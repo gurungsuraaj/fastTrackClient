@@ -19,12 +19,12 @@ class _SignUpActivity extends State<SignUpActivity> {
   /*Variables and declarations region*/
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
-  double MARGIN = 24;
+  double MARGIN = 32;
   double PADDING = 10.0;
 
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 14.0;
-  var fontSizeText = 16.0;
+  var fontSizeText = 14.0;
   bool initialCheckBox = false;
 
   /*Variables and declarations end region*/
@@ -56,7 +56,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(top: MARGIN),
+                            margin: EdgeInsets.only(top: 16),
                             child: Text(
                               'Full Name',
                               style: TextStyle(
@@ -161,7 +161,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                           Center(
                             child: Container(
                               margin: EdgeInsets.only(top: 24.0),
-                              width: width * 0.55,
+                              width: width * 1,
                               child: RaisedButton(
                                 onPressed: () {
                                   Navigator.of(context)
