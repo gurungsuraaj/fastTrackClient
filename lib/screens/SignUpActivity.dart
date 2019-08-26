@@ -138,7 +138,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                             margin: EdgeInsets.only(top: MARGIN),
                             child: Row(
                               children: <Widget>[
-                                CircularCheckBox(
+                                Checkbox(
                                     activeColor: Colors.blue[700],
                                     value: initialCheckBox,
                                     materialTapTargetSize:
