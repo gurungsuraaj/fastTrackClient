@@ -79,7 +79,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Image.asset(
-                                  "images/cart.png",
+                                  "images/outlet.png",
                                   height: 70,
                                   width: 50,
                                 ),
@@ -124,7 +124,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Image.asset(
-                                  "images/cart.png",
+                                  "images/distressCall.png",
                                   height: 70,
                                   width: 50,
                                 ),
@@ -149,7 +149,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Image.asset(
-                                  "images/cart.png",
+                                  "images/offer.png",
                                   height: 70,
                                   width: 50,
                                 ),
@@ -173,7 +173,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Image.asset(
-                                  "images/cart.png",
+                                  "images/service.png",
                                   height: 70,
                                   width: 50,
                                 ),
