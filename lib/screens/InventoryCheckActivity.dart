@@ -75,7 +75,6 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
                       width: MediaQuery.of(context).size.width * 0.68,
                       height: 48,
                       child: TextField(
-                        obscureText: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Details',

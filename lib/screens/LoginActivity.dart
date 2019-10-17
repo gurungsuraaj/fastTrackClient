@@ -1,9 +1,13 @@
+import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:ntlm/ntlm.dart';
+import '../helper/NetworkOperationManager.dart';
 import 'SignUpActivity.dart';
 import 'package:flutter/services.dart';
 
@@ -18,10 +22,19 @@ class _LoginActivityState extends State<LoginActivity> {
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 14.0;
   var fontSizeText = 16.0;
+  NTLMClient client;
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
   var passKey = GlobalKey<FormFieldState>();
+
+
+  @override
+  void initState() {
+    super.initState();
+    client = NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+    debugPrint("This is the password: ${Constants.NTLM_PASSWORD}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +95,12 @@ class _LoginActivityState extends State<LoginActivity> {
                                     Container(
                                       width: width * 0.8,
                                       child: TextFormField(
-                                        validator: (val) {
+                                       /* validator: (val) {
                                           if (val.isEmpty) {
                                             return 'Please enter your email';
                                           } else
                                             return null;
-                                        },
+                                        },*/
                                         style: TextStyle(
                                             fontSize: fontSizeTextField),
                                         decoration: InputDecoration(
@@ -116,12 +129,12 @@ class _LoginActivityState extends State<LoginActivity> {
                                       width: width * 0.8,
                                       child: TextFormField(
                                         obscureText: true,
-                                        validator: (val) {
+                                       /* validator: (val) {
                                           if (val.isEmpty) {
                                             return 'Please enter your Password';
                                           } else
                                             return null;
-                                        },
+                                        },*/
                                         style: TextStyle(
                                           fontSize: fontSizeTextField,
                                         ),
@@ -141,7 +154,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                   child: RaisedButton(
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
-                                      _submit();
+                                      Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
                                     },
                                     child: Text(
                                       "Login",
@@ -194,11 +207,15 @@ class _LoginActivityState extends State<LoginActivity> {
     );
   }
 
-  void _submit() {
+ /* void _submit() {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+      NetworkOperationManager.logIn("9806503355", "12345", "9806503355", "Ram", "test@example.com", client).then((val) {
+        debugPrint("This is status code:: ${val.status}");
+        debugPrint("This is response body:: ${val.responseBody}");
+      });
+
     }
-  }
+  }*/
 }

@@ -1,3 +1,4 @@
+import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
 import 'ServiceHistoryActivity.dart';
@@ -55,7 +56,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Image.asset(
-                                  "images/cart.png",
+                                  "images/setting.png",
                                   height: 70,
                                   width: 50,
                                 ),
@@ -137,12 +138,7 @@ class _HomeActivityState extends State<HomeActivity> {
                     child: Container(
                         child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ServiceHistoryActivity()),
-                              );
+
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -180,6 +176,51 @@ class _HomeActivityState extends State<HomeActivity> {
                                 Container(
                                     padding: EdgeInsets.only(top: 5),
                                     child: Text("Service"))
+                              ],
+                            )))),
+
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => GoogleMapActivity()),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/locate.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Locate"))
+                              ],
+                            )))),
+
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/cart.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Shop N Go"))
                               ],
                             )))),
               ]),

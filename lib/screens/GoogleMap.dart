@@ -22,7 +22,7 @@ class _GoogleMapState extends State<GoogleMapActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWithTitle.getAppBar('Outlet Location'),
+      appBar: AppBarWithTitle.getAppBar('Location'),
       body: Stack(
         children: [
           Container(

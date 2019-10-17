@@ -1,4 +1,4 @@
 class Api{
 
-  static final String POST_CHECKINVENTORY = "http://desktop-oqceko4:7362/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory";
+  static final String POST_CHECKINVENTORY = "http://192.168.0.57:7747/DynamicsNAV/ws/FT Support/Codeunit/CheckInventory";
 }
