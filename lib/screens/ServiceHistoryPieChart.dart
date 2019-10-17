@@ -18,11 +18,11 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
 
   _generateData() {
     var piedata = [
-      new Task('Work', 35.8, Color(0xff3366cc)),
-      new Task('Eat', 8.3, Color(0xff990099)),
-      new Task('Commute', 10.8, Color(0xff109618)),
-      new Task('TV', 15.6, Color(0xfffdbe19)),
-      new Task('Sleep', 19.2, Color(0xffff9900)),
+      new Task('Oil Exchanges', 35.8, Color(0xff3366cc)),
+      new Task('Batteries', 8.3, Color(0xff990099)),
+      new Task('Air filter', 10.8, Color(0xff109618)),
+      new Task('Brakes', 15.6, Color(0xfffdbe19)),
+      new Task('AC service', 19.2, Color(0xffff9900)),
       new Task('Other', 10.3, Color(0xffdc3912)),
     ];
 
@@ -63,7 +63,7 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Time spent on daily tasks',
+                  'Spent on various services',
                   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
