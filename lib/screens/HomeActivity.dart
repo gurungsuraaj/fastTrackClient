@@ -1,4 +1,5 @@
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
+import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
 import 'ServiceHistoryActivity.dart';
@@ -207,7 +208,12 @@ class _HomeActivityState extends State<HomeActivity> {
                     child: Container(
                         child: InkWell(
                             onTap: () {
-
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ShopAndGo()),
+                              );
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
