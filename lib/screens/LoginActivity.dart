@@ -1,5 +1,6 @@
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
@@ -33,7 +34,12 @@ class _LoginActivityState extends State<LoginActivity> {
   void initState() {
     super.initState();
     client = NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    debugPrint("This is the password: ${Constants.NTLM_PASSWORD}");
+
+    PrefsManager.checkSession().then((isSessionExist){
+      if(isSessionExist){
+        //open the landing page because app is logged in.
+      }
+    });
   }
 
   @override
