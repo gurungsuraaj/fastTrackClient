@@ -177,7 +177,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                             Container(
                               margin: EdgeInsets.only(top: MARGIN),
                               child: CheckboxListTile(
-                                title: new Text('Terms and Conditionns'),
+                                title: new Text('Terms and Conditions'),
                                 value: _termsChecked,
                                 onChanged: (val) {
                                   setState(() {

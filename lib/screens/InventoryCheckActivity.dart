@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:fasttrackgarage_app/models/InventoryCheck.dart';
+import 'package:http/http.dart' as http;
 
 class InventoryCheckActivity extends StatefulWidget {
   @override
@@ -56,6 +60,12 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
           .toList());
 
   @override
+  void initState() {
+    super.initState();
+    checkInventory();
+  }
+
+  @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
@@ -96,6 +106,35 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
             ),
           ],
         ));
+  }
+
+  void checkInventory() async {
+    debugPrint("Came to check inventory");
+    String url = Api.POST_CHECKINVENTORY;
+
+    Map<String, String> body = {
+      "itemNo": "2342",
+      "store": "110",
+    };
+
+    var body_json = json.encode(body);
+
+    Map<String, String> header = {
+      "Content-Type": "application/json",
+      "imei": "869386049899456",
+      // this is hardcoded for testing and is supposed to be changed later.
+      "username": "PSS",
+      "password": "\$ky\$p0rt\$",
+      "url":
+          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+    };
+    await http.post(url, body: body_json, headers: header).then((val) {
+
+      debugPrint("came to response after post url..");
+      debugPrint("This is status code: ${val.statusCode}");
+      debugPrint("This is body: ${val.body}");
+
+    });
   }
 }
 
