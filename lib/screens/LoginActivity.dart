@@ -27,7 +27,6 @@ class _LoginActivityState extends State<LoginActivity> {
   double MARGIN = 24.0;
   double PADDING = 10.0;
   var fontWeightText = FontWeight.w500;
-  bool isProgressBarShown = false;
   var fontSizeTextField = 14.0;
   var fontSizeText = 16.0;
   NTLMClient client;
@@ -35,20 +34,19 @@ class _LoginActivityState extends State<LoginActivity> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
   var passKey = GlobalKey<FormFieldState>();
-    bool isProgressBarShown = false;
-
+  bool isProgressBarShown = false;
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
-    client = NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+    client =
+        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
 
-    PrefsManager.checkSession().then((isSessionExist){
-      if(isSessionExist){
+    PrefsManager.checkSession().then((isSessionExist) {
+      if (isSessionExist) {
         //open the landing page because app is logged in.
       }
     });
@@ -112,7 +110,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                     Container(
                                       width: width * 0.8,
                                       child: TextFormField(
-                                       /* validator: (val) {
+                                        /* validator: (val) {
                                           if (val.isEmpty) {
                                             return 'Please enter your email';
                                           } else
@@ -147,7 +145,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                       width: width * 0.8,
                                       child: TextFormField(
                                         obscureText: true,
-                                       /* validator: (val) {
+                                        /* validator: (val) {
                                           if (val.isEmpty) {
                                             return 'Please enter your Password';
                                           } else
@@ -174,7 +172,8 @@ class _LoginActivityState extends State<LoginActivity> {
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
                                       performLogin();
-                                      Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+                                      Navigator.pushNamed(
+                                          context, RoutesName.HOME_ACTIVITY);
                                     },
                                     child: Text(
                                       "Login",
@@ -259,10 +258,9 @@ class _LoginActivityState extends State<LoginActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
-
       debugPrint("came to response after post url..");
       debugPrint("This is status code: ${val.statusCode}");
       debugPrint("This is body: ${val.body}");
@@ -270,17 +268,15 @@ class _LoginActivityState extends State<LoginActivity> {
       var result = json.decode(val.body);
       String message = result["message"];
 
-      if(statusCode == Rcode.SUCCESS_CODE){
+      if (statusCode == Rcode.SUCCESS_CODE) {
         hideProgressBar();
         // TODO display snackbar here and show progressbar
         Navigator.of(context).pushNamed('/LoginActivity');
         ShowToast.showToast(context, "Login successfull");
-      }
-      else {
+      } else {
         hideProgressBar();
         // display snackbar
       }
-
     }).catchError((val) {
       hideProgressBar();
       ShowToast.showToast(context, "Something went wrong");
@@ -299,19 +295,6 @@ class _LoginActivityState extends State<LoginActivity> {
 
     }
   }*/
-
-
-  void showProgressBar() {
-    setState(() {
-      isProgressBarShown = true;
-    });
-  }
-
-  void hideProgressBar() {
-    setState(() {
-      isProgressBarShown = false;
-    });
-  }
 
   Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
