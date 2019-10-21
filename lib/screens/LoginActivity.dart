@@ -24,7 +24,7 @@ class LoginActivity extends StatefulWidget {
 }
 
 class _LoginActivityState extends State<LoginActivity> {
-  double MARGIN = 24.0;
+  double MARGIN = 22.0;
   double PADDING = 10.0;
   var fontWeightText = FontWeight.w500;
   bool isProgressBarShown = false;
@@ -36,8 +36,11 @@ class _LoginActivityState extends State<LoginActivity> {
   final formKey = new GlobalKey<FormState>();
   var passKey = GlobalKey<FormFieldState>();
 
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController(text: "thisisdellcorp@gmail.com");
+  TextEditingController passwordController = new TextEditingController(text: "aabbccddee");
+  TextEditingController mobileController = new TextEditingController(text: "9819166741");
+  TextEditingController nameController = new TextEditingController(text: "Test Dell");
+  TextEditingController customerNumController = new TextEditingController(text: "121");
 
 
   @override
@@ -47,7 +50,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
     PrefsManager.checkSession().then((isSessionExist){
       if(isSessionExist){
-        //open the landing page because app is logged in.
+        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
       }
     });
   }
@@ -62,9 +65,10 @@ class _LoginActivityState extends State<LoginActivity> {
 
     return Scaffold(
       key: _scaffoldKey,
-      body: SafeArea(
-        child: ModalProgressHUD(
-          inAsyncCall: isProgressBarShown,
+      body: ModalProgressHUD(
+        inAsyncCall: isProgressBarShown,
+        dismissible: false,
+        child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -101,7 +105,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                     Container(
                                       margin: EdgeInsets.only(top: MARGIN),
                                       child: Text(
-                                        'Email',
+                                        'Mobile number',
                                         style: TextStyle(
                                           fontWeight: fontWeightText,
                                           fontSize: fontSizeText,
@@ -111,7 +115,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                     Container(
                                       width: width * 0.8,
                                       child: TextFormField(
-                                       /* validator: (val) {
+                                        /* validator: (val) {
                                           if (val.isEmpty) {
                                             return 'Please enter your email';
                                           } else
@@ -119,9 +123,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                         },*/
                                         style: TextStyle(
                                             fontSize: fontSizeTextField),
-                                        controller: emailController,
+                                        controller: mobileController,
                                         decoration: InputDecoration(
-                                            hintText: 'Your Email...',
+                                            hintText: 'Your Number...',
                                             hintStyle: TextStyle(
                                                 color: Color(0xffb8b8b8))),
                                       ),
@@ -166,6 +170,111 @@ class _LoginActivityState extends State<LoginActivity> {
                                 ),
                               ),
                               Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: MARGIN),
+                                      child: Text(
+                                        'Customer number',
+                                        style: TextStyle(
+                                          fontWeight: fontWeightText,
+                                          fontSize: fontSizeText,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width * 0.8,
+                                      child: TextFormField(
+                                        /* validator: (val) {
+                                          if (val.isEmpty) {
+                                            return 'Please enter your email';
+                                          } else
+                                            return null;
+                                        },*/
+                                        style: TextStyle(
+                                            fontSize: fontSizeTextField),
+                                        controller: customerNumController,
+                                        decoration: InputDecoration(
+                                            hintText: 'Customer number...',
+                                            hintStyle: TextStyle(
+                                                color: Color(0xffb8b8b8))),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: MARGIN),
+                                      child: Text(
+                                        'Email',
+                                        style: TextStyle(
+                                          fontWeight: fontWeightText,
+                                          fontSize: fontSizeText,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width * 0.8,
+                                      child: TextFormField(
+                                        /* validator: (val) {
+                                          if (val.isEmpty) {
+                                            return 'Please enter your email';
+                                          } else
+                                            return null;
+                                        },*/
+                                        style: TextStyle(
+                                            fontSize: fontSizeTextField),
+                                        controller: emailController,
+                                        decoration: InputDecoration(
+                                            hintText: 'Your Email...',
+                                            hintStyle: TextStyle(
+                                                color: Color(0xffb8b8b8))),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: MARGIN),
+                                      child: Text(
+                                        'Customer name',
+                                        style: TextStyle(
+                                          fontWeight: fontWeightText,
+                                          fontSize: fontSizeText,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width * 0.8,
+                                      child: TextFormField(
+                                        /* validator: (val) {
+                                          if (val.isEmpty) {
+                                            return 'Please enter your email';
+                                          } else
+                                            return null;
+                                        },*/
+                                        style: TextStyle(
+                                            fontSize: fontSizeTextField),
+                                        controller: nameController,
+                                        decoration: InputDecoration(
+                                            hintText: 'Customer name...',
+                                            hintStyle: TextStyle(
+                                                color: Color(0xffb8b8b8))),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Center(
                                 child: Container(
                                   padding: EdgeInsets.fromLTRB(0, 40, 0, 5),
                                   width: width * 0.55,
@@ -173,7 +282,6 @@ class _LoginActivityState extends State<LoginActivity> {
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
                                       performLogin();
-                                      Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
                                     },
                                     child: Text(
                                       "Login",
@@ -240,15 +348,28 @@ class _LoginActivityState extends State<LoginActivity> {
 
   void performLogin() async {
     showProgressBar();
-    String url = Api.POST_CUSTOMER_SIGNUP;
+    String url = Api.POST_CUSTOMER_LOGIN;
     debugPrint("This is  url : $url");
+
 
     String email = emailController.text;
     String password = passwordController.text;
+    String mobileNumber = mobileController.text;
+    String custNum = customerNumController.text;
+    String custName = nameController.text;
+
+    debugPrint("email : $email");
+    debugPrint("PW : $password");
+    debugPrint("Mobile num : $mobileNumber");
+    debugPrint("Number : $custNum");
+    debugPrint("CustName : $custName");
 
     Map<String, String> body = {
-      "email": email,
-      "passwordTxt": password,
+      "mobileNo": mobileNumber,
+      "passwordTxt":password,
+      "customerNo":custNum,
+      "customerName":custName,
+      "custemail":email
     };
 
     var body_json = json.encode(body);
@@ -265,15 +386,25 @@ class _LoginActivityState extends State<LoginActivity> {
       debugPrint("came to response after post url..");
       debugPrint("This is status code: ${val.statusCode}");
       debugPrint("This is body: ${val.body}");
-      var statusCode = val.statusCode;
+      int statusCode = val.statusCode;
       var result = json.decode(val.body);
+
+      debugPrint("This is after result: $result");
+
       String message = result["message"];
 
+      debugPrint("This is actual result: $message");
+      String custNumber = result["data"]["customerNo"];
+      String customerName = result["data"]["customerName"];
+      String custEmail = result["data"]["custEmail"];
+
       if(statusCode == Rcode.SUCCESS_CODE){
+        debugPrint("THis is Customer number $custNumber");
+
         hideProgressBar();
-        // TODO display snackbar here and show progressbar
-        Navigator.of(context).pushNamed('/LoginActivity');
-        ShowToast.showToast(context, "Login successfull");
+        PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName, custEmail);
+        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+        ShowToast.showToast(context, message);
       }
       else {
         hideProgressBar();
@@ -282,7 +413,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
     }).catchError((val) {
       hideProgressBar();
-      ShowToast.showToast(context, "Something went wrong");
+      ShowToast.showToast(context, "Something went wrong!");
       //display snackbar
     });
   }
