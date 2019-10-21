@@ -1,5 +1,6 @@
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
 import 'ServiceHistoryActivity.dart';
@@ -32,6 +33,19 @@ class _HomeActivityState extends State<HomeActivity> {
           title: new Text('Home'),
           automaticallyImplyLeading: false,
           backgroundColor: Color(ExtraColors.DARK_BLUE),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: choiceAction,
+              itemBuilder: (BuildContext context) {
+                return Constants.choices.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+            )
+          ],
         ),
         body: new Center(
           child: new GridView.count(
@@ -138,9 +152,7 @@ class _HomeActivityState extends State<HomeActivity> {
                 Card(
                     child: Container(
                         child: InkWell(
-                            onTap: () {
-
-                            },
+                            onTap: () {},
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,14 +191,14 @@ class _HomeActivityState extends State<HomeActivity> {
                                     child: Text("Service"))
                               ],
                             )))),
-
                 Card(
                     child: Container(
                         child: InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => GoogleMapActivity()),
+                                MaterialPageRoute(
+                                    builder: (context) => GoogleMapActivity()),
                               );
                             },
                             child: Column(
@@ -203,7 +215,6 @@ class _HomeActivityState extends State<HomeActivity> {
                                     child: Text("Locate"))
                               ],
                             )))),
-
                 Card(
                     child: Container(
                         child: InkWell(
@@ -211,8 +222,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        ShopAndGo()),
+                                    builder: (context) => ShopAndGo()),
                               );
                             },
                             child: Column(
@@ -231,6 +241,17 @@ class _HomeActivityState extends State<HomeActivity> {
                             )))),
               ]),
         ));
+  }
+
+  void choiceAction(String choice) {
+    if (choice == Constants.LOGOUT) {
+      // PrefsManager.clearStaffId().then((val) {
+      //   Navigator.pushAndRemoveUntil(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => MyApp()),
+      //       ModalRoute.withName("/Login"));
+      // });
+    }
   }
 
   void _showAlert() {
