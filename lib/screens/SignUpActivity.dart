@@ -265,7 +265,7 @@ class _SignUpActivity extends State<SignUpActivity> {
   void _submit() {
     final form = formKey.currentState;
     if (form.validate()) {
-      if (_termsChecked) {
+      if (checkBoxValue) {
         //proceed to post
         form.save();
         debugPrint("password Saved succesfully");
