@@ -36,16 +36,18 @@ class _LoginActivityState extends State<LoginActivity> {
   var passKey = GlobalKey<FormFieldState>();
   bool isProgressBarShown = false;
 
-  TextEditingController passwordController = new TextEditingController(text: "aabbccddee");
-  TextEditingController mobileController = new TextEditingController(text: "9819166741");
+  TextEditingController passwordController =
+      new TextEditingController(text: "aabbccddee");
+  TextEditingController mobileController =
+      new TextEditingController(text: "9819166741");
 
   @override
   void initState() {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    PrefsManager.checkSession().then((isSessionExist){
-      if(isSessionExist){
+    PrefsManager.checkSession().then((isSessionExist) {
+      if (isSessionExist) {
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
       }
     });
@@ -110,12 +112,13 @@ class _LoginActivityState extends State<LoginActivity> {
                                     Container(
                                       width: width * 0.8,
                                       child: TextFormField(
-                                        /* validator: (val) {
+                                        keyboardType: TextInputType.number,
+                                        validator: (val) {
                                           if (val.isEmpty) {
-                                            return 'Please enter your email';
+                                            return 'Please enter your phone number';
                                           } else
                                             return null;
-                                        },*/
+                                        },
                                         style: TextStyle(
                                             fontSize: fontSizeTextField),
                                         controller: mobileController,
@@ -145,12 +148,12 @@ class _LoginActivityState extends State<LoginActivity> {
                                       width: width * 0.8,
                                       child: TextFormField(
                                         obscureText: true,
-                                        /* validator: (val) {
+                                        validator: (val) {
                                           if (val.isEmpty) {
                                             return 'Please enter your Password';
                                           } else
                                             return null;
-                                        },*/
+                                        },
                                         style: TextStyle(
                                           fontSize: fontSizeTextField,
                                         ),
@@ -171,7 +174,8 @@ class _LoginActivityState extends State<LoginActivity> {
                                   child: RaisedButton(
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
-                                      performLogin();
+                                      FocusScope.of(context).requestFocus(FocusNode());
+                                      _submit();
                                     },
                                     child: Text(
                                       "Login",
@@ -255,10 +259,10 @@ class _LoginActivityState extends State<LoginActivity> {
 
     Map<String, String> body = {
       "mobileNo": mobileNumber,
-      "passwordTxt":password,
-      "customerNo":custNum,
-      "customerName":custName,
-      "custemail":email
+      "passwordTxt": password,
+      "customerNo": custNum,
+      "customerName": custName,
+      "custemail": email
     };
 
     var body_json = json.encode(body);
@@ -281,20 +285,19 @@ class _LoginActivityState extends State<LoginActivity> {
 
       String message = result["message"];
 
-
       String custNumber = result["data"]["customerNo"];
       String customerName = result["data"]["customerName"];
       String custEmail = result["data"]["custEmail"];
 
-      if(statusCode == Rcode.SUCCESS_CODE){
+      if (statusCode == Rcode.SUCCESS_CODE) {
         debugPrint("THis is Customer number $custNumber");
 
         hideProgressBar();
-        PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName, custEmail);
+        PrefsManager.saveLoginCredentialsToPrefs(
+            custNumber, customerName, custEmail);
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
         ShowToast.showToast(context, message);
-      }
-      else {
+      } else {
         hideProgressBar();
         // display snackbar
       }
@@ -305,17 +308,13 @@ class _LoginActivityState extends State<LoginActivity> {
     });
   }
 
-/*  void _submit() {
+  void _submit() {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      NetworkOperationManager.logIn("9806503355", "12345", "9806503355", "Ram", "test@example.com", client).then((val) {
-        debugPrint("This is status code:: ${val.status}");
-        debugPrint("This is response body:: ${val.responseBody}");
-      });
-
+      performLogin();
     }
-  }*/
+  }
 
   Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
