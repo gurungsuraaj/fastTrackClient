@@ -265,7 +265,7 @@ class _SignUpActivity extends State<SignUpActivity> {
   void _submit() {
     final form = formKey.currentState;
     if (form.validate()) {
-      if (_termsChecked) {
+      if (checkBoxValue) {
         //proceed to post
         form.save();
         debugPrint("password Saved succesfully");
@@ -329,7 +329,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         ShowToast.showToast(context, "Signed up successfully");
       } else {
         hideProgressBar();
-        // display snackbar
+        ShowToast.showToast(context,"Error : " + message);
       }
     }).catchError((val) {
       hideProgressBar();
