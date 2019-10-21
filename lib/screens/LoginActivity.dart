@@ -27,6 +27,8 @@ class _LoginActivityState extends State<LoginActivity> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
   var passKey = GlobalKey<FormFieldState>();
+    bool isProgressBarShown = false;
+
 
 
   @override
@@ -40,7 +42,6 @@ class _LoginActivityState extends State<LoginActivity> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    bool isProgressBarShown = false;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
 
@@ -218,4 +219,25 @@ class _LoginActivityState extends State<LoginActivity> {
 
     }
   }*/
+
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
+  }
+
+  Future<void> displaySnackbar(BuildContext context, msg) {
+    final snackBar = SnackBar(
+      content: Text('$msg'),
+      duration: const Duration(seconds: 2),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
 }
