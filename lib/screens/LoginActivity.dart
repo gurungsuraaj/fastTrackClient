@@ -290,7 +290,6 @@ class _LoginActivityState extends State<LoginActivity> {
       String custEmail = result["data"]["custEmail"];
 
       if (statusCode == Rcode.SUCCESS_CODE) {
-        debugPrint("THis is Customer number $custNumber");
 
         hideProgressBar();
         PrefsManager.saveLoginCredentialsToPrefs(
@@ -299,12 +298,12 @@ class _LoginActivityState extends State<LoginActivity> {
         ShowToast.showToast(context, message);
       } else {
         hideProgressBar();
-        // display snackbar
+        ShowToast.showToast(context, message);
       }
+
     }).catchError((val) {
       hideProgressBar();
       ShowToast.showToast(context, "Something went wrong!");
-      //display snackbar
     });
   }
 
