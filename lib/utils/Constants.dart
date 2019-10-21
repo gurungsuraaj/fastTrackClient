@@ -6,4 +6,15 @@ class Constants {
   static const List<String> choices = <String>[LOGOUT];
   static final String db_name = 'db_retail';
 
+  //login credentials
+
+static final String CUSTOMER_NUMBER = "customerNo";
+  static final String CUSTOMER_NAME = "customerName";
+  static final String CUSTOMER_EMAIL = "custEmail";
 }
+
+  
+
+
+
+

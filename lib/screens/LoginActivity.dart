@@ -24,7 +24,7 @@ class LoginActivity extends StatefulWidget {
 }
 
 class _LoginActivityState extends State<LoginActivity> {
-  double MARGIN = 24.0;
+  double MARGIN = 22.0;
   double PADDING = 10.0;
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 14.0;
@@ -36,18 +36,17 @@ class _LoginActivityState extends State<LoginActivity> {
   var passKey = GlobalKey<FormFieldState>();
   bool isProgressBarShown = false;
 
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController(text: "aabbccddee");
+  TextEditingController mobileController = new TextEditingController(text: "9819166741");
 
   @override
   void initState() {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-
-    PrefsManager.checkSession().then((isSessionExist) {
-      if (isSessionExist) {
-        //open the landing page because app is logged in.
+    PrefsManager.checkSession().then((isSessionExist){
+      if(isSessionExist){
+        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
       }
     });
   }
@@ -61,9 +60,10 @@ class _LoginActivityState extends State<LoginActivity> {
 
     return Scaffold(
       key: _scaffoldKey,
-      body: SafeArea(
-        child: ModalProgressHUD(
-          inAsyncCall: isProgressBarShown,
+      body: ModalProgressHUD(
+        inAsyncCall: isProgressBarShown,
+        dismissible: false,
+        child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -81,13 +81,13 @@ class _LoginActivityState extends State<LoginActivity> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(top: MARGIN),
+                                margin: EdgeInsets.only(top: 16),
                                 child: Center(
                                   child: Text(
                                     'Welcome',
                                     style: TextStyle(
                                       color: Colors.blue[900],
-                                      fontSize: 26.0,
+                                      fontSize: 22.0,
                                       // fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -98,9 +98,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
-                                      margin: EdgeInsets.only(top: MARGIN),
+                                      margin: EdgeInsets.only(top: 40),
                                       child: Text(
-                                        'Email',
+                                        'Mobile number',
                                         style: TextStyle(
                                           fontWeight: fontWeightText,
                                           fontSize: fontSizeText,
@@ -118,9 +118,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                         },*/
                                         style: TextStyle(
                                             fontSize: fontSizeTextField),
-                                        controller: emailController,
+                                        controller: mobileController,
                                         decoration: InputDecoration(
-                                            hintText: 'Your Email...',
+                                            hintText: 'Your Number...',
                                             hintStyle: TextStyle(
                                                 color: Color(0xffb8b8b8))),
                                       ),
@@ -166,14 +166,12 @@ class _LoginActivityState extends State<LoginActivity> {
                               ),
                               Center(
                                 child: Container(
-                                  padding: EdgeInsets.fromLTRB(0, 40, 0, 5),
+                                  padding: EdgeInsets.fromLTRB(0, 50, 0, 5),
                                   width: width * 0.55,
                                   child: RaisedButton(
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
                                       performLogin();
-                                      Navigator.pushNamed(
-                                          context, RoutesName.HOME_ACTIVITY);
                                     },
                                     child: Text(
                                       "Login",
@@ -240,15 +238,27 @@ class _LoginActivityState extends State<LoginActivity> {
 
   void performLogin() async {
     showProgressBar();
-    String url = Api.POST_CUSTOMER_SIGNUP;
+    String url = Api.POST_CUSTOMER_LOGIN;
     debugPrint("This is  url : $url");
 
-    String email = emailController.text;
+    String mobileNumber = mobileController.text;
     String password = passwordController.text;
+    String email = "";
+    String custNum = "";
+    String custName = "";
+
+    debugPrint("email : $email");
+    debugPrint("PW : $password");
+    debugPrint("Mobile num : $mobileNumber");
+    debugPrint("Number : $custNum");
+    debugPrint("CustName : $custName");
 
     Map<String, String> body = {
-      "email": email,
-      "passwordTxt": password,
+      "mobileNo": mobileNumber,
+      "passwordTxt":password,
+      "customerNo":custNum,
+      "customerName":custName,
+      "custemail":email
     };
 
     var body_json = json.encode(body);
@@ -264,22 +274,33 @@ class _LoginActivityState extends State<LoginActivity> {
       debugPrint("came to response after post url..");
       debugPrint("This is status code: ${val.statusCode}");
       debugPrint("This is body: ${val.body}");
-      var statusCode = val.statusCode;
+      int statusCode = val.statusCode;
       var result = json.decode(val.body);
+
+      debugPrint("This is after result: $result");
+
       String message = result["message"];
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
+
+      String custNumber = result["data"]["customerNo"];
+      String customerName = result["data"]["customerName"];
+      String custEmail = result["data"]["custEmail"];
+
+      if(statusCode == Rcode.SUCCESS_CODE){
+        debugPrint("THis is Customer number $custNumber");
+
         hideProgressBar();
-        // TODO display snackbar here and show progressbar
-        Navigator.of(context).pushNamed('/LoginActivity');
-        ShowToast.showToast(context, "Login successfull");
-      } else {
+        PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName, custEmail);
+        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+        ShowToast.showToast(context, message);
+      }
+      else {
         hideProgressBar();
         // display snackbar
       }
     }).catchError((val) {
       hideProgressBar();
-      ShowToast.showToast(context, "Something went wrong");
+      ShowToast.showToast(context, "Something went wrong!");
       //display snackbar
     });
   }
