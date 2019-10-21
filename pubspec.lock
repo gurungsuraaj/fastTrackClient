@@ -242,6 +242,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.8"
+<<<<<<< HEAD
+  location:
+    dependency: "direct main"
+    description:
+      name: location
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.5"
+=======
   io:
     dependency: transitive
     description:
@@ -270,6 +279,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.19"
+>>>>>>> 1bb22a9ae74e484a2c7ed41af2063264029d4c2f
   logging:
     dependency: transitive
     description:
@@ -291,6 +301,9 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
 <<<<<<< HEAD
+    version: "1.1.6"
+=======
+<<<<<<< HEAD
     version: "1.1.7"
   mime:
     dependency: transitive
@@ -302,6 +315,7 @@ packages:
 =======
     version: "1.1.6"
 >>>>>>> fdf2116dc5457e302afd13f5d41524b1b8068c46
+>>>>>>> 1bb22a9ae74e484a2c7ed41af2063264029d4c2f
   modal_progress_hud:
     dependency: "direct main"
     description:
@@ -489,6 +503,9 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
 <<<<<<< HEAD
+    version: "1.0.4"
+=======
+<<<<<<< HEAD
     version: "1.0.5"
   synchronized:
     dependency: transitive
@@ -500,6 +517,7 @@ packages:
 =======
     version: "1.0.4"
 >>>>>>> fdf2116dc5457e302afd13f5d41524b1b8068c46
+>>>>>>> 1bb22a9ae74e484a2c7ed41af2063264029d4c2f
   term_glyph:
     dependency: transitive
     description:
