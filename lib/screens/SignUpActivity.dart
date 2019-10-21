@@ -14,6 +14,7 @@ import 'HomeActivity.dart';
 import 'GenerateOTPActivity.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import "./TermsAndConditionScreen.dart";
 
 class SignUpActivity extends StatefulWidget {
   @override
@@ -46,6 +47,8 @@ class _SignUpActivity extends State<SignUpActivity> {
 
   String _email;
   String _password;
+
+  bool checkBoxValue = false;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -146,7 +149,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 decoration: InputDecoration(
                                     hintText: 'Your number',
                                     hintStyle:
-                                    TextStyle(color: Color(0xffb8b8b8))),
+                                        TextStyle(color: Color(0xffb8b8b8))),
                               ),
                             ),
                             Container(
@@ -180,21 +183,53 @@ class _SignUpActivity extends State<SignUpActivity> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: MARGIN),
-                              child: CheckboxListTile(
-                                title: new Text('Terms and Conditions'),
-                                value: _termsChecked,
-                                onChanged: (val) {
-                                  setState(() {
-                                    _termsChecked = val;
-                                    debugPrint("checkbox val $val");
-                                  });
-                                },
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                activeColor: Colors.green,
-                              ),
-                            ),
+                                margin: EdgeInsets.only(top: MARGIN),
+                                height: 40,
+                                child: Row(
+                                  children: <Widget>[
+                                    // CheckboxListTile(
+                                    //   title: new Text('Terms and Conditions'),
+                                    //   value: _termsChecked,
+                                    //   onChanged: (val) {
+                                    //     setState(() {
+                                    //       _termsChecked = val;
+                                    //       debugPrint("checkbox val $val");
+                                    //     });
+                                    //   },
+                                    //   controlAffinity:
+                                    //       ListTileControlAffinity.leading,
+                                    //   activeColor: Colors.green,
+                                    // ),
+                                    Checkbox(
+                                      value: checkBoxValue,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          checkBoxValue = val;
+                                        });
+                                        debugPrint("$val");
+                                      },
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          final callback = Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TermsAndConditionScreen()),
+                                          );
+
+                                          callback.then((res) {
+                                            debugPrint(res);
+                                            if (res == "Agree") {
+                                              setState(() {
+                                                checkBoxValue = true;
+                                              });
+                                            }
+                                          });
+                                        },
+                                        child: Text("Terms and Conditions")),
+                                  ],
+                                )),
                             Center(
                               child: Container(
                                 margin: EdgeInsets.only(top: 24.0),
@@ -234,7 +269,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         //proceed to post
         form.save();
         debugPrint("password Saved succesfully");
-      //  Navigator.of(context).pushNamed('/GenerateOTP');
+        //  Navigator.of(context).pushNamed('/GenerateOTP');
         signUp();
       } else {
         //show snackbar
@@ -277,10 +312,9 @@ class _SignUpActivity extends State<SignUpActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
-
       debugPrint("came to response after post url..");
       debugPrint("This is status code: ${val.statusCode}");
       debugPrint("This is body: ${val.body}");
@@ -288,17 +322,15 @@ class _SignUpActivity extends State<SignUpActivity> {
       var result = json.decode(val.body);
       String message = result["message"];
 
-      if(statusCode == Rcode.SUCCESS_CODE){
+      if (statusCode == Rcode.SUCCESS_CODE) {
         hideProgressBar();
         // TODO display snackbar here and show progressbar
         Navigator.of(context).pushNamed('/LoginActivity');
         ShowToast.showToast(context, "Signed up successfully");
-      }
-      else {
+      } else {
         hideProgressBar();
         // display snackbar
       }
-
     }).catchError((val) {
       hideProgressBar();
       ShowToast.showToast(context, "Something went wrong");
@@ -317,5 +349,4 @@ class _SignUpActivity extends State<SignUpActivity> {
       isProgressBarShown = false;
     });
   }
-
 }

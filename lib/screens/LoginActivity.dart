@@ -27,7 +27,6 @@ class _LoginActivityState extends State<LoginActivity> {
   double MARGIN = 22.0;
   double PADDING = 10.0;
   var fontWeightText = FontWeight.w500;
-  bool isProgressBarShown = false;
   var fontSizeTextField = 14.0;
   var fontSizeText = 16.0;
   NTLMClient client;
@@ -35,6 +34,7 @@ class _LoginActivityState extends State<LoginActivity> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
   var passKey = GlobalKey<FormFieldState>();
+  bool isProgressBarShown = false;
 
   TextEditingController emailController = new TextEditingController(text: "thisisdellcorp@gmail.com");
   TextEditingController passwordController = new TextEditingController(text: "aabbccddee");
@@ -42,12 +42,11 @@ class _LoginActivityState extends State<LoginActivity> {
   TextEditingController nameController = new TextEditingController(text: "Test Dell");
   TextEditingController customerNumController = new TextEditingController(text: "121");
 
-
   @override
   void initState() {
     super.initState();
-    client = NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-
+    client =
+        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
     PrefsManager.checkSession().then((isSessionExist){
       if(isSessionExist){
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
@@ -59,7 +58,6 @@ class _LoginActivityState extends State<LoginActivity> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    bool isProgressBarShown = false;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
 
@@ -150,7 +148,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                       width: width * 0.8,
                                       child: TextFormField(
                                         obscureText: true,
-                                       /* validator: (val) {
+                                        /* validator: (val) {
                                           if (val.isEmpty) {
                                             return 'Please enter your Password';
                                           } else
@@ -379,10 +377,9 @@ class _LoginActivityState extends State<LoginActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
-
       debugPrint("came to response after post url..");
       debugPrint("This is status code: ${val.statusCode}");
       debugPrint("This is body: ${val.body}");
@@ -393,7 +390,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
       String message = result["message"];
 
-      debugPrint("This is actual result: $message");
+
       String custNumber = result["data"]["customerNo"];
       String customerName = result["data"]["customerName"];
       String custEmail = result["data"]["custEmail"];
@@ -410,7 +407,6 @@ class _LoginActivityState extends State<LoginActivity> {
         hideProgressBar();
         // display snackbar
       }
-
     }).catchError((val) {
       hideProgressBar();
       ShowToast.showToast(context, "Something went wrong!");
@@ -429,4 +425,12 @@ class _LoginActivityState extends State<LoginActivity> {
 
     }
   }*/
+
+  Future<void> displaySnackbar(BuildContext context, msg) {
+    final snackBar = SnackBar(
+      content: Text('$msg'),
+      duration: const Duration(seconds: 2),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
 }

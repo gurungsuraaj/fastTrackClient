@@ -54,7 +54,7 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.DARK_BLUE),
-        title: Text('Flutter Charts'),
+        title: Text('Service Details'),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -62,6 +62,15 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
           child: Center(
             child: Column(
               children: <Widget>[
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        child: bodyData()),
+                  ),
+                ),
                 Text(
                   'Spent on various services',
                   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
@@ -101,6 +110,85 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
       ),
     );
   }
+
+  Widget bodyData() => DataTable(
+      onSelectAll: (b) {},
+      sortColumnIndex: 1,
+      sortAscending: true,
+      columns: <DataColumn>[
+        DataColumn(
+          label: Text("Description"),
+          numeric: false,
+          onSort: (i, b) {
+            print("$i $b");
+            setState(() {
+              // _serviceDetailList.sort((a, b) => a.firstName.compareTo(b.firstName));
+            });
+          },
+          tooltip: "To display first name of the Name",
+        ),
+        DataColumn(
+          label: Text("Quantity"),
+          numeric: false,
+          onSort: (i, b) {
+            print("$i $b");
+            setState(() {
+              // _serviceDetailList.sort((a, b) => a.lastName.compareTo(b.lastName));
+            });
+          },
+          tooltip: "To display last name of the Name",
+        ),
+        DataColumn(
+          label: Text("Rate"),
+          numeric: false,
+          onSort: (i, b) {
+            print("$i $b");
+            setState(() {
+              // _serviceDetailList.sort((a, b) => a.lastName.compareTo(b.lastName));
+            });
+          },
+          tooltip: "To display last name of the Name",
+        ),
+        DataColumn(
+          label: Text("Amount"),
+          numeric: false,
+          onSort: (i, b) {
+            print("$i $b");
+            setState(() {
+              // _serviceDetailList.sort((a, b) => a.lastName.compareTo(b.lastName));
+            });
+          },
+          tooltip: "To display last name of the Name",
+        ),
+      ],
+      rows: _serviceDetailList
+          .map(
+            (item) => DataRow(
+              cells: [
+                DataCell(
+                  Text(item.description),
+                  showEditIcon: false,
+                  placeholder: false,
+                ),
+                DataCell(
+                  Text(item.quantity.toString()),
+                  showEditIcon: false,
+                  placeholder: false,
+                ),
+                DataCell(
+                  Text(item.rate.toString()),
+                  showEditIcon: false,
+                  placeholder: false,
+                ),
+                DataCell(
+                  Text(item.amount.toString()),
+                  showEditIcon: false,
+                  placeholder: false,
+                )
+              ],
+            ),
+          )
+          .toList());
 }
 
 class Pollution {
@@ -125,3 +213,28 @@ class Sales {
 
   Sales(this.yearval, this.salesval);
 }
+
+class ServiceDetailsTableInfo {
+  String description;
+  int quantity;
+  double rate;
+  double amount;
+
+  ServiceDetailsTableInfo(
+      {this.description, this.quantity, this.rate, this.amount});
+}
+
+var _serviceDetailList = <ServiceDetailsTableInfo>[
+  ServiceDetailsTableInfo(
+      description: "Oil Change", quantity: 1, rate: 10.0, amount: 10.0),
+  ServiceDetailsTableInfo(
+      description: "Wash", quantity: 1, rate: 20.0, amount: 25.0),
+  ServiceDetailsTableInfo(
+      description: "Cockpit filter", quantity: 1, rate: 14.0, amount: 800.0),
+  ServiceDetailsTableInfo(
+      description: "Tyre", quantity: 1, rate: 11.0, amount: 25.0),
+  ServiceDetailsTableInfo(
+      description: "Oil Change", quantity: 1, rate: 25.0, amount: 10.0),
+  ServiceDetailsTableInfo(
+      description: "Wash", quantity: 1, rate: 400.0, amount: 880.0),
+];
