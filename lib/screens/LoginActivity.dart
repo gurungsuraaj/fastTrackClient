@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
@@ -8,6 +14,7 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import '../helper/NetworkOperationManager.dart';
+import 'package:http/http.dart' as http;
 import 'SignUpActivity.dart';
 import 'package:flutter/services.dart';
 
@@ -20,6 +27,7 @@ class _LoginActivityState extends State<LoginActivity> {
   double MARGIN = 24.0;
   double PADDING = 10.0;
   var fontWeightText = FontWeight.w500;
+  bool isProgressBarShown = false;
   var fontSizeTextField = 14.0;
   var fontSizeText = 16.0;
   NTLMClient client;
@@ -30,12 +38,20 @@ class _LoginActivityState extends State<LoginActivity> {
     bool isProgressBarShown = false;
 
 
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
     client = NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    debugPrint("This is the password: ${Constants.NTLM_PASSWORD}");
+
+    PrefsManager.checkSession().then((isSessionExist){
+      if(isSessionExist){
+        //open the landing page because app is logged in.
+      }
+    });
   }
 
   @override
@@ -104,6 +120,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                         },*/
                                         style: TextStyle(
                                             fontSize: fontSizeTextField),
+                                        controller: emailController,
                                         decoration: InputDecoration(
                                             hintText: 'Your Email...',
                                             hintStyle: TextStyle(
@@ -139,6 +156,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                         style: TextStyle(
                                           fontSize: fontSizeTextField,
                                         ),
+                                        controller: passwordController,
                                         decoration: InputDecoration(
                                             hintText: 'Your password',
                                             hintStyle: TextStyle(
@@ -155,6 +173,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                   child: RaisedButton(
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
+                                      performLogin();
                                       Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
                                     },
                                     child: Text(
@@ -206,6 +225,67 @@ class _LoginActivityState extends State<LoginActivity> {
         ),
       ),
     );
+  }
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
+  }
+
+  void performLogin() async {
+    showProgressBar();
+    String url = Api.POST_CUSTOMER_SIGNUP;
+    debugPrint("This is  url : $url");
+
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    Map<String, String> body = {
+      "email": email,
+      "passwordTxt": password,
+    };
+
+    var body_json = json.encode(body);
+
+    Map<String, String> header = {
+      "Content-Type": "application/json",
+      "username": "PSS",
+      "password": "\$ky\$p0rt\$",
+      "url":
+      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+    };
+    await http.post(url, body: body_json, headers: header).then((val) {
+
+      debugPrint("came to response after post url..");
+      debugPrint("This is status code: ${val.statusCode}");
+      debugPrint("This is body: ${val.body}");
+      var statusCode = val.statusCode;
+      var result = json.decode(val.body);
+      String message = result["message"];
+
+      if(statusCode == Rcode.SUCCESS_CODE){
+        hideProgressBar();
+        // TODO display snackbar here and show progressbar
+        Navigator.of(context).pushNamed('/LoginActivity');
+        ShowToast.showToast(context, "Login successfull");
+      }
+      else {
+        hideProgressBar();
+        // display snackbar
+      }
+
+    }).catchError((val) {
+      hideProgressBar();
+      ShowToast.showToast(context, "Something went wrong");
+      //display snackbar
+    });
   }
 
 /*  void _submit() {
