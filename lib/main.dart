@@ -16,7 +16,7 @@ void main() => runApp(
         debugShowCheckedModeBanner: false,
         home: LoginActivity(),
         routes: <String, WidgetBuilder>{
-          RoutesName.SIGNUP_ACTIVITY: (BuildContext context) =>
+          RoutesName.LOGIN_ACTIVITY: (BuildContext context) =>
               new LoginActivity(),
           RoutesName.SIGNUP_ACTIVITY: (BuildContext context) =>
               new SignUpActivity(),

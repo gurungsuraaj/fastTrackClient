@@ -1,6 +1,7 @@
 class RoutesName{
 
   static final String SIGNUP_ACTIVITY = "/SignUpActivity";
+  static final String LOGIN_ACTIVITY = "/LoginActivity";
   static final String HOME_ACTIVITY = "/Home";
   static final String GENERATE_OTP_ACTIVITY = "/GenerateOTP";
   static final String INVENTORY_CHECK_ACTIVITY = "/InventoryCheck";
