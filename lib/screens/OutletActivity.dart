@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
@@ -19,12 +20,16 @@ class _OutletActivity extends State<OutletActivity> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
   List<OutletList> outletlist = new List<OutletList>();
+  String basicToken = "";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getOutletList();
+
+    PrefsManager.getBasicToken().then((token){
+      basicToken = token;
+      getOutletList();
+    });
   }
 
   @override
@@ -114,7 +119,9 @@ class _OutletActivity extends State<OutletActivity> {
       "password": "\$ky\$p0rt\$",
       "url":
           "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/LocationList",
+      "Authorization": "$basicToken"
     };
+
     await http.post(url, body: body_json, headers: header).then((res) {
       hideProgressBar();
       debugPrint("this is status code ${res.statusCode}");

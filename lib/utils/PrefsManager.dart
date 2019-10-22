@@ -29,5 +29,10 @@ class PrefsManager {
     return false;
   }
 
+  static Future<String> getBasicToken() async{
+    final prefs = await SharedPreferences.getInstance();
+    return await prefs.getString(Constants.BASIC_TOKEN);
+  }
+
 
 }

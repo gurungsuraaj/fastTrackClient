@@ -1,7 +1,9 @@
 
 import 'dart:convert';
+import 'package:fasttrackgarage_app/models/Item.dart';
 import 'package:fasttrackgarage_app/screens/CartActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +25,21 @@ class ShopAndGo extends StatefulWidget{
 class _ShopAndGo extends State<ShopAndGo> {
   bool isProgressBarShown = false;
   TextEditingController searchController = new TextEditingController();
+
+  List<Item> itemList = new List<Item>();
+
+  String basicToken = "";
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    PrefsManager.getBasicToken().then((token){
+      basicToken = token;
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +66,9 @@ class _ShopAndGo extends State<ShopAndGo> {
 
                 child: RaisedButton(
                   onPressed: () {
-                    searchItem();
+                    if(searchController.text.isNotEmpty){
+                      searchItem();
+                    }
                   },
                   textColor: Colors.blue,
                   color: Colors.white,
@@ -62,7 +81,7 @@ class _ShopAndGo extends State<ShopAndGo> {
                 child: Container(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 5,
+                    itemCount: itemList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
@@ -87,7 +106,7 @@ class _ShopAndGo extends State<ShopAndGo> {
                                         padding: EdgeInsets.fromLTRB(
                                             8.0, 16.0, 0, 16.0),
                                         child: Text(
-                                          "Castrol engine oil",
+                                          itemList[index].Description,
                                           style: TextStyle(fontSize: 16.0),
                                         ),
                                       ),
@@ -96,7 +115,7 @@ class _ShopAndGo extends State<ShopAndGo> {
                                       padding: EdgeInsets.fromLTRB(
                                           0, 16.0, 8.0, 16.0),
                                       child: Text(
-                                        "AED 120",
+                                        itemList[index].Unit_Price,
                                         style: TextStyle(fontSize: 16.0),
                                       ),
                                     ),
@@ -120,6 +139,8 @@ class _ShopAndGo extends State<ShopAndGo> {
   }
 
   void searchItem() async {
+    FocusScope.of(context).requestFocus(FocusNode());
+
     showProgressBar();
     String url = Api.SEARCH_ITEM;
     debugPrint("This is  url : $url");
@@ -139,30 +160,34 @@ class _ShopAndGo extends State<ShopAndGo> {
       "password": "\$ky\$p0rt\$",
       "url":
       "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ItemList",
+      "Authorization": "$basicToken"
     };
-    await http.post(url, body: body_json, headers: header).then((val) {
-      debugPrint("came to response after post url..");
-      debugPrint("This is status code: ${val.statusCode}");
-      debugPrint("This is body: ${val.body}");
-      int statusCode = val.statusCode;
-      var result = json.decode(val.body);
 
-      debugPrint("This is after result: $result");
+    await http.post(url, body: body_json, headers: header).then((res) {
+      debugPrint("This is body: ${res.body}");
+      int statusCode = res.statusCode;
 
-      String message = result["message"];
+      var data = json.decode(res.body);
+
+      String message = data['message'];
+      debugPrint(">>message $message");
 
       if(statusCode == Rcode.SUCCESS_CODE){
         hideProgressBar();
-        ShowToast.showToast(context, message);
+
+        var values = data["data"] as List;
+        debugPrint(">>>values $values");
+
+        itemList = values.map<Item>((json) => Item.fromJson(json)).toList();
       }
       else {
         hideProgressBar();
-        // display snackbar
+        ShowToast.showToast(context, message);
       }
     }).catchError((val) {
       hideProgressBar();
+      debugPrint("error $val");
       ShowToast.showToast(context, "Something went wrong!");
-      //display snackbar
     });
   }
 

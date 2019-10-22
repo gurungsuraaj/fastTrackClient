@@ -7,6 +7,7 @@ class Api{
   static final String POST_CUSTOMER_LOGIN = "$URL//api/FastrackPostApi/Customerlogin";
   static final String LOCCATION_LIST = "$URL/api/FastrackPostApi/LocationList";
   static final String SEARCH_ITEM = "$URL/api/FastrackPostApi/ItemListSearch";
+  static final String SERVICE_HISTORY_LIST = "$URL/api/FastrackPostApi/ReadMultipleServiceLedger";
 
 
 }
