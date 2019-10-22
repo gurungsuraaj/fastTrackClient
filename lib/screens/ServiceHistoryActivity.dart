@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:charts_flutter/flutter.dart' as prefix1;
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/ServiceHistoryItem.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryPieChart.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ServiceHistoryActivity extends StatefulWidget {
   @override
@@ -19,160 +21,157 @@ class ServiceHistoryActivity extends StatefulWidget {
 }
 
 class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
+  bool isProgressBarShown = false;
 
   String basicToken = "";
-  List<ServiceHistoryItem> serviceHistoriesList = new List<ServiceHistoryItem>();
+  List<ServiceHistoryItem> serviceHistoriesList =
+      new List<ServiceHistoryItem>();
 
   @override
   void initState() {
     super.initState();
 
-    PrefsManager.getBasicToken().then((token){
+    PrefsManager.getBasicToken().then((token) {
       basicToken = token;
       getServiceHistoryList();
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
+    var textStyle = TextStyle(
+        fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Service history"),
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
-      ),
-      body: Column(
-        children: <Widget>[
-          //\n  19 May 2019
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ServiceHistoryPieChart()),
+        appBar: AppBar(
+          title: Text("Service history"),
+          backgroundColor: Color(ExtraColors.DARK_BLUE),
+        ),
+        body: ModalProgressHUD(
+          inAsyncCall: isProgressBarShown,
+          dismissible: false,
+          child: ListView.builder(
+            itemCount: serviceHistoriesList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                child: Text("Posting Date :", style: textStyle),
+                              ),
+                              Container(
+                                child: Text(
+                                  "Document no. :",
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  "Make :",
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  "Model :",
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  "Vehicle serial no. :",
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  "Location :",
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  "No. :",
+                                  style: textStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(0, 10, 20, 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                    serviceHistoriesList[index].Posting_Date,
+                                    style: textStyle),
+                              ),
+                              Container(
+                                child: Text(
+                                  serviceHistoriesList[index].Document_No,
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  serviceHistoriesList[index].Make_Code,
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  serviceHistoriesList[index].Model_Code,
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  serviceHistoriesList[index].Vehicle_Serial_No,
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  serviceHistoriesList[index].Location_Code,
+                                  style: textStyle,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  serviceHistoriesList[index].No,
+                                  style: textStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  new Divider(
+                    color: Colors.black,
+                  ),
+                ],
               );
             },
-            child: ListTile(
-              title: Container(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: Text(
-                  "Bur Dubai",
-                  style: TextStyle(color: Color(ExtraColors.DARK_BLUE)),
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        "DEC123400001",
-                        style: TextStyle(color: Colors.black),
-                      )),
-                  Text(
-                    "19 May 2019",
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 12,
-                        color: Colors.grey),
-                  )
-                ],
-              ),
-              isThreeLine: true,
-              trailing: Container(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Text(
-                    "AED 120.4",
-                    style: TextStyle(color: Colors.red),
-                  )),
-            ),
           ),
-          new Divider(
-            color: Colors.black,
-          ),
-          ListTile(
-            onTap: () {},
-            title: Container(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-              child: Text(
-                "Bur Dubai",
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      "DEC123400001",
-                      style: TextStyle(color: Colors.black),
-                    )),
-                Text(
-                  "19 May 2019",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 12,
-                      color: Colors.grey),
-                )
-              ],
-            ),
-            isThreeLine: true,
-            trailing: Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
-                  "AED 120.4",
-                  style: TextStyle(color: Colors.red),
-                )),
-          ),
-          new Divider(
-            color: Colors.black,
-          ),
-          ListTile(
-            onTap: () {},
-            title: Container(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-              child: Text(
-                "Bur Dubai",
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      "DEC123400001",
-                      style: TextStyle(color: Colors.black),
-                    )),
-                Text(
-                  "19 May 2019",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 12,
-                      color: Colors.grey),
-                )
-              ],
-            ),
-            isThreeLine: true,
-            trailing: Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
-                  "AED 120.4",
-                  style: TextStyle(color: Colors.red),
-                )),
-          ),
-          new Divider(
-            color: Colors.black,
-          ),
-        ],
-      ),
-    );
+        ));
   }
 
-  void getServiceHistoryList() async{
-
+  void getServiceHistoryList() async {
+    showProgressBar();
     String url = Api.SERVICE_HISTORY_LIST;
     debugPrint("This is  url : $url");
 
@@ -190,7 +189,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ServiceLedger",
+          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ServiceLedger",
       "Authorization": "$basicToken"
     };
 
@@ -203,22 +202,35 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
       String message = data['message'];
       debugPrint(">>message $message");
 
-      if(statusCode == Rcode.SUCCESS_CODE){
-
+      if (statusCode == Rcode.SUCCESS_CODE) {
         var values = data["data"] as List;
         debugPrint(">>>values $values");
 
-        serviceHistoriesList = values.map<ServiceHistoryItem>((json) => ServiceHistoryItem.fromJson(json)).toList();
-      }
-      else {
+        serviceHistoriesList = values
+            .map<ServiceHistoryItem>(
+                (json) => ServiceHistoryItem.fromJson(json))
+            .toList();
+      hideProgressBar();
+
+      } else {
         ShowToast.showToast(context, message);
       }
     }).catchError((val) {
       debugPrint("error $val");
       ShowToast.showToast(context, "Something went wrong!");
+      hideProgressBar();
     });
+  }
 
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
 
-
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
   }
 }
