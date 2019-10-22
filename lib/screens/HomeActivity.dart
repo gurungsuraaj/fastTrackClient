@@ -3,6 +3,8 @@ import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
+import '../utils/PrefsManager.dart';
+import 'LoginActivity.dart';
 import 'ServiceHistoryActivity.dart';
 import 'OutletActivity.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
@@ -245,12 +247,12 @@ class _HomeActivityState extends State<HomeActivity> {
 
   void choiceAction(String choice) {
     if (choice == Constants.LOGOUT) {
-      // PrefsManager.clearStaffId().then((val) {
-      //   Navigator.pushAndRemoveUntil(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => MyApp()),
-      //       ModalRoute.withName("/Login"));
-      // });
+      PrefsManager.clearSession().then((val) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginActivity()),
+            ModalRoute.withName("/Login"));
+      });
     }
   }
 

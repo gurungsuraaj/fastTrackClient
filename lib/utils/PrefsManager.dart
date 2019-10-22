@@ -34,5 +34,13 @@ class PrefsManager {
     return await prefs.getString(Constants.BASIC_TOKEN);
   }
 
+  static Future<void> clearSession() async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(Constants.CUSTOMER_NUMBER, "");
+    await prefs.setString(Constants.CUSTOMER_NAME, "");
+    await prefs.setString(Constants.CUSTOMER_EMAIL, "");
+    await prefs.setString(Constants.BASIC_TOKEN, "");
+  }
+
 
 }
