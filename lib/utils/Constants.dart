@@ -11,6 +11,7 @@ class Constants {
 static final String CUSTOMER_NUMBER = "customerNo";
   static final String CUSTOMER_NAME = "customerName";
   static final String CUSTOMER_EMAIL = "custEmail";
+  static final String BASIC_TOKEN = "basicToken";
 }
 
   

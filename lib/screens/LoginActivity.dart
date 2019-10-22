@@ -46,6 +46,7 @@ class _LoginActivityState extends State<LoginActivity> {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+
     PrefsManager.checkSession().then((isSessionExist) {
       if (isSessionExist) {
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
@@ -148,12 +149,6 @@ class _LoginActivityState extends State<LoginActivity> {
                                       width: width * 0.8,
                                       child: TextFormField(
                                         obscureText: true,
-                                        validator: (val) {
-                                          if (val.isEmpty) {
-                                            return 'Please enter your Password';
-                                          } else
-                                            return null;
-                                        },
                                         style: TextStyle(
                                           fontSize: fontSizeTextField,
                                         ),
@@ -174,7 +169,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                   child: RaisedButton(
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
-                                      FocusScope.of(context).requestFocus(FocusNode());
+                                      performLogin();
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
                                       _submit();
                                     },
                                     child: Text(
@@ -273,6 +270,7 @@ class _LoginActivityState extends State<LoginActivity> {
       "password": "\$ky\$p0rt\$",
       "url":
           "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "imei": "869386049899456",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
       debugPrint("came to response after post url..");
@@ -285,24 +283,32 @@ class _LoginActivityState extends State<LoginActivity> {
 
       String message = result["message"];
 
+      String token = result["data"]["token"];
+
       String custNumber = result["data"]["customerNo"];
       String customerName = result["data"]["customerName"];
       String custEmail = result["data"]["custEmail"];
 
       if (statusCode == Rcode.SUCCESS_CODE) {
+        debugPrint("THis is Customer number $custNumber");
+        debugPrint("THis is token number $token");
+        String basicToken = "Basic $token";
+        debugPrint("Basic token : $basicToken");
 
         hideProgressBar();
         PrefsManager.saveLoginCredentialsToPrefs(
-            custNumber, customerName, custEmail);
+            custNumber, customerName, custEmail, basicToken);
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
         ShowToast.showToast(context, message);
       } else {
         hideProgressBar();
+
         ShowToast.showToast(context, "Error : " + message);
       }
     }).catchError((val) {
       hideProgressBar();
       ShowToast.showToast(context, "Something went wrong!");
+      //display snackbar
     });
   }
 

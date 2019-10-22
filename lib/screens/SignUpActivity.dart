@@ -332,7 +332,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         ShowToast.showToast(context, "Signed up successfully");
       } else {
         hideProgressBar();
-        ShowToast.showToast(context, "Error : " + message);
+        ShowToast.showToast(context,"Error : " + message);
       }
     }).catchError((val) {
       hideProgressBar();

@@ -1,7 +1,15 @@
+
+import 'dart:convert';
 import 'package:fasttrackgarage_app/screens/CartActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:http/http.dart' as http;
+
+import '../api/Api.dart';
+import '../utils/Rcode.dart';
+import '../utils/Toast.dart';
+
 
 class ShopAndGo extends StatefulWidget{
   @override
@@ -31,6 +39,7 @@ class _ShopAndGo extends State<ShopAndGo> {
             children: <Widget>[
 
               TextField(
+                controller: searchController,
                 decoration: InputDecoration(labelText: 'Search'),
                 onChanged: (text) {},
               ),
@@ -40,6 +49,7 @@ class _ShopAndGo extends State<ShopAndGo> {
 
                 child: RaisedButton(
                   onPressed: () {
+                    searchItem();
                   },
                   textColor: Colors.blue,
                   color: Colors.white,
@@ -107,6 +117,65 @@ class _ShopAndGo extends State<ShopAndGo> {
       ),
 
     );
+  }
+
+  void searchItem() async {
+    showProgressBar();
+    String url = Api.SEARCH_ITEM;
+    debugPrint("This is  url : $url");
+
+    String itemNumber = searchController.text;
+
+
+    Map<String, String> body = {
+      "No": itemNumber,
+    };
+
+    var body_json = json.encode(body);
+
+    Map<String, String> header = {
+      "Content-Type": "application/json",
+      "username": "PSS",
+      "password": "\$ky\$p0rt\$",
+      "url":
+      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ItemList",
+    };
+    await http.post(url, body: body_json, headers: header).then((val) {
+      debugPrint("came to response after post url..");
+      debugPrint("This is status code: ${val.statusCode}");
+      debugPrint("This is body: ${val.body}");
+      int statusCode = val.statusCode;
+      var result = json.decode(val.body);
+
+      debugPrint("This is after result: $result");
+
+      String message = result["message"];
+
+      if(statusCode == Rcode.SUCCESS_CODE){
+        hideProgressBar();
+        ShowToast.showToast(context, message);
+      }
+      else {
+        hideProgressBar();
+        // display snackbar
+      }
+    }).catchError((val) {
+      hideProgressBar();
+      ShowToast.showToast(context, "Something went wrong!");
+      //display snackbar
+    });
+  }
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
   }
 
 }

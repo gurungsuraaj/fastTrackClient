@@ -8,11 +8,13 @@ class PrefsManager {
     await prefs.setString(Constants.USERNAME, username);
   }
 
-  static Future<void> saveLoginCredentialsToPrefs(String custNumber, String username, String email) async{
+  static Future<void> saveLoginCredentialsToPrefs(String custNumber, String username, String email, String basicToken) async{
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(Constants.CUSTOMER_NUMBER, custNumber);
     await prefs.setString(Constants.CUSTOMER_NAME, username);
     await prefs.setString(Constants.CUSTOMER_EMAIL, email);
+    await prefs.setString(Constants.BASIC_TOKEN, basicToken);
   }
 
   static Future<bool> checkSession() async {
