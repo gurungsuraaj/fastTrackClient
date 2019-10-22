@@ -36,16 +36,19 @@ class _LoginActivityState extends State<LoginActivity> {
   var passKey = GlobalKey<FormFieldState>();
   bool isProgressBarShown = false;
 
-  TextEditingController passwordController = new TextEditingController(text: "aabbccddee");
-  TextEditingController mobileController = new TextEditingController(text: "9819166741");
+  TextEditingController passwordController =
+      new TextEditingController(text: "aabbccddee");
+  TextEditingController mobileController =
+      new TextEditingController(text: "9819166741");
 
   @override
   void initState() {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    PrefsManager.checkSession().then((isSessionExist){
-      if(isSessionExist){
+
+    PrefsManager.checkSession().then((isSessionExist) {
+      if (isSessionExist) {
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
       }
     });
@@ -110,12 +113,13 @@ class _LoginActivityState extends State<LoginActivity> {
                                     Container(
                                       width: width * 0.8,
                                       child: TextFormField(
-                                        /* validator: (val) {
+                                        keyboardType: TextInputType.number,
+                                        validator: (val) {
                                           if (val.isEmpty) {
-                                            return 'Please enter your email';
+                                            return 'Please enter your phone number';
                                           } else
                                             return null;
-                                        },*/
+                                        },
                                         style: TextStyle(
                                             fontSize: fontSizeTextField),
                                         controller: mobileController,
@@ -145,12 +149,6 @@ class _LoginActivityState extends State<LoginActivity> {
                                       width: width * 0.8,
                                       child: TextFormField(
                                         obscureText: true,
-                                        /* validator: (val) {
-                                          if (val.isEmpty) {
-                                            return 'Please enter your Password';
-                                          } else
-                                            return null;
-                                        },*/
                                         style: TextStyle(
                                           fontSize: fontSizeTextField,
                                         ),
@@ -172,6 +170,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
                                       performLogin();
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                      _submit();
                                     },
                                     child: Text(
                                       "Login",
@@ -255,10 +256,10 @@ class _LoginActivityState extends State<LoginActivity> {
 
     Map<String, String> body = {
       "mobileNo": mobileNumber,
-      "passwordTxt":password,
-      "customerNo":custNum,
-      "customerName":custName,
-      "custemail":email
+      "passwordTxt": password,
+      "customerNo": custNum,
+      "customerName": custName,
+      "custemail": email
     };
 
     var body_json = json.encode(body);
@@ -267,7 +268,8 @@ class _LoginActivityState extends State<LoginActivity> {
       "Content-Type": "application/json",
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
-      "url": "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "url":
+          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
       "imei": "869386049899456",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
@@ -280,23 +282,25 @@ class _LoginActivityState extends State<LoginActivity> {
       debugPrint("This is after result: $result");
 
       String message = result["message"];
+
       String token = result["data"]["token"];
+
       String custNumber = result["data"]["customerNo"];
       String customerName = result["data"]["customerName"];
       String custEmail = result["data"]["custEmail"];
 
-      if(statusCode == Rcode.SUCCESS_CODE){
+      if (statusCode == Rcode.SUCCESS_CODE) {
         debugPrint("THis is Customer number $custNumber");
         debugPrint("THis is token number $token");
         String basicToken = "Basic $token";
         debugPrint("Basic token : $basicToken");
 
         hideProgressBar();
-        PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName, custEmail, basicToken);
+        PrefsManager.saveLoginCredentialsToPrefs(
+            custNumber, customerName, custEmail, basicToken);
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
         ShowToast.showToast(context, message);
-      }
-      else {
+      } else {
         hideProgressBar();
         // display snackbar
       }
@@ -307,17 +311,13 @@ class _LoginActivityState extends State<LoginActivity> {
     });
   }
 
-/*  void _submit() {
+  void _submit() {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      NetworkOperationManager.logIn("9806503355", "12345", "9806503355", "Ram", "test@example.com", client).then((val) {
-        debugPrint("This is status code:: ${val.status}");
-        debugPrint("This is response body:: ${val.responseBody}");
-      });
-
+      performLogin();
     }
-  }*/
+  }
 
   Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(

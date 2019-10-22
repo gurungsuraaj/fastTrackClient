@@ -142,6 +142,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                             ),
                             Container(
                               child: TextFormField(
+                                keyboardType: TextInputType.number,
                                 style: TextStyle(
                                   fontSize: fontSizeTextField,
                                 ),
@@ -236,6 +237,8 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 width: width * 1,
                                 child: RaisedButton(
                                   onPressed: () {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
                                     _submit();
                                   },
                                   color: Color(ExtraColors.DARK_BLUE),
