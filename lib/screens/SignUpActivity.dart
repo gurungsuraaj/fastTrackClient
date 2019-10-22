@@ -315,7 +315,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+          "http://desktop-oqceko4:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
       debugPrint("came to response after post url..");

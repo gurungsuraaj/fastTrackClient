@@ -159,7 +159,7 @@ class _ShopAndGo extends State<ShopAndGo> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ItemList",
+      "http://desktop-oqceko4:7747/DynamicsNAV/ws/FT%20Support/Page/ItemList",
       "Authorization": "$basicToken"
     };
 

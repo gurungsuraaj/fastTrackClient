@@ -118,7 +118,7 @@ class _OutletActivity extends State<OutletActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/LocationList",
+          "http://desktop-oqceko4:7747/DynamicsNAV/ws/FT%20Support/Page/LocationList",
       "Authorization": "$basicToken"
     };
 

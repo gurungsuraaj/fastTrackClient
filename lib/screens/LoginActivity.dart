@@ -269,7 +269,7 @@ class _LoginActivityState extends State<LoginActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+          "http://desktop-oqceko4:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
       "imei": "869386049899456",
     };
     await http.post(url, body: body_json, headers: header).then((val) {

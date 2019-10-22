@@ -189,7 +189,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
       "username": "PSS",
       "password": "\$ky\$p0rt\$",
       "url":
-          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ServiceLedger",
+          "http://desktop-oqceko4:7747/DynamicsNAV/ws/FT%20Support/Page/ServiceLedger",
       "Authorization": "$basicToken"
     };
 
@@ -210,8 +210,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
             .map<ServiceHistoryItem>(
                 (json) => ServiceHistoryItem.fromJson(json))
             .toList();
-      hideProgressBar();
-
+        hideProgressBar();
       } else {
         ShowToast.showToast(context, message);
       }
