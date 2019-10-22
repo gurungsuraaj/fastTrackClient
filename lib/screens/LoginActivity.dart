@@ -298,9 +298,8 @@ class _LoginActivityState extends State<LoginActivity> {
         ShowToast.showToast(context, message);
       } else {
         hideProgressBar();
-        ShowToast.showToast(context, message);
+        ShowToast.showToast(context, "Error : " + message);
       }
-
     }).catchError((val) {
       hideProgressBar();
       ShowToast.showToast(context, "Something went wrong!");

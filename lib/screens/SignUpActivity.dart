@@ -327,7 +327,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
       if (statusCode == Rcode.SUCCESS_CODE) {
         hideProgressBar();
-        // TODO display snackbar here and show progressbar
+
         Navigator.of(context).pushNamed('/LoginActivity');
         ShowToast.showToast(context, "Signed up successfully");
       } else {
@@ -337,7 +337,6 @@ class _SignUpActivity extends State<SignUpActivity> {
     }).catchError((val) {
       hideProgressBar();
       ShowToast.showToast(context, "Something went wrong");
-      //display snackbar
     });
   }
 
