@@ -121,12 +121,10 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "imei": "869386049899456",
       // this is hardcoded for testing and is supposed to be changed later.
-      "username": "PSS",
-      "password": "\$ky\$p0rt\$",
+   
       "url":
-          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+          "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
 

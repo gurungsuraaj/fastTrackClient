@@ -186,10 +186,9 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "username": "PSS",
-      "password": "\$ky\$p0rt\$",
+      
       "url":
-          "http://desktop-oqceko4:7747/DynamicsNAV/ws/FT%20Support/Page/ServiceLedger",
+          "DynamicsNAV/ws/FT%20Support/Page/ServiceLedger",
       "Authorization": "$basicToken"
     };
 

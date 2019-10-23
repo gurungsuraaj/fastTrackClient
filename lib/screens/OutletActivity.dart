@@ -115,10 +115,8 @@ class _OutletActivity extends State<OutletActivity> {
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "username": "PSS",
-      "password": "\$ky\$p0rt\$",
       "url":
-          "http://desktop-oqceko4:7747/DynamicsNAV/ws/FT%20Support/Page/LocationList",
+          "DynamicsNAV/ws/FT%20Support/Page/LocationList",
       "Authorization": "$basicToken"
     };
 
