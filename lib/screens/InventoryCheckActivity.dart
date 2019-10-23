@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
+import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
-import 'package:fasttrackgarage_app/models/InventoryCheck.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:http/http.dart' as http;
 
 class InventoryCheckActivity extends StatefulWidget {
@@ -12,6 +15,10 @@ class InventoryCheckActivity extends StatefulWidget {
 }
 
 class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
+
+  TextEditingController detailsController = new TextEditingController();
+  String basicToken = "";
+
   Widget bodyData() => DataTable(
       onSelectAll: (b) {},
       sortColumnIndex: 1,
@@ -60,12 +67,6 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
           .toList());
 
   @override
-  void initState() {
-    super.initState();
-    checkInventory();
-  }
-
-  @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
@@ -85,6 +86,7 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
                       width: MediaQuery.of(context).size.width * 0.68,
                       height: 48,
                       child: TextField(
+                        controller: detailsController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Details',
@@ -95,7 +97,11 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
                         height: 37,
                         width: 44,
                         color: Colors.blue,
-                        child: Icon(Icons.search))
+                        child: IconButton(
+                          onPressed: () {
+                            prepareToCheckInventory();
+                          },
+                            icon: Icon(Icons.search))),
                   ],
                 ),
               ),
@@ -108,32 +114,68 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
         ));
   }
 
+
+  prepareToCheckInventory() async{
+
+    PrefsManager.getBasicToken().then((token){
+      basicToken = token;
+      checkInventory();
+    });
+  }
+
   void checkInventory() async {
-    debugPrint("Came to check inventory");
     String url = Api.POST_CHECKINVENTORY;
 
+    String query = detailsController.text;
+    prefix0.debugPrint("query : $query");
+
+    debugPrint("This is  url : $url");
+
+    String customerNo = "CS000001";
+
     Map<String, String> body = {
-      "itemNo": "2342",
-      "store": "110",
+      "Field": "Customer_No",
+      "Criteria": customerNo,
     };
 
     var body_json = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      // this is hardcoded for testing and is supposed to be changed later.
-   
-      "url":
-          "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
-    };
-    await http.post(url, body: body_json, headers: header).then((val) {
 
-      debugPrint("came to response after post url..");
-      debugPrint("This is status code: ${val.statusCode}");
-      debugPrint("This is body: ${val.body}");
+      "url":
+      "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "Authorization": "$basicToken"
+    };
+
+    await http.post(url, body: body_json, headers: header).then((res) {
+      debugPrint("This is body: ${res.body}");
+      int statusCode = res.statusCode;
+
+      var data = json.decode(res.body);
+
+      String message = data['message'];
+      debugPrint(">>message $message");
+
+      if (statusCode == Rcode.SUCCESS_CODE) {
+        var values = data["data"] as List;
+        debugPrint(">>>values $values");
+
+       /* serviceHistoriesList = values
+            .map<ServiceHistoryItem>(
+                (json) => ServiceHistoryItem.fromJson(json))
+            .toList();*/
+
+      } else {
+        ShowToast.showToast(context, message);
+      }
+    }).catchError((val) {
+      debugPrint("error $val");
+      ShowToast.showToast(context, "Something went wrong!");
 
     });
   }
+
 }
 
 class Name {
