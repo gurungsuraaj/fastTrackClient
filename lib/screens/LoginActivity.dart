@@ -17,6 +17,7 @@ import '../helper/NetworkOperationManager.dart';
 import 'package:http/http.dart' as http;
 import 'SignUpActivity.dart';
 import 'package:flutter/services.dart';
+import 'package:imei_plugin/imei_plugin.dart';
 
 class LoginActivity extends StatefulWidget {
   @override
@@ -24,6 +25,7 @@ class LoginActivity extends StatefulWidget {
 }
 
 class _LoginActivityState extends State<LoginActivity> {
+  String _platformImei = 'Unknown';
   double MARGIN = 22.0;
   double PADDING = 10.0;
   var fontWeightText = FontWeight.w500;
@@ -44,6 +46,7 @@ class _LoginActivityState extends State<LoginActivity> {
   @override
   void initState() {
     super.initState();
+    initPlatformState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
 
@@ -51,6 +54,26 @@ class _LoginActivityState extends State<LoginActivity> {
       if (isSessionExist) {
         Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
       }
+    });
+  }
+
+  Future<void> initPlatformState() async {
+    String platformImei;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      platformImei =
+          await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
+    } on PlatformException {
+      platformImei = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _platformImei = platformImei;
     });
   }
 
@@ -266,9 +289,8 @@ class _LoginActivityState extends State<LoginActivity> {
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "url":
-          "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
-      "imei": "869386049899456",
+      "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "imei": "$_platformImei",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
       debugPrint("came to response after post url..");
