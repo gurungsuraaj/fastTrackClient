@@ -4,6 +4,7 @@ import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
 import '../utils/PrefsManager.dart';
+import 'CheckInventory.dart';
 import 'LoginActivity.dart';
 import 'ServiceHistoryActivity.dart';
 import 'OutletActivity.dart';
@@ -114,7 +115,7 @@ class _HomeActivityState extends State<HomeActivity> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        InventoryCheckActivity()),
+                                        CheckInventory()),
                               );
                             },
                             child: Column(

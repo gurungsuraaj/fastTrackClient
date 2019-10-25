@@ -1,3 +1,4 @@
+import 'package:fasttrackgarage_app/screens/CheckInventory.dart';
 import 'package:fasttrackgarage_app/screens/GenerateOTPActivity.dart';
 import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
 import 'package:fasttrackgarage_app/screens/InventoryCheckActivity.dart';
@@ -24,7 +25,7 @@ void main() => runApp(
           RoutesName.GENERATE_OTP_ACTIVITY: (BuildContext context) =>
               new GenerateOTP(),
           RoutesName.HOME_ACTIVITY: (BuildContext context) => new Home(),
-          RoutesName.INVENTORY_CHECK_ACTIVITY: (BuildContext context) =>
+          RoutesName.CHECK_INVENTORY: (BuildContext context) =>
               new InventoryCheckActivity(),
           RoutesName.OUTLET_ACTIVITY: (BuildContext context) =>
               new OutletActivity(),

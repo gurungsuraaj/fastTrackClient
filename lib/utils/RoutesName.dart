@@ -9,5 +9,6 @@ class RoutesName{
   static final String OUTLET_ACTIVITY = "/Outlet";
   static final String SERVICE_ACTIVITY = "/ServiceActivity";
   static final String SERVICE_HISTORY_ACTIVITY = "/ServiceHistory";
+  static final String CHECK_INVENTORY = "/CheckInventory";
 
 }
