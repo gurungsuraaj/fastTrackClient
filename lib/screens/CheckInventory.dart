@@ -23,6 +23,11 @@ class _CheckInventoryState extends State<CheckInventory> {
   OutletList selectedValue = new OutletList();
   List<DropdownMenuItem<OutletList>> _outletList =
       new List<DropdownMenuItem<OutletList>>();
+  List<Item> item = new List<Item>();
+  Item selectItemValue = new Item();
+  List<DropdownMenuItem<Item>> _itemList = new List();
+
+  TextEditingController detailsController = new TextEditingController();
   String basicToken = "";
 
   bool isProgressBarShown = false;
@@ -36,7 +41,13 @@ class _CheckInventoryState extends State<CheckInventory> {
     PrefsManager.getBasicToken().then((token) {
       basicToken = token;
 
-      searchItem();
+      searchItem().then((itemList) {
+        setState(() {
+          _itemList = buildItemDropdownMenu(itemList);
+          selectItemValue = _itemList[0].value;
+        });
+      });
+
       getOutletList().then((outletList) {
         setState(() {
           _outletList = buildOutletDropdownMenu(outletList);
@@ -53,11 +64,10 @@ class _CheckInventoryState extends State<CheckInventory> {
       appBar: AppBarWithTitle.getAppBar('Inventory Check'),
       body: Column(
         children: <Widget>[
-          Row(
+          Column(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.fromLTRB(16, 8, 0, 0),
-                width: MediaQuery.of(context).size.width / 2,
+                margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
                 height: MediaQuery.of(context).size.height / 13,
                 child: DropdownButton(
                     isExpanded: true,
@@ -66,28 +76,40 @@ class _CheckInventoryState extends State<CheckInventory> {
                     onChanged: onChangeOutletDropdown),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.height / 13,
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  value: dropdownValue2,
-                  icon: Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                  onChanged: (String newValue) {
-                    setState(() {
-                      dropdownValue2 = newValue;
-                    });
-                  },
-                  items: <String>['One', 'Two', 'Three', 'Four']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                margin: EdgeInsets.fromLTRB(0, 2, 16, 0),
+                height: MediaQuery.of(context).size.height / 10,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height / 15,
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      child: TextField(
+                        controller: detailsController,
+                        decoration: InputDecoration(
+                          labelText: 'Enter Details',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 15,
+                      width: MediaQuery.of(context).size.width / 9,
+                      alignment: Alignment.center,
+                      child: Center(
+                        widthFactor: 10,
+                        heightFactor: 10,
+                        child: IconButton(
+                          onPressed: () {
+                            prepareToCheckInventory();
+                          },
+                          icon: Center(
+                            child: Icon(Icons.search),
+                          ),
+                          iconSize: 35,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -193,7 +215,19 @@ class _CheckInventoryState extends State<CheckInventory> {
     return outletData;
   }
 
-  void searchItem() async {
+  List<DropdownMenuItem<Item>> buildItemDropdownMenu(List item) {
+    List<DropdownMenuItem<Item>> itemData = List();
+    for (Item itemList in item) {
+      itemData.add(DropdownMenuItem(
+        value: itemList,
+        child: Text(itemList.Description),
+      ));
+    }
+
+    return itemData;
+  }
+
+  Future<List<Item>> searchItem() async {
     //FocusScope.of(context).requestFocus(FocusNode());
 
     showProgressBar();
@@ -239,6 +273,8 @@ class _CheckInventoryState extends State<CheckInventory> {
       debugPrint("error $val");
       ShowToast.showToast(context, "Something went wrong!");
     });
+
+    return itemList;
   }
 
   void showProgressBar() {
@@ -258,4 +294,12 @@ class _CheckInventoryState extends State<CheckInventory> {
       selectedValue = value;
     });
   }
+
+  void onChangeItemDropdown(Item value) {
+    setState(() {
+      selectItemValue = value;
+    });
+  }
+
+  void prepareToCheckInventory() {}
 }
