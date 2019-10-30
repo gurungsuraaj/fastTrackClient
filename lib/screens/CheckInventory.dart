@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/Item.dart';
 import 'package:fasttrackgarage_app/models/OutletList.dart';
@@ -31,6 +32,7 @@ class _CheckInventoryState extends State<CheckInventory> {
   String basicToken = "";
 
   bool isProgressBarShown = false;
+  ProgressDialog _progressDialog = ProgressDialog();
 
   //List<String> value = new List<String>();
 
@@ -40,18 +42,12 @@ class _CheckInventoryState extends State<CheckInventory> {
 
     PrefsManager.getBasicToken().then((token) {
       basicToken = token;
-
-      searchItem().then((itemList) {
-        setState(() {
-          _itemList = buildItemDropdownMenu(itemList);
-          selectItemValue = _itemList[0].value;
-        });
-      });
-
-      getOutletList().then((outletList) {
-        setState(() {
-          _outletList = buildOutletDropdownMenu(outletList);
-          selectedValue = _outletList[0].value;
+      searchItem().then((onValue) {
+        getOutletList().then((outletList) {
+          setState(() {
+            _outletList = buildOutletDropdownMenu(outletList);
+            selectedValue = _outletList[0].value;
+          });
         });
       });
     });
@@ -172,7 +168,6 @@ class _CheckInventoryState extends State<CheckInventory> {
   }
 
   Future<List<OutletList>> getOutletList() async {
-    showProgressBar();
     String url = Api.LOCCATION_LIST;
     debugPrint("---url---$url");
 
@@ -186,7 +181,6 @@ class _CheckInventoryState extends State<CheckInventory> {
     };
 
     await http.post(url, body: body_json, headers: header).then((res) {
-      hideProgressBar();
       debugPrint("this is status code ${res.statusCode}");
       var result = json.decode(res.body);
       var values = result['data'] as List;
@@ -230,7 +224,7 @@ class _CheckInventoryState extends State<CheckInventory> {
   Future<List<Item>> searchItem() async {
     //FocusScope.of(context).requestFocus(FocusNode());
 
-    showProgressBar();
+    showProgressDialog(context);
     String url = Api.ITEMLIST;
     debugPrint("This is  url : $url");
 
@@ -258,18 +252,18 @@ class _CheckInventoryState extends State<CheckInventory> {
       debugPrint(">>message $message");
 
       if (statusCode == Rcode.SUCCESS_CODE) {
-        hideProgressBar();
+        hideProgressDialog(context);
 
         var values = data["data"] as List;
         debugPrint(">>>values $values");
 
         itemList = values.map<Item>((json) => Item.fromJson(json)).toList();
       } else {
-        hideProgressBar();
+        hideProgressDialog(context);
         ShowToast.showToast(context, message);
       }
     }).catchError((val) {
-      hideProgressBar();
+      hideProgressDialog(context);
       debugPrint("error $val");
       ShowToast.showToast(context, "Something went wrong!");
     });
@@ -277,16 +271,13 @@ class _CheckInventoryState extends State<CheckInventory> {
     return itemList;
   }
 
-  void showProgressBar() {
-    setState(() {
-      isProgressBarShown = true;
-    });
+  void showProgressDialog(BuildContext context) {
+    _progressDialog.showProgressDialog(context,
+        textToBeDisplayed: 'Please wait...');
   }
 
-  void hideProgressBar() {
-    setState(() {
-      isProgressBarShown = false;
-    });
+  void hideProgressDialog(BuildContext context) {
+    _progressDialog.dismissProgressDialog(context);
   }
 
   void onChangeOutletDropdown(OutletList value) {

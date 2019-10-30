@@ -40,6 +40,7 @@ dependencies:
   floor: ^0.9.0
   sqflite: ^1.1.3
   imei_plugin: ^1.1.4
+  custom_progress_dialog: ^1.0.2
 
 
 
