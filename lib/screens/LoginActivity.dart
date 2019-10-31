@@ -39,9 +39,8 @@ class _LoginActivityState extends State<LoginActivity> {
   bool isProgressBarShown = false;
 
   TextEditingController passwordController =
-      new TextEditingController(text: "aabbccddee");
-  TextEditingController mobileController =
-      new TextEditingController(text: "9819166741");
+      new TextEditingController(text: "");
+  TextEditingController mobileController = new TextEditingController(text: "");
 
   @override
   void initState() {
@@ -52,7 +51,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
     PrefsManager.checkSession().then((isSessionExist) {
       if (isSessionExist) {
-        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+        Navigator.pushReplacementNamed(context, RoutesName.HOME_ACTIVITY);
       }
     });
   }
@@ -192,7 +191,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                   child: RaisedButton(
                                     color: Color(ExtraColors.DARK_BLUE),
                                     onPressed: () {
-                                      performLogin();
+                                      // performLogin();
                                       FocusScope.of(context)
                                           .requestFocus(FocusNode());
                                       _submit();
@@ -318,7 +317,7 @@ class _LoginActivityState extends State<LoginActivity> {
         hideProgressBar();
         PrefsManager.saveLoginCredentialsToPrefs(
             custNumber, customerName, custEmail, basicToken);
-        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+        Navigator.pushReplacementNamed(context, RoutesName.HOME_ACTIVITY);
         ShowToast.showToast(context, message);
       } else {
         hideProgressBar();

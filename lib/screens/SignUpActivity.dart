@@ -312,8 +312,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "url":
-          "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
       debugPrint("came to response after post url..");
@@ -326,11 +325,11 @@ class _SignUpActivity extends State<SignUpActivity> {
       if (statusCode == Rcode.SUCCESS_CODE) {
         hideProgressBar();
 
-        Navigator.of(context).pushNamed('/LoginActivity');
+        Navigator.of(context).pop();
         ShowToast.showToast(context, "Signed up successfully");
       } else {
         hideProgressBar();
-        ShowToast.showToast(context,"Error : " + message);
+        ShowToast.showToast(context, "Error : " + message);
       }
     }).catchError((val) {
       hideProgressBar();
