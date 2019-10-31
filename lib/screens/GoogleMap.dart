@@ -5,16 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapActivity extends StatefulWidget {
+  double longitude;
+  double latidude;
+  GoogleMapActivity(this.longitude, this.latidude);
   @override
   _GoogleMapState createState() => _GoogleMapState();
 }
 
 class _GoogleMapState extends State<GoogleMapActivity> {
   Completer<GoogleMapController> _controller = Completer();
+  double longitude;
+  double latidude;
+  var cordinates;
+  // static final LatLng center;
+  _GoogleMapState() {
+    // center = LatLng(widget.longitude, widget.latidude);
+  }
 
   @override
   void initState() {
     super.initState();
+    debugPrint("+++++++++");
   }
 
   GoogleMapController mapController;
@@ -31,7 +42,7 @@ class _GoogleMapState extends State<GoogleMapActivity> {
             child: GoogleMap(
               initialCameraPosition: const CameraPosition(
                 bearing: 270.0,
-                target: LatLng(28.2096, 83.9856),
+                target: LatLng(222.0, 22.2),
                 zoom: 17.0,
               ),
               onMapCreated: _onMapCreated,
@@ -48,12 +59,13 @@ class _GoogleMapState extends State<GoogleMapActivity> {
       mapController = controller;
     });
   }
+
   Marker outletLocation = Marker(
-  markerId: MarkerId('Pokhara'),
-  position: LatLng(28.2096, 83.9856),
-  infoWindow: InfoWindow(title: 'Bur Dubai, mankhod road'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
+    markerId: MarkerId('Pokhara'),
+    position: LatLng(28.2096, 83.9856),
+    infoWindow: InfoWindow(title: 'Bur Dubai, mankhod road'),
+    icon: BitmapDescriptor.defaultMarkerWithHue(
+      BitmapDescriptor.hueRed,
+    ),
+  );
 }

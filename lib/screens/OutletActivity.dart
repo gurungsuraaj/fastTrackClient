@@ -52,11 +52,11 @@ class _OutletActivity extends State<OutletActivity> {
 
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GoogleMapActivity()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => GoogleMapActivity()),
+                      // );
                     },
                     child: ListTile(
                       onTap: null,
