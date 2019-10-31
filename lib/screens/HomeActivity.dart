@@ -1,3 +1,4 @@
+import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
@@ -13,6 +14,8 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'InventoryCheckActivity.dart';
 import 'ServiceActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Home extends StatelessWidget {
   @override
@@ -29,6 +32,7 @@ class HomeActivity extends StatefulWidget {
 
 class _HomeActivityState extends State<HomeActivity> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  List<Promo> promoList = new List<Promo>();
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +119,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        CheckInventory()),
+                                    builder: (context) => CheckInventory()),
                               );
                             },
                             child: Column(
@@ -156,7 +159,9 @@ class _HomeActivityState extends State<HomeActivity> {
                 Card(
                     child: Container(
                         child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showOffer();
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -204,7 +209,7 @@ class _HomeActivityState extends State<HomeActivity> {
                               //   MaterialPageRoute(
                               //       builder: (context) => GoogleMapActivity()),
                               // );
-                                Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => LocateActivity()),
@@ -307,6 +312,66 @@ class _HomeActivityState extends State<HomeActivity> {
                         style: TextStyle(
                           color: Colors.white,
                         ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+    showDialog(context: context, child: dialog);
+  }
+
+  showOffer() async {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+    Map<String, String> header = {
+      "Content-Type": "application/json",
+    };
+    await http
+        .get("http://www.fasttrackemarat.com/feed/updates.json",
+            headers: header)
+        .then((res) {
+      var result = json.decode(res.body);
+      var values = result["promo"] as List;
+      promoList = values.map<Promo>((json) => Promo.fromJson(json)).toList();
+      debugPrint("${promoList[0].name}");
+    });
+    AlertDialog dialog = new AlertDialog(
+      contentPadding: EdgeInsets.all(0.0),
+      content: Container(
+        height: queryData.size.height * 0.36,
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: queryData.size.width,
+              color: Color(ExtraColors.DARK_BLUE),
+              child: Image.network(
+                promoList[0].banner,
+                fit: BoxFit.fill,
+                height: 160,
+              ),
+            ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                    child: Text(
+                      promoList[0].name,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                    child: Text(
+                      promoList[0].details,
+                      style: TextStyle(
+                        color: Colors.black,
                       ),
                     ),
                   ),
