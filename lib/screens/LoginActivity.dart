@@ -1,0 +1,350 @@
+import 'dart:convert';
+
+import 'package:fasttrackgarage_app/api/Api.dart';
+import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
+import 'package:fasttrackgarage_app/utils/RoutesName.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
+import 'package:flutter/gestures.dart';
+import "package:flutter/material.dart";
+import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
+import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:ntlm/ntlm.dart';
+import '../helper/NetworkOperationManager.dart';
+import 'package:http/http.dart' as http;
+import 'SignUpActivity.dart';
+import 'package:flutter/services.dart';
+import 'package:imei_plugin/imei_plugin.dart';
+
+class LoginActivity extends StatefulWidget {
+  @override
+  _LoginActivityState createState() => _LoginActivityState();
+}
+
+class _LoginActivityState extends State<LoginActivity> {
+  String _platformImei = 'Unknown';
+  double MARGIN = 22.0;
+  double PADDING = 10.0;
+  var fontWeightText = FontWeight.w500;
+  var fontSizeTextField = 14.0;
+  var fontSizeText = 16.0;
+  NTLMClient client;
+
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final formKey = new GlobalKey<FormState>();
+  var passKey = GlobalKey<FormFieldState>();
+  bool isProgressBarShown = false;
+
+  TextEditingController passwordController =
+      new TextEditingController(text: "aabbccddee");
+  TextEditingController mobileController =
+      new TextEditingController(text: "9819166741");
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+    client =
+        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+
+    PrefsManager.checkSession().then((isSessionExist) {
+      if (isSessionExist) {
+        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+      }
+    });
+  }
+
+  Future<void> initPlatformState() async {
+    String platformImei;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      platformImei =
+          await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
+    } on PlatformException {
+      platformImei = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _platformImei = platformImei;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
+
+    return Scaffold(
+      key: _scaffoldKey,
+      body: ModalProgressHUD(
+        inAsyncCall: isProgressBarShown,
+        dismissible: false,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ReusableAppBar.getAppBar(0, PADDING, height, width), //Container
+              Expanded(
+                child: Form(
+                  key: formKey,
+                  child: ListView(
+                    children: <Widget>[
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: MARGIN),
+                          height: height,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(top: 16),
+                                child: Center(
+                                  child: Text(
+                                    'Welcome',
+                                    style: TextStyle(
+                                      color: Colors.blue[900],
+                                      fontSize: 22.0,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: 40),
+                                      child: Text(
+                                        'Mobile number',
+                                        style: TextStyle(
+                                          fontWeight: fontWeightText,
+                                          fontSize: fontSizeText,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width * 0.8,
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        validator: (val) {
+                                          if (val.isEmpty) {
+                                            return 'Please enter your phone number';
+                                          } else
+                                            return null;
+                                        },
+                                        style: TextStyle(
+                                            fontSize: fontSizeTextField),
+                                        controller: mobileController,
+                                        decoration: InputDecoration(
+                                            hintText: 'Your Number...',
+                                            hintStyle: TextStyle(
+                                                color: Color(0xffb8b8b8))),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: MARGIN),
+                                      child: Text(
+                                        'Password',
+                                        style: TextStyle(
+                                            fontWeight: fontWeightText,
+                                            fontSize: fontSizeText),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width * 0.8,
+                                      child: TextFormField(
+                                        obscureText: true,
+                                        style: TextStyle(
+                                          fontSize: fontSizeTextField,
+                                        ),
+                                        controller: passwordController,
+                                        decoration: InputDecoration(
+                                            hintText: 'Your password',
+                                            hintStyle: TextStyle(
+                                                color: Color(0xffb8b8b8))),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Center(
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(0, 50, 0, 5),
+                                  width: width * 0.55,
+                                  child: RaisedButton(
+                                    color: Color(ExtraColors.DARK_BLUE),
+                                    onPressed: () {
+                                      performLogin();
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                      _submit();
+                                    },
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 65),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "Dont have account?",
+                                        style:
+                                            TextStyle(color: Color(0xff7c7b7b)),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(context,
+                                              RoutesName.SIGNUP_ACTIVITY);
+                                        },
+                                        child: Container(
+                                            padding: EdgeInsets.all(6),
+                                            child: Text(
+                                              "Sign Up",
+                                              style: TextStyle(
+                                                  color: Color(
+                                                      ExtraColors.DARK_BLUE)),
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
+  }
+
+  void performLogin() async {
+    showProgressBar();
+    String url = Api.POST_CUSTOMER_LOGIN;
+    debugPrint("This is  url : $url");
+
+    String mobileNumber = mobileController.text;
+    String password = passwordController.text;
+    String email = "";
+    String custNum = "";
+    String custName = "";
+
+    debugPrint("email : $email");
+    debugPrint("PW : $password");
+    debugPrint("Mobile num : $mobileNumber");
+    debugPrint("Number : $custNum");
+    debugPrint("CustName : $custName");
+
+    Map<String, String> body = {
+      "mobileNo": mobileNumber,
+      "passwordTxt": password,
+      "customerNo": custNum,
+      "customerName": custName,
+      "custemail": email
+    };
+
+    var body_json = json.encode(body);
+
+    Map<String, String> header = {
+      "Content-Type": "application/json",
+      "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "imei": "$_platformImei",
+    };
+    await http.post(url, body: body_json, headers: header).then((val) {
+      debugPrint("came to response after post url..");
+      debugPrint("This is status code: ${val.statusCode}");
+      debugPrint("This is body: ${val.body}");
+      int statusCode = val.statusCode;
+      var result = json.decode(val.body);
+
+      debugPrint("This is after result: $result");
+
+      String message = result["message"];
+
+      String token = result["data"]["token"];
+
+      String custNumber = result["data"]["customerNo"];
+      String customerName = result["data"]["customerName"];
+      String custEmail = result["data"]["custEmail"];
+
+      if (statusCode == Rcode.SUCCESS_CODE) {
+        debugPrint("THis is Customer number $custNumber");
+        debugPrint("THis is token number $token");
+        String basicToken = "Basic $token";
+        debugPrint("Basic token : $basicToken");
+
+        hideProgressBar();
+        PrefsManager.saveLoginCredentialsToPrefs(
+            custNumber, customerName, custEmail, basicToken);
+        Navigator.pushNamed(context, RoutesName.HOME_ACTIVITY);
+        ShowToast.showToast(context, message);
+      } else {
+        hideProgressBar();
+
+        ShowToast.showToast(context, "Error : " + message);
+      }
+    }).catchError((val) {
+      hideProgressBar();
+      ShowToast.showToast(context, "Something went wrong!");
+      //display snackbar
+    });
+  }
+
+  void _submit() {
+    final form = formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      performLogin();
+    }
+  }
+
+  Future<void> displaySnackbar(BuildContext context, msg) {
+    final snackBar = SnackBar(
+      content: Text('$msg'),
+      duration: const Duration(seconds: 2),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+}
