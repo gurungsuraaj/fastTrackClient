@@ -1,4 +1,5 @@
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
+import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
@@ -198,10 +199,15 @@ class _HomeActivityState extends State<HomeActivity> {
                     child: Container(
                         child: InkWell(
                             onTap: () {
-                              Navigator.push(
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => GoogleMapActivity()),
+                              // );
+                                Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => GoogleMapActivity()),
+                                    builder: (context) => LocateActivity()),
                               );
                             },
                             child: Column(

@@ -331,7 +331,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       if (statusCode == Rcode.SUCCESS_CODE) {
         hideProgressBar();
 
-        Navigator.of(context).pushNamed('/LoginActivity');
+        Navigator.of(context).pop();
         ShowToast.showToast(context, "Signed up successfully");
       } else {
         hideProgressBar();
