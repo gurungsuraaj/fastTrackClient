@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:circular_check_box/circular_check_box.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -265,15 +266,20 @@ class _SignUpActivity extends State<SignUpActivity> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     final form = formKey.currentState;
     if (form.validate()) {
       if (checkBoxValue) {
         //proceed to post
         form.save();
         debugPrint("password Saved succesfully");
-        //  Navigator.of(context).pushNamed('/GenerateOTP');
-        signUp();
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.mobile ||
+            connectivityResult == ConnectivityResult.wifi) {
+          signUp();
+        } else {
+          ShowToast.showToast(context, "No internet connection");
+        }
       } else {
         //show snackbar
         displaySnackbar(context,
@@ -312,8 +318,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "url":
-          "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
       debugPrint("came to response after post url..");
@@ -330,7 +335,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         ShowToast.showToast(context, "Signed up successfully");
       } else {
         hideProgressBar();
-        ShowToast.showToast(context,"Error : " + message);
+        ShowToast.showToast(context, "Error : " + message);
       }
     }).catchError((val) {
       hideProgressBar();

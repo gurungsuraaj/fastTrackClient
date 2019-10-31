@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
@@ -332,11 +333,17 @@ class _LoginActivityState extends State<LoginActivity> {
     });
   }
 
-  void _submit() {
+  void _submit() async {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      performLogin();
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile ||
+          connectivityResult == ConnectivityResult.wifi) {
+        performLogin();
+      } else {
+        ShowToast.showToast(context, "No internet connection");
+      }
     }
   }
 
