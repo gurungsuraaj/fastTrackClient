@@ -3,6 +3,7 @@ import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
 import '../utils/PrefsManager.dart';
@@ -37,6 +38,7 @@ class _HomeActivityState extends State<HomeActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         appBar: new AppBar(
           title: new Text('Home'),
           automaticallyImplyLeading: false,
@@ -335,53 +337,67 @@ class _HomeActivityState extends State<HomeActivity> {
         .get("http://www.fasttrackemarat.com/feed/updates.json",
             headers: header)
         .then((res) {
-      var result = json.decode(res.body);
-      var values = result["promo"] as List;
-      promoList = values.map<Promo>((json) => Promo.fromJson(json)).toList();
-      debugPrint("${promoList[0].name}");
-    });
-    AlertDialog dialog = new AlertDialog(
-      contentPadding: EdgeInsets.all(0.0),
-      content: Container(
-        height: queryData.size.height * 0.36,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: queryData.size.width,
-              color: Color(ExtraColors.DARK_BLUE),
-              child: Image.network(
-                promoList[0].banner,
-                fit: BoxFit.fill,
-                height: 160,
-              ),
-            ),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                    child: Text(
-                      promoList[0].name,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
+      int status = res.statusCode;
+
+      if (status == Rcode.SUCCESS_CODE) {
+        var result = json.decode(res.body);
+        var values = result["promo"] as List;
+        promoList = values.map<Promo>((json) => Promo.fromJson(json)).toList();
+        debugPrint("${promoList[0].name}");
+        AlertDialog dialog = new AlertDialog(
+          contentPadding: EdgeInsets.all(0.0),
+          content: Container(
+            height: queryData.size.height * 0.36,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: queryData.size.width,
+                  color: Color(ExtraColors.DARK_BLUE),
+                  child: Image.network(
+                    promoList[0].banner,
+                    fit: BoxFit.fill,
+                    height: 160,
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(25, 15, 0, 0),
-                    child: Text(
-                      promoList[0].details,
-                      style: TextStyle(
-                        color: Colors.black,
+                ),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: Text(
+                          promoList[0].name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
                       ),
-                    ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                        child: Text(
+                          promoList[0].details,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+                )
+              ],
+            ),
+          ),
+        );
+        showDialog(context: context, child: dialog);
+      } else {
+        displaySnackbar(context, "An error has occured ");
+      }
+    });
+  }
+
+  Future<void> displaySnackbar(BuildContext context, msg) {
+    final snackBar = SnackBar(
+      content: Text('$msg'),
+      duration: const Duration(seconds: 2),
     );
-    showDialog(context: context, child: dialog);
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }

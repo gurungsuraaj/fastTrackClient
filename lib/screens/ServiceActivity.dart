@@ -1,5 +1,6 @@
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
+import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -22,6 +23,7 @@ class _ServiceActivityState extends State<ServiceActivity> {
   var listHeight = 170.0;
   List serviceList = new List();
   bool isProgressBarShown = false;
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _ServiceActivityState extends State<ServiceActivity> {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBarWithTitle.getAppBar('Services'),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -103,14 +106,27 @@ class _ServiceActivityState extends State<ServiceActivity> {
         .get("http://www.fasttrackemarat.com/feed/updates.json",
             headers: header)
         .then((res) {
-      var result = json.decode(res.body);
-      var values = result["facilities"] as List;
-      String services = values[0]["services"];
-      setState(() {
-        serviceList = services.split(",");
-      });
-      hideProgressBar();
-      debugPrint("$serviceList");
+      int status = res.statusCode;
+      if (status == Rcode.SUCCESS_CODE) {
+        var result = json.decode(res.body);
+        var values = result["facilities"] as List;
+        String services = values[0]["services"];
+        hideProgressBar();
+
+        setState(() {
+          serviceList = services.split(",");
+        });
+      } else {
+        displaySnackbar(context, "An error has occured");
+      }
     });
+  }
+
+  Future<void> displaySnackbar(BuildContext context, msg) {
+    final snackBar = SnackBar(
+      content: Text('$msg'),
+      duration: const Duration(seconds: 2),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }

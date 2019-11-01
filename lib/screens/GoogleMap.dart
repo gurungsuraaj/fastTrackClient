@@ -14,24 +14,27 @@ class GoogleMapActivity extends StatefulWidget {
 
 class _GoogleMapState extends State<GoogleMapActivity> {
   Completer<GoogleMapController> _controller = Completer();
-  double longitude;
-  double latidude;
-  var cordinates;
-  // static final LatLng center;
+  LatLng _center;
   _GoogleMapState() {
-    // center = LatLng(widget.longitude, widget.latidude);
+    _center = LatLng(widget.latidude, widget.longitude);
   }
 
   @override
   void initState() {
     super.initState();
-    debugPrint("+++++++++");
   }
 
   GoogleMapController mapController;
-
   @override
   Widget build(BuildContext context) {
+    Marker outletLocation = Marker(
+      markerId: MarkerId('Pokhara'),
+      position: _center,
+      infoWindow: InfoWindow(title: 'Bur Dubai, mankhod road'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueRed,
+      ),
+    );
     return Scaffold(
       appBar: AppBarWithTitle.getAppBar('Location'),
       body: Stack(
@@ -40,9 +43,9 @@ class _GoogleMapState extends State<GoogleMapActivity> {
             width: double.infinity,
             height: double.infinity,
             child: GoogleMap(
-              initialCameraPosition: const CameraPosition(
+              initialCameraPosition: new CameraPosition(
                 bearing: 270.0,
-                target: LatLng(222.0, 22.2),
+                target: _center,
                 zoom: 17.0,
               ),
               onMapCreated: _onMapCreated,
@@ -59,13 +62,4 @@ class _GoogleMapState extends State<GoogleMapActivity> {
       mapController = controller;
     });
   }
-
-  Marker outletLocation = Marker(
-    markerId: MarkerId('Pokhara'),
-    position: LatLng(28.2096, 83.9856),
-    infoWindow: InfoWindow(title: 'Bur Dubai, mankhod road'),
-    icon: BitmapDescriptor.defaultMarkerWithHue(
-      BitmapDescriptor.hueRed,
-    ),
-  );
 }
