@@ -2,8 +2,12 @@ import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
+import 'package:fasttrackgarage_app/models/UserList.dart';
+import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:xml/xml.dart' as xml;
+import 'package:xml2json/xml2json.dart';
+import 'package:http/http.dart' as http;
 
 class NetworkOperationManager {
   static Future<NetworkResponse> signUp(NTLMClient client) async {
@@ -42,7 +46,8 @@ class NetworkOperationManager {
     return rs;
   }
 
-  static Future<NetworkResponse> logIn(String mobileNo, String passWord, String cusNumber, String cusName, String email, NTLMClient client) async {
+  static Future<NetworkResponse> logIn(String mobileNo, String passWord,
+      String cusNumber, String cusName, String email, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.POST_CHECKINVENTORY);
     String response = "";
@@ -72,8 +77,8 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-        print("This is the response ${res.body}");
-    /*  var rawXmlResponse = res.body;
+      print("This is the response ${res.body}");
+      /*  var rawXmlResponse = res.body;
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
       var resValue = parsedXml.findAllElements("customerName");
       response = (resValue.map((node) => node.text)).first;
@@ -83,5 +88,90 @@ class NetworkOperationManager {
     });
 
     return rs;
+  }
+
+  static Future<List<UserList>> getAdminUserList(NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.GET_ADMIN_USER_LIST_FOR_NOTIFICATION);
+    String response = "";
+    List<UserList> userArrayList = new List();
+    Xml2Json xml2json = new Xml2Json();
+    print("This is the url $url");
+    print("this is client ${client.username}");
+    var envelope =
+        '''<soap:Envelope xmlns:tns="urn:microsoft-dynamics-schemas/page/userlistlocation" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+<soap:Body>
+<tns:ReadMultiple>
+<tns:filter>
+<tns:Field></tns:Field>
+<tns:Criteria></tns:Criteria>
+</tns:filter>
+<tns:bookmarkKey></tns:bookmarkKey>
+<tns:setSize></tns:setSize>
+</tns:ReadMultiple>
+</soap:Body>
+</soap:Envelope>''';
+
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/Page/UserListLocation",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      parsedXml.findAllElements("UserListLocation").forEach((val) {
+        UserList userList = new UserList();
+        xml2json.parse(val.toString());
+        var json = xml2json.toParker();
+        var data = jsonDecode(json);
+        userList.token = data["UserListLocation"]["Token"] ?? "";
+        userList.latitude = data["UserListLocation"]["Latitude"] ?? "";
+        userList.longitude = data["UserListLocation"]["Longitude"] ?? "";
+
+        userList.statusCode = res.statusCode;
+        //  print("This is Model Code inside loop ======> ${vehicleList.Model_Code}");
+        userArrayList.add(userList);
+      });
+    });
+
+    return userArrayList;
+  }
+
+  static Future<NetworkResponse> sendNotification(String token) async {
+    String url = Api.SEND_NOTIFICATION;
+    NetworkResponse rs = NetworkResponse();
+
+    try {
+      Map<String, String> header = {
+        "Content-Type": "application/json",
+        "Authorization":
+            "key=AAAAtSaXuEQ:APA91bGLDP8cG8WRPbkN6KXAxeVXkPLYrHJHJhMKeVU3fwxzGQ2njbYl2pS4XWP5zm_pPQJ8GkvHqYWzVKcC4D48lRZnnb9xbyxSLoYwBRVCIyOOpqRigh3Oze07bA5M6rLUhFGrjAdM"
+      };
+      Map<String, String> notification = {
+        "body": "Show Details",
+        "title": "New Like"
+      };
+      Map body = {"to": token, "notification": notification};
+      var bodyJson = json.encode(body);
+      debugPrint(" json body ${bodyJson}");
+
+      await http.post(url, headers: header, body: bodyJson).then((response) {
+        rs.status = response.statusCode;
+        debugPrint("${response.body}");
+        rs.responseBodyForFireBase = jsonDecode(response.body);
+      });
+      return rs;
+    } catch (e) {
+      debugPrint("error $e");
+      //throw Exception("$e");
+    }
   }
 }

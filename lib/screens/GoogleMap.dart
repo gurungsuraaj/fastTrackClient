@@ -15,13 +15,11 @@ class GoogleMapActivity extends StatefulWidget {
 class _GoogleMapState extends State<GoogleMapActivity> {
   Completer<GoogleMapController> _controller = Completer();
   LatLng _center;
-  _GoogleMapState() {
-    _center = LatLng(widget.latidude, widget.longitude);
-  }
 
   @override
   void initState() {
     super.initState();
+    _center = LatLng(widget.longitude, widget.latidude);
   }
 
   GoogleMapController mapController;

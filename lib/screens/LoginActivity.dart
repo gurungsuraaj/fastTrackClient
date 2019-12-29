@@ -40,8 +40,8 @@ class _LoginActivityState extends State<LoginActivity> {
   bool isProgressBarShown = false;
 
   TextEditingController passwordController =
-      new TextEditingController(text: "");
-  TextEditingController mobileController = new TextEditingController(text: "");
+      new TextEditingController(text: "surajgrg");
+  TextEditingController mobileController = new TextEditingController(text: "9806644429");
 
   @override
   void initState() {

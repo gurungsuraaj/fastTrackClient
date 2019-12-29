@@ -1,4 +1,7 @@
+import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
+import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/Promo.dart';
+import 'package:fasttrackgarage_app/models/UserList.dart';
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
@@ -6,6 +9,7 @@ import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
+import 'package:ntlm/ntlm.dart';
 import '../utils/PrefsManager.dart';
 import 'CheckInventory.dart';
 import 'LoginActivity.dart';
@@ -17,6 +21,9 @@ import 'ServiceActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:geolocator/geolocator.dart';
+import 'dart:math';
 
 class Home extends StatelessWidget {
   @override
@@ -32,8 +39,38 @@ class HomeActivity extends StatefulWidget {
 }
 
 class _HomeActivityState extends State<HomeActivity> {
+  List<UserList> userList = List();
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Promo> promoList = new List<Promo>();
+
+  final FirebaseMessaging _messaging = FirebaseMessaging();
+  NTLMClient client;
+  double userLong, userLatitude; //  For location of client user
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    client =
+        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+
+    // _messaging.getToken().then((token) {
+    //   print("Your FCM Token is : $token");
+    // });
+    // suraj();
+    getLocationOfCLient();
+  }
+
+  void getLocationOfCLient() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(
+        "THis is the location latitude ${position.latitude}  location :${position.latitude}");
+
+    userLong = position.longitude;
+    userLatitude = position.latitude;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -302,11 +339,7 @@ class _HomeActivityState extends State<HomeActivity> {
                     width: queryData.size.width * 0.4,
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeActivity()),
-                        );
+                        getUserList();
                       },
                       color: Colors.blue[700],
                       child: Text(
@@ -399,5 +432,65 @@ class _HomeActivityState extends State<HomeActivity> {
       duration: const Duration(seconds: 2),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  getUserList() async {
+    NetworkOperationManager.getAdminUserList(client).then((val) {
+      debugPrint("This is the response $val");
+      setState(() {
+        userList = val;
+      });
+      print("This is the first token ${val[0].token}");
+      calculateDistance();
+    }).catchError((err) {
+      print("There is an error: $err");
+    });
+  }
+
+  void calculateDistance() async {
+    List<UserList> calculatedDistanceList = [];
+    List<double> distList = [];
+
+    debugPrint("This is user location $userLong");
+
+    for (UserList item in userList) {
+      double longitude = double.parse(item.longitude);
+      double latitude = double.parse(item.latitude);
+      debugPrint("long $longitude , lat : $latitude");
+
+      double distanceInMeters = await Geolocator()
+          .distanceBetween(userLatitude, userLong, latitude, longitude);
+      // item.distanceInMeter = distanceInMeters;
+      // calculatedDistanceList.add(item);
+      // print("THis is from geolocator $distanceInMeters");
+      distList.add(distanceInMeters);
+
+      // var result = calculatedDistanceList
+      //     .map((item) => (item.distanceInMeter))
+      //     .reduce(min);
+      // print("this is result $result");
+
+      // distList.reduce(min);
+    }
+    int shortDistanceIndex = distList.indexOf(distList.reduce(min));
+    print("This is the index $shortDistanceIndex");
+
+    var shortDistanceToken = userList[shortDistanceIndex].token;
+    print("This is the token $shortDistanceToken");
+
+    // print("Shorest distnace ${calculatedDistanceList.reduce(min)}");
+
+    // calculatedDistanceList.reduce((item, index) => (item.distanceInMeter));
+
+    NetworkOperationManager.sendNotification(shortDistanceToken).then((res) {
+      print(
+          "status ${res.status} , response body ${res.responseBodyForFireBase["success"]}");
+      if (res.responseBodyForFireBase["success"] == 1) {
+        print("Notification has been sent");
+        Navigator.pop(context);
+      } else {
+        print("Failure in sending notification");
+      }
+    });
   }
 }

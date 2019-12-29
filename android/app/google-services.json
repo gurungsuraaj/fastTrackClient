@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "778036557892",
+    "firebase_url": "https://aamsukh-d5190.firebaseio.com",
+    "project_id": "aamsukh-d5190",
+    "storage_bucket": "aamsukh-d5190.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778036557892:android:5879da73fb5b5b95",
+        "android_client_info": {
+          "package_name": "com.example.aamshuk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778036557892-3dv0memfbd89fg6fh5qkuuiqhfl3g3eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkE0MfmzvvuFtZaxVqYWh5-mnY8cuI1zs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778036557892-3dv0memfbd89fg6fh5qkuuiqhfl3g3eb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778036557892:android:73b87aa8201c05fcc82411",
+        "android_client_info": {
+          "package_name": "com.example.flutter_geomaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778036557892-3dv0memfbd89fg6fh5qkuuiqhfl3g3eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkE0MfmzvvuFtZaxVqYWh5-mnY8cuI1zs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778036557892-3dv0memfbd89fg6fh5qkuuiqhfl3g3eb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778036557892:android:91f5ef0ae0cb11cec82411",
+        "android_client_info": {
+          "package_name": "nipunaprabidhiksewa.fasttrackgarage_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778036557892-3dv0memfbd89fg6fh5qkuuiqhfl3g3eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkE0MfmzvvuFtZaxVqYWh5-mnY8cuI1zs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778036557892-3dv0memfbd89fg6fh5qkuuiqhfl3g3eb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
