@@ -4,6 +4,7 @@ import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
+import 'package:fasttrackgarage_app/screens/OfferPromo.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -199,7 +200,12 @@ class _HomeActivityState extends State<HomeActivity> {
                     child: Container(
                         child: InkWell(
                             onTap: () {
-                              showOffer();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OfferPromo()),
+                              );
+                              //showOffer();
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
