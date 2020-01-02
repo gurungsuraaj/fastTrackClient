@@ -143,14 +143,28 @@ class _CheckInventoryState extends State<CheckInventory> {
                                     ),
                                   ),
                                 ),
+                                // Container(
+                                //   padding:
+                                //       EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
+                                //   child: Text(
+                                //     itemList[index].Unit_Price,
+                                //     style: TextStyle(fontSize: 16.0),
+                                //   ),
+                                // ),
                                 Container(
-                                  padding:
-                                      EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
-                                  child: Text(
-                                    itemList[index].Unit_Price,
-                                    style: TextStyle(fontSize: 16.0),
-                                  ),
-                                ),
+                                    padding:
+                                        EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
+                                    child:
+                                        (int.parse(itemList[index].Unit_Price) >
+                                                0)
+                                            ? Text("Stock Available",
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.green))
+                                            : Text("Stock not available",
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.red)))
                               ],
                             ),
                           ),

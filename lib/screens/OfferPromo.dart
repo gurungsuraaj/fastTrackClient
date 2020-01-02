@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class OfferPromo extends StatefulWidget {
   OfferPromo({Key key}) : super(key: key);
@@ -15,6 +16,7 @@ class OfferPromo extends StatefulWidget {
 
 class _OfferPromoState extends State<OfferPromo> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool isProgressBarShown = false;
 
   List<Promo> promoList = new List<Promo>();
 
@@ -36,60 +38,64 @@ class _OfferPromoState extends State<OfferPromo> {
         title: Text("Offers and Promotion"),
       ),
       backgroundColor: Color(0xFFD9D9D9),
-      body: ListView.builder(
-        itemCount: promoList.length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: EdgeInsets.only(top: 4),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            child: ClipRRect(
-              borderRadius: new BorderRadius.circular(12.0),
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: queryData.size.width,
-                      child: Image.network(
-                        promoList[index].banner,
-                        fit: BoxFit.fill,
-                        height: 190,
+      body: ModalProgressHUD(
+        inAsyncCall: isProgressBarShown,
+        child: ListView.builder(
+          itemCount: promoList.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.only(top: 4),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              child: ClipRRect(
+                borderRadius: new BorderRadius.circular(12.0),
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: queryData.size.width,
+                        child: Image.network(
+                          promoList[index].banner,
+                          fit: BoxFit.fill,
+                          height: 190,
+                        ),
                       ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                            child: Text(
-                              promoList[index].name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(25, 10, 10, 10),
-                            child: Text(
-                              promoList[index].details,
-                              style: TextStyle(
-                                color: Colors.black,
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                              child: Text(
+                                promoList[index].name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                            Container(
+                              padding: EdgeInsets.fromLTRB(25, 10, 10, 10),
+                              child: Text(
+                                promoList[index].details,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
 
   showOffer() async {
+    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
@@ -100,6 +106,8 @@ class _OfferPromoState extends State<OfferPromo> {
       int status = res.statusCode;
 
       if (status == Rcode.SUCCESS_CODE) {
+        hideProgressBar();
+
         var result = json.decode(res.body);
         var values = result["promo"] as List;
         setState(() {
@@ -108,6 +116,8 @@ class _OfferPromoState extends State<OfferPromo> {
         });
         debugPrint("${promoList[0].name}");
       } else {
+        hideProgressBar();
+
         displaySnackbar(context, "An error has occured ");
       }
     });
@@ -119,5 +129,17 @@ class _OfferPromoState extends State<OfferPromo> {
       duration: const Duration(seconds: 2),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
   }
 }
