@@ -2,14 +2,21 @@ import 'dart:convert';
 
 import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
+import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/Item.dart';
+import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/OutletList.dart';
+import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ntlm/ntlm.dart';
+import 'package:xml2json/xml2json.dart';
+import 'package:xml/xml.dart' as xml;
 
 class CheckInventory extends StatefulWidget {
   @override
@@ -19,6 +26,9 @@ class CheckInventory extends StatefulWidget {
 class _CheckInventoryState extends State<CheckInventory> {
   String dropdownValue1 = "One";
   String dropdownValue2 = "One";
+  String search;
+  NTLMClient client;
+
   List<Item> itemList = new List<Item>();
   List<OutletList> outletList = new List<OutletList>();
   OutletList selectedValue = new OutletList();
@@ -33,23 +43,26 @@ class _CheckInventoryState extends State<CheckInventory> {
 
   bool isProgressBarShown = false;
   ProgressDialog _progressDialog = ProgressDialog();
+  TextEditingController searchController = new TextEditingController();
+  List<TextEditingController> textEditContollerlist = new List();
 
   //List<String> value = new List<String>();
 
   @override
   void initState() {
     super.initState();
-
+    client =
+        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
     PrefsManager.getBasicToken().then((token) {
       basicToken = token;
-      searchItem().then((onValue) {
-        getOutletList().then((outletList) {
-          setState(() {
-            _outletList = buildOutletDropdownMenu(outletList);
-            selectedValue = _outletList[0].value;
-          });
-        });
-      });
+      // searchItem().then((onValue) {
+      //   getOutletList().then((outletList) {
+      //     setState(() {
+      //       _outletList = buildOutletDropdownMenu(outletList);
+      //       selectedValue = _outletList[0].value;
+      //     });
+      //   });
+      // });
     });
   }
 
@@ -81,7 +94,7 @@ class _CheckInventoryState extends State<CheckInventory> {
                       height: MediaQuery.of(context).size.height / 15,
                       width: MediaQuery.of(context).size.width * 0.75,
                       child: TextField(
-                        controller: detailsController,
+                        controller: searchController,
                         decoration: InputDecoration(
                           labelText: 'Enter Details',
                         ),
@@ -96,7 +109,8 @@ class _CheckInventoryState extends State<CheckInventory> {
                         heightFactor: 10,
                         child: IconButton(
                           onPressed: () {
-                            prepareToCheckInventory();
+                            prepareToCheckInventory(
+                                searchController.text, client);
                           },
                           icon: Center(
                             child: Icon(Icons.search),
@@ -154,17 +168,17 @@ class _CheckInventoryState extends State<CheckInventory> {
                                 Container(
                                     padding:
                                         EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
-                                    child:
-                                        (int.parse(itemList[index].Unit_Price) >
-                                                0)
-                                            ? Text("Stock Available",
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    color: Colors.green))
-                                            : Text("Stock not available",
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    color: Colors.red)))
+                                    child: (double.parse(
+                                                itemList[index].Unit_Price) >
+                                            0)
+                                        ? Text("Stock available",
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.green))
+                                        : Text("Stock not available",
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.red)))
                               ],
                             ),
                           ),
@@ -244,7 +258,7 @@ class _CheckInventoryState extends State<CheckInventory> {
 
     //String itemNumber = searchController.text;
 
-    Map<String, String> body = {"Key": "", "Code": "", "Name": ""};
+    Map<String, String> body = {"Key": "", "Code": "", "Name": "Condensor"};
 
     var body_json = json.encode(body);
 
@@ -306,5 +320,61 @@ class _CheckInventoryState extends State<CheckInventory> {
     });
   }
 
-  void prepareToCheckInventory() {}
+  void prepareToCheckInventory(String search, NTLMClient client) async {
+    debugPrint("search   ${searchController.text}");
+
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.URL_FOR_SEARCH_ITEM_FROM_NAV);
+    String response = "";
+    List<SearchItemModel> searchItemArrayList = new List();
+    Xml2Json xml2json = new Xml2Json();
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/itemlist">
+<soapenv:Body>
+<tns:ReadMultiple>
+<tns:filter>
+<tns:Field>Description</tns:Field>
+<tns:Criteria>$search</tns:Criteria>
+</tns:filter>
+<tns:bookmarkKey></tns:bookmarkKey>
+<tns:setSize></tns:setSize>
+</tns:ReadMultiple>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    print("This is the envelope $envelope");
+
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/page/itemList",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      parsedXml.findAllElements("ItemList").forEach((val) {
+        SearchItemModel searchItemList = new SearchItemModel();
+        xml2json.parse(val.toString());
+        var json = xml2json.toParker();
+        var data = jsonDecode(json);
+        searchItemList.no = data["SearchItemList"]["No"] ?? "";
+        searchItemList.description =
+            data["SearchItemList"]["Description"] ?? "";
+
+        searchItemList.unitprice = data["SearchItemList"]["Unitprice"] ?? "";
+        searchItemList.inventory = data["SearchItemList"]["Inventory"] ?? "";
+
+        searchItemList.statusCode = res.statusCode;
+        //  print("This is Model Code inside loop ======> ${vehicleList.Model_Code}");
+        searchItemArrayList.add(searchItemList);
+      });
+    });
+  }
 }
