@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fasttrackgarage_app/screens/InventoryCheckActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,7 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class GoogleMapActivity extends StatefulWidget {
   double longitude;
   double latidude;
-  GoogleMapActivity(this.longitude, this.latidude);
+  String name;
+  GoogleMapActivity(this.longitude, this.latidude,this.name);
   @override
   _GoogleMapState createState() => _GoogleMapState();
 }
@@ -19,7 +21,7 @@ class _GoogleMapState extends State<GoogleMapActivity> {
   @override
   void initState() {
     super.initState();
-    _center = LatLng(widget.longitude, widget.latidude);
+    _center = LatLng(widget.latidude, widget.longitude);
   }
 
   GoogleMapController mapController;
@@ -28,7 +30,7 @@ class _GoogleMapState extends State<GoogleMapActivity> {
     Marker outletLocation = Marker(
       markerId: MarkerId('Pokhara'),
       position: _center,
-      infoWindow: InfoWindow(title: 'Bur Dubai, mankhod road'),
+      infoWindow: InfoWindow(title: '${widget.name}'),
       icon: BitmapDescriptor.defaultMarkerWithHue(
         BitmapDescriptor.hueRed,
       ),

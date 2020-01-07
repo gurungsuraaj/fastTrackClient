@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
+import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/Item.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
@@ -45,6 +46,7 @@ class _CheckInventoryState extends State<CheckInventory> {
   ProgressDialog _progressDialog = ProgressDialog();
   TextEditingController searchController = new TextEditingController();
   List<TextEditingController> textEditContollerlist = new List();
+  List<SearchItemModel> searchList = new List();
 
   //List<String> value = new List<String>();
 
@@ -55,14 +57,14 @@ class _CheckInventoryState extends State<CheckInventory> {
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
     PrefsManager.getBasicToken().then((token) {
       basicToken = token;
-      // searchItem().then((onValue) {
-      //   getOutletList().then((outletList) {
-      //     setState(() {
-      //       _outletList = buildOutletDropdownMenu(outletList);
-      //       selectedValue = _outletList[0].value;
-      //     });
-      //   });
-      // });
+      prepareToCheckInventory("", client).then((onValue) {
+        getOutletList().then((outletList) {
+          setState(() {
+            _outletList = buildOutletDropdownMenu(outletList);
+            selectedValue = _outletList[0].value;
+          });
+        });
+      });
     });
   }
 
@@ -91,13 +93,16 @@ class _CheckInventoryState extends State<CheckInventory> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
-                      height: MediaQuery.of(context).size.height / 15,
+                      height: MediaQuery.of(context).size.height / 13,
                       width: MediaQuery.of(context).size.width * 0.75,
                       child: TextField(
                         controller: searchController,
                         decoration: InputDecoration(
                           labelText: 'Enter Details',
                         ),
+                        onSubmitted: (val) {
+                          prepareToCheckInventory(val, client);
+                        },
                       ),
                     ),
                     Container(
@@ -128,7 +133,7 @@ class _CheckInventoryState extends State<CheckInventory> {
             child: Container(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: itemList.length,
+                itemCount: searchList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
@@ -141,35 +146,56 @@ class _CheckInventoryState extends State<CheckInventory> {
                     },
                     child: Card(
                       color: Colors.white,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(8.0, 8.0, 0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.fromLTRB(8.0, 16.0, 0, 16.0),
-                                    child: Text(
-                                      itemList[index].Description,
-                                      style: TextStyle(fontSize: 16.0),
-                                    ),
-                                  ),
+                                Text(
+                                  searchList[index].description,
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                // Container(
-                                //   padding:
-                                //       EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
-                                //   child: Text(
-                                //     itemList[index].Unit_Price,
-                                //     style: TextStyle(fontSize: 16.0),
-                                //   ),
-                                // ),
-                                Container(
-                                    padding:
-                                        EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
-                                    child: (double.parse(
-                                                itemList[index].Unit_Price) >
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Text(
+                                      "Car: " + searchList[index].makeCode,
+                                      style: TextStyle(
+                                          fontSize: 13.0, color: Colors.grey),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Model: " + searchList[index].modelCode,
+                                      style: TextStyle(
+                                          fontSize: 13.0, color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            // Container(
+                            //   padding:
+                            //       EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
+                            //   child: Text(
+                            //     searchList[index].Unit_Price,
+                            //     style: TextStyle(fontSize: 16.0),
+                            //   ),
+                            // ),
+                            Container(
+                                padding:
+                                    EdgeInsets.fromLTRB(0, 16.0, 8.0, 16.0),
+                                child:
+                                    (double.parse(searchList[index].inventory) >
                                             0)
                                         ? Text("Stock available",
                                             style: TextStyle(
@@ -179,10 +205,8 @@ class _CheckInventoryState extends State<CheckInventory> {
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 color: Colors.red)))
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -320,61 +344,21 @@ class _CheckInventoryState extends State<CheckInventory> {
     });
   }
 
-  void prepareToCheckInventory(String search, NTLMClient client) async {
-    debugPrint("search   ${searchController.text}");
+  Future prepareToCheckInventory(String search, NTLMClient client) async {
+    showProgressDialog(context);
+    NetworkOperationManager.searchItemFromNav(search, client).then((val) {
+      debugPrint("This is the response $val");
+      if (val.length <= 0) {
+        ShowToast.showToast(context, "No such product found !!");
+      } else {
+        setState(() {
+          searchList = val;
+        });
+      }
 
-    NetworkResponse rs = new NetworkResponse();
-    var url = Uri.encodeFull(Api.URL_FOR_SEARCH_ITEM_FROM_NAV);
-    String response = "";
-    List<SearchItemModel> searchItemArrayList = new List();
-    Xml2Json xml2json = new Xml2Json();
-    print("This is the url $url");
-    var envelope =
-        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/itemlist">
-<soapenv:Body>
-<tns:ReadMultiple>
-<tns:filter>
-<tns:Field>Description</tns:Field>
-<tns:Criteria>$search</tns:Criteria>
-</tns:filter>
-<tns:bookmarkKey></tns:bookmarkKey>
-<tns:setSize></tns:setSize>
-</tns:ReadMultiple>
-</soapenv:Body>
-</soapenv:Envelope>''';
-    print("This is the envelope $envelope");
-
-    await client
-        .post(
-      url,
-      headers: {
-        "Content-Type": "text/xml",
-        "Accept-Charset": "utf-8",
-        "SOAPAction": "urn:microsoft-dynamics-schemas/page/itemList",
-      },
-      body: envelope,
-      encoding: Encoding.getByName("UTF-8"),
-    )
-        .then((res) {
-      print("This is the response ${res.body}");
-      var rawXmlResponse = res.body;
-      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
-      parsedXml.findAllElements("ItemList").forEach((val) {
-        SearchItemModel searchItemList = new SearchItemModel();
-        xml2json.parse(val.toString());
-        var json = xml2json.toParker();
-        var data = jsonDecode(json);
-        searchItemList.no = data["SearchItemList"]["No"] ?? "";
-        searchItemList.description =
-            data["SearchItemList"]["Description"] ?? "";
-
-        searchItemList.unitprice = data["SearchItemList"]["Unitprice"] ?? "";
-        searchItemList.inventory = data["SearchItemList"]["Inventory"] ?? "";
-
-        searchItemList.statusCode = res.statusCode;
-        //  print("This is Model Code inside loop ======> ${vehicleList.Model_Code}");
-        searchItemArrayList.add(searchItemList);
-      });
+      hideProgressDialog(context);
+    }).catchError((err) {
+      print("There is an error: $err");
     });
   }
 }

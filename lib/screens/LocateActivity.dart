@@ -122,7 +122,10 @@ class _LocateActivityState extends State<LocateActivity> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   GoogleMapActivity(
-                                                     longitude,latitude)),
+                                                      longitude,
+                                                      latitude,
+                                                      locationlist[index]
+                                                          .name)),
                                         );
                                       },
                                       child: Text(

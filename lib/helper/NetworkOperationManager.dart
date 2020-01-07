@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
+import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
 import 'package:flutter/material.dart';
 import 'package:ntlm/ntlm.dart';
@@ -173,5 +174,65 @@ class NetworkOperationManager {
       debugPrint("error $e");
       //throw Exception("$e");
     }
+  }
+
+  static Future<List<SearchItemModel>> searchItemFromNav(
+      String search, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.URL_FOR_SEARCH_ITEM_FROM_NAV);
+    String response = "";
+    List<SearchItemModel> searchItemArrayList = new List();
+    Xml2Json xml2json = new Xml2Json();
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/itemlist">
+<soapenv:Body>
+<tns:ReadMultiple>
+<tns:filter>
+<tns:Field>Description</tns:Field>
+<tns:Criteria>$search*</tns:Criteria>
+</tns:filter>
+<tns:bookmarkKey></tns:bookmarkKey>
+<tns:setSize>100</tns:setSize>
+</tns:ReadMultiple>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    print("This is the envelope $envelope");
+
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/page/itemList",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      parsedXml.findAllElements("ItemList").forEach((val) {
+        SearchItemModel searchItemList = new SearchItemModel();
+        xml2json.parse(val.toString());
+        var json = xml2json.toParker();
+        var data = jsonDecode(json);
+        searchItemList.no = data["ItemList"]["No"] ?? "";
+        searchItemList.description = data["ItemList"]["Description"] ?? "";
+
+        searchItemList.unitprice = data["ItemList"]["Unit_Price"] ?? "";
+        searchItemList.inventory = data["ItemList"]["Inventory"] ?? "";
+        searchItemList.makeCode = data["ItemList"]["Make_Code"] ?? "";
+        searchItemList.modelCode = data["ItemList"]["Model_Code"] ?? "";
+
+        searchItemList.statusCode = res.statusCode;
+        //  print("This is Model Code inside loop ======> ${vehicleList.Model_Code}");
+        searchItemArrayList.add(searchItemList);
+      });
+    });
+
+    return searchItemArrayList;
   }
 }
