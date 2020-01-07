@@ -52,118 +52,125 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
           child: ListView.builder(
             itemCount: serviceHistoriesList.length,
             itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                child: Text("Posting Date :", style: textStyle),
-                              ),
-                              Container(
-                                child: Text(
-                                  "Document no. :",
-                                  style: textStyle,
+              return Card(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  child:
+                                      Text("Posting Date :", style: textStyle),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  "Make :",
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    "Document no. :",
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  "Model :",
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    "Make :",
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  "Vehicle serial no. :",
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    "Model :",
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  "Location :",
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    "Vehicle serial no. :",
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  "No. :",
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    "Location :",
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Container(
+                                  child: Text(
+                                    "No. :",
+                                    style: textStyle,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 20, 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              Container(
-                                child: Text(
-                                    serviceHistoriesList[index].Posting_Date,
-                                    style: textStyle),
-                              ),
-                              Container(
-                                child: Text(
-                                  serviceHistoriesList[index].Document_No,
-                                  style: textStyle,
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 20, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                      serviceHistoriesList[index].Posting_Date,
+                                      style: textStyle),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  serviceHistoriesList[index].Make_Code,
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    serviceHistoriesList[index].Document_No,
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  serviceHistoriesList[index].Model_Code,
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    serviceHistoriesList[index].Make_Code,
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  serviceHistoriesList[index].Vehicle_Serial_No,
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    serviceHistoriesList[index].Model_Code,
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  serviceHistoriesList[index].Location_Code,
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    serviceHistoriesList[index]
+                                        .Vehicle_Serial_No,
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Text(
-                                  serviceHistoriesList[index].No,
-                                  style: textStyle,
+                                Container(
+                                  child: Text(
+                                    serviceHistoriesList[index].Location_Code,
+                                    style: textStyle,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Container(
+                                  child: Text(
+                                    serviceHistoriesList[index].No,
+                                    style: textStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  new Divider(
-                    color: Colors.black,
-                  ),
-                ],
+                      ],
+                    ),
+                    // new Divider(
+                    //   color: Colors.black,
+                    // ),
+                  ],
+                ),
               );
             },
           ),
