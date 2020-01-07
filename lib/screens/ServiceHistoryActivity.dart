@@ -46,6 +46,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
           title: Text("Service history"),
           backgroundColor: Color(ExtraColors.DARK_BLUE),
         ),
+        backgroundColor: Color(0xFFD9D9D9),
         body: ModalProgressHUD(
           inAsyncCall: isProgressBarShown,
           dismissible: false,
@@ -53,6 +54,8 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
             itemCount: serviceHistoriesList.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
+                elevation: 2,
+                color: Colors.white,
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -65,47 +68,66 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  child:
-                                      Text("Posting Date :", style: textStyle),
-                                ),
-                                Container(
                                   child: Text(
-                                    "Document no. :",
-                                    style: textStyle,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    "Make :",
-                                    style: textStyle,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    "Model :",
-                                    style: textStyle,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    "Vehicle serial no. :",
-                                    style: textStyle,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    "Location :",
-                                    style: textStyle,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    "No. :",
-                                    style: textStyle,
+                                    "Posting Date :",
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 SizedBox(
                                   height: 5,
+                                ),
+                                Container(
+                                  child: Text("Document no. :",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  child: Text("Make :",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  child: Text("Model :",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  child: Text("Vehicle serial no. :",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  child: Text("Location :",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  child: Text("No. :",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold)),
                                 ),
                               ],
                             ),
@@ -123,11 +145,17 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                                       serviceHistoriesList[index].Posting_Date,
                                       style: textStyle),
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 Container(
                                   child: Text(
                                     serviceHistoriesList[index].Document_No,
                                     style: textStyle,
                                   ),
+                                ),
+                                SizedBox(
+                                  height: 5,
                                 ),
                                 Container(
                                   child: Text(
@@ -135,11 +163,17 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                                     style: textStyle,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 Container(
                                   child: Text(
                                     serviceHistoriesList[index].Model_Code,
                                     style: textStyle,
                                   ),
+                                ),
+                                SizedBox(
+                                  height: 5,
                                 ),
                                 Container(
                                   child: Text(
@@ -148,11 +182,17 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                                     style: textStyle,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 Container(
                                   child: Text(
                                     serviceHistoriesList[index].Location_Code,
                                     style: textStyle,
                                   ),
+                                ),
+                                SizedBox(
+                                  height: 5,
                                 ),
                                 Container(
                                   child: Text(
@@ -166,6 +206,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                         ),
                       ],
                     ),
+
                     // new Divider(
                     //   color: Colors.black,
                     // ),
