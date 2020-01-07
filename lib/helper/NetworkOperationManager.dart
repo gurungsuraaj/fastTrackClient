@@ -190,10 +190,10 @@ class NetworkOperationManager {
 <tns:ReadMultiple>
 <tns:filter>
 <tns:Field>Description</tns:Field>
-<tns:Criteria>$search</tns:Criteria>
+<tns:Criteria>$search*</tns:Criteria>
 </tns:filter>
 <tns:bookmarkKey></tns:bookmarkKey>
-<tns:setSize></tns:setSize>
+<tns:setSize>100</tns:setSize>
 </tns:ReadMultiple>
 </soapenv:Body>
 </soapenv:Envelope>''';
