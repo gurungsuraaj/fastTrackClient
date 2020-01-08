@@ -18,4 +18,6 @@ class Api {
   static final String SEND_NOTIFICATION = "https://fcm.googleapis.com/fcm/send";
   static final String URL_FOR_SEARCH_ITEM_FROM_NAV =
       "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ItemList";
+  static final String CHECK_INVENTORY =
+      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory";
 }

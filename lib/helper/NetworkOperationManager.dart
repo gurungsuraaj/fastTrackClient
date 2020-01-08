@@ -136,6 +136,7 @@ class NetworkOperationManager {
         userList.token = data["UserListLocation"]["Token"] ?? "";
         userList.latitude = data["UserListLocation"]["Latitude"] ?? "";
         userList.longitude = data["UserListLocation"]["Longitude"] ?? "";
+        userList.userId = data["UserListLocation"]["User_ID"] ?? "";
 
         userList.statusCode = res.statusCode;
         //  print("This is Model Code inside loop ======> ${vehicleList.Model_Code}");
@@ -234,5 +235,47 @@ class NetworkOperationManager {
     });
 
     return searchItemArrayList;
+  }
+
+  static Future<NetworkResponse> distressCall(
+      String cusNumber, String cusName, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    String response = "";
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:Distresscall>
+<urn:custName>$cusName</urn:custName>
+<urn:custMobNo>$cusNumber</urn:custMobNo>
+</urn:Distresscall>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      rs.status = res.statusCode;
+      /*  var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue = parsedXml.findAllElements("customerName");
+      response = (resValue.map((node) => node.text)).first;
+
+      rs.responseBody = response;
+      rs.status = res.statusCode;*/
+    });
+
+    return rs;
   }
 }

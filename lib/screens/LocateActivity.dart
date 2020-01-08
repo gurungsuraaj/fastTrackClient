@@ -6,6 +6,7 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models//LocateModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -64,6 +65,9 @@ class _LocateActivityState extends State<LocateActivity> {
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.bold)),
                                     ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
                                     Container(
                                       child: Text(locationlist[index].name,
                                           style: textStyle),
@@ -73,15 +77,21 @@ class _LocateActivityState extends State<LocateActivity> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Wrap(
-                                  verticalDirection: VerticalDirection.down,
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Container(
                                         child: Text("Address :",
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold))),
-                                    Container(
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      flex: 4,
                                       child: Text(
                                         locationlist[index].address,
                                         style: textStyle,
@@ -100,6 +110,9 @@ class _LocateActivityState extends State<LocateActivity> {
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold))),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
                                     Container(
                                       child: Text(
                                         locationlist[index].telephone,
@@ -120,6 +133,9 @@ class _LocateActivityState extends State<LocateActivity> {
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.bold)),
                                     ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
                                     Container(
                                       child: Text(
                                           locationlist[index].openinghours,
@@ -134,7 +150,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                   children: <Widget>[
                                     Container(
                                       child: InkWell(
-                                        onTap: () {
+                                        onTap: () async {
                                           var location = locationlist[index]
                                               .latlng
                                               .split(",");
@@ -142,9 +158,6 @@ class _LocateActivityState extends State<LocateActivity> {
                                               double.parse(location[0]);
                                           double latitude =
                                               double.parse(location[1]);
-                                          debugPrint(
-                                              "here is the location $longitude , $latitude");
-
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -157,15 +170,11 @@ class _LocateActivityState extends State<LocateActivity> {
                                           );
                                         },
                                         child: new Container(
-                                            //width: 100.0,
-                                            height: 40.0,
+                                            height: 32,
                                             width: 100,
                                             decoration: new BoxDecoration(
                                               color:
                                                   Color(ExtraColors.DARK_BLUE),
-                                              // border: new Border.all(
-                                              //     color: Colors.white,
-                                              //     width: 6.0),
                                               borderRadius:
                                                   new BorderRadius.circular(
                                                       10.0),
@@ -180,7 +189,52 @@ class _LocateActivityState extends State<LocateActivity> {
                                               ),
                                             )),
                                       ),
-                                    )
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      child: new Container(
+                                        height: 32.0,
+                                        width: 150,
+                                        decoration: new BoxDecoration(
+                                          color: Color(ExtraColors.DARK_BLUE),
+                                          // border: new Border.all(
+                                          //     color: Colors.white,
+                                          //     width: 6.0),
+                                          borderRadius:
+                                              new BorderRadius.circular(10.0),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            var location = locationlist[index]
+                                                .latlng
+                                                .split(",");
+                                            double longitude =
+                                                double.parse(location[0]);
+                                            double latitude =
+                                                double.parse(location[1]);
+                                            debugPrint(
+                                                "here is the location $longitude , $latitude");
+                                            if (await canLaunch(
+                                                locationlist[index]
+                                                    .googlemap)) {
+                                              await launch(locationlist[index]
+                                                  .googlemap);
+                                            }
+                                          },
+                                          child: new Center(
+                                            child: Text(
+                                              "Open Google Map",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:charts_flutter/flutter.dart' as prefix1;
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/ServiceHistoryItem.dart';
+import 'package:fasttrackgarage_app/screens/ServiceHistoryDetail.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryPieChart.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
@@ -53,164 +54,197 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
           child: ListView.builder(
             itemCount: serviceHistoriesList.length,
             itemBuilder: (BuildContext context, int index) {
-              return Card(
-                elevation: 2,
-                color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  child: Text(
-                                    "Posting Date :",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServiceHistoryDetail(
+                              serviceHistoriesList[index])));
+                },
+                child: Card(
+                  elevation: 2,
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                      "Posting Date :",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("Document no. :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("Make :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("Model :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("Vehicle serial no. :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("Location :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("No. :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ],
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text("Document no. :",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text("Make :",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text("Model :",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text("Description :",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text("Unit Price :",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text("Quantity :",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text("Total Amount :",
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(0, 10, 20, 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Container(
-                                  child: Text(
-                                      serviceHistoriesList[index].Posting_Date,
-                                      style: textStyle),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    serviceHistoriesList[index].Document_No,
-                                    style: textStyle,
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 20, 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                        serviceHistoriesList[index]
+                                            .Posting_Date,
+                                        style: textStyle),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    serviceHistoriesList[index].Make_Code,
-                                    style: textStyle,
+                                  SizedBox(
+                                    height: 5,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    serviceHistoriesList[index].Model_Code,
-                                    style: textStyle,
+                                  Container(
+                                    child: Text(
+                                      serviceHistoriesList[index].Document_No,
+                                      style: textStyle,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    serviceHistoriesList[index]
-                                        .Vehicle_Serial_No,
-                                    style: textStyle,
+                                  SizedBox(
+                                    height: 5,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    serviceHistoriesList[index].Location_Code,
-                                    style: textStyle,
+                                  Container(
+                                    child: Text(
+                                      serviceHistoriesList[index].Make_Code,
+                                      style: textStyle,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    serviceHistoriesList[index].No,
-                                    style: textStyle,
+                                  SizedBox(
+                                    height: 5,
                                   ),
-                                ),
-                              ],
+                                  Container(
+                                    child: Text(
+                                      serviceHistoriesList[index].Model_Code,
+                                      style: textStyle,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      serviceHistoriesList[index].description,
+                                      style: textStyle,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      serviceHistoriesList[index]
+                                          .unitPrice
+                                          .toString(),
+                                      style: textStyle,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      serviceHistoriesList[index]
+                                          .quantity
+                                          .toString(),
+                                      style: textStyle,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      serviceHistoriesList[index]
+                                          .totalAmount
+                                          .toString(),
+                                      style: textStyle,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
 
-                    // new Divider(
-                    //   color: Colors.black,
-                    // ),
-                  ],
+                      // new Divider(
+                      //   color: Colors.black,
+                      // ),
+                    ],
+                  ),
                 ),
               );
             },

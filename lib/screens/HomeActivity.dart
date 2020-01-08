@@ -9,8 +9,11 @@ import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/PrefsManager.dart';
 import 'CheckInventory.dart';
 import 'LoginActivity.dart';
@@ -43,10 +46,11 @@ class _HomeActivityState extends State<HomeActivity> {
   List<UserList> userList = List();
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Promo> promoList = new List<Promo>();
-
+  String customerNumber;
   final FirebaseMessaging _messaging = FirebaseMessaging();
   NTLMClient client;
   double userLong, userLatitude; //  For location of client user
+  bool isProgressBarShown = false;
 
   @override
   void initState() {
@@ -60,7 +64,9 @@ class _HomeActivityState extends State<HomeActivity> {
     //   print("Your FCM Token is : $token");
     // });
     // suraj();
-    getLocationOfCLient();
+    getPrefs().then((val) {
+      getLocationOfCLient();
+    });
   }
 
   void getLocationOfCLient() async {
@@ -95,210 +101,213 @@ class _HomeActivityState extends State<HomeActivity> {
             )
           ],
         ),
-        body: new Center(
-          child: new GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 1.2,
-              padding: const EdgeInsets.all(15.0),
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 4.0,
-              children: <Widget>[
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ServiceHistoryActivity()),
-                              );
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/setting.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("Service History"))
-                              ],
-                            )))),
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OutletActivity()),
-                              );
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/outlet.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("Outlet List"))
-                              ],
-                            )))),
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CheckInventory()),
-                              );
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/cart.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("Inventory Check"))
-                              ],
-                            )))),
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              _showAlert();
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/distressCall.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("Distress Call"))
-                              ],
-                            )))),
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OfferPromo()),
-                              );
-                              //showOffer();
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/offer.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("offers & Promotions"))
-                              ],
-                            )))),
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ServiceActivity()),
-                              );
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/service.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("Service"))
-                              ],
-                            )))),
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => GoogleMapActivity()),
-                              // );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LocateActivity()),
-                              );
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/locate.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("Locate"))
-                              ],
-                            )))),
-                Card(
-                    child: Container(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ShopAndGo()),
-                              );
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/cart.png",
-                                  height: 70,
-                                  width: 50,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text("Shop N Go"))
-                              ],
-                            )))),
-              ]),
+        body: ModalProgressHUD(
+          inAsyncCall: isProgressBarShown,
+          child: new Center(
+            child: new GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 1.2,
+                padding: const EdgeInsets.all(15.0),
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 4.0,
+                children: <Widget>[
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ServiceHistoryActivity()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/setting.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Service History"))
+                                ],
+                              )))),
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OutletActivity()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/outlet.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Outlet List"))
+                                ],
+                              )))),
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CheckInventory()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/cart.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Inventory Check"))
+                                ],
+                              )))),
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                _showAlert();
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/distressCall.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Distress Call"))
+                                ],
+                              )))),
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OfferPromo()),
+                                );
+                                //showOffer();
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/offer.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("offers & Promotions"))
+                                ],
+                              )))),
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ServiceActivity()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/service.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Service"))
+                                ],
+                              )))),
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => GoogleMapActivity()),
+                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LocateActivity()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/locate.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Locate"))
+                                ],
+                              )))),
+                  Card(
+                      child: Container(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ShopAndGo()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/cart.png",
+                                    height: 70,
+                                    width: 50,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Shop N Go"))
+                                ],
+                              )))),
+                ]),
+          ),
         ));
   }
 
@@ -345,11 +354,13 @@ class _HomeActivityState extends State<HomeActivity> {
                     width: queryData.size.width * 0.4,
                     child: RaisedButton(
                       onPressed: () {
+                        Navigator.pop(context);
+
                         getUserList();
                       },
                       color: Colors.blue[700],
                       child: Text(
-                        'SEND SMS',
+                        'SEND ALERT',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -440,20 +451,50 @@ class _HomeActivityState extends State<HomeActivity> {
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
+  void showInSnackBar(String value) {
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+      duration: Duration(minutes: 1),
+      content: new Text(value),
+      action: SnackBarAction(
+        label: 'Dismiss',
+        textColor: Colors.blue,
+        onPressed: () {
+          _scaffoldKey.currentState.hideCurrentSnackBar();
+        },
+      ),
+    ));
+  }
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
+  }
+
   getUserList() async {
+    showProgressBar();
     NetworkOperationManager.getAdminUserList(client).then((val) {
       debugPrint("This is the response $val");
+      hideProgressBar();
       setState(() {
         userList = val;
       });
       print("This is the first token ${val[0].token}");
       calculateDistance();
     }).catchError((err) {
+      hideProgressBar();
       print("There is an error: $err");
     });
   }
 
   void calculateDistance() async {
+    showProgressBar();
     List<UserList> calculatedDistanceList = [];
     List<double> distList = [];
 
@@ -483,7 +524,7 @@ class _HomeActivityState extends State<HomeActivity> {
 
     var shortDistanceToken = userList[shortDistanceIndex].token;
     print("This is the token $shortDistanceToken");
-
+    String cusName = userList[shortDistanceIndex].userId;
     // print("Shorest distnace ${calculatedDistanceList.reduce(min)}");
 
     // calculatedDistanceList.reduce((item, index) => (item.distanceInMeter));
@@ -493,10 +534,26 @@ class _HomeActivityState extends State<HomeActivity> {
           "status ${res.status} , response body ${res.responseBodyForFireBase["success"]}");
       if (res.responseBodyForFireBase["success"] == 1) {
         print("Notification has been sent");
-        Navigator.pop(context);
+        NetworkOperationManager.distressCall(customerNumber, cusName, client)
+            .then((res) {
+          hideProgressBar();
+          if (res.status == Rcode.SUCCESS_CODE) {
+            showInSnackBar(
+                "Send alert successfully ! You will get call from the nearest branch ");
+          } else {
+            showInSnackBar("Something went wrong while sending alert");
+          }
+        });
       } else {
         print("Failure in sending notification");
       }
     });
+  }
+
+  Future<String> getPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    customerNumber = await prefs.getString((Constants.customerMobileNumber));
+    debugPrint(" this is mobile number$customerNumber");
+    //  return serviceOrderNum;
   }
 }

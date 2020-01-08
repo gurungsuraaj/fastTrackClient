@@ -8,14 +8,9 @@ class Constants {
 
   //login credentials
 
-static final String CUSTOMER_NUMBER = "customerNo";
+  static final String CUSTOMER_NUMBER = "customerNo";
   static final String CUSTOMER_NAME = "customerName";
   static final String CUSTOMER_EMAIL = "custEmail";
   static final String BASIC_TOKEN = "basicToken";
+  static final String customerMobileNumber = "customerMobileNo";
 }
-
-  
-
-
-
-

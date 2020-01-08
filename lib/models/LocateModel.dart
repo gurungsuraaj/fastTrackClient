@@ -4,8 +4,15 @@ class LocateModel {
   String telephone;
   String openinghours;
   String latlng;
+  String googlemap;
 
-  LocateModel({this.name, this.address, this.openinghours, this.telephone,this.latlng});
+  LocateModel(
+      {this.name,
+      this.address,
+      this.openinghours,
+      this.telephone,
+      this.latlng,
+      this.googlemap});
   factory LocateModel.fromJson(Map<String, dynamic> json) {
     return LocateModel(
       name: json['name'],
@@ -13,7 +20,7 @@ class LocateModel {
       telephone: json['telephone'],
       openinghours: json['openinghours'],
       latlng: json['latlng'],
-
+      googlemap: json['googlemap'],
     );
   }
 }

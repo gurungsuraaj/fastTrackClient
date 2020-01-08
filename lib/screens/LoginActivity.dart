@@ -41,7 +41,8 @@ class _LoginActivityState extends State<LoginActivity> {
 
   TextEditingController passwordController =
       new TextEditingController(text: "surajgrg");
-  TextEditingController mobileController = new TextEditingController(text: "9806644429");
+  TextEditingController mobileController =
+      new TextEditingController(text: "9806644429");
 
   @override
   void initState() {
@@ -316,8 +317,8 @@ class _LoginActivityState extends State<LoginActivity> {
         debugPrint("Basic token : $basicToken");
 
         hideProgressBar();
-        PrefsManager.saveLoginCredentialsToPrefs(
-            custNumber, customerName, custEmail, basicToken);
+        PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName,
+            custEmail, basicToken, mobileController.text);
         Navigator.pushReplacementNamed(context, RoutesName.HOME_ACTIVITY);
         ShowToast.showToast(context, message);
       } else {
