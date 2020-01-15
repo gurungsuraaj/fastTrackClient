@@ -262,11 +262,11 @@ class _HomeActivityState extends State<HomeActivity> {
                                 //   MaterialPageRoute(
                                 //       builder: (context) => GoogleMapActivity()),
                                 // );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LocateActivity()),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => LocateActivity()),
+                                // );
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
@@ -18,6 +19,8 @@ import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:xml/xml.dart' as xml;
+import 'package:barcode_scan/barcode_scan.dart';
+
 
 class CheckInventory extends StatefulWidget {
   @override
@@ -361,4 +364,25 @@ class _CheckInventoryState extends State<CheckInventory> {
       print("There is an error: $err");
     });
   }
+
+
+  // Future _scanQR() async {
+  //   try {
+  //     String qrResult = await BarcodeScanner.scan();
+  //     setState(() {
+      
+  //     });
+  //   } on PlatformException catch (ex) {
+  //     if (ex.code == BarcodeScanner.CameraAccessDenied) {
+  //       displaySnackbar(context, "Camera permission was denied");
+  //     } else {
+  //       displaySnackbar(context, "Unknown Error $ex");
+  //     }
+  //   } on FormatException {
+  //     displaySnackbar(
+  //         context, "You pressed the back button before scanning anything");
+  //   } catch (ex) {
+  //     displaySnackbar(context, "Unknown Error $ex");
+  //   }
+  // }
 }
