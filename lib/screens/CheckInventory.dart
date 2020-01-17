@@ -393,8 +393,8 @@ class _CheckInventoryState extends State<CheckInventory> {
         displaySnackbar(context, "Unknown Error $ex");
       }
     } on FormatException {
-      displaySnackbar(
-          context, "You pressed the back button before scanning anything");
+      // displaySnackbar(
+      //     context, "You pressed the back button before scanning anything");
     } catch (ex) {
       displaySnackbar(context, "Unknown Error $ex");
     }
@@ -413,7 +413,7 @@ class _CheckInventoryState extends State<CheckInventory> {
     await NetworkOperationManager.getItemFromBarcodeScanning(
             searchController.text, client)
         .then((res) {
-          hideProgressDialog(context);
+      hideProgressDialog(context);
       if (res.length <= 0) {
         ShowToast.showToast(context, "No such product found !!");
       } else {

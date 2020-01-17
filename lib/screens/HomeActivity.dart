@@ -546,7 +546,7 @@ class _HomeActivityState extends State<HomeActivity> {
           }
         });
       } else {
-        print("Failure in sending notification");
+        showInSnackBar("Failure in sending notification");
       }
     }).catchError((err) {
       hideProgressBar();
