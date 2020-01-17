@@ -556,7 +556,7 @@ class _HomeActivityState extends State<HomeActivity> {
 
   Future<String> getPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    customerNumber = await prefs.getString((Constants.customerMobileNumber));
+    customerNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
     debugPrint(" this is mobile number$customerNumber");
     //  return serviceOrderNum;
   }
