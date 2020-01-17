@@ -158,8 +158,8 @@ class NetworkOperationManager {
             "key=AAAAtSaXuEQ:APA91bGLDP8cG8WRPbkN6KXAxeVXkPLYrHJHJhMKeVU3fwxzGQ2njbYl2pS4XWP5zm_pPQJ8GkvHqYWzVKcC4D48lRZnnb9xbyxSLoYwBRVCIyOOpqRigh3Oze07bA5M6rLUhFGrjAdM"
       };
       Map<String, String> notification = {
-        "body": "Show Details",
-        "title": "New Like"
+        "body": "Tap for more info!",
+        "title": "Help!"
       };
       Map body = {"to": token, "notification": notification};
       var bodyJson = json.encode(body);
@@ -279,8 +279,7 @@ class NetworkOperationManager {
     return rs;
   }
 
-
-   static Future<List<SearchItemModel>> getItemFromBarcodeScanning(
+  static Future<List<SearchItemModel>> getItemFromBarcodeScanning(
       String search, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.URL_FOR_SEARCH_ITEM_FROM_NAV);
@@ -339,5 +338,4 @@ class NetworkOperationManager {
 
     return searchItemArrayList;
   }
-
 }

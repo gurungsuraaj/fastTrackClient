@@ -412,6 +412,7 @@ class _CheckInventoryState extends State<CheckInventory> {
     await NetworkOperationManager.getItemFromBarcodeScanning(
             searchController.text, client)
         .then((res) {
+          hideProgressDialog(context);
       if (res.length <= 0) {
         ShowToast.showToast(context, "No such product found !!");
       } else {
@@ -420,6 +421,7 @@ class _CheckInventoryState extends State<CheckInventory> {
         });
       }
     }).catchError((err) {
+      hideProgressDialog(context);
       ShowToast.showToast(context, "Error : $err !!");
     });
   }

@@ -530,6 +530,7 @@ class _HomeActivityState extends State<HomeActivity> {
     // calculatedDistanceList.reduce((item, index) => (item.distanceInMeter));
 
     NetworkOperationManager.sendNotification(shortDistanceToken).then((res) {
+      hideProgressBar();
       print(
           "status ${res.status} , response body ${res.responseBodyForFireBase["success"]}");
       if (res.responseBodyForFireBase["success"] == 1) {
@@ -547,6 +548,9 @@ class _HomeActivityState extends State<HomeActivity> {
       } else {
         print("Failure in sending notification");
       }
+    }).catchError((err) {
+      hideProgressBar();
+      ShowToast.showToast(context, " Error : $err");
     });
   }
 
