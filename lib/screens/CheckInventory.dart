@@ -78,6 +78,7 @@ class _CheckInventoryState extends State<CheckInventory> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.DARK_BLUE),
         actions: <Widget>[
@@ -399,7 +400,7 @@ class _CheckInventoryState extends State<CheckInventory> {
     }
   }
 
-  void displaySnackbar(BuildContext context, msg) {
+  Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),

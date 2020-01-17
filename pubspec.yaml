@@ -46,6 +46,7 @@ dependencies:
   geolocator:
   barcode_scan:
   url_launcher:
+  intl:
 
 dev_dependencies:
   flutter_test:

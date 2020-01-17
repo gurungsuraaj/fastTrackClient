@@ -25,7 +25,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
       ),
       backgroundColor: Color(0xFFD9D9D9),
       body: Container(
-        height: height / 1.8,
+        height: height / 1.7,
         padding: EdgeInsets.fromLTRB(2, 8, 8, 8),
         child: Card(
           elevation: 2,

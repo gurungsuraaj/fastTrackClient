@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:xml2json/xml2json.dart';
@@ -243,12 +244,17 @@ class NetworkOperationManager {
     var url = Uri.encodeFull(Api.CHECK_INVENTORY);
     String response = "";
     print("This is the url $url");
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-ddTkk:mm:ss').format(now);
+    print("This is the now $formattedDate");
+
     var envelope =
         '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
 <urn:Distresscall>
 <urn:custName>$cusName</urn:custName>
 <urn:custMobNo>$cusNumber</urn:custMobNo>
+<urn:reqCallDateTime>$formattedDate</urn:reqCallDateTime>
 </urn:Distresscall>
 </soapenv:Body>
 </soapenv:Envelope>''';
