@@ -18,7 +18,7 @@ class PrefsManager {
     await prefs.setString(Constants.CUSTOMER_NAME, username);
     await prefs.setString(Constants.CUSTOMER_EMAIL, email);
     await prefs.setString(Constants.BASIC_TOKEN, basicToken);
-    await prefs.setString(Constants.customerMobileNumber, mobileNumber);
+    await prefs.setString(Constants.CUSTOMER_MOBILE_NO, mobileNumber);
   }
 
   static Future<bool> checkSession() async {
