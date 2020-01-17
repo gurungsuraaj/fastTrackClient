@@ -44,8 +44,8 @@ dependencies:
   connectivity:
   firebase_messaging:
   geolocator:
-  url_launcher: ^5.4.1
-
+  barcode_scan:
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

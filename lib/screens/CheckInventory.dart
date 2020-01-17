@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
@@ -10,14 +11,18 @@ import 'package:fasttrackgarage_app/models/OutletList.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:xml/xml.dart' as xml;
+import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/services.dart';
 
 class CheckInventory extends StatefulWidget {
   @override
@@ -29,6 +34,7 @@ class _CheckInventoryState extends State<CheckInventory> {
   String dropdownValue2 = "One";
   String search;
   NTLMClient client;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<Item> itemList = new List<Item>();
   List<OutletList> outletList = new List<OutletList>();
@@ -72,7 +78,16 @@ class _CheckInventoryState extends State<CheckInventory> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBarWithTitle.getAppBar('Inventory Check'),
+      appBar: AppBar(
+        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(FontAwesomeIcons.barcode),
+              onPressed: () {
+                _scanQR();
+              })
+        ],
+      ),
       body: Column(
         children: <Widget>[
           Column(
@@ -359,6 +374,53 @@ class _CheckInventoryState extends State<CheckInventory> {
       hideProgressDialog(context);
     }).catchError((err) {
       print("There is an error: $err");
+    });
+  }
+
+  Future _scanQR() async {
+    try {
+      String qrResult = await BarcodeScanner.scan();
+      setState(() {
+        searchController.text = qrResult;
+
+        getItemFromBarcode();
+      });
+    } on PlatformException catch (ex) {
+      if (ex.code == BarcodeScanner.CameraAccessDenied) {
+        displaySnackbar(context, "Camera permission was denied");
+      } else {
+        displaySnackbar(context, "Unknown Error $ex");
+      }
+    } on FormatException {
+      displaySnackbar(
+          context, "You pressed the back button before scanning anything");
+    } catch (ex) {
+      displaySnackbar(context, "Unknown Error $ex");
+    }
+  }
+
+  void displaySnackbar(BuildContext context, msg) {
+    final snackBar = SnackBar(
+      content: Text('$msg'),
+      duration: const Duration(seconds: 2),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  void getItemFromBarcode() async {
+    showProgressDialog(context);
+    await NetworkOperationManager.getItemFromBarcodeScanning(
+            searchController.text, client)
+        .then((res) {
+      if (res.length <= 0) {
+        ShowToast.showToast(context, "No such product found !!");
+      } else {
+        setState(() {
+          searchList = res;
+        });
+      }
+    }).catchError((err) {
+      ShowToast.showToast(context, "Error : $err !!");
     });
   }
 }
