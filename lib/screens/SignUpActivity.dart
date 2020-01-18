@@ -143,6 +143,9 @@ class _SignUpActivity extends State<SignUpActivity> {
                             ),
                             Container(
                               child: TextFormField(
+                                validator: (val) => val.length < 10
+                                    ? 'Please enter atleast 10 character '
+                                    : null,
                                 keyboardType: TextInputType.number,
                                 style: TextStyle(
                                   fontSize: fontSizeTextField,
@@ -165,14 +168,11 @@ class _SignUpActivity extends State<SignUpActivity> {
                             ),
                             Container(
                               child: TextFormField(
-                                key: passKey,
+                                validator: (val) => val.length < 6
+                                    ? 'Please enter atleast 6 character '
+                                    : null,
+                                // key: passKey,
                                 obscureText: true,
-                                validator: (String val) {
-                                  if (val.isEmpty) {
-                                    return 'Use atleast 6 characters to create your password';
-                                  } else
-                                    return null;
-                                },
                                 style: TextStyle(
                                   fontSize: fontSizeTextField,
                                 ),
@@ -271,7 +271,6 @@ class _SignUpActivity extends State<SignUpActivity> {
     if (form.validate()) {
       if (checkBoxValue) {
         //proceed to post
-        form.save();
         debugPrint("password Saved succesfully");
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile ||
