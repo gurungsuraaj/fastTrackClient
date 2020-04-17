@@ -53,7 +53,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
     PrefsManager.checkSession().then((isSessionExist) {
       if (isSessionExist) {
-        Navigator.pushReplacementNamed(context, RoutesName.HOME_ACTIVITY);
+        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
       }
     });
   }
@@ -86,6 +86,7 @@ class _LoginActivityState extends State<LoginActivity> {
         statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
 
     return Scaffold(
+      backgroundColor:  Color(ExtraColors.DARK_BLUE),
       key: _scaffoldKey,
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -94,7 +95,13 @@ class _LoginActivityState extends State<LoginActivity> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ReusableAppBar.getAppBar(0, PADDING, height, width), //Container
+              ReusableAppBar.getAppBar(0, 0, height, width),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                  child: Text("Login to your account", style: TextStyle(color: Colors.white,fontSize: 16),),
+                ),
+              ) ,//Container
               Expanded(
                 child: Form(
                   key: formKey,
@@ -107,35 +114,25 @@ class _LoginActivityState extends State<LoginActivity> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(top: 16),
-                                child: Center(
-                                  child: Text(
-                                    'Welcome',
-                                    style: TextStyle(
-                                      color: Colors.blue[900],
-                                      fontSize: 22.0,
-                                      // fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
+
                               Center(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
+//                                    Container(
+//                                      margin: EdgeInsets.only(top: 40),
+//                                      child: Text(
+//                                        'Mobile number',
+//                                        style: TextStyle(
+//                                          fontWeight: fontWeightText,
+//                                          fontSize: fontSizeText,
+//                                        ),
+//                                      ),
+//                                    ),
                                     Container(
-                                      margin: EdgeInsets.only(top: 40),
-                                      child: Text(
-                                        'Mobile number',
-                                        style: TextStyle(
-                                          fontWeight: fontWeightText,
-                                          fontSize: fontSizeText,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: width * 0.8,
+                                      padding: EdgeInsets.only(top: 15),
+
+                                      width: width * 0.7,
                                       child: TextFormField(
                                         keyboardType: TextInputType.number,
                                         validator: (val) {
@@ -145,12 +142,20 @@ class _LoginActivityState extends State<LoginActivity> {
                                             return null;
                                         },
                                         style: TextStyle(
+                                          color: Colors.white,
                                             fontSize: fontSizeTextField),
                                         controller: mobileController,
                                         decoration: InputDecoration(
                                             hintText: 'Your Number...',
                                             hintStyle: TextStyle(
-                                                color: Color(0xffb8b8b8))),
+                                                color: Color(0xffb8b8b8)),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.white),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -160,27 +165,37 @@ class _LoginActivityState extends State<LoginActivity> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
+//                                    Container(
+//                                      margin: EdgeInsets.only(top: MARGIN),
+//                                      child: Text(
+//                                        'Password',
+//                                        style: TextStyle(
+//                                            fontWeight: fontWeightText,
+//                                            fontSize: fontSizeText),
+//                                      ),
+//                                    ),
                                     Container(
-                                      margin: EdgeInsets.only(top: MARGIN),
-                                      child: Text(
-                                        'Password',
-                                        style: TextStyle(
-                                            fontWeight: fontWeightText,
-                                            fontSize: fontSizeText),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: width * 0.8,
-                                      child: TextFormField(
+                                      padding: EdgeInsets.only(top: 15),
+                                      width: width * 0.7,
+                                      child: TextField(
                                         obscureText: true,
                                         style: TextStyle(
                                           fontSize: fontSizeTextField,
+                                          color: Colors.white
                                         ),
                                         controller: passwordController,
                                         decoration: InputDecoration(
                                             hintText: 'Your password',
                                             hintStyle: TextStyle(
-                                                color: Color(0xffb8b8b8))),
+                                                color: Color(0xffb8b8b8)),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.white),
+                                          ),  ),
+
+
                                       ),
                                     ),
                                   ],
@@ -188,10 +203,14 @@ class _LoginActivityState extends State<LoginActivity> {
                               ),
                               Center(
                                 child: Container(
-                                  padding: EdgeInsets.fromLTRB(0, 50, 0, 5),
-                                  width: width * 0.55,
+                                  padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
+                                  width: width * 0.45,
                                   child: RaisedButton(
-                                    color: Color(ExtraColors.DARK_BLUE),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: new BorderRadius.circular(18.0),
+                                      // side: BorderSide(color: Colors.black),
+                                    ),
+                                    color: Colors.white,
                                     onPressed: () {
                                       // performLogin();
                                       FocusScope.of(context)
@@ -199,10 +218,36 @@ class _LoginActivityState extends State<LoginActivity> {
                                       _submit();
                                     },
                                     child: Text(
-                                      "Login",
-                                      style: TextStyle(color: Colors.white),
+                                      "Continue",
+                                      style: TextStyle(color: Color(ExtraColors.DARK_BLUE)),
                                     ),
                                   ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "Dont have account?",
+                                      style:
+                                      TextStyle(color: Colors.white),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(context,
+                                            RoutesName.SIGNUP_ACTIVITY);
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.all(6),
+                                          child: Text(
+                                            "Register",
+                                            style: TextStyle(
+                                                color: Colors.yellow),
+                                          )),
+                                    )
+                                  ],
                                 ),
                               ),
                               Expanded(
@@ -212,24 +257,11 @@ class _LoginActivityState extends State<LoginActivity> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        "Dont have account?",
+                                        "All right reserve © 2020",
                                         style:
-                                            TextStyle(color: Color(0xff7c7b7b)),
+                                            TextStyle(color: Colors.white),
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              RoutesName.SIGNUP_ACTIVITY);
-                                        },
-                                        child: Container(
-                                            padding: EdgeInsets.all(6),
-                                            child: Text(
-                                              "Sign Up",
-                                              style: TextStyle(
-                                                  color: Color(
-                                                      ExtraColors.DARK_BLUE)),
-                                            )),
-                                      )
+
                                     ],
                                   ),
                                 ),
@@ -319,7 +351,7 @@ class _LoginActivityState extends State<LoginActivity> {
         hideProgressBar();
         PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName,
             custEmail, basicToken, mobileController.text);
-        Navigator.pushReplacementNamed(context, RoutesName.HOME_ACTIVITY);
+        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
         ShowToast.showToast(context, message);
       } else {
         hideProgressBar();

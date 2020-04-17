@@ -10,5 +10,6 @@ class RoutesName{
   static final String SERVICE_ACTIVITY = "/ServiceActivity";
   static final String SERVICE_HISTORY_ACTIVITY = "/ServiceHistory";
   static final String CHECK_INVENTORY = "/CheckInventory";
+  static final String MAIN_TAB = '/MainTab';
 
 }

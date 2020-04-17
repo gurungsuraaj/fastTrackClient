@@ -7,11 +7,12 @@ class ReusableAppBar {
       margin: EdgeInsets.only(bottom: margin),
       padding: EdgeInsets.only(bottom: padding),
       color: Color(ExtraColors.DARK_BLUE),
+//    color: Colors.white,
       height: height/6,
       child: Align(
-        alignment: Alignment.center,
+        alignment: Alignment.bottomCenter,
         child: Container(
-          width: 270,
+          width: 310,
           child: new Image(
             image: AssetImage(
               'images/fast_track_logo.png',

@@ -47,6 +47,9 @@ dependencies:
   barcode_scan:
   url_launcher:
   intl:
+  country_pickers: ^1.2.0
+  carousel_slider: ^1.4.1
+  cached_network_image: 2.0.0-rc
 
 dev_dependencies:
   flutter_test:
@@ -75,18 +78,23 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - images/fast_track_logo.png
-    - images/cart.png
+    - images/shopAndGo.png
     - images/message.png
     - images/maintenance_icon.png
     - images/tyre.png
     - images/carrepair.png
-    - images/setting.png
-    - images/outlet.png
+    - images/ServiceHistory.png
+    - images/outletLogo.png
     - images/distressCall.png
-    - images/service.png
-    - images/shop.png
-    - images/offer.png
-    - images/locate.png
+    - images/ServicesLogo.png
+    - images/LocationLogo.png
+    - images/promotionLogo.png
+    - images/promotionLogo.png
+    - images/fastTrackSplashLogo.png
+    - images/fastTrackSingleLogo.png
+    - images/inventoryLogo.png
+    - images/AcImage.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

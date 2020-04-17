@@ -160,7 +160,8 @@ class NetworkOperationManager {
       };
       Map<String, String> notification = {
         "body": "Tap for more info!",
-        "title": "Help!"
+        "title": "Pleases response to the distress call",
+        "sound": "default"
       };
       Map body = {"to": token, "notification": notification};
       var bodyJson = json.encode(body);

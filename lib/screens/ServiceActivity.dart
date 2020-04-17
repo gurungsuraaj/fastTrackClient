@@ -1,3 +1,4 @@
+import 'package:fasttrackgarage_app/screens/ServiceDetailActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -41,43 +42,60 @@ class _ServiceActivityState extends State<ServiceActivity> {
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         child: Container(
-          child: ListView.builder(
+          child: GridView.builder(
+              padding: const EdgeInsets.all(15.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                childAspectRatio: 1.9,
+                mainAxisSpacing: 5.0,
+                crossAxisSpacing: 4.0,
+              ),
               itemCount: serviceList.length,
               itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: 15,
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ServiceDetailActivity(serviceList[index])),
+                    );
+                  },
+                  child: Card(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Icon(
+                                Icons.settings,
+                                color: Color(ExtraColors.DARK_BLUE),
+                                size: 35,
+                              ),
+                              // Image(
+                              //   height: imageHeight,
+                              //   width: imageWidth,
+                              //   image: AssetImage('images/maintenance_icon.png'),
+                              // ),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              Text(
+                                serviceList[index],
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                          Icon(
-                            Icons.settings,
-                            color: Color(ExtraColors.DARK_BLUE),
-                            size: 35,
-                          ),
-                          // Image(
-                          //   height: imageHeight,
-                          //   width: imageWidth,
-                          //   image: AssetImage('images/maintenance_icon.png'),
-                          // ),
-                          SizedBox(
-                            width: 25,
-                          ),
-                          Text(
-                            serviceList[index],
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                        ),
+
+                      ],
                     ),
-                    new Divider(
-                      color: Colors.black,
-                    ),
-                  ],
+                  ),
                 );
               }),
         ),
