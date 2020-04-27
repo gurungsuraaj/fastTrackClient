@@ -9,15 +9,21 @@ import 'package:fasttrackgarage_app/screens/OutletActivity.dart';
 import 'package:fasttrackgarage_app/screens/ServiceActivity.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryActivity.dart';
 import 'package:fasttrackgarage_app/screens/SignUpActivity.dart';
+import 'package:fasttrackgarage_app/screens/app.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'package:flutter/material.dart';
+//GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
 
 void main() => runApp(
       MaterialApp(
+
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
         routes: <String, WidgetBuilder>{
@@ -64,8 +70,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigationPage() async {
     // String location = prefs.getString(Constants.location);
+    String basicToken ;
 
-    Navigator.of(context).pushReplacementNamed(RoutesName.LOGIN_ACTIVITY);
+    final prefs = await SharedPreferences.getInstance();
+basicToken = prefs.getString(Constants.BASIC_TOKEN);
+
+if(basicToken == null || basicToken == ""){
+  Navigator.of(context).pushReplacementNamed(RoutesName.LOGIN_ACTIVITY);
+
+}else{
+  Navigator.of(context).pushReplacementNamed(RoutesName.MAIN_TAB);
+
+}
+
 
   }
 
@@ -129,6 +146,9 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+
+
 
 
 

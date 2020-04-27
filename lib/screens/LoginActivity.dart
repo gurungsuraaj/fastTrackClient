@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
@@ -39,10 +40,11 @@ class _LoginActivityState extends State<LoginActivity> {
   var passKey = GlobalKey<FormFieldState>();
   bool isProgressBarShown = false;
 
-  TextEditingController passwordController =
-      new TextEditingController(text: "surajgrg");
   TextEditingController mobileController =
-      new TextEditingController(text: "9806644429");
+  new TextEditingController(text: "");
+  TextEditingController passwordController =
+      new TextEditingController(text: "");
+
 
   @override
   void initState() {
@@ -296,7 +298,7 @@ class _LoginActivityState extends State<LoginActivity> {
   void performLogin() async {
     showProgressBar();
     String url = Api.POST_CUSTOMER_LOGIN;
-    debugPrint("This is  url : $url");
+    debugPrint("This is  url : $url, IMEI $_platformImei");
 
     String mobileNumber = mobileController.text;
     String password = passwordController.text;
@@ -351,7 +353,12 @@ class _LoginActivityState extends State<LoginActivity> {
         hideProgressBar();
         PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName,
             custEmail, basicToken, mobileController.text);
-        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
+//        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
+//        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: ((context) => MainTab())));
         ShowToast.showToast(context, message);
       } else {
         hideProgressBar();

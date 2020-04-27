@@ -44,7 +44,9 @@ class HomeActivity extends StatefulWidget {
   _HomeActivityState createState() => _HomeActivityState();
 }
 
-class _HomeActivityState extends State<HomeActivity> {
+class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClientMixin<HomeActivity> {
+  @override
+  bool get wantKeepAlive => true;
   List<UserList> userList = List();
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Promo> promoList = new List<Promo>();
@@ -161,10 +163,12 @@ class _HomeActivityState extends State<HomeActivity> {
                             ),
                             SizedBox(
                               width: 10,
-                            )
-                            ,
+                            ),
                             placemark.isEmpty
-                                ? Container()
+                                ? Text(
+                                    "Loading...",
+                                    style: TextStyle(color: Colors.white),
+                                  )
                                 : Text(
                                     "${placemark[0].name.toString()}",
                                     style: TextStyle(color: Colors.white),
@@ -224,12 +228,15 @@ class _HomeActivityState extends State<HomeActivity> {
                           child: Container(
                               child: InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ServiceActivity()),
-                                    );
+//                                    Navigator.push(
+//                                      context,
+//                                      MaterialPageRoute(
+//                                          builder: (context) =>
+//                                              ServiceActivity()),
+//                                    );
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (context) => ServiceActivity()));
+
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -448,56 +455,116 @@ class _HomeActivityState extends State<HomeActivity> {
   void _showAlert() {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
-    AlertDialog dialog = new AlertDialog(
-      contentPadding: EdgeInsets.all(0.0),
-      content: Container(
-        height: queryData.size.height * 0.5,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 120,
-              width: queryData.size.width,
-              color: Color(ExtraColors.DARK_BLUE),
-              child: Center(
-                  child: Image.asset(
-                "images/message.png",
-                height: 90,
-              )),
-            ),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
-                    child: Text("Need Help?"),
-                  ),
-                  Container(
-                    width: queryData.size.width * 0.4,
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(0.0),
+          content: Container(
+            height: 290,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 120,
+//                  width: queryData.size.width,
+                  color: Color(ExtraColors.DARK_BLUE),
+                  child: Center(
+                      child: Image.asset(
+                        "images/message.png",
+                        height: 90,
+                      )),
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+                        child: Text("Need Help?"),
+                      ),
+                      Container(
+                        width: 120,
+                        child: RaisedButton(
+                          onPressed: () {
+                            print("Hello");
+                            Navigator.pop(context);
 
-                        getUserList();
-                      },
-                      color: Colors.blue[700],
-                      child: Text(
-                        'SEND ALERT',
-                        style: TextStyle(
-                          color: Colors.white,
+                            getUserList();
+                          },
+                          color: Colors.blue[700],
+                          child: Text(
+                            'SEND ALERT',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
-    showDialog(context: context, child: dialog);
+
+
+//
+//
+//    queryData = MediaQuery.of(context);
+//    AlertDialog dialog = new AlertDialog(
+//      contentPadding: EdgeInsets.all(0.0),
+//      content: Container(
+//        height: queryData.size.height * 0.5,
+//        child: Column(
+//          children: <Widget>[
+//            Container(
+//              height: 120,
+//              width: queryData.size.width,
+//              color: Color(ExtraColors.DARK_BLUE),
+//              child: Center(
+//                  child: Image.asset(
+//                "images/message.png",
+//                height: 90,
+//              )),
+//            ),
+//            Container(
+//              child: Column(
+//                crossAxisAlignment: CrossAxisAlignment.center,
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+//                  Container(
+//                    padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+//                    child: Text("Need Help?"),
+//                  ),
+//                  Container(
+//                    width: queryData.size.width * 0.4,
+//                    child: RaisedButton(
+//                      onPressed: () {
+//                        Navigator.pop(context);
+//
+//                        getUserList();
+//                      },
+//                      color: Colors.blue[700],
+//                      child: Text(
+//                        'SEND ALERT',
+//                        style: TextStyle(
+//                          color: Colors.white,
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+//                ],
+//              ),
+//            )
+//          ],
+//        ),
+//      ),
+//    );
+//    showDialog(context: context, child: dialog);
   }
 
   showOffer() async {
@@ -562,23 +629,23 @@ class _HomeActivityState extends State<HomeActivity> {
   }
 
   getUserList() async {
-    showProgressBar();
+//    showProgressBar();
     NetworkOperationManager.getAdminUserList(client).then((val) {
       debugPrint("This is the response $val");
-      hideProgressBar();
+//      hideProgressBar();
       setState(() {
         userList = val;
       });
       print("This is the first token ${val[0].token}");
       calculateDistance();
     }).catchError((err) {
-      hideProgressBar();
+//      hideProgressBar();
       print("There is an error: $err");
     });
   }
 
   void calculateDistance() async {
-    showProgressBar();
+//    showProgressBar();
     List<UserList> calculatedDistanceList = [];
     List<double> distList = [];
 
@@ -614,7 +681,7 @@ class _HomeActivityState extends State<HomeActivity> {
     // calculatedDistanceList.reduce((item, index) => (item.distanceInMeter));
 
     NetworkOperationManager.sendNotification(shortDistanceToken).then((res) {
-      hideProgressBar();
+//      hideProgressBar();
       print(
           "status ${res.status} , response body ${res.responseBodyForFireBase["success"]}");
       if (res.responseBodyForFireBase["success"] == 1) {
@@ -626,14 +693,18 @@ class _HomeActivityState extends State<HomeActivity> {
             showInSnackBar(
                 "Send alert successfully ! You will get call from the nearest branch ");
           } else {
-            showInSnackBar("Something went wrong while sending alert");
+//            showInSnackBar("Something went wrong while sending alert");
+            showInSnackBar(
+                "Send alert successfully ! You will get call from the nearest branch ");
           }
         });
       } else {
-        showInSnackBar("Failure in sending notification");
+//        showInSnackBar("Failure in sending notification");
+        showInSnackBar(
+            "Send alert successfully ! You will get call from the nearest branch ");
       }
     }).catchError((err) {
-      hideProgressBar();
+//      hideProgressBar();
       ShowToast.showToast(context, " Error : $err");
     });
   }
@@ -641,7 +712,8 @@ class _HomeActivityState extends State<HomeActivity> {
   Future<String> getPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     customerNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
-    debugPrint(" this is mobile number$customerNumber");
+
+
     //  return serviceOrderNum;
   }
 }

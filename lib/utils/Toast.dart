@@ -7,8 +7,8 @@ class ShowToast {
   static showToast(BuildContext context, String message) {
     Toast.show(message, context,
         duration: Toast.LENGTH_LONG,
-        gravity: Toast.CENTER,
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
-        textColor: Colors.white);
+        gravity: Toast.BOTTOM,
+        backgroundColor: Colors.grey,
+        textColor: Colors.black);
   }
 }
