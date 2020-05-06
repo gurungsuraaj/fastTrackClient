@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:circular_check_box/circular_check_box.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -16,6 +17,7 @@ import 'GenerateOTPActivity.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import "./TermsAndConditionScreen.dart";
+import 'package:country_pickers/country_pickers.dart';
 
 class SignUpActivity extends StatefulWidget {
   @override
@@ -38,6 +40,7 @@ class _SignUpActivity extends State<SignUpActivity> {
   var fontSizeTextField = 14.0;
   var fontSizeText = 14.0;
   bool _termsChecked = false;
+  String phoneCode = "971",mobileNumber;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -60,6 +63,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Color(ExtraColors.DARK_BLUE),
       key: _scaffoldKey,
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -68,7 +72,17 @@ class _SignUpActivity extends State<SignUpActivity> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ReusableAppBar.getAppBar(0, PADDING, height, width), //Container
+              ReusableAppBar.getAppBar(0, 0, height, width),
+
+              Center(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                  child: Text(
+                    "Create new account",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ), ////Container
               Expanded(
                 child: ListView(
                   children: <Widget>[
@@ -77,19 +91,22 @@ class _SignUpActivity extends State<SignUpActivity> {
                       child: Container(
                         margin: EdgeInsets.all(MARGIN),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+
+//                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+//                            Container(
+//                              margin: EdgeInsets.only(top: 16),
+//                              child: Text(
+//                                'Full Name',
+//                                style: TextStyle(
+//                                  fontWeight: fontWeightText,
+//                                  fontSize: fontSizeText,
+//                                ),
+//                              ),
+//                            ),
                             Container(
-                              margin: EdgeInsets.only(top: 16),
-                              child: Text(
-                                'Full Name',
-                                style: TextStyle(
-                                  fontWeight: fontWeightText,
-                                  fontSize: fontSizeText,
-                                ),
-                              ),
-                            ),
-                            Container(
+                              width: width * 0.8,
                               child: TextFormField(
                                 // validator: (val) => val.length && val.isEmpty > 20
                                 //     ?
@@ -102,71 +119,109 @@ class _SignUpActivity extends State<SignUpActivity> {
                                   }
                                 },
                                 controller: nameController,
-                                style: TextStyle(fontSize: fontSizeTextField),
+                                style: TextStyle(
+                                    fontSize: fontSizeTextField,
+                                    color: Colors.white),
                                 decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
                                     hintText: 'Full name...',
                                     hintStyle:
                                         TextStyle(color: Color(0xffb8b8b8))),
                               ),
                             ),
+//                            Container(
+//                              margin: EdgeInsets.only(top: MARGIN),
+//                              child: Text(
+//                                'E-mail',
+//                                style: TextStyle(
+//                                    fontWeight: fontWeightText,
+//                                    fontSize: fontSizeText),
+//                              ),
+//                            ),
                             Container(
-                              margin: EdgeInsets.only(top: MARGIN),
-                              child: Text(
-                                'E-mail',
-                                style: TextStyle(
-                                    fontWeight: fontWeightText,
-                                    fontSize: fontSizeText),
-                              ),
-                            ),
-                            Container(
+                              padding: EdgeInsets.only(top: 15),
+                              width: width * 0.8,
                               child: TextFormField(
                                 validator: (val) =>
                                     !val.contains('@') ? 'Invalid Email' : null,
                                 style: TextStyle(
-                                  fontSize: fontSizeTextField,
-                                ),
+                                    fontSize: fontSizeTextField,
+                                    color: Colors.white),
                                 controller: emailController,
                                 decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
                                     hintText: 'Your e-mail',
                                     hintStyle:
                                         TextStyle(color: Color(0xffb8b8b8))),
                               ),
                             ),
+//                            Container(
+//                              margin: EdgeInsets.only(top: MARGIN),
+//                              child: Text(
+//                                'Mobile number',
+//                                style: TextStyle(
+//                                    fontWeight: fontWeightText,
+//                                    fontSize: fontSizeText),
+//                              ),
+//                            ),
+//                            Container(
+//                              padding: EdgeInsets.only(top: 15),
+//                              width: width * 0.7,
+//                              child: TextFormField(
+//
+//                                validator: (val) => val.length < 10
+//                                    ? 'Please enter atleast 10 character '
+//                                    : null,
+//                                keyboardType: TextInputType.number,
+//                                style: TextStyle(
+//                                  color: Colors.white,
+//                                  fontSize: fontSizeTextField,
+//                                ),
+//                                controller: mobileController,
+//                                decoration: InputDecoration(
+//                                    enabledBorder: UnderlineInputBorder(
+//                                      borderSide: BorderSide(color: Colors.white),
+//                                    ),
+//                                    focusedBorder: UnderlineInputBorder(
+//                                      borderSide: BorderSide(color: Colors.white),),
+//                                    hintText: 'Your number',
+//                                    hintStyle:
+//                                        TextStyle(color: Color(0xffb8b8b8))),
+//                              ),
+//                            ),
+                          Container(
+                            padding: EdgeInsets.only(top: 15),
+                            width: width * 0.8,
+                            child: _buildCountryPickerDropdown() ,
+                          ),
+
+
+//                            Container(
+//                              margin: EdgeInsets.only(top: MARGIN),
+//                              child: Text(
+//                                'Password',
+//                                style: TextStyle(
+//                                    fontWeight: fontWeightText,
+//                                    fontSize: fontSizeText),
+//                              ),
+//                            ),
                             Container(
-                              margin: EdgeInsets.only(top: MARGIN),
-                              child: Text(
-                                'Mobile number',
-                                style: TextStyle(
-                                    fontWeight: fontWeightText,
-                                    fontSize: fontSizeText),
-                              ),
-                            ),
-                            Container(
-                              child: TextFormField(
-                                validator: (val) => val.length < 10
-                                    ? 'Please enter atleast 10 character '
-                                    : null,
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontSize: fontSizeTextField,
-                                ),
-                                controller: mobileController,
-                                decoration: InputDecoration(
-                                    hintText: 'Your number',
-                                    hintStyle:
-                                        TextStyle(color: Color(0xffb8b8b8))),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: MARGIN),
-                              child: Text(
-                                'Password',
-                                style: TextStyle(
-                                    fontWeight: fontWeightText,
-                                    fontSize: fontSizeText),
-                              ),
-                            ),
-                            Container(
+                              padding: EdgeInsets.only(top: 15),
+                              width: width * 0.8,
                               child: TextFormField(
                                 validator: (val) => val.length < 6
                                     ? 'Please enter atleast 6 character '
@@ -174,16 +229,25 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 // key: passKey,
                                 obscureText: true,
                                 style: TextStyle(
-                                  fontSize: fontSizeTextField,
-                                ),
+                                    fontSize: fontSizeTextField,
+                                    color: Colors.white),
                                 controller: passwordController,
                                 decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
                                     hintText: 'Your password',
                                     hintStyle:
                                         TextStyle(color: Color(0xffb8b8b8))),
                                 onSaved: (val) => _password,
                               ),
                             ),
+
                             Container(
                                 margin: EdgeInsets.only(top: MARGIN),
                                 height: 40,
@@ -229,29 +293,42 @@ class _SignUpActivity extends State<SignUpActivity> {
                                             }
                                           });
                                         },
-                                        child: Text("Terms and Conditions")),
+                                        child: Text(
+                                          "Subscribe for share locally program to earn & redeem.\n Read Share terms and condition",
+                                          style: TextStyle(color: Colors.white,fontSize: 10),
+                                        )),
                                   ],
                                 )),
                             Center(
                               child: Container(
-                                margin: EdgeInsets.only(top: 24.0),
-                                width: width * 1,
+                                margin: EdgeInsets.only(top: 45.0),
+                                width: width * 0.5,
                                 child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(18.0),
+                                    // side: BorderSide(color: Colors.black),
+                                  ),
                                   onPressed: () {
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
                                     _submit();
                                   },
-                                  color: Color(ExtraColors.DARK_BLUE),
+                                  color: Colors.white,
                                   child: Text(
-                                    'SIGN UP',
+                                    'Continue',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Color(ExtraColors.DARK_BLUE),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
+                            Center(
+                              child: Container(
+                                padding: EdgeInsets.only(top: 25),
+                                  child: Text("By proceeding you accept the terms and condition",style: TextStyle(color: Colors.white,fontSize: 12),)),
+                            )
                           ],
                         ),
                       ),
@@ -265,6 +342,17 @@ class _SignUpActivity extends State<SignUpActivity> {
       ),
     );
   }
+//  Widget _buildDropdownItem(Country country) => Container(
+//    child: Row(
+//      children: <Widget>[
+//        CountryPickerUtils.getDefaultFlagImage(country),
+//        SizedBox(
+//          width: 8.0,
+//        ),
+//        Text("+${country.phoneCode}(${country.isoCode})"),
+//      ],
+//    ),
+//  );
 
   void _submit() async {
     final form = formKey.currentState;
@@ -299,12 +387,14 @@ class _SignUpActivity extends State<SignUpActivity> {
     showProgressBar();
     debugPrint("Came to check inventory");
     String url = Api.POST_CUSTOMER_SIGNUP;
-    debugPrint("This is  url : $url");
 
     String name = nameController.text;
     String email = emailController.text;
-    String mobileNum = mobileController.text;
+    String mobileNum = phoneCode + mobileController.text;
     String password = passwordController.text;
+    debugPrint("This is  url : $mobileNum");
+
+
 
     Map<String, String> body = {
       "mobileNo": mobileNum,
@@ -353,4 +443,73 @@ class _SignUpActivity extends State<SignUpActivity> {
       isProgressBarShown = false;
     });
   }
+
+  _buildCountryPickerDropdown(
+          {bool filtered = false,
+          bool sortedByIsoCode = false,
+          bool hasPriorityList = false}) =>
+      Row(
+
+        children: <Widget>[
+          CountryPickerDropdown(
+
+            initialValue: 'AE',
+            itemBuilder: _buildDropdownItem,
+            itemFilter: filtered
+                ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
+                : null,
+            priorityList: hasPriorityList
+                ? [
+                    CountryPickerUtils.getCountryByIsoCode('GB'),
+                    CountryPickerUtils.getCountryByIsoCode('CN'),
+                  ]
+                : null,
+            sortComparator: sortedByIsoCode
+                ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
+                : null,
+            onValuePicked: (Country country) {
+              print("${country.phoneCode}", );
+              setState(() {
+                phoneCode = country.phoneCode;
+              });
+            },
+          ),
+          SizedBox(
+            width: 8.0,
+          ),
+          Expanded(
+            child: TextField(
+              controller: mobileController,
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+
+                hintText: "Phone",
+                hintStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+
+  Widget _buildDropdownItem(Country country) => Container(
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            SizedBox(
+              width: 8.0,
+            ),
+            Text(
+              "+${country.phoneCode}(${country.isoCode})",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      );
 }

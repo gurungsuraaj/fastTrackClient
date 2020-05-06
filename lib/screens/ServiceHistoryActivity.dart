@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/ServiceHistoryItem.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryDetail.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryPieChart.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ServiceHistoryActivity extends StatefulWidget {
   @override
@@ -23,7 +25,7 @@ class ServiceHistoryActivity extends StatefulWidget {
 
 class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
   bool isProgressBarShown = false;
-
+String customerNumber;
   String basicToken = "";
   List<ServiceHistoryItem> serviceHistoriesList =
       new List<ServiceHistoryItem>();
@@ -33,6 +35,8 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
     super.initState();
 
     PrefsManager.getBasicToken().then((token) {
+      getPref();
+
       basicToken = token;
       getServiceHistoryList();
     });
@@ -255,13 +259,14 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
   void getServiceHistoryList() async {
     showProgressBar();
     String url = Api.SERVICE_HISTORY_LIST;
-    debugPrint("This is  url : $url");
+    debugPrint("This is  url : $url, basic token $basicToken");
 
     String customerNo = "CS000001";
 
     Map<String, String> body = {
       "Field": "Customer_No",
       "Criteria": customerNo,
+
     };
 
     var body_json = json.encode(body);
@@ -291,6 +296,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
             .toList();
         hideProgressBar();
       } else {
+        hideProgressBar();
         ShowToast.showToast(context, message);
       }
     }).catchError((val) {
@@ -310,5 +316,13 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
     setState(() {
       isProgressBarShown = false;
     });
+  }
+
+
+   Future<void> getPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
+    print("Customer Number  $customerNumber");
+
   }
 }

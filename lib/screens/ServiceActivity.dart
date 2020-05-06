@@ -1,3 +1,4 @@
+import 'package:fasttrackgarage_app/screens/ServiceDetailActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -28,7 +29,7 @@ class _ServiceActivityState extends State<ServiceActivity> {
   @override
   void initState() {
     super.initState();
-    getServiceList();
+//    getServiceList();
   }
 
   @override
@@ -41,45 +42,341 @@ class _ServiceActivityState extends State<ServiceActivity> {
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         child: Container(
-          child: ListView.builder(
-              itemCount: serviceList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Icon(
-                            Icons.settings,
-                            color: Color(ExtraColors.DARK_BLUE),
-                            size: 35,
-                          ),
-                          // Image(
-                          //   height: imageHeight,
-                          //   width: imageWidth,
-                          //   image: AssetImage('images/maintenance_icon.png'),
-                          // ),
-                          SizedBox(
-                            width: 25,
-                          ),
-                          Text(
-                            serviceList[index],
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    new Divider(
-                      color: Colors.black,
-                    ),
-                  ],
-                );
-              }),
+          child:   new GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              childAspectRatio: 1,
+              padding: const EdgeInsets.all(15.0),
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 4.0,
+              children: <Widget>[
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ServiceDetailActivity("Air Conditioning")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/air-conditioning.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Air-Conditioning"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ServiceDetailActivity("Brakes")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/brakes.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Brakes"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ServiceDetailActivity("Electrics")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/electrics.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Electrics"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ServiceDetailActivity("Oil Filter")),
+                              );
+//showOffer();
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/oil-filter.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Oil Filter"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                  builder: (context) =>
+                                  ServiceDetailActivity("Servicing")));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/servicing.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Servicing"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+// Navigator.push(
+//   context,
+//   MaterialPageRoute(
+//       builder: (context) => GoogleMapActivity()),
+// );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ServiceDetailActivity("Steering")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/steering.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Steering"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ServiceDetailActivity("Suspension")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/suspension.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Suspension"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ServiceDetailActivity("Tone Up")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/tone-up.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Tone-up"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ServiceDetailActivity("Tyre-S")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/tyre-s.png",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Tyre-S"))
+                              ],
+                            )))),
+                Card(
+                    child: Container(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ServiceDetailActivity("Other")),
+                              );
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/other.gif",
+                                  height: 70,
+                                  width: 50,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text("Other"))
+                              ],
+                            )))),
+
+
+              ]),
+
+
+            // For later dynamic list
+//
+//          GridView.builder(
+//              padding: const EdgeInsets.all(15.0),
+//              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                  crossAxisCount: 2,
+//                childAspectRatio: 1.9,
+//                mainAxisSpacing: 5.0,
+//                crossAxisSpacing: 4.0,
+//              ),
+//              itemCount: serviceList.length,
+//              itemBuilder: (BuildContext context, int index) {
+//                return GestureDetector(
+//                  onTap: (){
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) =>
+//                              ServiceDetailActivity(serviceList[index])),
+//                    );
+//                  },
+//                  child: Card(
+//                    child: Column(
+//                      children: <Widget>[
+//                        Container(
+//                          padding: EdgeInsets.all(15),
+//                          child: Column(
+//                            children: <Widget>[
+//                              SizedBox(
+//                                width: 15,
+//                              ),
+//                              Icon(
+//                                Icons.settings,
+//                                color: Color(ExtraColors.DARK_BLUE),
+//                                size: 35,
+//                              ),
+//                              // Image(
+//                              //   height: imageHeight,
+//                              //   width: imageWidth,
+//                              //   image: AssetImage('images/maintenance_icon.png'),
+//                              // ),
+//                              SizedBox(
+//                                width: 25,
+//                              ),
+//                              Text(
+//                                serviceList[index],
+//                                style: TextStyle(
+//                                    fontSize: 18, fontWeight: FontWeight.bold),
+//                              ),
+//                            ],
+//                          ),
+//                        ),
+//
+//                      ],
+//                    ),
+//                  ),
+//                );
+//              }),
         ),
       ),
     );
