@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_picker_dropdown.dart';
+import 'package:country_pickers/utils/utils.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
@@ -34,6 +37,7 @@ class _LoginActivityState extends State<LoginActivity> {
   var fontSizeTextField = 14.0;
   var fontSizeText = 16.0;
   NTLMClient client;
+  String phoneCode = "971";
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
@@ -121,45 +125,45 @@ class _LoginActivityState extends State<LoginActivity> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
+
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(top: 15),
+                                      width: width * 0.7,
+                                      child: _buildCountryPickerDropdown() ,
+                                    ),
+
 //                                    Container(
-//                                      margin: EdgeInsets.only(top: 40),
-//                                      child: Text(
-//                                        'Mobile number',
+//                                      padding: EdgeInsets.only(top: 15),
+//
+//                                      width: width * 0.7,
+//                                      child: TextFormField(
+//                                        keyboardType: TextInputType.number,
+//                                        validator: (val) {
+//                                          if (val.isEmpty) {
+//                                            return 'Please enter your phone number';
+//                                          } else
+//                                            return null;
+//                                        },
 //                                        style: TextStyle(
-//                                          fontWeight: fontWeightText,
-//                                          fontSize: fontSizeText,
+//                                          color: Colors.white,
+//                                            fontSize: fontSizeTextField),
+//                                        controller: mobileController,
+//                                        decoration: InputDecoration(
+//                                            hintText: 'Your Number...',
+//                                            hintStyle: TextStyle(
+//                                                color: Color(0xffb8b8b8)),
+//                                          enabledBorder: UnderlineInputBorder(
+//                                            borderSide: BorderSide(color: Colors.white),
+//                                          ),
+//                                          focusedBorder: UnderlineInputBorder(
+//                                            borderSide: BorderSide(color: Colors.white),
+//                                          ),
 //                                        ),
 //                                      ),
 //                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(top: 15),
-
-                                      width: width * 0.7,
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        validator: (val) {
-                                          if (val.isEmpty) {
-                                            return 'Please enter your phone number';
-                                          } else
-                                            return null;
-                                        },
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                            fontSize: fontSizeTextField),
-                                        controller: mobileController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Your Number...',
-                                            hintStyle: TextStyle(
-                                                color: Color(0xffb8b8b8)),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.white),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -300,7 +304,7 @@ class _LoginActivityState extends State<LoginActivity> {
     String url = Api.POST_CUSTOMER_LOGIN;
     debugPrint("This is  url : $url, IMEI $_platformImei");
 
-    String mobileNumber = mobileController.text;
+    String mobileNumber = phoneCode +  mobileController.text;
     String password = passwordController.text;
     String email = "";
     String custNum = "";
@@ -393,4 +397,79 @@ class _LoginActivityState extends State<LoginActivity> {
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
+
+  _buildCountryPickerDropdown(
+      {bool filtered = false,
+        bool sortedByIsoCode = false,
+        bool hasPriorityList = false}) =>
+      Row(
+
+        children: <Widget>[
+          CountryPickerDropdown(
+
+            initialValue: 'AE',
+            itemBuilder: _buildDropdownItem,
+            itemFilter: filtered
+                ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
+                : null,
+            priorityList: hasPriorityList
+                ? [
+              CountryPickerUtils.getCountryByIsoCode('GB'),
+              CountryPickerUtils.getCountryByIsoCode('CN'),
+            ]
+                : null,
+            sortComparator: sortedByIsoCode
+                ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
+                : null,
+            onValuePicked: (Country country) {
+              print("${country.phoneCode}", );
+              setState(() {
+                phoneCode = country.phoneCode;
+              });
+            },
+          ),
+          SizedBox(
+            width: 8.0,
+          ),
+          Expanded(
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              controller: mobileController,
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: "Your Number...",
+                hintStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+              ),
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Please enter your phone number';
+                } else
+                  return null;
+              },
+            ),
+          )
+        ],
+      );
+
+  Widget _buildDropdownItem(Country country) => Container(
+    child: Row(
+      children: <Widget>[
+        CountryPickerUtils.getDefaultFlagImage(country),
+        SizedBox(
+          width: 8.0,
+        ),
+        Text(
+          "+${country.phoneCode}(${country.isoCode})",
+          style: TextStyle(color: Colors.grey),
+        ),
+      ],
+    ),
+  );
 }

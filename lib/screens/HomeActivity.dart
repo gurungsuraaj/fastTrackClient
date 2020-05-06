@@ -11,6 +11,7 @@ import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,24 +57,53 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
   double userLong, userLatitude; //  For location of client user
   bool isProgressBarShown = false;
   List<Placemark> placemark = List<Placemark>();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  new FlutterLocalNotificationsPlugin();
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-//
-
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
 
-    // _messaging.getToken().then((token) {
-    //   print("Your FCM Token is : $token");
-    // });
-    // suraj();
+     _messaging.getToken().then((token) {
+       print("Your FCM Token is : $token");
+     });
+    // ignore: missing_return
+
+    var android = new AndroidInitializationSettings('mipmap/ic_launcher');
+    var ios = new IOSInitializationSettings();
+    var platform = new InitializationSettings(android, ios);
+    flutterLocalNotificationsPlugin.initialize(platform);
+
+    // ignore: missing_return
+    _messaging.configure(onMessage: (Map<String, dynamic> msg) {
+      showNotification(msg);
+    });
+
+
     getPrefs().then((val) async {
       getLocationOfCLient();
       showOffer();
     });
+
+  }
+  showNotification(Map<String, dynamic> msg) async {
+
+    print("this is message $msg");
+
+    var android = new AndroidNotificationDetails(
+      'sdffds dsffds',
+      "CHANNLE NAME",
+      "channelDescription",
+    );
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(
+        0, msg['notification']['title'],msg['notification']['body'], platform);
   }
 
   void getLocationOfCLient() async {

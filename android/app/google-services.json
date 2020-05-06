@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "124041872656",
+    "firebase_url": "https://fasttrack-b178f.firebaseio.com",
+    "project_id": "fasttrack-b178f",
+    "storage_bucket": "fasttrack-b178f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124041872656:android:68b0def4750e1ad9ad9195",
+        "android_client_info": {
+          "package_name": "com.example.ebtech.ebtreportingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124041872656-8s0mgdjq4j58cn7jhsoa90sqaidt2bho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJHAaPY4anffPeI6UV8XO83qcmRWTul64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124041872656-8s0mgdjq4j58cn7jhsoa90sqaidt2bho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124041872656:android:45aa15821f4867aead9195",
+        "android_client_info": {
+          "package_name": "nipunaprabidhiksewa.fasttrackgarage_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124041872656-8s0mgdjq4j58cn7jhsoa90sqaidt2bho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJHAaPY4anffPeI6UV8XO83qcmRWTul64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124041872656-8s0mgdjq4j58cn7jhsoa90sqaidt2bho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

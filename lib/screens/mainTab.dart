@@ -3,6 +3,9 @@ import 'package:fasttrackgarage_app/screens/UsersProfileActivity.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
 
+import 'OfferPromo.dart';
+import 'StoreLocationScreen.dart';
+
 class MainTab extends StatefulWidget {
   @override
   _MainTabState createState() => _MainTabState();
@@ -33,6 +36,7 @@ class _MainTabState extends State<MainTab> {
       bottomNavigationBar: Container(
 
         child: BottomNavigationBar(
+
           currentIndex: bottomSelectedIndex,
           onTap: (index) {
             bottomTapped(index);
@@ -54,10 +58,11 @@ class _MainTabState extends State<MainTab> {
       },
       children: <Widget>[
         HomeActivity(),
-        FlutterLogo(),
-        FlutterLogo(),
-        FlutterLogo(),
         UsersProfileActivity(),
+
+        FlutterLogo(),
+        StoreLocationScreen(),
+        OfferPromo(),
 
 //        HomeButtons(),
 //        RequestButtons(),
@@ -84,7 +89,16 @@ class _MainTabState extends State<MainTab> {
             ),
           )),
       BottomNavigationBarItem(
-        icon: new Icon(Icons.local_taxi,color: Color(ExtraColors.DARK_BLUE)),
+          icon: Icon(Icons.person,color: Color(ExtraColors.DARK_BLUE)),
+          title: Padding(
+            padding: const EdgeInsets.only(top: 2.0),
+            child: Text(
+              'Profile',
+              style: bottomTabBarText,
+            ),
+          )),
+      BottomNavigationBarItem(
+        icon: new Icon(Icons.notifications,color: Color(ExtraColors.DARK_BLUE)),
         title: Padding(
           padding: const EdgeInsets.only(top: 2.0),
           child: new Text(
@@ -94,7 +108,7 @@ class _MainTabState extends State<MainTab> {
         ),
       ),
       BottomNavigationBarItem(
-          icon: Icon(Icons.settings,color: Color(ExtraColors.DARK_BLUE)),
+          icon: Icon(Icons.location_on,color: Color(ExtraColors.DARK_BLUE)),
           title: Padding(
             padding: const EdgeInsets.only(top: 2.0),
             child: Text(
@@ -103,7 +117,7 @@ class _MainTabState extends State<MainTab> {
             ),
           )),
       BottomNavigationBarItem(
-          icon: Icon(Icons.email,color: Color(ExtraColors.DARK_BLUE)),
+          icon: Icon(Icons.view_carousel,color: Color(ExtraColors.DARK_BLUE)),
           title: Padding(
             padding: const EdgeInsets.only(top: 2.0),
             child: Text(
@@ -111,15 +125,7 @@ class _MainTabState extends State<MainTab> {
               style: bottomTabBarText,
             ),
           )),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.person,color: Color(ExtraColors.DARK_BLUE)),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Text(
-              'Profile',
-              style: bottomTabBarText,
-            ),
-          ))
+
     ];
   }
   void bottomTapped(int index) {

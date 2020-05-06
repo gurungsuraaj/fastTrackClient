@@ -9,6 +9,7 @@ import 'package:fasttrackgarage_app/screens/OutletActivity.dart';
 import 'package:fasttrackgarage_app/screens/ServiceActivity.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryActivity.dart';
 import 'package:fasttrackgarage_app/screens/SignUpActivity.dart';
+import 'package:fasttrackgarage_app/screens/StoreLocationScreen.dart';
 import 'package:fasttrackgarage_app/screens/app.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
@@ -45,6 +46,8 @@ void main() => runApp(
               new ServiceActivity(),
           RoutesName.MAIN_TAB: (BuildContext context) =>
           new MainTab(),
+          RoutesName.STORE_LOCATION: (BuildContext context) =>
+          new StoreLocationScreen(),
 
         },
       ),
