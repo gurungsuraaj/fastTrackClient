@@ -6,6 +6,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
+import 'ResetPasswordScreen.dart';
+
 class OTP extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -72,8 +74,8 @@ class _OTP extends State<OTP> {
                                   },
                                   onSubmit: (String pin) {
                                     //_showSnackBar(pin, context);
-                                    Navigator.pushNamed(
-                                        context, RoutesName.HOME_ACTIVITY);
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: ((context) => ResetPasswordScreen())));
                                   },
                                 ),
                               ),

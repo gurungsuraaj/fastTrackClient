@@ -1,3 +1,4 @@
+import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:flutter/material.dart';
@@ -16,19 +17,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Color(ExtraColors.DARK_BLUE),
+      appBar: AppBar(
+        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        title: Text("Forgot Password"),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             ReusableAppBar.getAppBar(0, 0, height, width),
-            Center(
-              child: Container(
-                margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                child: Text(
-                  "Forgot Password",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              ),
-            ),
+//            Center(
+//              child: Container(
+//                margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+//                child: Text(
+//                  "Forgot Password",
+//                  style: TextStyle(color: Colors.white, fontSize: 16),
+//                ),
+//              ),
+//            ),
+          SizedBox(
+            height: 40,
+          ),
             Container(
               padding: EdgeInsets.only(top: 15),
               width: width * 0.8,
@@ -51,6 +59,31 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     hintText: 'Your e-mail',
                     hintStyle:
                     TextStyle(color: Color(0xffb8b8b8))),
+              ),
+            ),
+            Center(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
+                width: width * 0.45,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                    new BorderRadius.circular(18.0),
+                  ),
+                  color: Colors.white,
+                  onPressed: () {
+                    // performLogin();
+                    FocusScope.of(context)
+                        .requestFocus(FocusNode());
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: ((context) => OTP())));
+                  },
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(
+                        color: Color(ExtraColors.DARK_BLUE)),
+                  ),
+                ),
               ),
             ),
           ],
