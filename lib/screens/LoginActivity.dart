@@ -6,6 +6,7 @@ import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/screens/ForgotPasswordScreen.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -44,11 +45,9 @@ class _LoginActivityState extends State<LoginActivity> {
   var passKey = GlobalKey<FormFieldState>();
   bool isProgressBarShown = false;
 
-  TextEditingController mobileController =
-  new TextEditingController(text: "");
+  TextEditingController mobileController = new TextEditingController(text: "");
   TextEditingController passwordController =
       new TextEditingController(text: "");
-
 
   @override
   void initState() {
@@ -92,7 +91,7 @@ class _LoginActivityState extends State<LoginActivity> {
         statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
 
     return Scaffold(
-      backgroundColor:  Color(ExtraColors.DARK_BLUE),
+      backgroundColor: Color(ExtraColors.DARK_BLUE),
       key: _scaffoldKey,
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -105,9 +104,12 @@ class _LoginActivityState extends State<LoginActivity> {
               Center(
                 child: Container(
                   margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  child: Text("Login to your account", style: TextStyle(color: Colors.white,fontSize: 16),),
+                  child: Text(
+                    "Login to your account",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
-              ) ,//Container
+              ), //Container
               Expanded(
                 child: Form(
                   key: formKey,
@@ -120,19 +122,17 @@ class _LoginActivityState extends State<LoginActivity> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-
                               Center(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-
                                     SizedBox(
                                       height: 20,
                                     ),
                                     Container(
                                       padding: EdgeInsets.only(top: 15),
                                       width: width * 0.7,
-                                      child: _buildCountryPickerDropdown() ,
+                                      child: _buildCountryPickerDropdown(),
                                     ),
 
 //                                    Container(
@@ -186,22 +186,22 @@ class _LoginActivityState extends State<LoginActivity> {
                                       child: TextField(
                                         obscureText: true,
                                         style: TextStyle(
-                                          fontSize: fontSizeTextField,
-                                          color: Colors.white
-                                        ),
+                                            fontSize: fontSizeTextField,
+                                            color: Colors.white),
                                         controller: passwordController,
                                         decoration: InputDecoration(
-                                            hintText: 'Your password',
-                                            hintStyle: TextStyle(
-                                                color: Color(0xffb8b8b8)),
+                                          hintText: 'Your password',
+                                          hintStyle: TextStyle(
+                                              color: Color(0xffb8b8b8)),
                                           enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.white),
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.white),
-                                          ),  ),
-
-
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -213,7 +213,8 @@ class _LoginActivityState extends State<LoginActivity> {
                                   width: width * 0.45,
                                   child: RaisedButton(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: new BorderRadius.circular(18.0),
+                                      borderRadius:
+                                          new BorderRadius.circular(18.0),
                                       // side: BorderSide(color: Colors.black),
                                     ),
                                     color: Colors.white,
@@ -225,7 +226,8 @@ class _LoginActivityState extends State<LoginActivity> {
                                     },
                                     child: Text(
                                       "Continue",
-                                      style: TextStyle(color: Color(ExtraColors.DARK_BLUE)),
+                                      style: TextStyle(
+                                          color: Color(ExtraColors.DARK_BLUE)),
                                     ),
                                   ),
                                 ),
@@ -237,8 +239,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                   children: <Widget>[
                                     Text(
                                       "Dont have account?",
-                                      style:
-                                      TextStyle(color: Colors.white),
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                     InkWell(
                                       onTap: () {
@@ -249,8 +250,8 @@ class _LoginActivityState extends State<LoginActivity> {
                                           padding: EdgeInsets.all(6),
                                           child: Text(
                                             "Register",
-                                            style: TextStyle(
-                                                color: Colors.yellow),
+                                            style:
+                                                TextStyle(color: Colors.yellow),
                                           )),
                                     )
                                   ],
@@ -262,12 +263,28 @@ class _LoginActivityState extends State<LoginActivity> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text(
-                                        "All right reserve © 2020",
-                                        style:
-                                            TextStyle(color: Colors.white),
-                                      ),
-
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                                            },
+                                            child: Text(
+                                              "Forgot Password?",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                          Text(
+                                            "All right reserve © 2020",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ),
@@ -304,7 +321,7 @@ class _LoginActivityState extends State<LoginActivity> {
     String url = Api.POST_CUSTOMER_LOGIN;
     debugPrint("This is  url : $url, IMEI $_platformImei");
 
-    String mobileNumber = phoneCode +  mobileController.text;
+    String mobileNumber = phoneCode + mobileController.text;
     String password = passwordController.text;
     String email = "";
     String custNum = "";
@@ -360,9 +377,7 @@ class _LoginActivityState extends State<LoginActivity> {
 //        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
 //        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: ((context) => MainTab())));
+            context, MaterialPageRoute(builder: ((context) => MainTab())));
         ShowToast.showToast(context, message);
       } else {
         hideProgressBar();
@@ -399,14 +414,12 @@ class _LoginActivityState extends State<LoginActivity> {
   }
 
   _buildCountryPickerDropdown(
-      {bool filtered = false,
-        bool sortedByIsoCode = false,
-        bool hasPriorityList = false}) =>
+          {bool filtered = false,
+          bool sortedByIsoCode = false,
+          bool hasPriorityList = false}) =>
       Row(
-
         children: <Widget>[
           CountryPickerDropdown(
-
             initialValue: 'AE',
             itemBuilder: _buildDropdownItem,
             itemFilter: filtered
@@ -414,15 +427,17 @@ class _LoginActivityState extends State<LoginActivity> {
                 : null,
             priorityList: hasPriorityList
                 ? [
-              CountryPickerUtils.getCountryByIsoCode('GB'),
-              CountryPickerUtils.getCountryByIsoCode('CN'),
-            ]
+                    CountryPickerUtils.getCountryByIsoCode('GB'),
+                    CountryPickerUtils.getCountryByIsoCode('CN'),
+                  ]
                 : null,
             sortComparator: sortedByIsoCode
                 ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
                 : null,
             onValuePicked: (Country country) {
-              print("${country.phoneCode}", );
+              print(
+                "${country.phoneCode}",
+              );
               setState(() {
                 phoneCode = country.phoneCode;
               });
@@ -437,7 +452,7 @@ class _LoginActivityState extends State<LoginActivity> {
               controller: mobileController,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: "Your Number...",
+                hintText: "Phone...",
                 hintStyle: TextStyle(color: Colors.white),
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: UnderlineInputBorder(
@@ -459,17 +474,17 @@ class _LoginActivityState extends State<LoginActivity> {
       );
 
   Widget _buildDropdownItem(Country country) => Container(
-    child: Row(
-      children: <Widget>[
-        CountryPickerUtils.getDefaultFlagImage(country),
-        SizedBox(
-          width: 8.0,
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            SizedBox(
+              width: 8.0,
+            ),
+            Text(
+              "+${country.phoneCode}(${country.isoCode})",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
         ),
-        Text(
-          "+${country.phoneCode}(${country.isoCode})",
-          style: TextStyle(color: Colors.grey),
-        ),
-      ],
-    ),
-  );
+      );
 }

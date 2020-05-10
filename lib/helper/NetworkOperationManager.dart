@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
+import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
 import 'package:flutter/material.dart';
@@ -344,5 +345,71 @@ class NetworkOperationManager {
     });
 
     return searchItemArrayList;
+  }
+
+  static Future<List<PostedSalesInvoiceModel>> getPostedSalesInvoiceList(
+    NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.POSTED_SALES_INVOICE);
+    Xml2Json xml2json = new Xml2Json();
+    List<PostedSalesInvoiceModel> postedSalesList = new List();
+    var envelope =
+    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/postedsalesinvoicelist">
+<soapenv:Body>
+<tns:ReadMultiple>
+<tns:filter>
+<tns:Field></tns:Field>
+<tns:Criteria></tns:Criteria>
+</tns:filter>
+<tns:bookmarkKey></tns:bookmarkKey>
+<tns:setSize>50</tns:setSize>
+</tns:ReadMultiple>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    print("This is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/page/postedsalesinvoicelist",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      var rawXmlResponse = res.body.toString();
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      parsedXml.findAllElements("PostedSalesInvoiceList").forEach((val) {
+        PostedSalesInvoiceModel postedSalesItem = new PostedSalesInvoiceModel();
+        xml2json.parse(val.toString());
+        var json = xml2json.toParker();
+        var data = jsonDecode(json);
+        print("val");
+        postedSalesItem.no = data["PostedSalesInvoiceList"]["No"] ?? "";
+        postedSalesItem.sellToCustomerNo = data["PostedSalesInvoiceList"]["Sell_to_Customer_No"] ?? "";
+        postedSalesItem.sellToCustomerName = data["PostedSalesInvoiceList"]["Sell_to_Customer_Name"] ?? "";
+        postedSalesItem.amt = data["PostedSalesInvoiceList"]["Amount"] ?? "";
+        postedSalesItem.amt_inc_VAT = data["PostedSalesInvoiceList"]["Amount_Including_VAT"] ?? "";
+        postedSalesItem.bill_to_customerNo = data["PostedSalesInvoiceList"]["Bill_to_Customer_No"] ?? "";
+        postedSalesItem.bill_to_name = data["PostedSalesInvoiceList"]["Bill_to_Name"] ?? "";
+        postedSalesItem.ship_to_name = data["PostedSalesInvoiceList"]["Ship_to_Name"] ?? "";
+        postedSalesItem.post_date = data["PostedSalesInvoiceList"]["Posting_Date"] ?? "";
+        postedSalesItem.locationCode = data["PostedSalesInvoiceList"]["Location_Code"] ?? "";
+        postedSalesItem.documentDate = data["PostedSalesInvoiceList"]["Document_Date"] ?? "";
+        postedSalesItem.dueDate = data["PostedSalesInvoiceList"]["Due_Date"] ?? "";
+        postedSalesItem.paymentDiscountPercent = data["PostedSalesInvoiceList"]["Payment_Discount_Percent"] ?? "";
+        postedSalesItem.shipmentDate = data["PostedSalesInvoiceList"]["Shipment_Date"] ?? "";
+        postedSalesItem.smsSend = data["PostedSalesInvoiceList"]["SMS_Sent"] ?? "";
+        postedSalesItem.serviceOrder = data["PostedSalesInvoiceList"]["Service_Order_No"] ?? "";
+
+        postedSalesList.add(postedSalesItem);
+      });
+    });
+
+    return postedSalesList;
+
   }
 }
