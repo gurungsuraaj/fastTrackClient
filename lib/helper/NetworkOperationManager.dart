@@ -410,6 +410,138 @@ class NetworkOperationManager {
     });
 
     return postedSalesList;
+  }
+
+  static Future<NetworkResponse> generateOTP(
+      String email, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    String response = "";
+    print("This is the url $url");
+
+    var envelope =
+    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:CustomerGenerateOTP>
+<urn:customerEmail>$email</urn:customerEmail>
+</urn:CustomerGenerateOTP>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      rs.status = res.statusCode;
+      /*  var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue = parsedXml.findAllElements("customerName");
+      response = (resValue.map((node) => node.text)).first;
+
+      rs.responseBody = response;
+      rs.status = res.statusCode;*/
+    });
+
+    return rs;
+
+  }
+
+  static Future<NetworkResponse> SubmitOTP(String email,
+      String OTP, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    String response = "";
+    print("This is the url $url");
+    var envelope =
+    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:CustomerOTPVerification>
+<urn:customerEmail>$email</urn:customerEmail>
+<urn:customerOTP>$OTP</urn:customerOTP>
+</urn:CustomerOTPVerification>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      rs.status = res.statusCode;
+      /*  var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue = parsedXml.findAllElements("customerName");
+      response = (resValue.map((node) => node.text)).first;
+
+      rs.responseBody = response;
+      rs.status = res.statusCode;*/
+    });
+
+    return rs;
+
+  }
+
+  static Future<NetworkResponse> saveNewPassword(String email,
+      String password, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    String response = "";
+    print("This is the url $url");
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-ddTkk:mm:ss').format(now);
+    print("This is the now $formattedDate");
+
+    var envelope =
+    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:CustomerSavePassword>
+<urn:customerEmail>$email</urn:customerEmail>
+<urn:customerPassword>$password</urn:customerPassword>
+</urn:CustomerSavePassword>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      rs.status = res.statusCode;
+      /*  var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue = parsedXml.findAllElements("customerName");
+      response = (resValue.map((node) => node.text)).first;
+
+      rs.responseBody = response;
+      rs.status = res.statusCode;*/
+    });
+
+    return rs;
 
   }
 }
