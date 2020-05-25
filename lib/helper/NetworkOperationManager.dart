@@ -347,7 +347,7 @@ class NetworkOperationManager {
     return searchItemArrayList;
   }
 
-  static Future<List<PostedSalesInvoiceModel>> getPostedSalesInvoiceList(
+  static Future<List<PostedSalesInvoiceModel>> getPostedSalesInvoiceList(String custNumber,
     NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.POSTED_SALES_INVOICE);
@@ -358,8 +358,8 @@ class NetworkOperationManager {
 <soapenv:Body>
 <tns:ReadMultiple>
 <tns:filter>
-<tns:Field></tns:Field>
-<tns:Criteria></tns:Criteria>
+<tns:Field>Sell_to_Customer_No</tns:Field>
+<tns:Criteria>$custNumber</tns:Criteria>
 </tns:filter>
 <tns:bookmarkKey></tns:bookmarkKey>
 <tns:setSize>50</tns:setSize>

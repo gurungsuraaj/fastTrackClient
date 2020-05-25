@@ -1,4 +1,5 @@
 import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
+import 'package:fasttrackgarage_app/screens/NotificationScreen.dart';
 import 'package:fasttrackgarage_app/screens/UsersProfileActivity.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class _MainTabState extends State<MainTab> {
         HomeActivity(),
         UsersProfileActivity(),
 
-        FlutterLogo(),
+        NotificationScreen(),
         StoreLocationScreen(),
         OfferPromo(),
 

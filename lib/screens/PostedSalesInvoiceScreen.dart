@@ -2,9 +2,11 @@ import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostedSalesInvoiceScreen extends StatefulWidget {
   @override
@@ -16,16 +18,18 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   NTLMClient client;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
-
+String customerNumber = "";
   List<PostedSalesInvoiceModel> postedSalesList = List();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    loadPostedSalesInvoiceData();
+    getPrefs().whenComplete((){
+      loadPostedSalesInvoiceData();
+    });
+
   }
 
   @override
@@ -35,6 +39,8 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
+
         title: Text("Posted Sales Invoice List"),
       ),
       body: ModalProgressHUD(
@@ -210,7 +216,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
 
   void loadPostedSalesInvoiceData() async {
     showProgressBar();
-    NetworkOperationManager.getPostedSalesInvoiceList(client).then((res) {
+    NetworkOperationManager.getPostedSalesInvoiceList(customerNumber, client).then((res) {
       hideProgressBar();
       if (res.length > 0) {
         setState(() {
@@ -244,5 +250,10 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
     setState(() {
       isProgressBarShown = false;
     });
+  }
+
+  Future<void> getPrefs() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
   }
 }

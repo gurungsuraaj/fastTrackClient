@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 
 
@@ -21,20 +22,22 @@ class StoreLocationScreen extends StatefulWidget {
 }
 
 class _StoreLocationScreenState extends State<StoreLocationScreen> {
-  int shortDistanceIndex;
-  double shortDistBranchlat;
-  double shortDistBranchLong;
+  int shortDistanceIndex ;
+  double shortDistBranchlat = 0;
+  double shortDistBranchLong = 0;
   List<LocateModel> branchList = List();
   List<double> branchDistanceList = List();
   Completer<GoogleMapController> _controller = Completer();
   String storeLatLong;
   LatLng _center;
   GoogleMapController mapController;
+  bool isProgressBarShown = false;
+
   @override
   void initState() {
-//    _center = LatLng(0, 0);
+    _center = LatLng(0, 0);
     super.initState();
-
+    fetchBranchList();
   }
 
   @override
@@ -42,34 +45,39 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     Marker outletLocation = Marker(
       markerId: MarkerId('Pokhara'),
       position: _center,
-      infoWindow: InfoWindow(title: 'suraj}'),
+      infoWindow: InfoWindow(title: shortDistanceIndex == null ? "":  "${branchList[shortDistanceIndex].address}"),
       icon: BitmapDescriptor.defaultMarkerWithHue(
         BitmapDescriptor.hueRed,
       ),
     );
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Store Location"),
         backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
       ),
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: GoogleMap(
-              zoomGesturesEnabled: true,
-              initialCameraPosition: new CameraPosition(
-                bearing: 270.0,
-                target: _center,
-                zoom: 17.0,
+      body: ModalProgressHUD(
+        inAsyncCall: isProgressBarShown,
 
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: GoogleMap(
+                zoomGesturesEnabled: true,
+                initialCameraPosition: new CameraPosition(
+                  bearing: 270.0,
+                  target: _center,
+                  zoom: 17.0,
+
+                ),
+                onMapCreated: _onMapCreated,
+                markers: {outletLocation},
               ),
-              onMapCreated: _onMapCreated,
-              markers: {outletLocation},
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -110,10 +118,14 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     setState(() {
       _center = LatLng(shortDistBranchlat, shortDistBranchLong);
     });
+
+    hideProgressBar();
+    zoomInMarker();
   }
 
 
   Future<void> fetchBranchList() async {
+    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
@@ -131,9 +143,39 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
             .toList();
 
         calculateDistance();
+      }else{
+        hideProgressBar();
+
       }
     }).catchError((err) {
       print("Error $err ");
+      hideProgressBar();
+    });
+  }
+
+   void zoomInMarker()async {
+    print("inside zoom camera $shortDistBranchlat $shortDistBranchLong");
+    mapController
+        .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(
+            shortDistBranchlat, shortDistBranchLong),
+        zoom: 17.0,
+        bearing: 90.0,
+        tilt: 45.0)))
+        .then((val) {
+
+    });
+  }
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
     });
   }
 

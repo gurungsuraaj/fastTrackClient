@@ -75,8 +75,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     // performLogin();
                     FocusScope.of(context)
                         .requestFocus(FocusNode());
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: ((context) => OTP())));
+//                    Navigator.push(
+//                        context, MaterialPageRoute(builder: ((context) => OTP())));
                   },
                   child: Text(
                     "Submit",

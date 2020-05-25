@@ -34,6 +34,7 @@ class _OfferPromoState extends State<OfferPromo> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color(ExtraColors.DARK_BLUE),
         title: Text("Offers and Promotion"),
       ),

@@ -94,17 +94,27 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
   }
   showNotification(Map<String, dynamic> msg) async {
 
-    print("this is message $msg");
+//    print("this is message $msg");
+//
+//    var android = new AndroidNotificationDetails(
+//      'sdffds dsffds',
+//      "CHANNLE NAME",
+//      "channelDescription",
+//    );
+//    var iOS = new IOSNotificationDetails();
+//    var platform = new NotificationDetails(android, iOS);
+//    await flutterLocalNotificationsPlugin.show(
+//        0, msg['notification']['title'],msg['notification']['body'], platform);
 
-    var android = new AndroidNotificationDetails(
-      'sdffds dsffds',
-      "CHANNLE NAME",
-      "channelDescription",
-    );
-    var iOS = new IOSNotificationDetails();
-    var platform = new NotificationDetails(android, iOS);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        0, msg['notification']['title'],msg['notification']['body'], platform);
+        0,  msg['notification']['title'], msg['notification']['body'], platformChannelSpecifics,
+        payload: 'item x');
   }
 
   void getLocationOfCLient() async {
