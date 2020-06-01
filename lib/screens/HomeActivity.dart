@@ -246,8 +246,8 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
 //                                color: Colors.amber
                                     ),
                                 child: Image.network(
-                                  i.banner,
-                                  fit: BoxFit.fill,
+                                  i.image,
+                                  fit: BoxFit.fitHeight,
                                   height: 190,
                                   width: MediaQuery.of(context).size.width,
                                 ),
@@ -614,20 +614,24 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
+//    await http
+//        .get("http://www.fasttrackemarat.com/feed/updates.json",
+//            headers: header)
+
+    //This is the new API for list of banners for the home page
     await http
-        .get("http://www.fasttrackemarat.com/feed/updates.json",
-            headers: header)
+        .get("https://www.fasttrackemarat.com/feed/images.json",
+        headers: header)
         .then((res) {
       int status = res.statusCode;
 
       if (status == Rcode.SUCCESS_CODE) {
         var result = json.decode(res.body);
-        var values = result["promo"] as List;
+        var values = result["sliders"] as List;
 
         setState(() {
           promoList =
               values.map<Promo>((json) => Promo.fromJson(json)).toList();
-          debugPrint("${promoList[0].name}");
         });
       } else {
         displaySnackbar(context, "An error has occured ");

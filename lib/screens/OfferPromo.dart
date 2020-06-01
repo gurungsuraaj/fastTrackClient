@@ -61,29 +61,31 @@ class _OfferPromoState extends State<OfferPromo> {
                           height: 190,
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                              child: Text(
-                                promoList[index].name,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(25, 10, 10, 10),
-                              child: Text(
-                                promoList[index].details,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+
+// This was the previous code, there was changes in the api so the following values are not present so I have disabled these code.
+//                      Container(
+//                        child: Column(
+//                          children: <Widget>[
+//                            Container(
+//                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+//                              child: Text(
+//                                promoList[index].name,
+//                                style: TextStyle(
+//                                    fontWeight: FontWeight.bold, fontSize: 20),
+//                              ),
+//                            ),
+//                            Container(
+//                              padding: EdgeInsets.fromLTRB(25, 10, 10, 10),
+//                              child: Text(
+//                                promoList[index].details,
+//                                style: TextStyle(
+//                                  color: Colors.black,
+//                                ),
+//                              ),
+//                            ),
+//                          ],
+//                        ),
+//                      )
                     ],
                   ),
                 ),
@@ -100,22 +102,23 @@ class _OfferPromoState extends State<OfferPromo> {
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
+
+    // This is the URL for getting promo images
     await http
-        .get("http://www.fasttrackemarat.com/feed/updates.json",
+        .get("https://www.fasttrackemarat.com/feed/promotions.json",
             headers: header)
         .then((res) {
       int status = res.statusCode;
-
       if (status == Rcode.SUCCESS_CODE) {
         hideProgressBar();
 
         var result = json.decode(res.body);
-        var values = result["promo"] as List;
+        var values = result["promotions"] as List;
         setState(() {
+          // All the images from the API is save to the promo list.
           promoList =
               values.map<Promo>((json) => Promo.fromJson(json)).toList();
         });
-        debugPrint("${promoList[0].name}");
       } else {
         hideProgressBar();
 
