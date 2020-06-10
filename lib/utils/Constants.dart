@@ -13,4 +13,9 @@ class Constants {
   static final String CUSTOMER_EMAIL = "custEmail";
   static final String BASIC_TOKEN = "basicToken";
   static final String CUSTOMER_MOBILE_NO = "customerMobileNo";
+
+
+//OTP
+  static final String OTP_GENERATE_SUCCESS = "OTP to reset password sent on registered email.";
+
 }

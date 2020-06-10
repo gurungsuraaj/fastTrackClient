@@ -59,6 +59,8 @@ class _$AppDatabase extends AppDatabase {
 
   PersonDao _personDaoInstance;
 
+  NotificationDao _notificationDaoInstance;
+
   Future<sqflite.Database> open(String name, List<Migration> migrations,
       [Callback callback]) async {
     final path = join(await sqflite.getDatabasesPath(), name);
@@ -80,7 +82,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Person` (`id` INTEGER, `name` TEXT, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Suraj` (`id` INTEGER, `name` TEXT, PRIMARY KEY (`id`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `NotificationDbModel` (`id` INTEGER, `notificationTitle` TEXT, `notificationBody` TEXT, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -91,15 +95,21 @@ class _$AppDatabase extends AppDatabase {
   PersonDao get personDao {
     return _personDaoInstance ??= _$PersonDao(database, changeListener);
   }
+
+  @override
+  NotificationDao get notificationDao {
+    return _notificationDaoInstance ??=
+        _$NotificationDao(database, changeListener);
+  }
 }
 
 class _$PersonDao extends PersonDao {
   _$PersonDao(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database),
-        _personInsertionAdapter = InsertionAdapter(
+        _surajInsertionAdapter = InsertionAdapter(
             database,
-            'Person',
-            (Person item) =>
+            'Suraj',
+            (Suraj item) =>
                 <String, dynamic>{'id': item.id, 'name': item.name});
 
   final sqflite.DatabaseExecutor database;
@@ -108,26 +118,69 @@ class _$PersonDao extends PersonDao {
 
   final QueryAdapter _queryAdapter;
 
-  static final _personMapper = (Map<String, dynamic> row) =>
-      Person(row['id'] as int, row['name'] as String);
+  static final _surajMapper = (Map<String, dynamic> row) =>
+      Suraj(row['id'] as int, row['name'] as String);
 
-  final InsertionAdapter<Person> _personInsertionAdapter;
+  final InsertionAdapter<Suraj> _surajInsertionAdapter;
 
   @override
-  Future<List<Person>> findAllPersons() async {
-    return _queryAdapter.queryList('SELECT * FROM Person',
-        mapper: _personMapper);
+  Future<List<Suraj>> findAllPersons() async {
+    return _queryAdapter.queryList('SELECT * FROM Suraj', mapper: _surajMapper);
   }
 
   @override
-  Future<Person> findPersonById(int id) async {
-    return _queryAdapter.query('SELECT * FROM Person WHERE id = ?',
-        arguments: <dynamic>[id], mapper: _personMapper);
+  Future<Suraj> findPersonById(int id) async {
+    return _queryAdapter.query('SELECT * FROM Suraj WHERE id = ?',
+        arguments: <dynamic>[id], mapper: _surajMapper);
   }
 
   @override
-  Future<void> insertPerson(Person person) async {
-    await _personInsertionAdapter.insert(
+  Future<void> insertPerson(Suraj person) async {
+    await _surajInsertionAdapter.insert(
+        person, sqflite.ConflictAlgorithm.abort);
+  }
+}
+
+class _$NotificationDao extends NotificationDao {
+  _$NotificationDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _notificationDbModelInsertionAdapter = InsertionAdapter(
+            database,
+            'NotificationDbModel',
+            (NotificationDbModel item) => <String, dynamic>{
+                  'id': item.id,
+                  'notificationTitle': item.notificationTitle,
+                  'notificationBody': item.notificationBody
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  static final _notificationDbModelMapper = (Map<String, dynamic> row) =>
+      NotificationDbModel(row['id'] as int, row['notificationTitle'] as String,
+          row['notificationBody'] as String);
+
+  final InsertionAdapter<NotificationDbModel>
+      _notificationDbModelInsertionAdapter;
+
+  @override
+  Future<List<NotificationDbModel>> findAllNotification() async {
+    return _queryAdapter.queryList('SELECT * FROM NotificationDbModel',
+        mapper: _notificationDbModelMapper);
+  }
+
+  @override
+  Future<NotificationDbModel> findPersonById(int id) async {
+    return _queryAdapter.query('SELECT * FROM Suraj WHERE id = ?',
+        arguments: <dynamic>[id], mapper: _notificationDbModelMapper);
+  }
+
+  @override
+  Future<void> insertPerson(NotificationDbModel person) async {
+    await _notificationDbModelInsertionAdapter.insert(
         person, sqflite.ConflictAlgorithm.abort);
   }
 }

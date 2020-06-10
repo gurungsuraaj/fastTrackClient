@@ -21,7 +21,7 @@ import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:xml/xml.dart' as xml;
-import 'package:barcode_scan/barcode_scan.dart';
+// import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 
 class CheckInventory extends StatefulWidget {
@@ -85,7 +85,7 @@ class _CheckInventoryState extends State<CheckInventory> {
           IconButton(
               icon: Icon(FontAwesomeIcons.barcode),
               onPressed: () {
-                _scanQR();
+                // _scanQR();
               })
         ],
       ),
@@ -378,27 +378,27 @@ class _CheckInventoryState extends State<CheckInventory> {
     });
   }
 
-  Future _scanQR() async {
-    try {
-      String qrResult = await BarcodeScanner.scan();
-      setState(() {
-        searchController.text = qrResult;
+  // Future _scanQR() async {
+  //   try {
+  //     String qrResult = await BarcodeScanner.scan();
+  //     setState(() {
+  //       searchController.text = qrResult;
 
-        getItemFromBarcode();
-      });
-    } on PlatformException catch (ex) {
-      if (ex.code == BarcodeScanner.CameraAccessDenied) {
-        displaySnackbar(context, "Camera permission was denied");
-      } else {
-        displaySnackbar(context, "Unknown Error $ex");
-      }
-    } on FormatException {
-      // displaySnackbar(
-      //     context, "You pressed the back button before scanning anything");
-    } catch (ex) {
-      displaySnackbar(context, "Unknown Error $ex");
-    }
-  }
+  //       getItemFromBarcode();
+  //     });
+  //   } on PlatformException catch (ex) {
+  //     if (ex.code == BarcodeScanner.CameraAccessDenied) {
+  //       displaySnackbar(context, "Camera permission was denied");
+  //     } else {
+  //       displaySnackbar(context, "Unknown Error $ex");
+  //     }
+  //   } on FormatException {
+  //     // displaySnackbar(
+  //     //     context, "You pressed the back button before scanning anything");
+  //   } catch (ex) {
+  //     displaySnackbar(context, "Unknown Error $ex");
+  //   }
+  // }
 
   Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(

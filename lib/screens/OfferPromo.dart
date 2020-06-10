@@ -45,50 +45,11 @@ class _OfferPromoState extends State<OfferPromo> {
           itemCount: promoList.length,
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.only(top: 4),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              child: ClipRRect(
-                borderRadius: new BorderRadius.circular(12.0),
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        width: queryData.size.width,
-                        child: Image.network(
-                          promoList[index].banner,
-                          fit: BoxFit.fill,
-                          height: 190,
-                        ),
-                      ),
-
-// This was the previous code, there was changes in the api so the following values are not present so I have disabled these code.
-//                      Container(
-//                        child: Column(
-//                          children: <Widget>[
-//                            Container(
-//                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-//                              child: Text(
-//                                promoList[index].name,
-//                                style: TextStyle(
-//                                    fontWeight: FontWeight.bold, fontSize: 20),
-//                              ),
-//                            ),
-//                            Container(
-//                              padding: EdgeInsets.fromLTRB(25, 10, 10, 10),
-//                              child: Text(
-//                                promoList[index].details,
-//                                style: TextStyle(
-//                                  color: Colors.black,
-//                                ),
-//                              ),
-//                            ),
-//                          ],
-//                        ),
-//                      )
-                    ],
-                  ),
-                ),
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Image.network(
+                promoList[index].banner,
+                fit: BoxFit.fitWidth,
+                // height: 190,
               ),
             );
           },

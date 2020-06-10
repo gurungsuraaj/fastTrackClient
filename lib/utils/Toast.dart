@@ -9,6 +9,6 @@ class ShowToast {
         duration: Toast.LENGTH_LONG,
         gravity: Toast.BOTTOM,
         backgroundColor: Colors.grey,
-        textColor: Colors.black);
+        textColor: Colors.white);
   }
 }

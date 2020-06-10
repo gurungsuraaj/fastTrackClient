@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
+import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ntlm/ntlm.dart';
@@ -440,17 +441,29 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-      print("This is the response ${res.body}");
-      rs.status = res.statusCode;
-      /*  var rawXmlResponse = res.body;
+     var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
+
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
-      var resValue = parsedXml.findAllElements("customerName");
-      response = (resValue.map((node) => node.text)).first;
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("return_value");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
 
-      rs.responseBody = response;
-      rs.status = res.statusCode;*/
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
     });
-
     return rs;
 
   }
@@ -483,15 +496,28 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-      print("This is the response ${res.body}");
-      rs.status = res.statusCode;
-      /*  var rawXmlResponse = res.body;
-      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
-      var resValue = parsedXml.findAllElements("customerName");
-      response = (resValue.map((node) => node.text)).first;
+ var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
 
-      rs.responseBody = response;
-      rs.status = res.statusCode;*/
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("return_value");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
+
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
     });
 
     return rs;
@@ -530,15 +556,28 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-      print("This is the response ${res.body}");
-      rs.status = res.statusCode;
-      /*  var rawXmlResponse = res.body;
-      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
-      var resValue = parsedXml.findAllElements("customerName");
-      response = (resValue.map((node) => node.text)).first;
+    var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
 
-      rs.responseBody = response;
-      rs.status = res.statusCode;*/
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("return_value");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
+
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
     });
 
     return rs;

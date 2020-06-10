@@ -1,7 +1,9 @@
+import 'package:fasttrackgarage_app/database/AppDatabase.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
+import 'package:fasttrackgarage_app/models/person.dart';
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
 import 'package:fasttrackgarage_app/screens/OfferPromo.dart';
@@ -242,14 +244,20 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
                               return Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                                decoration: BoxDecoration(
-//                                color: Colors.amber
-                                    ),
-                                child: Image.network(
-                                  i.image,
-                                  fit: BoxFit.fitHeight,
-                                  height: 190,
-                                  width: MediaQuery.of(context).size.width,
+//                                decoration: BoxDecoration(
+//                                  color: Color(
+//                                    0xFF1D1E33,
+//                                  ),
+//                                  borderRadius: BorderRadius.circular(20),
+//                                ),
+                                child: ClipRRect(
+                                  borderRadius: new BorderRadius.circular(11.0),
+                                  child: Image.network(
+                                    i.image,
+                                    fit: BoxFit.fitHeight,
+                                    height: 190,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
                                 ),
                               );
                             },

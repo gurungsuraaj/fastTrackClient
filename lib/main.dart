@@ -32,7 +32,7 @@ void main() => runApp(
               new LoginActivity(),
           RoutesName.SIGNUP_ACTIVITY: (BuildContext context) =>
               new SignUpActivity(),
-          RoutesName.OTP_ACTIVITY: (BuildContext context) => new OTP(),
+          RoutesName.OTP_ACTIVITY: (BuildContext context) => new OTP(""),
           RoutesName.GENERATE_OTP_ACTIVITY: (BuildContext context) =>
               new GenerateOTP(),
           RoutesName.HOME_ACTIVITY: (BuildContext context) => new Home(),

@@ -44,7 +44,7 @@ dependencies:
   connectivity:
   firebase_messaging:
   geolocator:
-  barcode_scan:
+  # barcode_scan:
   url_launcher:
   intl:
   country_pickers: ^1.2.0
