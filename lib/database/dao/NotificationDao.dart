@@ -6,10 +6,15 @@ abstract class NotificationDao{
   @Query('SELECT * FROM NotificationDbModel')
   Future<List<NotificationDbModel>> findAllNotification();
 
-  @Query('SELECT * FROM Suraj WHERE id = :id')
-  Future<NotificationDbModel> findPersonById(int id);
+  @Query('SELECT * FROM NotificationDbModel WHERE id = :id')
+  Future<NotificationDbModel> findNotificationById(int id);
 
   @insert
-  Future<void> insertPerson(NotificationDbModel person);
+  Future<void> insertNotification(NotificationDbModel notification);
+
+  @Query("DELETE FROM NotificationDbModel WHERE id = :id")
+  Future<void> deleteNotification(int id);
+
+
 
 }

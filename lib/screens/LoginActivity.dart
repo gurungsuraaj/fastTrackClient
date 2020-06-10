@@ -277,7 +277,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
+                                            
                                           ),
+                                          SizedBox(height: 10,),
                                           Text(
                                             "All right reserve © 2020",
                                             style:

@@ -60,7 +60,6 @@ class _MainTabState extends State<MainTab> {
       children: <Widget>[
         HomeActivity(),
         UsersProfileActivity(),
-
         NotificationScreen(),
         StoreLocationScreen(),
         OfferPromo(),

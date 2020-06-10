@@ -3,8 +3,9 @@
  @entity
  class NotificationDbModel{
    @primaryKey
-   final int id;
-   final String notificationTitle;
-   final String notificationBody;
-   NotificationDbModel({this.id,this.notificationTitle,this.notificationBody});
+    int id;
+    String notificationTitle;
+    String notificationBody;
+    String dateTime;
+   NotificationDbModel(this.id,this.notificationTitle,this.notificationBody,this.dateTime);
  }

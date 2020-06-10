@@ -84,7 +84,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Suraj` (`id` INTEGER, `name` TEXT, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `NotificationDbModel` (`id` INTEGER, `notificationTitle` TEXT, `notificationBody` TEXT, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `NotificationDbModel` (`id` INTEGER, `notificationTitle` TEXT, `notificationBody` TEXT, `dateTime` TEXT, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -150,7 +150,8 @@ class _$NotificationDao extends NotificationDao {
             (NotificationDbModel item) => <String, dynamic>{
                   'id': item.id,
                   'notificationTitle': item.notificationTitle,
-                  'notificationBody': item.notificationBody
+                  'notificationBody': item.notificationBody,
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -161,7 +162,7 @@ class _$NotificationDao extends NotificationDao {
 
   static final _notificationDbModelMapper = (Map<String, dynamic> row) =>
       NotificationDbModel(row['id'] as int, row['notificationTitle'] as String,
-          row['notificationBody'] as String);
+          row['notificationBody'] as String, row['dateTime'] as String);
 
   final InsertionAdapter<NotificationDbModel>
       _notificationDbModelInsertionAdapter;
@@ -173,14 +174,21 @@ class _$NotificationDao extends NotificationDao {
   }
 
   @override
-  Future<NotificationDbModel> findPersonById(int id) async {
-    return _queryAdapter.query('SELECT * FROM Suraj WHERE id = ?',
+  Future<NotificationDbModel> findNotificationById(int id) async {
+    return _queryAdapter.query('SELECT * FROM NotificationDbModel WHERE id = ?',
         arguments: <dynamic>[id], mapper: _notificationDbModelMapper);
   }
 
   @override
-  Future<void> insertPerson(NotificationDbModel person) async {
+  Future<void> deleteNotification(int id) async {
+    await _queryAdapter.queryNoReturn(
+        'DELETE FROM NotificationDbModel WHERE id = ?',
+        arguments: <dynamic>[id]);
+  }
+
+  @override
+  Future<void> insertNotification(NotificationDbModel notification) async {
     await _notificationDbModelInsertionAdapter.insert(
-        person, sqflite.ConflictAlgorithm.abort);
+        notification, sqflite.ConflictAlgorithm.abort);
   }
 }

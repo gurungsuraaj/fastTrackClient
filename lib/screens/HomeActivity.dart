@@ -1,6 +1,8 @@
 import 'package:fasttrackgarage_app/database/AppDatabase.dart';
+import 'package:fasttrackgarage_app/database/dao/NotificationDao.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/models/NotificationDbModel.dart';
 import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
 import 'package:fasttrackgarage_app/models/person.dart';
@@ -10,6 +12,7 @@ import 'package:fasttrackgarage_app/screens/OfferPromo.dart';
 import 'package:fasttrackgarage_app/screens/PostedSalesInvoiceScreen.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
@@ -48,7 +51,8 @@ class HomeActivity extends StatefulWidget {
   _HomeActivityState createState() => _HomeActivityState();
 }
 
-class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClientMixin<HomeActivity> {
+class _HomeActivityState extends State<HomeActivity>
+    with AutomaticKeepAliveClientMixin<HomeActivity> {
   @override
   bool get wantKeepAlive => true;
   List<UserList> userList = List();
@@ -61,9 +65,7 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
   bool isProgressBarShown = false;
   List<Placemark> placemark = List<Placemark>();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  new FlutterLocalNotificationsPlugin();
-
-
+      new FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
@@ -72,9 +74,9 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
 
-     _messaging.getToken().then((token) {
-       print("Your FCM Token is : $token");
-     });
+    _messaging.getToken().then((token) {
+      print("Your FCM Token is : $token");
+    });
     // ignore: missing_return
 
     var android = new AndroidInitializationSettings('mipmap/ic_launcher');
@@ -83,40 +85,35 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
     flutterLocalNotificationsPlugin.initialize(platform);
 
     // ignore: missing_return
-    _messaging.configure(onMessage: (Map<String, dynamic> msg) {
-      showNotification(msg);
-    });
-
+    _messaging.configure(
+      onMessage: (Map<String, dynamic> msg) {
+        print("Inside message -------------------");
+        showNotification(msg);
+      },
+      // onBackgroundMessage: (Map<String, dynamic> msg) {
+      //   print(msg);
+      //   print("Inside background");
+      // }
+    );
 
     getPrefs().then((val) async {
       getLocationOfCLient();
       showOffer();
     });
-
   }
+
   showNotification(Map<String, dynamic> msg) async {
-
-//    print("this is message $msg");
-//
-//    var android = new AndroidNotificationDetails(
-//      'sdffds dsffds',
-//      "CHANNLE NAME",
-//      "channelDescription",
-//    );
-//    var iOS = new IOSNotificationDetails();
-//    var platform = new NotificationDetails(android, iOS);
-//    await flutterLocalNotificationsPlugin.show(
-//        0, msg['notification']['title'],msg['notification']['body'], platform);
-
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0,  msg['notification']['title'], msg['notification']['body'], platformChannelSpecifics,
+    await flutterLocalNotificationsPlugin.show(0, msg['notification']['title'],
+        msg['notification']['body'], platformChannelSpecifics,
         payload: 'item x');
+
+    saveNotificatonDataOnDB(msg);
   }
 
   void getLocationOfCLient() async {
@@ -143,7 +140,7 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
           title: Container(
             height: 35,
             child: TextField(
-//  controller: _textFieldController,
+              //  controller: _textFieldController,
               style: TextStyle(fontSize: 16),
               decoration: InputDecoration(
                   filled: true,
@@ -170,17 +167,17 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
           automaticallyImplyLeading: false,
           backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
           actions: <Widget>[
-//            PopupMenuButton<String>(
-//              onSelected: choiceAction,
-//              itemBuilder: (BuildContext context) {
-//                return Constants.choices.map((String choice) {
-//                  return PopupMenuItem<String>(
-//                    value: choice,
-//                    child: Text(choice),
-//                  );
-//                }).toList();
-//              },
-//            )
+            //            PopupMenuButton<String>(
+            //              onSelected: choiceAction,
+            //              itemBuilder: (BuildContext context) {
+            //                return Constants.choices.map((String choice) {
+            //                  return PopupMenuItem<String>(
+            //                    value: choice,
+            //                    child: Text(choice),
+            //                  );
+            //                }).toList();
+            //              },
+            //            )
           ],
         ),
         body: SingleChildScrollView(
@@ -234,8 +231,8 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
                       )
                     : CarouselSlider(
                         enlargeCenterPage: true,
-//                  autoPlay: true,
-//                  autoPlayInterval: Duration(seconds: 1),
+                        //                  autoPlay: true,
+                        //                  autoPlayInterval: Duration(seconds: 1),
                         height: 200.0,
                         items: promoList.map((i) {
                           print("${i.banner}");
@@ -244,12 +241,12 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
                               return Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-//                                decoration: BoxDecoration(
-//                                  color: Color(
-//                                    0xFF1D1E33,
-//                                  ),
-//                                  borderRadius: BorderRadius.circular(20),
-//                                ),
+                                //                                decoration: BoxDecoration(
+                                //                                  color: Color(
+                                //                                    0xFF1D1E33,
+                                //                                  ),
+                                //                                  borderRadius: BorderRadius.circular(20),
+                                //                                ),
                                 child: ClipRRect(
                                   borderRadius: new BorderRadius.circular(11.0),
                                   child: Image.network(
@@ -277,15 +274,16 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
                           child: Container(
                               child: InkWell(
                                   onTap: () {
-//                                    Navigator.push(
-//                                      context,
-//                                      MaterialPageRoute(
-//                                          builder: (context) =>
-//                                              ServiceActivity()),
-//                                    );
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (context) => ServiceActivity()));
-
+                                    //                                    Navigator.push(
+                                    //                                      context,
+                                    //                                      MaterialPageRoute(
+                                    //                                          builder: (context) =>
+                                    //                                              ServiceActivity()),
+                                    //                                    );
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ServiceActivity()));
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -363,7 +361,7 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
                                       MaterialPageRoute(
                                           builder: (context) => OfferPromo()),
                                     );
-//showOffer();
+                                    //showOffer();
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -405,11 +403,11 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
                           child: Container(
                               child: InkWell(
                                   onTap: () {
-// Navigator.push(
-//   context,
-//   MaterialPageRoute(
-//       builder: (context) => GoogleMapActivity()),
-// );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => GoogleMapActivity()),
+                                    // );
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -515,13 +513,13 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
               children: <Widget>[
                 Container(
                   height: 120,
-//                  width: queryData.size.width,
+                  //                  width: queryData.size.width,
                   color: Color(ExtraColors.DARK_BLUE),
                   child: Center(
                       child: Image.asset(
-                        "images/message.png",
-                        height: 90,
-                      )),
+                    "images/message.png",
+                    height: 90,
+                  )),
                 ),
                 Container(
                   child: Column(
@@ -560,60 +558,59 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
       },
     );
 
-
-//
-//
-//    queryData = MediaQuery.of(context);
-//    AlertDialog dialog = new AlertDialog(
-//      contentPadding: EdgeInsets.all(0.0),
-//      content: Container(
-//        height: queryData.size.height * 0.5,
-//        child: Column(
-//          children: <Widget>[
-//            Container(
-//              height: 120,
-//              width: queryData.size.width,
-//              color: Color(ExtraColors.DARK_BLUE),
-//              child: Center(
-//                  child: Image.asset(
-//                "images/message.png",
-//                height: 90,
-//              )),
-//            ),
-//            Container(
-//              child: Column(
-//                crossAxisAlignment: CrossAxisAlignment.center,
-//                mainAxisAlignment: MainAxisAlignment.center,
-//                children: <Widget>[
-//                  Container(
-//                    padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
-//                    child: Text("Need Help?"),
-//                  ),
-//                  Container(
-//                    width: queryData.size.width * 0.4,
-//                    child: RaisedButton(
-//                      onPressed: () {
-//                        Navigator.pop(context);
-//
-//                        getUserList();
-//                      },
-//                      color: Colors.blue[700],
-//                      child: Text(
-//                        'SEND ALERT',
-//                        style: TextStyle(
-//                          color: Colors.white,
-//                        ),
-//                      ),
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            )
-//          ],
-//        ),
-//      ),
-//    );
-//    showDialog(context: context, child: dialog);
+    //
+    //
+    //    queryData = MediaQuery.of(context);
+    //    AlertDialog dialog = new AlertDialog(
+    //      contentPadding: EdgeInsets.all(0.0),
+    //      content: Container(
+    //        height: queryData.size.height * 0.5,
+    //        child: Column(
+    //          children: <Widget>[
+    //            Container(
+    //              height: 120,
+    //              width: queryData.size.width,
+    //              color: Color(ExtraColors.DARK_BLUE),
+    //              child: Center(
+    //                  child: Image.asset(
+    //                "images/message.png",
+    //                height: 90,
+    //              )),
+    //            ),
+    //            Container(
+    //              child: Column(
+    //                crossAxisAlignment: CrossAxisAlignment.center,
+    //                mainAxisAlignment: MainAxisAlignment.center,
+    //                children: <Widget>[
+    //                  Container(
+    //                    padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+    //                    child: Text("Need Help?"),
+    //                  ),
+    //                  Container(
+    //                    width: queryData.size.width * 0.4,
+    //                    child: RaisedButton(
+    //                      onPressed: () {
+    //                        Navigator.pop(context);
+    //
+    //                        getUserList();
+    //                      },
+    //                      color: Colors.blue[700],
+    //                      child: Text(
+    //                        'SEND ALERT',
+    //                        style: TextStyle(
+    //                          color: Colors.white,
+    //                        ),
+    //                      ),
+    //                    ),
+    //                  ),
+    //                ],
+    //              ),
+    //            )
+    //          ],
+    //        ),
+    //      ),
+    //    );
+    //    showDialog(context: context, child: dialog);
   }
 
   showOffer() async {
@@ -622,14 +619,14 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-//    await http
-//        .get("http://www.fasttrackemarat.com/feed/updates.json",
-//            headers: header)
+    //    await http
+    //        .get("http://www.fasttrackemarat.com/feed/updates.json",
+    //            headers: header)
 
     //This is the new API for list of banners for the home page
     await http
         .get("https://www.fasttrackemarat.com/feed/images.json",
-        headers: header)
+            headers: header)
         .then((res) {
       int status = res.statusCode;
 
@@ -682,23 +679,23 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
   }
 
   getUserList() async {
-//    showProgressBar();
+    //    showProgressBar();
     NetworkOperationManager.getAdminUserList(client).then((val) {
       debugPrint("This is the response $val");
-//      hideProgressBar();
+      //      hideProgressBar();
       setState(() {
         userList = val;
       });
       print("This is the first token ${val[0].token}");
       calculateDistance();
     }).catchError((err) {
-//      hideProgressBar();
+      //      hideProgressBar();
       print("There is an error: $err");
     });
   }
 
   void calculateDistance() async {
-//    showProgressBar();
+    //    showProgressBar();
     List<UserList> calculatedDistanceList = [];
     List<double> distList = [];
 
@@ -734,7 +731,7 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
     // calculatedDistanceList.reduce((item, index) => (item.distanceInMeter));
 
     NetworkOperationManager.sendNotification(shortDistanceToken).then((res) {
-//      hideProgressBar();
+      //      hideProgressBar();
       print(
           "status ${res.status} , response body ${res.responseBodyForFireBase["success"]}");
       if (res.responseBodyForFireBase["success"] == 1) {
@@ -746,18 +743,18 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
             showInSnackBar(
                 "Send alert successfully ! You will get call from the nearest branch ");
           } else {
-//            showInSnackBar("Something went wrong while sending alert");
+            //            showInSnackBar("Something went wrong while sending alert");
             showInSnackBar(
                 "Send alert successfully ! You will get call from the nearest branch ");
           }
         });
       } else {
-//        showInSnackBar("Failure in sending notification");
+        //        showInSnackBar("Failure in sending notification");
         showInSnackBar(
             "Send alert successfully ! You will get call from the nearest branch ");
       }
     }).catchError((err) {
-//      hideProgressBar();
+      //      hideProgressBar();
       ShowToast.showToast(context, " Error : $err");
     });
   }
@@ -766,8 +763,22 @@ class _HomeActivityState extends State<HomeActivity> with AutomaticKeepAliveClie
     final prefs = await SharedPreferences.getInstance();
     customerNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
 
-
     //  return serviceOrderNum;
+  }
+
+  void saveNotificatonDataOnDB(Map<String, dynamic> msg) async {
+
+    print(DateTime.now().toString());
+    print("${msg['notification']['title']} ${msg['notification']['body']}");
+    final database =
+        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
+    notification.id = PrimaryKeyGenerator.generateKey();
+    notification.notificationTitle = msg['notification']['title'];
+    notification.notificationBody = msg['notification']['body'];
+    notification.dateTime = DateTime.now().toString();
+    await database.notificationDao
+      .insertNotification(notification);
   }
 }
 
