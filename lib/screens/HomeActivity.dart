@@ -74,27 +74,31 @@ class _HomeActivityState extends State<HomeActivity>
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
 
-    _messaging.getToken().then((token) {
-      print("Your FCM Token is : $token");
-    });
-    // ignore: missing_return
+    // _messaging.getToken().then((token) {
+    //   print("Your FCM Token is : $token");
+    // });
+    // // ignore: missing_return
 
-    var android = new AndroidInitializationSettings('mipmap/ic_launcher');
-    var ios = new IOSInitializationSettings();
-    var platform = new InitializationSettings(android, ios);
-    flutterLocalNotificationsPlugin.initialize(platform);
+    // var android = new AndroidInitializationSettings('mipmap/ic_launcher');
+    // var ios = new IOSInitializationSettings();
+    // var platform = new InitializationSettings(android, ios);
+    // flutterLocalNotificationsPlugin.initialize(platform);
 
-    // ignore: missing_return
-    _messaging.configure(
-      onMessage: (Map<String, dynamic> msg) {
-        print("Inside message -------------------");
-        showNotification(msg);
-      },
-      // onBackgroundMessage: (Map<String, dynamic> msg) {
-      //   print(msg);
-      //   print("Inside background");
-      // }
-    );
+    // // ignore: missing_return
+    // _messaging.configure(
+    //   onMessage: (Map<String, dynamic> msg) {
+    //     print("Inside message -------------------");
+    //     showNotification(msg);
+    //   },
+    //   onLaunch: (Map<String, dynamic> msg) async {
+    //     print(msg);
+    //     print("on launch");
+    //   },
+    //   onResume: (Map<String, dynamic> msg) async {
+    //     print(msg);
+    //     print("on resume");
+    //   },
+    // );
 
     getPrefs().then((val) async {
       getLocationOfCLient();
@@ -767,7 +771,6 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   void saveNotificatonDataOnDB(Map<String, dynamic> msg) async {
-
     print(DateTime.now().toString());
     print("${msg['notification']['title']} ${msg['notification']['body']}");
     final database =
@@ -777,8 +780,7 @@ class _HomeActivityState extends State<HomeActivity>
     notification.notificationTitle = msg['notification']['title'];
     notification.notificationBody = msg['notification']['body'];
     notification.dateTime = DateTime.now().toString();
-    await database.notificationDao
-      .insertNotification(notification);
+    await database.notificationDao.insertNotification(notification);
   }
 }
 
