@@ -43,6 +43,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ):
          Expanded(
                     child: ListView.builder(
+                      reverse: true,
               shrinkWrap: true,
               itemCount: notificationList.length,
               itemBuilder: (BuildContext context, int index) {

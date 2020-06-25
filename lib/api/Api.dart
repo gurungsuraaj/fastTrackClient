@@ -1,8 +1,10 @@
 class Api {
   static final String URL =
-      "http://192.168.0.57:8099"; // This is intermediate link created by our dot net developer
+      "http://http://202.166.211.230:8099"; // This is intermediate link created by our dot net developer
   static final String BASE_URL =
-      "http://192.168.0.57:7747"; // This is the main url for both admin and client api
+      "http://http://202.166.211.230:7747"; // This is the main url for both admin and client api
+      // "http://192.168.0.57:7747"; // This is the main url for both admin and client api
+
   static final String POST_CHECKINVENTORY =
       "$URL/api/FastrackPostApi/CheckInventory";
   static final String POST_CUSTOMER_SIGNUP =

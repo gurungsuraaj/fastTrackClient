@@ -35,10 +35,11 @@ Future<void> main() async {
   _messaging.getToken().then((token) {
     print("Your FCM Token is : $token");
   });
+  _messaging.subscribeToTopic('Notification');
   _messaging.configure(
       onMessage: (Map<String, dynamic> msg) {
         print("Inside message -------------------");
-        showNotification(msg);
+        // showNotification(msg);
       },
       onLaunch: (Map<String, dynamic> msg) async {
         print(msg);
@@ -47,6 +48,8 @@ Future<void> main() async {
       onResume: (Map<String, dynamic> msg) async {
         print(msg);
         print("on resume");
+        saveBackgorundNotificatonDataOnDB(msg);
+      //  showBackGroundNotification(msg);
       },
       onBackgroundMessage: onBackgroundMessage);
 
@@ -147,7 +150,7 @@ void saveNotificatonDataOnDB(Map<String, dynamic> msg) async {
 
 void saveBackgorundNotificatonDataOnDB(Map<String, dynamic> msg) async {
   print(DateTime.now().toString());
-  print("${msg['notification']['title']} ${msg['notification']['body']}");
+
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
@@ -259,7 +262,7 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Future onBackgroundMessage(Map<String, dynamic> message) async {
-  debugPrint(message.toString() + message['data']['body']);
   print("on background messae");
+  debugPrint(message.toString() );
   showBackGroundNotification(message);
 }
