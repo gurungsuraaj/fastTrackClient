@@ -185,310 +185,307 @@ class _HomeActivityState extends State<HomeActivity>
           ],
         ),
         body: SingleChildScrollView(
-          child: ModalProgressHUD(
-            inAsyncCall: isProgressBarShown,
-            child: new Center(
-                child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  color: Color(ExtraColors.DARK_BLUE),
-                  height: 35,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.white,
-                              size: 18,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            placemark.isEmpty
-                                ? Text(
-                                    "Loading...",
-                                    style: TextStyle(color: Colors.white),
-                                  )
-                                : Text(
-                                    "${placemark[0].name.toString()}",
-                                    style: TextStyle(color: Colors.white),
-                                  )
-                          ],
-                        ),
+          child: new Center(
+              child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                color: Color(ExtraColors.DARK_BLUE),
+                height: 35,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          placemark.isEmpty
+                              ? Text(
+                                  "Loading...",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              : Text(
+                                  "${placemark[0].name.toString()}",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                        ],
                       ),
-                      Text(
-                        "Change",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
+                    ),
+                    Text(
+                      "Change",
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
                 ),
-                promoList.isEmpty
-                    ? Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 190,
-                        color: Colors.grey[300],
-                      )
-                    : CarouselSlider(
-                        enlargeCenterPage: true,
-                        //                  autoPlay: true,
-                        //                  autoPlayInterval: Duration(seconds: 1),
-                        height: 200.0,
-                        items: promoList.map((i) {
-                          print("${i.banner}");
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                                //                                decoration: BoxDecoration(
-                                //                                  color: Color(
-                                //                                    0xFF1D1E33,
-                                //                                  ),
-                                //                                  borderRadius: BorderRadius.circular(20),
-                                //                                ),
-                                child: ClipRRect(
-                                  borderRadius: new BorderRadius.circular(11.0),
-                                  child: Image.network(
-                                    i.image,
-                                    fit: BoxFit.fitHeight,
-                                    height: 190,
-                                    width: MediaQuery.of(context).size.width,
-                                  ),
+              ),
+              promoList.isEmpty
+                  ? Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 190,
+                      color: Colors.grey[300],
+                    )
+                  : CarouselSlider(
+                      enlargeCenterPage: true,
+                      //                  autoPlay: true,
+                      //                  autoPlayInterval: Duration(seconds: 1),
+                      height: 200.0,
+                      items: promoList.map((i) {
+                        print("${i.banner}");
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                              //                                decoration: BoxDecoration(
+                              //                                  color: Color(
+                              //                                    0xFF1D1E33,
+                              //                                  ),
+                              //                                  borderRadius: BorderRadius.circular(20),
+                              //                                ),
+                              child: ClipRRect(
+                                borderRadius: new BorderRadius.circular(11.0),
+                                child: Image.network(
+                                  i.image,
+                                  fit: BoxFit.fitHeight,
+                                  height: 190,
+                                  width: MediaQuery.of(context).size.width,
                                 ),
-                              );
-                            },
-                          );
-                        }).toList(),
-                      ),
-                new GridView.count(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    crossAxisCount: 3,
-                    childAspectRatio: 1,
-                    padding: const EdgeInsets.all(15.0),
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 4.0,
-                    children: <Widget>[
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    //                                    Navigator.push(
-                                    //                                      context,
-                                    //                                      MaterialPageRoute(
-                                    //                                          builder: (context) =>
-                                    //                                              ServiceActivity()),
-                                    //                                    );
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ServiceActivity()));
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/ServicesLogo.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Service"))
-                                    ],
-                                  )))),
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+              new GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 3,
+                  childAspectRatio: 1,
+                  padding: const EdgeInsets.all(15.0),
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 4.0,
+                  children: <Widget>[
+                    Card(
+                        child: Container(
+                            child: InkWell(
+                                onTap: () {
+                                  //                                    Navigator.push(
+                                  //                                      context,
+                                  //                                      MaterialPageRoute(
+                                  //                                          builder: (context) =>
+                                  //                                              ServiceActivity()),
+                                  //                                    );
+                                  Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              PostedSalesInvoiceScreen()),
-                                    );
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/ServiceHistory.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Invoice Sales"))
-                                    ],
-                                  )))),
-                      // Card(
-                      //     child: Container(
-                      //         child: InkWell(
-                      //             onTap: () {
-                      //               Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) =>
-                      //                         OutletActivity()),
-                      //               );
-                      //             },
-                      //             child: Column(
-                      //               mainAxisAlignment: MainAxisAlignment.center,
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.center,
-                      //               children: <Widget>[
-                      //                 Image.asset(
-                      //                   "images/outletLogo.png",
-                      //                   height: 70,
-                      //                   width: 50,
-                      //                 ),
-                      //                 Container(
-                      //                     padding: EdgeInsets.only(top: 5),
-                      //                     child: Text("Outlet List"))
-                      //               ],
-                      //             )))),
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => OfferPromo()),
-                                    );
-                                    //showOffer();
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/promotionLogo.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Promotions"))
-                                    ],
-                                  )))),
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    _showAlert();
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/distressCall.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Distress Call"))
-                                    ],
-                                  )))),
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) => GoogleMapActivity()),
-                                    // );
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              LocateActivity()),
-                                    );
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/LocationLogo.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Locate"))
-                                    ],
-                                  )))),
-                      // Card(
-                      //     child: Container(
-                      //         child: InkWell(
-                      //             onTap: () {
-                      //               Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) => ShopAndGo()),
-                      //               );
-                      //             },
-                      //             child: Column(
-                      //               mainAxisAlignment: MainAxisAlignment.center,
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.center,
-                      //               children: <Widget>[
-                      //                 Image.asset(
-                      //                   "images/shopAndGo.png",
-                      //                   height: 70,
-                      //                   width: 50,
-                      //                 ),
-                      //                 Container(
-                      //                     padding: EdgeInsets.only(top: 5),
-                      //                     child: Text("Shop N Go"))
-                      //               ],
-                      //             )))),
-                      // Card(
-                      //     child: Container(
-                      //         child: InkWell(
-                      //             onTap: () {
-                      //               Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) =>
-                      //                         CheckInventory()),
-                      //               );
-                      //             },
-                      //             child: Column(
-                      //               mainAxisAlignment: MainAxisAlignment.center,
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.center,
-                      //               children: <Widget>[
-                      //                 Image.asset(
-                      //                   "images/inventoryLogo.png",
-                      //                   height: 70,
-                      //                   width: 50,
-                      //                 ),
-                      //                 Container(
-                      //                     padding: EdgeInsets.only(top: 5),
-                      //                     child: Text("Inventory Check"))
-                      //               ],
-                      //             )))),
-                    ]),
-              ],
-            )),
-          ),
+                                              ServiceActivity()));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/ServicesLogo.png",
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text("Service"))
+                                  ],
+                                )))),
+                    Card(
+                        child: Container(
+                            child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostedSalesInvoiceScreen()),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/ServiceHistory.png",
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text("Invoice Sales"))
+                                  ],
+                                )))),
+                    // Card(
+                    //     child: Container(
+                    //         child: InkWell(
+                    //             onTap: () {
+                    //               Navigator.push(
+                    //                 context,
+                    //                 MaterialPageRoute(
+                    //                     builder: (context) =>
+                    //                         OutletActivity()),
+                    //               );
+                    //             },
+                    //             child: Column(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               crossAxisAlignment:
+                    //                   CrossAxisAlignment.center,
+                    //               children: <Widget>[
+                    //                 Image.asset(
+                    //                   "images/outletLogo.png",
+                    //                   height: 70,
+                    //                   width: 50,
+                    //                 ),
+                    //                 Container(
+                    //                     padding: EdgeInsets.only(top: 5),
+                    //                     child: Text("Outlet List"))
+                    //               ],
+                    //             )))),
+                    Card(
+                        child: Container(
+                            child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OfferPromo()),
+                                  );
+                                  //showOffer();
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/promotionLogo.png",
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text("Promotions"))
+                                  ],
+                                )))),
+                    Card(
+                        child: Container(
+                            child: InkWell(
+                                onTap: () {
+                                  _showAlert();
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/distressCall.png",
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text("Distress Call"))
+                                  ],
+                                )))),
+                    Card(
+                        child: Container(
+                            child: InkWell(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => GoogleMapActivity()),
+                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            LocateActivity()),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/LocationLogo.png",
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text("Locate"))
+                                  ],
+                                )))),
+                    // Card(
+                    //     child: Container(
+                    //         child: InkWell(
+                    //             onTap: () {
+                    //               Navigator.push(
+                    //                 context,
+                    //                 MaterialPageRoute(
+                    //                     builder: (context) => ShopAndGo()),
+                    //               );
+                    //             },
+                    //             child: Column(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               crossAxisAlignment:
+                    //                   CrossAxisAlignment.center,
+                    //               children: <Widget>[
+                    //                 Image.asset(
+                    //                   "images/shopAndGo.png",
+                    //                   height: 70,
+                    //                   width: 50,
+                    //                 ),
+                    //                 Container(
+                    //                     padding: EdgeInsets.only(top: 5),
+                    //                     child: Text("Shop N Go"))
+                    //               ],
+                    //             )))),
+                    // Card(
+                    //     child: Container(
+                    //         child: InkWell(
+                    //             onTap: () {
+                    //               Navigator.push(
+                    //                 context,
+                    //                 MaterialPageRoute(
+                    //                     builder: (context) =>
+                    //                         CheckInventory()),
+                    //               );
+                    //             },
+                    //             child: Column(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               crossAxisAlignment:
+                    //                   CrossAxisAlignment.center,
+                    //               children: <Widget>[
+                    //                 Image.asset(
+                    //                   "images/inventoryLogo.png",
+                    //                   height: 70,
+                    //                   width: 50,
+                    //                 ),
+                    //                 Container(
+                    //                     padding: EdgeInsets.only(top: 5),
+                    //                     child: Text("Inventory Check"))
+                    //               ],
+                    //             )))),
+                  ]),
+            ],
+          )),
         ));
   }
 

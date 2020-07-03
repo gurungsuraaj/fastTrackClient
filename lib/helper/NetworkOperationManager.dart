@@ -158,12 +158,14 @@ class NetworkOperationManager {
       final body = jsonEncode({
         "to": token,
         "priority": "high",
-        "notitification": {"title": "Title", "body": "body"},
+        "notitification": {"title": "Pleases response to the distress call!", "body": "Tap for more info!"},
         "data": {
-          "title": "title",
-          "body": "body",
+          // 'status':'done',
+          // 'id':'done',
+          "title": "Pleases response to the distress call!",
+          "body": "Tap for more info!",
           "click_action": "FLUTTER_NOTIFICATION_CLICK"
-        }
+        },
       });
 
       await http
@@ -178,8 +180,7 @@ class NetworkOperationManager {
         print("Notification response ${response.statusCode} ${response.body}");
 
         rs.status = response.statusCode;
-        rs.responseBodyForFireBase = jsonDecode(response.body)  ;
-        
+        rs.responseBodyForFireBase = jsonDecode(response.body);
       });
       return rs;
 

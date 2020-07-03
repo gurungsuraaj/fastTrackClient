@@ -58,7 +58,7 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
   }
 
   onCallPressed() async {
-    const url = "tel:1234567";
+    const url = "tel:+971553425400";
     if (await canLaunch(url)) {
       await launch(url);
     } else {

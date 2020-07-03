@@ -12,7 +12,7 @@ class UsersProfileActivity extends StatefulWidget {
 }
 
 class _UsersProfileActivityState extends State<UsersProfileActivity> {
-  String customerName, mobNumber;
+  String customerName, mobNumber,customerEmail;
   @override
   void initState() {
     // TODO: implement initState
@@ -53,6 +53,10 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
                     customerName,
                     style: TextStyle(fontSize: 18),
                   ),
+                  customerEmail == null ? Container(): Text(
+                    customerEmail,
+                    style: TextStyle(fontSize: 18),
+                  ),
                   mobNumber== null ? Container(): Text(mobNumber, style: TextStyle(fontSize: 18))
                 ],
               )
@@ -89,7 +93,7 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
     final prefs = await SharedPreferences.getInstance();
     customerName = await prefs.getString((Constants.CUSTOMER_NAME));
     mobNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
-
+    customerEmail = await prefs.getString((Constants.CUSTOMER_EMAIL));
     //  return serviceOrderNum;
   }
 }

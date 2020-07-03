@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -45,13 +46,18 @@ class _OfferPromoState extends State<OfferPromo> {
           itemCount: promoList.length,
           itemBuilder: (context, index) {
             return Container(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Image.network(
-                promoList[index].banner,
-                fit: BoxFit.fitWidth,
-                // height: 190,
-              ),
-            );
+                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                // child: Image.network(
+                //   promoList[index].banner,
+                //   fit: BoxFit.fitWidth,
+                //   // height: 190,
+                // ),
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: promoList[index].banner,
+                  placeholder: (context, url) => Container(height:40,width:50,child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                ));
           },
         ),
       ),
