@@ -1,9 +1,9 @@
 class Api {
   static final String URL =
-      "http://http://202.166.211.230:8099"; // This is intermediate link created by our dot net developer
+      "http://192.168.0.57:8099"; // This is intermediate link created by our dot net developer
   static final String BASE_URL =
-      "http://http://202.166.211.230:7747"; // This is the main url for both admin and client api
-      // "http://192.168.0.57:7747"; // This is the main url for both admin and client api
+      // "http://202.166.211.230:7747"; // This is the main url for both admin and client api
+      "http://192.168.0.57:7747"; // This is the main url for both admin and client api
 
   static final String POST_CHECKINVENTORY =
       "$URL/api/FastrackPostApi/CheckInventory";
@@ -18,13 +18,13 @@ class Api {
   static final String ITEMLIST = "$URL/api/FastrackPostApi/ItemList";
   // static final String GET_ADMIN_USER_LIST_FOR_NOTIFICATION = "http://192.168.0.57:7747/DynamicsNAV/ws/FT%20Support/Page/UserListLocation";
   static final String GET_ADMIN_USER_LIST_FOR_NOTIFICATION =
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/UserListLocation";
+      "$BASE_URL/DynamicsNAV/ws/FT%20Support/Page/UserListLocation";
 
   static final String SEND_NOTIFICATION = "https://fcm.googleapis.com/fcm/send";
   static final String URL_FOR_SEARCH_ITEM_FROM_NAV =
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/ItemList";
+      "$BASE_URL/DynamicsNAV/ws/FT%20Support/Page/ItemList";
   static final String CHECK_INVENTORY =
-      "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory";
+      "$BASE_URL/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory";
   static final String POSTED_SALES_INVOICE =
       "$BASE_URL/DynamicsNAV/ws/FT%20Support/Page/PostedSalesInvoiceList";
 }

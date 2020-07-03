@@ -30,20 +30,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
         title: Text("Notifications"),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              notificationList = [];
+              getDataFromDB();
+            },
+            icon: Icon(Icons.refresh),
+          )
+        ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          notificationList = [];
-          getDataFromDB();
-        },
-        child:
-        notificationList.length== 0? 
-        Center(
-          child: Text("Notification List is empty"),
-        ):
-         Expanded(
-                    child: ListView.builder(
-                      reverse: true,
+      body: notificationList.length == 0
+          ? Center(
+              child: Text("Notification List is empty"),
+            )
+          : ListView.builder(
+              reverse: true,
               shrinkWrap: true,
               itemCount: notificationList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -53,12 +55,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Expanded(
                               flex: 2,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
                                       "Title : ${notificationList[index].notificationTitle} "),
@@ -73,7 +77,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             Expanded(
                               flex: 1,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(timeAgoSinceDate(
                                       notificationList[index].dateTime))
@@ -85,8 +90,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 );
               }),
-         ),
-      ),
     );
   }
 

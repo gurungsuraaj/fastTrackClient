@@ -330,32 +330,32 @@ class _HomeActivityState extends State<HomeActivity>
                                           child: Text("Invoice Sales"))
                                     ],
                                   )))),
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              OutletActivity()),
-                                    );
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/outletLogo.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Outlet List"))
-                                    ],
-                                  )))),
+                      // Card(
+                      //     child: Container(
+                      //         child: InkWell(
+                      //             onTap: () {
+                      //               Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         OutletActivity()),
+                      //               );
+                      //             },
+                      //             child: Column(
+                      //               mainAxisAlignment: MainAxisAlignment.center,
+                      //               crossAxisAlignment:
+                      //                   CrossAxisAlignment.center,
+                      //               children: <Widget>[
+                      //                 Image.asset(
+                      //                   "images/outletLogo.png",
+                      //                   height: 70,
+                      //                   width: 50,
+                      //                 ),
+                      //                 Container(
+                      //                     padding: EdgeInsets.only(top: 5),
+                      //                     child: Text("Outlet List"))
+                      //               ],
+                      //             )))),
                       Card(
                           child: Container(
                               child: InkWell(
@@ -434,57 +434,57 @@ class _HomeActivityState extends State<HomeActivity>
                                           child: Text("Locate"))
                                     ],
                                   )))),
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ShopAndGo()),
-                                    );
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/shopAndGo.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Shop N Go"))
-                                    ],
-                                  )))),
-                      Card(
-                          child: Container(
-                              child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CheckInventory()),
-                                    );
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        "images/inventoryLogo.png",
-                                        height: 70,
-                                        width: 50,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text("Inventory Check"))
-                                    ],
-                                  )))),
+                      // Card(
+                      //     child: Container(
+                      //         child: InkWell(
+                      //             onTap: () {
+                      //               Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) => ShopAndGo()),
+                      //               );
+                      //             },
+                      //             child: Column(
+                      //               mainAxisAlignment: MainAxisAlignment.center,
+                      //               crossAxisAlignment:
+                      //                   CrossAxisAlignment.center,
+                      //               children: <Widget>[
+                      //                 Image.asset(
+                      //                   "images/shopAndGo.png",
+                      //                   height: 70,
+                      //                   width: 50,
+                      //                 ),
+                      //                 Container(
+                      //                     padding: EdgeInsets.only(top: 5),
+                      //                     child: Text("Shop N Go"))
+                      //               ],
+                      //             )))),
+                      // Card(
+                      //     child: Container(
+                      //         child: InkWell(
+                      //             onTap: () {
+                      //               Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         CheckInventory()),
+                      //               );
+                      //             },
+                      //             child: Column(
+                      //               mainAxisAlignment: MainAxisAlignment.center,
+                      //               crossAxisAlignment:
+                      //                   CrossAxisAlignment.center,
+                      //               children: <Widget>[
+                      //                 Image.asset(
+                      //                   "images/inventoryLogo.png",
+                      //                   height: 70,
+                      //                   width: 50,
+                      //                 ),
+                      //                 Container(
+                      //                     padding: EdgeInsets.only(top: 5),
+                      //                     child: Text("Inventory Check"))
+                      //               ],
+                      //             )))),
                     ]),
               ],
             )),
@@ -539,7 +539,7 @@ class _HomeActivityState extends State<HomeActivity>
                         child: RaisedButton(
                           onPressed: () {
                             print("Hello");
-                            Navigator.pop(context);
+                            // Navigator.pop(context);
 
                             getUserList();
                           },
@@ -683,17 +683,17 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   getUserList() async {
-    //    showProgressBar();
+    showProgressBar();
     NetworkOperationManager.getAdminUserList(client).then((val) {
       debugPrint("This is the response $val");
-      //      hideProgressBar();
+      hideProgressBar();
       setState(() {
         userList = val;
       });
-      print("This is the first token ${val[0].token}");
+      print("This is the first token $val ${val[0].token}");
       calculateDistance();
     }).catchError((err) {
-      //      hideProgressBar();
+      hideProgressBar();
       print("There is an error: $err");
     });
   }
@@ -736,8 +736,12 @@ class _HomeActivityState extends State<HomeActivity>
 
     NetworkOperationManager.sendNotification(shortDistanceToken).then((res) {
       //      hideProgressBar();
-      print(
-          "status ${res.status} , response body ${res.responseBodyForFireBase["success"]}");
+
+// print("${res.responseBodyForFireBase["results"][0]['']}")
+      // print(
+      //     "Response +++++++++++++++++++++++++++++++++ ${res.responseBodyForFireBase["success"].toString()}");
+      Navigator.pop(context);
+
       if (res.responseBodyForFireBase["success"] == 1) {
         print("Notification has been sent");
         NetworkOperationManager.distressCall(customerNumber, cusName, client)
@@ -754,11 +758,11 @@ class _HomeActivityState extends State<HomeActivity>
         });
       } else {
         //        showInSnackBar("Failure in sending notification");
-        showInSnackBar(
-            "Send alert successfully ! You will get call from the nearest branch ");
+        showInSnackBar("There was a problem sending notification");
       }
     }).catchError((err) {
       //      hideProgressBar();
+      print(err);
       ShowToast.showToast(context, " Error : $err");
     });
   }

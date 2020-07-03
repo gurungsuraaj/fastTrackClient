@@ -153,28 +153,56 @@ class NetworkOperationManager {
   static Future<NetworkResponse> sendNotification(String token) async {
     String url = Api.SEND_NOTIFICATION;
     NetworkResponse rs = NetworkResponse();
-
+    print(" Token $token");
     try {
-      Map<String, String> header = {
-        "Content-Type": "application/json",
-        "Authorization":
-            "key=AAAAHOF4xRA:APA91bEfCiqTOH-nNIqE8gJiVNdt75xeXLHRN6Dtp0yFk1_mCMjfSCr8EHPqk2LsWtc_X4GYAWrmlKpqcBUfIWxtbyIXuI1MaNG1ifRCbMbDy61gCYw56yV0er6741ajpMxQdFSy0mUJ"
-      };
-      Map<String, String> notification = {
-        "body": "Tap for more info!",
-        "title": "Pleases response to the distress call",
-        "sound": "default"
-      };
-      Map body = {"to": token, "notification": notification};
-      var bodyJson = json.encode(body);
-      debugPrint(" json body ${bodyJson}");
+      final body = jsonEncode({
+        "to": token,
+        "priority": "high",
+        "notitification": {"title": "Title", "body": "body"},
+        "data": {
+          "title": "title",
+          "body": "body",
+          "click_action": "FLUTTER_NOTIFICATION_CLICK"
+        }
+      });
 
-      await http.post(url, headers: header, body: bodyJson).then((response) {
+      await http
+          .post('https://fcm.googleapis.com/fcm/send',
+              headers: <String, String>{
+                'Content-Type': 'application/json',
+                'Authorization':
+                    'key=AAAAtSaXuEQ:APA91bGLDP8cG8WRPbkN6KXAxeVXkPLYrHJHJhMKeVU3fwxzGQ2njbYl2pS4XWP5zm_pPQJ8GkvHqYWzVKcC4D48lRZnnb9xbyxSLoYwBRVCIyOOpqRigh3Oze07bA5M6rLUhFGrjAdM',
+              },
+              body: body)
+          .then((response) {
+        print("Notification response ${response.statusCode} ${response.body}");
+
         rs.status = response.statusCode;
-        debugPrint("${response.body}");
-        rs.responseBodyForFireBase = jsonDecode(response.body);
+        rs.responseBodyForFireBase = jsonDecode(response.body)  ;
+        
       });
       return rs;
+
+      // Map<String, String> header = {
+      //   "Content-Type": "application/json",
+      //   "Authorization":
+      //       "key=AAAAtSaXuEQ:APA91bGLDP8cG8WRPbkN6KXAxeVXkPLYrHJHJhMKeVU3fwxzGQ2njbYl2pS4XWP5zm_pPQJ8GkvHqYWzVKcC4D48lRZnnb9xbyxSLoYwBRVCIyOOpqRigh3Oze07bA5M6rLUhFGrjAdM"
+      // };
+      // Map<String, String> notification = {
+      //   "body": "Tap for more info!",
+      //   "title": "Pleases response to the distress call",
+      //   "sound": "default"
+      // };
+      // Map body = {"to": token, "notification": notification};
+      // var bodyJson = json.encode(body);
+      // debugPrint(" json body ${bodyJson}");
+
+      // await http.post(url, headers: header, body: bodyJson).then((response) {
+      //   rs.status = response.statusCode;
+      //   debugPrint("${response.body}");
+      //   rs.responseBodyForFireBase = jsonDecode(response.body);
+      // });
+      // return rs;
     } catch (e) {
       debugPrint("error $e");
       //throw Exception("$e");
@@ -348,14 +376,14 @@ class NetworkOperationManager {
     return searchItemArrayList;
   }
 
-  static Future<List<PostedSalesInvoiceModel>> getPostedSalesInvoiceList(String custNumber,
-    NTLMClient client) async {
+  static Future<List<PostedSalesInvoiceModel>> getPostedSalesInvoiceList(
+      String custNumber, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.POSTED_SALES_INVOICE);
     Xml2Json xml2json = new Xml2Json();
     List<PostedSalesInvoiceModel> postedSalesList = new List();
     var envelope =
-    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/postedsalesinvoicelist">
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/postedsalesinvoicelist">
 <soapenv:Body>
 <tns:ReadMultiple>
 <tns:filter>
@@ -374,7 +402,8 @@ class NetworkOperationManager {
       headers: {
         "Content-Type": "text/xml",
         "Accept-Charset": "utf-8",
-        "SOAPAction": "urn:microsoft-dynamics-schemas/page/postedsalesinvoicelist",
+        "SOAPAction":
+            "urn:microsoft-dynamics-schemas/page/postedsalesinvoicelist",
       },
       body: envelope,
       encoding: Encoding.getByName("UTF-8"),
@@ -390,21 +419,35 @@ class NetworkOperationManager {
         var data = jsonDecode(json);
         print("val");
         postedSalesItem.no = data["PostedSalesInvoiceList"]["No"] ?? "";
-        postedSalesItem.sellToCustomerNo = data["PostedSalesInvoiceList"]["Sell_to_Customer_No"] ?? "";
-        postedSalesItem.sellToCustomerName = data["PostedSalesInvoiceList"]["Sell_to_Customer_Name"] ?? "";
+        postedSalesItem.sellToCustomerNo =
+            data["PostedSalesInvoiceList"]["Sell_to_Customer_No"] ?? "";
+        postedSalesItem.sellToCustomerName =
+            data["PostedSalesInvoiceList"]["Sell_to_Customer_Name"] ?? "";
         postedSalesItem.amt = data["PostedSalesInvoiceList"]["Amount"] ?? "";
-        postedSalesItem.amt_inc_VAT = data["PostedSalesInvoiceList"]["Amount_Including_VAT"] ?? "";
-        postedSalesItem.bill_to_customerNo = data["PostedSalesInvoiceList"]["Bill_to_Customer_No"] ?? "";
-        postedSalesItem.bill_to_name = data["PostedSalesInvoiceList"]["Bill_to_Name"] ?? "";
-        postedSalesItem.ship_to_name = data["PostedSalesInvoiceList"]["Ship_to_Name"] ?? "";
-        postedSalesItem.post_date = data["PostedSalesInvoiceList"]["Posting_Date"] ?? "";
-        postedSalesItem.locationCode = data["PostedSalesInvoiceList"]["Location_Code"] ?? "";
-        postedSalesItem.documentDate = data["PostedSalesInvoiceList"]["Document_Date"] ?? "";
-        postedSalesItem.dueDate = data["PostedSalesInvoiceList"]["Due_Date"] ?? "";
-        postedSalesItem.paymentDiscountPercent = data["PostedSalesInvoiceList"]["Payment_Discount_Percent"] ?? "";
-        postedSalesItem.shipmentDate = data["PostedSalesInvoiceList"]["Shipment_Date"] ?? "";
-        postedSalesItem.smsSend = data["PostedSalesInvoiceList"]["SMS_Sent"] ?? "";
-        postedSalesItem.serviceOrder = data["PostedSalesInvoiceList"]["Service_Order_No"] ?? "";
+        postedSalesItem.amt_inc_VAT =
+            data["PostedSalesInvoiceList"]["Amount_Including_VAT"] ?? "";
+        postedSalesItem.bill_to_customerNo =
+            data["PostedSalesInvoiceList"]["Bill_to_Customer_No"] ?? "";
+        postedSalesItem.bill_to_name =
+            data["PostedSalesInvoiceList"]["Bill_to_Name"] ?? "";
+        postedSalesItem.ship_to_name =
+            data["PostedSalesInvoiceList"]["Ship_to_Name"] ?? "";
+        postedSalesItem.post_date =
+            data["PostedSalesInvoiceList"]["Posting_Date"] ?? "";
+        postedSalesItem.locationCode =
+            data["PostedSalesInvoiceList"]["Location_Code"] ?? "";
+        postedSalesItem.documentDate =
+            data["PostedSalesInvoiceList"]["Document_Date"] ?? "";
+        postedSalesItem.dueDate =
+            data["PostedSalesInvoiceList"]["Due_Date"] ?? "";
+        postedSalesItem.paymentDiscountPercent =
+            data["PostedSalesInvoiceList"]["Payment_Discount_Percent"] ?? "";
+        postedSalesItem.shipmentDate =
+            data["PostedSalesInvoiceList"]["Shipment_Date"] ?? "";
+        postedSalesItem.smsSend =
+            data["PostedSalesInvoiceList"]["SMS_Sent"] ?? "";
+        postedSalesItem.serviceOrder =
+            data["PostedSalesInvoiceList"]["Service_Order_No"] ?? "";
 
         postedSalesList.add(postedSalesItem);
       });
@@ -421,7 +464,7 @@ class NetworkOperationManager {
     print("This is the url $url");
 
     var envelope =
-    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
 <urn:CustomerGenerateOTP>
 <urn:customerEmail>$email</urn:customerEmail>
@@ -441,7 +484,7 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-     var rawXmlResponse = res.body;
+      var rawXmlResponse = res.body;
       print("URL: $url");
       var code = res.statusCode;
       print("STATUS: $code");
@@ -465,17 +508,16 @@ class NetworkOperationManager {
       rs.responseBody = response_message;
     });
     return rs;
-
   }
 
-  static Future<NetworkResponse> SubmitOTP(String email,
-      String OTP, NTLMClient client) async {
+  static Future<NetworkResponse> SubmitOTP(
+      String email, String OTP, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.CHECK_INVENTORY);
     String response = "";
     print("This is the url $url");
     var envelope =
-    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
 <urn:CustomerOTPVerification>
 <urn:customerEmail>$email</urn:customerEmail>
@@ -496,7 +538,7 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
- var rawXmlResponse = res.body;
+      var rawXmlResponse = res.body;
       print("URL: $url");
       var code = res.statusCode;
       print("STATUS: $code");
@@ -521,11 +563,10 @@ class NetworkOperationManager {
     });
 
     return rs;
-
   }
 
-  static Future<NetworkResponse> saveNewPassword(String email,
-      String password, NTLMClient client) async {
+  static Future<NetworkResponse> saveNewPassword(
+      String email, String password, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.CHECK_INVENTORY);
     String response = "";
@@ -535,7 +576,7 @@ class NetworkOperationManager {
     print("This is the now $formattedDate");
 
     var envelope =
-    '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
 <urn:CustomerSavePassword>
 <urn:customerEmail>$email</urn:customerEmail>
@@ -556,7 +597,7 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-    var rawXmlResponse = res.body;
+      var rawXmlResponse = res.body;
       print("URL: $url");
       var code = res.statusCode;
       print("STATUS: $code");
@@ -581,6 +622,5 @@ class NetworkOperationManager {
     });
 
     return rs;
-
   }
 }

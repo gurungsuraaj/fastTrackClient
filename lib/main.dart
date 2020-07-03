@@ -40,6 +40,8 @@ Future<void> main() async {
       onMessage: (Map<String, dynamic> msg) {
         print("Inside message -------------------");
         // showNotification(msg);
+       showBackGroundNotification(msg);
+
       },
       onLaunch: (Map<String, dynamic> msg) async {
         print(msg);
