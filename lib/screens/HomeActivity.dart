@@ -23,6 +23,7 @@ import 'package:ntlm/ntlm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/PrefsManager.dart';
 import 'CheckInventory.dart';
+import 'InquiryListScreen.dart';
 import 'LoginActivity.dart';
 import 'ServiceHistoryActivity.dart';
 import 'OutletActivity.dart';
@@ -143,30 +144,13 @@ class _HomeActivityState extends State<HomeActivity>
         appBar: new AppBar(
           title: Container(
             height: 35,
-            child: TextField(
-              //  controller: _textFieldController,
-              style: TextStyle(fontSize: 16),
-              decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(25.7),
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(25.7),
-                  ),
-                  hintText: "Search...",
-                  icon: Image.asset(
+            child: Row(children: <Widget>[
+              Image.asset(
                     'images/fastTrackSingleLogo.png',
                     height: 30,
                   ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor))),
-            ),
+                  Text("  FastTrack")
+            ],)
           ),
           automaticallyImplyLeading: false,
           backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
@@ -430,6 +414,38 @@ class _HomeActivityState extends State<HomeActivity>
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
                                         child: Text("Locate"))
+                                  ],
+                                )))),
+
+                                 Card(
+                        child: Container(
+                            child: InkWell(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => GoogleMapActivity()),
+                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            InquiryListScreen()),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/inquiry.png",
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text("Inquiry"))
                                   ],
                                 )))),
                     // Card(

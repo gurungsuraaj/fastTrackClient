@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetailActivity extends StatefulWidget {
-  String serviceTitle, body;
-  ServiceDetailActivity(this.serviceTitle, this.body);
+  String serviceTitle, body, image;
+  ServiceDetailActivity(this.serviceTitle, this.body, this.image);
   @override
   _ServiceDetailActivityState createState() => _ServiceDetailActivityState();
 }
@@ -37,14 +37,21 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Column(
         children: <Widget>[
-          Image.asset('images/AcImage.jpg'),
           Container(
-              padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                widget.serviceTitle,
-                style: TextStyle(color: Colors.white, fontSize: 25),
-              )),
+            padding: EdgeInsets.fromLTRB(15, 30, 0, 20),
+            child: Row(
+              children: <Widget>[
+                Image.asset(widget.image),
+                Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget.serviceTitle,
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    )),
+              ],
+            ),
+          ),
           Container(
               padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
               child: Text(

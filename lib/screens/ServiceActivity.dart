@@ -335,7 +335,7 @@ class _ServiceActivityState extends State<ServiceActivity> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ServiceDetailActivity(staticServiceList[index].title, staticServiceList[index].body)),
+                                            ServiceDetailActivity(staticServiceList[index].title, staticServiceList[index].body,staticServiceList[index].image)),
                                   );
                                 },
                                 child: Column(
