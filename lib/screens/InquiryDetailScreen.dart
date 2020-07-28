@@ -55,7 +55,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   var _formKey1 = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   AnimationController _controller;
-  String nearestStorePhn;
+  String nearestStorePhn, whatsAppNum;
   static const List<IconData> icons = const [Icons.whatshot, Icons.phone];
 
   static const List<String> imageList = const [
@@ -71,6 +71,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       setState(() async {
         nearestStorePhn =
             await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
       });
       getMakeList();
       getYearList();
@@ -119,9 +120,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                         throw 'Could not launch $url';
                       }
                     } else if (index == 1) {
-                      print("hello 1");
-                      var whatsappUrl =
-                          "whatsapp://send?phone=+9710504788482";
+                      print("hello 1 $whatsAppNum");
+                      var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                       await canLaunch(whatsappUrl)
                           ? launch(whatsappUrl)
                           : showAlert();

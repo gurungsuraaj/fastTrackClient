@@ -17,7 +17,8 @@ class BatteryInquiry extends StatefulWidget {
   _BatteryInquiryState createState() => _BatteryInquiryState();
 }
 
-class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStateMixin{
+class _BatteryInquiryState extends State<BatteryInquiry>
+    with TickerProviderStateMixin {
   List<String> makeList = List();
   List<String> locationList = List();
   List<String> currentBatteryList = List();
@@ -46,9 +47,9 @@ class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStat
   List<String> modelList = List();
   List<int> yearList = List();
   AnimationController _controller;
-  String nearestStorePhn;
+  String nearestStorePhn, whatsAppNum;
 
- static const List<String> imageList = const [
+  static const List<String> imageList = const [
     "images/call.png",
     "images/whatsapp.png"
   ];
@@ -56,18 +57,19 @@ class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStat
   void initState() {
     // TODO: implement initState
     super.initState();
-    getInquiryDataForBatttery().whenComplete(()async {
-        final prefs = await SharedPreferences.getInstance();
+    getInquiryDataForBatttery().whenComplete(() async {
+      final prefs = await SharedPreferences.getInstance();
 
-      setState(()async {
-          nearestStorePhn =
-              await prefs.getString(Constants.NEAREST_STORE_PHONENO); 
+      setState(() async {
+        nearestStorePhn =
+            await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
       });
-      
+
       getMakeList();
       getYearList();
     });
-      _controller = new AnimationController(
+    _controller = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
@@ -452,75 +454,75 @@ class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStat
           ),
         ),
       ),
-       floatingActionButton: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: new List.generate(imageList.length, (int index) {
-            Widget child = new Container(
-              height: 70.0,
-              width: 56.0,
-              alignment: FractionalOffset.topCenter,
-              child: new ScaleTransition(
-                scale: new CurvedAnimation(
-                  parent: _controller,
-                  curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
-                      curve: Curves.easeOut),
-                ),
-                child: new FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: backgroundColor,
-                  mini: true,
-                  // child: new Icon(icons[index], color: foregroundColor),
-                  child: new Image.asset(
-                    imageList[index],
-                  ),
-                  onPressed: () async {
-                    if (index == 0) {
-                      print("hello 0");
-                      var url = "tel:$nearestStorePhn";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    } else if (index == 1) {
-                      print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=+9710504788482";
-                      await canLaunch(whatsappUrl)
-                          ? launch(whatsappUrl)
-                          : showAlert();
-                    }
-                  },
-                ),
+      floatingActionButton: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: new List.generate(imageList.length, (int index) {
+          Widget child = new Container(
+            height: 70.0,
+            width: 56.0,
+            alignment: FractionalOffset.topCenter,
+            child: new ScaleTransition(
+              scale: new CurvedAnimation(
+                parent: _controller,
+                curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
+                    curve: Curves.easeOut),
               ),
-            );
-            return child;
-          }).toList()
-            ..add(
-              new FloatingActionButton(
-                backgroundColor: Color(ExtraColors.DARK_BLUE),
+              child: new FloatingActionButton(
                 heroTag: null,
-                child: new AnimatedBuilder(
-                  animation: _controller,
-                  builder: (BuildContext context, Widget child) {
-                    return new Transform(
-                      transform: new Matrix4.rotationZ(
-                          _controller.value * 0.5 * math.pi),
-                      alignment: FractionalOffset.center,
-                      child: new Icon(
-                          _controller.isDismissed ? Icons.call : Icons.close),
-                    );
-                  },
+                backgroundColor: backgroundColor,
+                mini: true,
+                // child: new Icon(icons[index], color: foregroundColor),
+                child: new Image.asset(
+                  imageList[index],
                 ),
-                onPressed: () {
-                  if (_controller.isDismissed) {
-                    _controller.forward();
-                  } else {
-                    _controller.reverse();
+                onPressed: () async {
+                  if (index == 0) {
+                    print("hello 0");
+                    var url = "tel:$nearestStorePhn";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  } else if (index == 1) {
+                    print("hello 1");
+                    var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
+                    await canLaunch(whatsappUrl)
+                        ? launch(whatsappUrl)
+                        : showAlert();
                   }
                 },
               ),
             ),
-        ),
+          );
+          return child;
+        }).toList()
+          ..add(
+            new FloatingActionButton(
+              backgroundColor: Color(ExtraColors.DARK_BLUE),
+              heroTag: null,
+              child: new AnimatedBuilder(
+                animation: _controller,
+                builder: (BuildContext context, Widget child) {
+                  return new Transform(
+                    transform: new Matrix4.rotationZ(
+                        _controller.value * 0.5 * math.pi),
+                    alignment: FractionalOffset.center,
+                    child: new Icon(
+                        _controller.isDismissed ? Icons.call : Icons.close),
+                  );
+                },
+              ),
+              onPressed: () {
+                if (_controller.isDismissed) {
+                  _controller.forward();
+                } else {
+                  _controller.reverse();
+                }
+              },
+            ),
+          ),
+      ),
     );
   }
 

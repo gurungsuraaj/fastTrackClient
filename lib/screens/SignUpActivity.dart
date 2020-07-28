@@ -496,6 +496,7 @@ class _SignUpActivity extends State<SignUpActivity> {
           Expanded(
             child: TextField(
               controller: mobileController,
+              keyboardType: TextInputType.number,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: "Phone",

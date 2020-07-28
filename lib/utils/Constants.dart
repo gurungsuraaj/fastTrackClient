@@ -22,5 +22,7 @@ class Constants {
 
 //Nearest store phone number
   static final String NEAREST_STORE_PHONENO = "NEAREST_STORE_PHONENO";
+  static final String WHATS_APP_NUMBER = "WHATS_APP_NUMBER";
+
 
 }

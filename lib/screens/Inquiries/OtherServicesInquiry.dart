@@ -37,7 +37,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
   TextEditingController emailController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  String nearestStorePhn;
+  String nearestStorePhn,whatsAppNum;
   TimeOfDay time = TimeOfDay.now();
   AnimationController _controller;
   static const List<String> imageList = const [
@@ -54,6 +54,8 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
       setState(() async {
         nearestStorePhn =
             await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+
       });
       getLocation();
     });
@@ -435,7 +437,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                       }
                     } else if (index == 1) {
                       print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=+9710504788482";
+                      var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                       await canLaunch(whatsappUrl)
                           ? launch(whatsappUrl)
                           : showAlert();

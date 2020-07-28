@@ -764,7 +764,7 @@ class _HomeActivityState extends State<HomeActivity>
           } else {
             //            showInSnackBar("Something went wrong while sending alert");
             showInSnackBar(
-                "Send alert successfully ! You will get call from the nearest branch ");
+                "Error: ${res.responseBody}");
           }
         });
       } else {
@@ -849,8 +849,10 @@ class _HomeActivityState extends State<HomeActivity>
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(Constants.NEAREST_STORE_PHONENO,
           "${branchList[shortDistanceIndex].telephone}");
-      print(
-          "the shorted distance is ${branchList[shortDistanceIndex].telephone}");
+      await prefs.setString(Constants.WHATS_APP_NUMBER,
+          "${branchList[shortDistanceIndex].whatsAppNum}");
+      // print(
+      //     "the shorted distance is ${branchList[shortDistanceIndex].telephone}");
 
       // var shortestDistancebranch =
       // branchList[shortDistanceIndex].latlng.split(",");

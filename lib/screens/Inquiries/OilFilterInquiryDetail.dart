@@ -39,7 +39,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   TimeOfDay time = TimeOfDay.now();
   bool isProgressBarShown = false;
   List<int> yearList = List();
-  String nearestStorePhn;
+  String nearestStorePhn,whatsAppNum;
   var _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> modelList = List();
@@ -62,6 +62,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
         setState(() async {
           nearestStorePhn =
               await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+
         });
       });
       getYearList();
@@ -538,7 +540,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                     }
                   } else if (index == 1) {
                     print("hello 1");
-                    var whatsappUrl = "whatsapp://send?phone=+9710504788482";
+                    var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                     await canLaunch(whatsappUrl)
                         ? launch(whatsappUrl)
                         : showAlert();

@@ -21,7 +21,7 @@ class BrakeInquiry extends StatefulWidget {
 class _BrakeInquiryState extends State<BrakeInquiry>with TickerProviderStateMixin {
   List<String> makeList = List();
   List<String> locationList = List();
-  String nearestStorePhn;
+  String nearestStorePhn,whatsAppNum;
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -55,6 +55,8 @@ class _BrakeInquiryState extends State<BrakeInquiry>with TickerProviderStateMixi
        final prefs = await SharedPreferences.getInstance();
       setState(() async{
         nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+
       });
       getMakeList();
       getYearList();
@@ -490,7 +492,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>with TickerProviderStateMixi
                       }
                     } else if (index == 1) {
                       print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=+9710504788482";
+                      var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                       await canLaunch(whatsappUrl)
                           ? launch(whatsappUrl)
                           : showAlert();
