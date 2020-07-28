@@ -1,5 +1,7 @@
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetailActivity extends StatefulWidget {
@@ -65,7 +67,10 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
   }
 
   onCallPressed() async {
-    const url = "tel:+971553425400";
+    final prefs = await SharedPreferences.getInstance();
+    String phnNum = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+
+    var url = "tel:$phnNum";
     if (await canLaunch(url)) {
       await launch(url);
     } else {

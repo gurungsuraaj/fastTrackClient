@@ -12,7 +12,7 @@ class UsersProfileActivity extends StatefulWidget {
 }
 
 class _UsersProfileActivityState extends State<UsersProfileActivity> {
-  String customerName, mobNumber,customerEmail;
+  String customerName, mobNumber, customerEmail;
   @override
   void initState() {
     // TODO: implement initState
@@ -35,34 +35,54 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
           ),
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          Row(
-//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Container(
-                  child: Icon(
-                Icons.perm_identity,
-                size: 120,
-                color: Color(ExtraColors.DARK_BLUE_ACCENT),
-              )),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                 customerName == null ? Container(): Text(
-                    customerName,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  customerEmail == null ? Container(): Text(
-                    customerEmail,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  mobNumber== null ? Container(): Text(mobNumber, style: TextStyle(fontSize: 18))
-                ],
-              )
-            ],
-          )
-        ],
+      body: Container(
+        height: 358,
+        width: MediaQuery.of(context).size.width,
+        child: Card(
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Image.asset(
+              "images/userProfile.png",
+              height: 150,
+              width: 150,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+              dense: true,
+              leading: Text("User Name"),
+              trailing: customerName == null
+                  ? Container(
+                      child: Text(""),
+                    )
+                  : Text(customerName),
+            ),
+            Divider(
+              color: Colors.grey,
+              height: 10,
+            ),
+            ListTile(
+              leading: Text("Email"),
+              trailing: customerEmail == null
+                  ? Container(
+                      child: Text(""),
+                    )
+                  : Text(customerEmail),
+            ),
+            Divider(
+              color: Colors.grey,
+              height: 10,
+            ),
+            ListTile(
+              leading: Text("Phone No."),
+              trailing: mobNumber == null
+                  ? Container(
+                      child: Text(""),
+                    )
+                  : Text(mobNumber),
+            ),
+          ]),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(

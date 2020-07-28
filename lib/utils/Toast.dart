@@ -6,7 +6,7 @@ import 'package:toast/toast.dart';
 class ShowToast {
   static showToast(BuildContext context, String message) {
     Toast.show(message, context,
-        duration: Toast.LENGTH_LONG,
+        duration: 3,
         gravity: Toast.BOTTOM,
         backgroundColor: Colors.grey,
         textColor: Colors.white);

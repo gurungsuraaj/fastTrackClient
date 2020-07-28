@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
+import 'package:fasttrackgarage_app/models/LoginModel.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
@@ -14,17 +15,21 @@ import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkOperationManager {
-  static Future<NetworkResponse> signUp(NTLMClient client) async {
+  static Future<NetworkResponse> signUp(String mobileNum, String custName, String email,String password, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
-    var url = Api.POST_CHECKINVENTORY;
+    var url =Uri.encodeFull(Api.WEB_SERVICE);
     var envelope =
         '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
-<urn:LoginStaff>
-<urn:staffID>101</urn:staffID>
-</urn:LoginStaff>
+<urn:CustomerSignUp>
+<urn:mobileNo>$mobileNum</urn:mobileNo>
+<urn:customerName>$custName</urn:customerName>
+<urn:email>$email</urn:email>
+<urn:passwordTxt>$password</urn:passwordTxt>
+</urn:CustomerSignUp>
 </soapenv:Body>
 </soapenv:Envelope>''';
+    print(envelope);
 
     await client
         .post(
@@ -38,33 +43,47 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
+          print("status ${res.statusCode}  ${res.body}");
       var rawXmlResponse = res.body;
+      var code = res.statusCode;
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
-      var resValue = parsedXml.findAllElements("return_value");
-      String response = (resValue.map((node) => node.text)).first;
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("CustomerSignUp_Result");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
 
-      rs.responseBody = response;
       rs.status = res.statusCode;
+      rs.responseBody = response_message;
     });
 
     return rs;
   }
 
-  static Future<NetworkResponse> logIn(String mobileNo, String passWord,
-      String cusNumber, String cusName, String email, NTLMClient client) async {
+  static Future<LoginModel> logIn(
+      String mobileNo, String passWord, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
-    var url = Uri.encodeFull(Api.POST_CHECKINVENTORY);
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
     print("This is the url $url");
+    Xml2Json xml2json = new Xml2Json();
+    LoginModel loginModel = LoginModel();
     var envelope =
         '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
 <urn:Customerlogin>
 <urn:mobileNo>$mobileNo</urn:mobileNo>
 <urn:passwordTxt>$passWord</urn:passwordTxt>
-<urn:customerNo>$cusNumber</urn:customerNo>
-<urn:customerName>$cusName</urn:customerName>
-<urn:custEmail>$email</urn:custEmail>
+<urn:customerNo></urn:customerNo>
+<urn:customerName></urn:customerName>
+<urn:custEmail></urn:custEmail>
 </urn:Customerlogin>
 </soapenv:Body>
 </soapenv:Envelope>''';
@@ -81,7 +100,7 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-      print("This is the response ${res.body}");
+      // print("This is the response ${res.body}");
       /*  var rawXmlResponse = res.body;
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
       var resValue = parsedXml.findAllElements("customerName");
@@ -89,9 +108,38 @@ class NetworkOperationManager {
 
       rs.responseBody = response;
       rs.status = res.statusCode;*/
+
+      var rawXmlResponse = res.body;
+      var code = res.statusCode;
+      print("STATUS: $code");
+      loginModel.status = res.statusCode;
+
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        parsedXml.findAllElements("Customerlogin_Result").forEach((val) {
+          xml2json.parse(val.toString());
+          var json = xml2json.toParker();
+          var data = jsonDecode(json);
+
+          loginModel.customerNo = data['Customerlogin_Result']['customerNo'];
+          loginModel.customerName =
+              data['Customerlogin_Result']['customerName'];
+          loginModel.customerEmail = data['Customerlogin_Result']['custEmail'];
+        });
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+        loginModel.errResponse = response_message;
+
+      }
     });
 
-    return rs;
+    return loginModel;
   }
 
   static Future<List<UserList>> getAdminUserList(NTLMClient client) async {
@@ -158,7 +206,10 @@ class NetworkOperationManager {
       final body = jsonEncode({
         "to": token,
         "priority": "high",
-        "notitification": {"title": "Pleases response to the distress call!", "body": "Tap for more info!"},
+        "notitification": {
+          "title": "Pleases response to the distress call!",
+          "body": "Tap for more info!"
+        },
         "data": {
           // 'status':'done',
           // 'id':'done',
@@ -273,7 +324,7 @@ class NetworkOperationManager {
   static Future<NetworkResponse> distressCall(
       String cusNumber, String cusName, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
-    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
     print("This is the url $url");
     DateTime now = DateTime.now();
@@ -460,7 +511,7 @@ class NetworkOperationManager {
   static Future<NetworkResponse> generateOTP(
       String email, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
-    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
     print("This is the url $url");
 
@@ -514,7 +565,7 @@ class NetworkOperationManager {
   static Future<NetworkResponse> SubmitOTP(
       String email, String OTP, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
-    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
     print("This is the url $url");
     var envelope =
@@ -569,7 +620,7 @@ class NetworkOperationManager {
   static Future<NetworkResponse> saveNewPassword(
       String email, String password, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
-    var url = Uri.encodeFull(Api.CHECK_INVENTORY);
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
     print("This is the url $url");
     DateTime now = DateTime.now();

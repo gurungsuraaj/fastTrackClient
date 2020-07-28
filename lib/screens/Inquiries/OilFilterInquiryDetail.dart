@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/InquiryInfo.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OilFilterInquiryDetail extends StatefulWidget {
@@ -16,7 +18,8 @@ class OilFilterInquiryDetail extends StatefulWidget {
   _OilFilterInquiryDetailState createState() => _OilFilterInquiryDetailState();
 }
 
-class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail> with TickerProviderStateMixin{
+class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
+    with TickerProviderStateMixin {
   TextEditingController phoneController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
@@ -36,13 +39,13 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail> with Ti
   TimeOfDay time = TimeOfDay.now();
   bool isProgressBarShown = false;
   List<int> yearList = List();
-
+  String nearestStorePhn;
   var _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> modelList = List();
   List<MakeModel> makeModelList = List();
 
- static const List<String> imageList = const [
+  static const List<String> imageList = const [
     "images/call.png",
     "images/whatsapp.png"
   ];
@@ -52,11 +55,18 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail> with Ti
   void initState() {
     // TODO: implement initState
     super.initState();
-    getMakeList().whenComplete(() {
-      getLocation();
+    getMakeList().whenComplete(() async {
+      getLocation().then((value) async {
+        final prefs = await SharedPreferences.getInstance();
+
+        setState(() async {
+          nearestStorePhn =
+              await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+        });
+      });
       getYearList();
     });
-     _controller = new AnimationController(
+    _controller = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
@@ -65,7 +75,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail> with Ti
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-Color backgroundColor = Theme.of(context).cardColor;
+    Color backgroundColor = Theme.of(context).cardColor;
     Color foregroundColor = Theme.of(context).accentColor;
     return Scaffold(
       key: _scaffoldKey,
@@ -492,80 +502,79 @@ Color backgroundColor = Theme.of(context).cardColor;
               SizedBox(
                 height: 30,
               ),
-              
             ]),
           ),
         ),
       ),
-       floatingActionButton: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: new List.generate(imageList.length, (int index) {
-            Widget child = new Container(
-              height: 70.0,
-              width: 56.0,
-              alignment: FractionalOffset.topCenter,
-              child: new ScaleTransition(
-                scale: new CurvedAnimation(
-                  parent: _controller,
-                  curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
-                      curve: Curves.easeOut),
-                ),
-                child: new FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: backgroundColor,
-                  mini: true,
-                  // child: new Icon(icons[index], color: foregroundColor),
-                  child: new Image.asset(
-                    imageList[index],
-                  ),
-                  onPressed: () async {
-                    if (index == 0) {
-                      print("hello 0");
-                      const url = "tel:+971553425400";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    } else if (index == 1) {
-                      print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=9806522695";
-                      await canLaunch(whatsappUrl)
-                          ? launch(whatsappUrl)
-                          : showAlert();
-                    }
-                  },
-                ),
+      floatingActionButton: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: new List.generate(imageList.length, (int index) {
+          Widget child = new Container(
+            height: 70.0,
+            width: 56.0,
+            alignment: FractionalOffset.topCenter,
+            child: new ScaleTransition(
+              scale: new CurvedAnimation(
+                parent: _controller,
+                curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
+                    curve: Curves.easeOut),
               ),
-            );
-            return child;
-          }).toList()
-            ..add(
-              new FloatingActionButton(
-                backgroundColor: Color(ExtraColors.DARK_BLUE),
+              child: new FloatingActionButton(
                 heroTag: null,
-                child: new AnimatedBuilder(
-                  animation: _controller,
-                  builder: (BuildContext context, Widget child) {
-                    return new Transform(
-                      transform: new Matrix4.rotationZ(
-                          _controller.value * 0.5 * math.pi),
-                      alignment: FractionalOffset.center,
-                      child: new Icon(
-                          _controller.isDismissed ? Icons.call : Icons.close),
-                    );
-                  },
+                backgroundColor: backgroundColor,
+                mini: true,
+                // child: new Icon(icons[index], color: foregroundColor),
+                child: new Image.asset(
+                  imageList[index],
                 ),
-                onPressed: () {
-                  if (_controller.isDismissed) {
-                    _controller.forward();
-                  } else {
-                    _controller.reverse();
+                onPressed: () async {
+                  if (index == 0) {
+                    print("hello 0");
+                    var url = "tel:$nearestStorePhn";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  } else if (index == 1) {
+                    print("hello 1");
+                    var whatsappUrl = "whatsapp://send?phone=+9710504788482";
+                    await canLaunch(whatsappUrl)
+                        ? launch(whatsappUrl)
+                        : showAlert();
                   }
                 },
               ),
             ),
-        ),
+          );
+          return child;
+        }).toList()
+          ..add(
+            new FloatingActionButton(
+              backgroundColor: Color(ExtraColors.DARK_BLUE),
+              heroTag: null,
+              child: new AnimatedBuilder(
+                animation: _controller,
+                builder: (BuildContext context, Widget child) {
+                  return new Transform(
+                    transform: new Matrix4.rotationZ(
+                        _controller.value * 0.5 * math.pi),
+                    alignment: FractionalOffset.center,
+                    child: new Icon(
+                        _controller.isDismissed ? Icons.call : Icons.close),
+                  );
+                },
+              ),
+              onPressed: () {
+                if (_controller.isDismissed) {
+                  _controller.forward();
+                } else {
+                  _controller.reverse();
+                }
+              },
+            ),
+          ),
+      ),
     );
   }
 
@@ -701,7 +710,7 @@ Color backgroundColor = Theme.of(context).cardColor;
     }
   }
 
-  getLocation() async {
+  Future<void> getLocation() async {
     showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
@@ -748,6 +757,7 @@ Color backgroundColor = Theme.of(context).cardColor;
       "Content-Type": "application/json",
       "Accept": "application/json"
     };
+
     final body = jsonEncode({
       "car-brand": selectedMake,
       "car-model": selectedModel,
@@ -764,7 +774,7 @@ Color backgroundColor = Theme.of(context).cardColor;
     });
 
     await http
-        .post("https://fasttrackemarat.com/contact-from-app/other-services.php",
+        .post("https://fasttrackemarat.com/contact-from-app/oil-change.php",
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
@@ -779,8 +789,8 @@ Color backgroundColor = Theme.of(context).cardColor;
           emailController.text = "";
           phoneController.text = "";
           commentController.text = "";
-          mileageController.text="";
-          winController.text="";
+          mileageController.text = "";
+          winController.text = "";
           selectedMake = null;
           selectedModel = null;
           selectedYear = null;

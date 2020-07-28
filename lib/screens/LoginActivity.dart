@@ -19,6 +19,7 @@ import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
+import 'package:package_info/package_info.dart';
 import '../helper/NetworkOperationManager.dart';
 import 'package:http/http.dart' as http;
 import 'SignUpActivity.dart';
@@ -259,7 +260,7 @@ class _LoginActivityState extends State<LoginActivity> {
                               ),
                               Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.only(bottom: 65),
+                                  padding: EdgeInsets.only(bottom:80),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -269,22 +270,43 @@ class _LoginActivityState extends State<LoginActivity> {
                                         children: <Widget>[
                                           GestureDetector(
                                             onTap: () {
-                                              Navigator.of(context)
-                                                  .push(MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ForgotPasswordScreen()));
                                             },
                                             child: Text(
                                               "Forgot Password?",
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),
-                                            
                                           ),
-                                          SizedBox(height: 10,),
-                                          Text(
-                                            "All right reserve © 2020",
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                          SizedBox(
+                                            height: 10,
                                           ),
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                "All right reserve © 2020",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              SizedBox(width: 10),
+                                              FutureBuilder(
+                                                future: getVersionNumber(),
+                                                builder: (BuildContext context,
+                                                        AsyncSnapshot<String>
+                                                            snapshot) =>
+                                                    Text(
+                                                  snapshot.hasData
+                                                      ? "v${snapshot.data}" 
+                                                      : "Loading ...",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       )
                                     ],
@@ -400,7 +422,8 @@ class _LoginActivityState extends State<LoginActivity> {
       var connectivityResult = await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.mobile ||
           connectivityResult == ConnectivityResult.wifi) {
-        performLogin();
+        // performLogin();
+        _performLogin();
       } else {
         ShowToast.showToast(context, "No internet connection");
       }
@@ -489,4 +512,35 @@ class _LoginActivityState extends State<LoginActivity> {
           ],
         ),
       );
+
+  void _performLogin() async {
+    showProgressBar();
+    String mobileNumber = phoneCode + mobileController.text;
+    NetworkOperationManager.logIn(mobileNumber, passwordController.text, client)
+        .then((res) {
+      hideProgressBar();
+      if (res.status == Rcode.SUCCESS_CODE) {
+        print("${res.customerEmail} ${res.customerName}");
+        PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
+            res.customerName, res.customerEmail, "", mobileController.text);
+
+        Navigator.push(
+            context, MaterialPageRoute(builder: ((context) => MainTab())));
+        ShowToast.showToast(context, "Login Success");
+      } else {
+        print(res.errResponse);
+        ShowToast.showToast(context, res.errResponse);
+      }
+    }).catchError((err) {
+      ShowToast.showToast(context, err);
+    });
+  }
+
+  Future<String> getVersionNumber() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    print(version);
+
+    return version;
+  }
 }

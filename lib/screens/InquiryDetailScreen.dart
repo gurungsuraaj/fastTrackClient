@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InquiryDetailScreen extends StatefulWidget {
@@ -53,7 +55,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   var _formKey1 = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   AnimationController _controller;
-
+  String nearestStorePhn;
   static const List<IconData> icons = const [Icons.whatshot, Icons.phone];
 
   static const List<String> imageList = const [
@@ -64,7 +66,12 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    getInquiryDataForTyres().whenComplete(() {
+    getInquiryDataForTyres().whenComplete(() async {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() async {
+        nearestStorePhn =
+            await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      });
       getMakeList();
       getYearList();
     });
@@ -105,7 +112,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   onPressed: () async {
                     if (index == 0) {
                       print("hello 0");
-                      const url = "tel:+971553425400";
+                      var url = "tel:$nearestStorePhn";
                       if (await canLaunch(url)) {
                         await launch(url);
                       } else {
@@ -113,7 +120,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       }
                     } else if (index == 1) {
                       print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=9806522695";
+                      var whatsappUrl =
+                          "whatsapp://send?phone=+9710504788482";
                       await canLaunch(whatsappUrl)
                           ? launch(whatsappUrl)
                           : showAlert();
@@ -464,62 +472,57 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Container(
-                height: 60,
-                width: 170,
-                child: TextFormField(
-                  validator: (value) {
-                    bool emailValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value);
-                    if (value.isEmpty) {
-                      return 'Please fill up this field';
-                    } else if (!emailValid) {
-                      return 'Please enter a valid address';
-                    }
-                    return null;
-                  },
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                  controller: emailControllerSize,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(8),
-                    isDense: true,
-                    labelText: 'Email',
-                    hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                    border: OutlineInputBorder(),
-                  ),
-                ),
+          Container(
+            height: 60,
+            width: width * 0.9,
+            child: TextFormField(
+              validator: (value) {
+                bool emailValid = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    .hasMatch(value);
+                if (value.isEmpty) {
+                  return 'Please fill up this field';
+                } else if (!emailValid) {
+                  return 'Please enter a valid address';
+                }
+                return null;
+              },
+              style: TextStyle(
+                fontSize: 16,
               ),
-              Container(
-                height: 60,
-                width: 170,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value.length == 0) {
-                      return ("Please fill up this field.");
-                    } else {
-                      return null;
-                    }
-                  },
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                  controller: commentControllerSize,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(8),
-                    isDense: true,
-                    labelText: 'Enter the Comment',
-                    hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                    border: OutlineInputBorder(),
-                  ),
-                ),
+              controller: emailControllerSize,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(8),
+                isDense: true,
+                labelText: 'Email',
+                hintStyle: TextStyle(color: Color(0xffb8b8b8)),
+                border: OutlineInputBorder(),
               ),
-            ],
+            ),
+          ),
+          Container(
+            width: width * 0.9,
+            child: TextFormField(
+              maxLines: 5,
+              validator: (value) {
+                if (value.length == 0) {
+                  return ("Please fill up this field.");
+                } else {
+                  return null;
+                }
+              },
+              style: TextStyle(
+                fontSize: 16,
+              ),
+              controller: commentControllerSize,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(8),
+                isDense: true,
+                labelText: 'Enter the Comment',
+                hintStyle: TextStyle(color: Color(0xffb8b8b8)),
+                border: OutlineInputBorder(),
+              ),
+            ),
           ),
           Center(
             child: Container(
@@ -853,7 +856,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           ),
           SizedBox(
             height: 30,
-          ),    
+          ),
         ]),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:fasttrackgarage_app/database/AppDatabase.dart';
 import 'package:fasttrackgarage_app/database/dao/NotificationDao.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/models/LocateModel.dart';
 import 'package:fasttrackgarage_app/models/NotificationDbModel.dart';
 import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
@@ -67,6 +68,9 @@ class _HomeActivityState extends State<HomeActivity>
   List<Placemark> placemark = List<Placemark>();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
+  List<double> branchDistanceList = List();
+  List<LocateModel> branchList = List();
+  int shortDistanceIndex;
 
   @override
   void initState() {
@@ -102,7 +106,9 @@ class _HomeActivityState extends State<HomeActivity>
     // );
 
     getPrefs().then((val) async {
-      getLocationOfCLient();
+      getLocationOfCLient().whenComplete(() {
+        fetchBranchList();
+      });
       showOffer();
     });
   }
@@ -121,7 +127,7 @@ class _HomeActivityState extends State<HomeActivity>
     saveNotificatonDataOnDB(msg);
   }
 
-  void getLocationOfCLient() async {
+  Future<void> getLocationOfCLient() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
@@ -143,15 +149,16 @@ class _HomeActivityState extends State<HomeActivity>
         key: _scaffoldKey,
         appBar: new AppBar(
           title: Container(
-            height: 35,
-            child: Row(children: <Widget>[
-              Image.asset(
+              height: 35,
+              child: Row(
+                children: <Widget>[
+                  Image.asset(
                     'images/fastTrackSingleLogo.png',
                     height: 30,
                   ),
                   Text("  FastTrack")
-            ],)
-          ),
+                ],
+              )),
           automaticallyImplyLeading: false,
           backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
           actions: <Widget>[
@@ -203,7 +210,7 @@ class _HomeActivityState extends State<HomeActivity>
                       ),
                     ),
                     Text(
-                      "Change",
+                      "",
                       style: TextStyle(color: Colors.white),
                     )
                   ],
@@ -266,15 +273,12 @@ class _HomeActivityState extends State<HomeActivity>
                                   //                                          builder: (context) =>
                                   //                                              ServiceActivity()),
                                   //                                    );
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ServiceActivity()));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ServiceActivity()));
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
                                       "images/ServicesLogo.png",
@@ -299,8 +303,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
                                       "images/ServiceHistory.png",
@@ -351,8 +354,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
                                       "images/promotionLogo.png",
@@ -372,8 +374,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
                                       "images/distressCall.png",
@@ -397,14 +398,12 @@ class _HomeActivityState extends State<HomeActivity>
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            LocateActivity()),
+                                        builder: (context) => LocateActivity()),
                                   );
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
                                       "images/LocationLogo.png",
@@ -417,7 +416,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   ],
                                 )))),
 
-                                 Card(
+                    Card(
                         child: Container(
                             child: InkWell(
                                 onTap: () {
@@ -435,8 +434,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
                                       "images/inquiry.png",
@@ -799,8 +797,74 @@ class _HomeActivityState extends State<HomeActivity>
     notification.dateTime = DateTime.now().toString();
     await database.notificationDao.insertNotification(notification);
   }
-}
 
-//Extra COde
-//
-//
+  Future<void> fetchBranchList() async {
+    showProgressBar();
+    Map<String, String> header = {
+      "Content-Type": "application/json",
+    };
+    await http
+        .get('http://www.fasttrackemarat.com/feed/updates.json',
+            headers: header)
+        .then((res) {
+      hideProgressBar();
+      int status = res.statusCode;
+      if (status == Rcode.SUCCESS_CODE) {
+        var result = json.decode(res.body);
+        var value = result["branches"] as List;
+
+        branchList = value
+            .map<LocateModel>((json) => LocateModel.fromJson(json))
+            .toList();
+
+        calculateDistanceForPhone();
+      } else {
+        hideProgressBar();
+      }
+    }).catchError((err) {
+      print("Error $err ");
+      hideProgressBar();
+    });
+  }
+
+  void calculateDistanceForPhone() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    if (position != null) {
+      for (LocateModel branch in branchList) {
+        var location = branch.latlng.split(",");
+        double branchLatitude = double.parse(location[0]);
+        double branchLongitude = double.parse(location[1]);
+
+        double distanceInMeters = await Geolocator().distanceBetween(
+            position.latitude,
+            position.longitude,
+            branchLatitude,
+            branchLongitude);
+
+        branchDistanceList.add(distanceInMeters);
+      }
+      shortDistanceIndex =
+          branchDistanceList.indexOf(branchDistanceList.reduce(min));
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(Constants.NEAREST_STORE_PHONENO,
+          "${branchList[shortDistanceIndex].telephone}");
+      print(
+          "the shorted distance is ${branchList[shortDistanceIndex].telephone}");
+
+      // var shortestDistancebranch =
+      // branchList[shortDistanceIndex].latlng.split(",");
+      // shortDistBranchlat = double.parse(shortestDistancebranch[0]);
+      // shortDistBranchLong = double.parse(shortestDistancebranch[1]);
+
+      setState(() {
+        // _center = LatLng(shortDistBranchlat, shortDistBranchLong);
+      });
+    } else {
+      showInSnackBar("Couldn't locate your position. Is your GPS turned on?");
+    }
+
+    hideProgressBar();
+    // zoomInMarker();
+  }
+}

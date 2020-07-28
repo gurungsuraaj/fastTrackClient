@@ -186,11 +186,13 @@ class _SplashScreenState extends State<SplashScreen> {
     String basicToken;
 
     final prefs = await SharedPreferences.getInstance();
-    basicToken = prefs.getString(Constants.BASIC_TOKEN);
+    basicToken = prefs.getString(Constants.CUSTOMER_NUMBER);
 
     if (basicToken == null || basicToken == "") {
+      print("Inside the null check condition");
       Navigator.of(context).pushReplacementNamed(RoutesName.LOGIN_ACTIVITY);
     } else {
+      print("Inside the else condition");
       Navigator.of(context).pushReplacementNamed(RoutesName.MAIN_TAB);
     }
   }

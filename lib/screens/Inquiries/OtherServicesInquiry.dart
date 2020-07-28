@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as math;
 
 import 'package:url_launcher/url_launcher.dart';
@@ -35,7 +37,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
   TextEditingController emailController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-
+  String nearestStorePhn;
   TimeOfDay time = TimeOfDay.now();
   AnimationController _controller;
   static const List<String> imageList = const [
@@ -47,7 +49,12 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
     // TODO: implement initState
     super.initState();
 
-    getMakeList().whenComplete(() {
+    getMakeList().whenComplete(() async {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() async {
+        nearestStorePhn =
+            await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      });
       getLocation();
     });
     _controller = new AnimationController(
@@ -418,21 +425,21 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                   imageList[index],
                 ),
                 onPressed: () async {
-                  if (index == 0) {
-                    print("hello 0");
-                    const url = "tel:+971553425400";
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
+                 if (index == 0) {
+                      print("hello 0");
+                      var url = "tel:$nearestStorePhn";
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    } else if (index == 1) {
+                      print("hello 1");
+                      var whatsappUrl = "whatsapp://send?phone=+9710504788482";
+                      await canLaunch(whatsappUrl)
+                          ? launch(whatsappUrl)
+                          : showAlert();
                     }
-                  } else if (index == 1) {
-                    print("hello 1");
-                    var whatsappUrl = "whatsapp://send?phone=9806522695";
-                    await canLaunch(whatsappUrl)
-                        ? launch(whatsappUrl)
-                        : showAlert();
-                  }
                 },
               ),
             ),

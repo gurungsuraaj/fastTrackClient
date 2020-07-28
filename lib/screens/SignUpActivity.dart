@@ -4,6 +4,9 @@ import 'package:circular_check_box/circular_check_box.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
+import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
+import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
@@ -11,6 +14,7 @@ import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:ntlm/ntlm.dart';
 import 'package:toast/toast.dart';
 import 'HomeActivity.dart';
 import 'GenerateOTPActivity.dart';
@@ -40,7 +44,8 @@ class _SignUpActivity extends State<SignUpActivity> {
   var fontSizeTextField = 14.0;
   var fontSizeText = 14.0;
   bool _termsChecked = false;
-  String phoneCode = "971",mobileNumber;
+  String phoneCode = "971", mobileNumber;
+  NTLMClient client;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -53,6 +58,13 @@ class _SignUpActivity extends State<SignUpActivity> {
   String _password;
 
   bool checkBoxValue = false;
+  @override
+  void initState() {
+    super.initState();
+    client =
+        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -203,12 +215,11 @@ class _SignUpActivity extends State<SignUpActivity> {
 //                                        TextStyle(color: Color(0xffb8b8b8))),
 //                              ),
 //                            ),
-                          Container(
-                            padding: EdgeInsets.only(top: 15),
-                            width: width * 0.8,
-                            child: _buildCountryPickerDropdown() ,
-                          ),
-
+                            Container(
+                              padding: EdgeInsets.only(top: 15),
+                              width: width * 0.8,
+                              child: _buildCountryPickerDropdown(),
+                            ),
 
 //                            Container(
 //                              margin: EdgeInsets.only(top: MARGIN),
@@ -295,7 +306,9 @@ class _SignUpActivity extends State<SignUpActivity> {
                                         },
                                         child: Text(
                                           "Subscribe for share locally program to earn & redeem.\n Read Share terms and condition",
-                                          style: TextStyle(color: Colors.white,fontSize: 10),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10),
                                         )),
                                   ],
                                 )),
@@ -326,8 +339,12 @@ class _SignUpActivity extends State<SignUpActivity> {
                             ),
                             Center(
                               child: Container(
-                                padding: EdgeInsets.only(top: 25),
-                                  child: Text("By proceeding you accept the terms and condition",style: TextStyle(color: Colors.white,fontSize: 12),)),
+                                  padding: EdgeInsets.only(top: 25),
+                                  child: Text(
+                                    "By proceeding you accept the terms and condition",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  )),
                             )
                           ],
                         ),
@@ -363,7 +380,8 @@ class _SignUpActivity extends State<SignUpActivity> {
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile ||
             connectivityResult == ConnectivityResult.wifi) {
-          signUp();
+          // signUp();
+          _signUp();
         } else {
           ShowToast.showToast(context, "No internet connection");
         }
@@ -393,8 +411,6 @@ class _SignUpActivity extends State<SignUpActivity> {
     String mobileNum = phoneCode + mobileController.text;
     String password = passwordController.text;
     debugPrint("This is  url : $mobileNum");
-
-
 
     Map<String, String> body = {
       "mobileNo": mobileNum,
@@ -449,10 +465,8 @@ class _SignUpActivity extends State<SignUpActivity> {
           bool sortedByIsoCode = false,
           bool hasPriorityList = false}) =>
       Row(
-
         children: <Widget>[
           CountryPickerDropdown(
-
             initialValue: 'AE',
             itemBuilder: _buildDropdownItem,
             itemFilter: filtered
@@ -468,7 +482,9 @@ class _SignUpActivity extends State<SignUpActivity> {
                 ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
                 : null,
             onValuePicked: (Country country) {
-              print("${country.phoneCode}", );
+              print(
+                "${country.phoneCode}",
+              );
               setState(() {
                 phoneCode = country.phoneCode;
               });
@@ -482,7 +498,6 @@ class _SignUpActivity extends State<SignUpActivity> {
               controller: mobileController,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
-
                 hintText: "Phone",
                 hintStyle: TextStyle(color: Colors.white),
                 labelStyle: TextStyle(color: Colors.white),
@@ -512,4 +527,24 @@ class _SignUpActivity extends State<SignUpActivity> {
           ],
         ),
       );
+
+  void _signUp() async {
+    String mobileNum = phoneCode + mobileController.text;
+
+    showProgressBar();
+    NetworkOperationManager.signUp(mobileNum, nameController.text,
+            emailController.text, passwordController.text, client)
+        .then((res) {
+      hideProgressBar();
+      if (res.status == Rcode.SUCCESS_CODE) {
+        Navigator.of(context).pop();
+        ShowToast.showToast(context, "Signed up successfully");
+      } else {
+        print("suraj ${res.responseBody}");
+        ShowToast.showToast(context, "Error :" + "${res.responseBody}");
+      }
+    }).catchError((err) {
+      ShowToast.showToast(context, "Error :" + err);
+    });
+  }
 }

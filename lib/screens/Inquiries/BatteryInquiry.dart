@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,6 +46,7 @@ class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStat
   List<String> modelList = List();
   List<int> yearList = List();
   AnimationController _controller;
+  String nearestStorePhn;
 
  static const List<String> imageList = const [
     "images/call.png",
@@ -53,7 +56,14 @@ class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStat
   void initState() {
     // TODO: implement initState
     super.initState();
-    getInquiryDataForBatttery().whenComplete(() {
+    getInquiryDataForBatttery().whenComplete(()async {
+        final prefs = await SharedPreferences.getInstance();
+
+      setState(()async {
+          nearestStorePhn =
+              await prefs.getString(Constants.NEAREST_STORE_PHONENO); 
+      });
+      
       getMakeList();
       getYearList();
     });
@@ -466,7 +476,7 @@ class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStat
                   onPressed: () async {
                     if (index == 0) {
                       print("hello 0");
-                      const url = "tel:+971553425400";
+                      var url = "tel:$nearestStorePhn";
                       if (await canLaunch(url)) {
                         await launch(url);
                       } else {
@@ -474,7 +484,7 @@ class _BatteryInquiryState extends State<BatteryInquiry> with TickerProviderStat
                       }
                     } else if (index == 1) {
                       print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=9806522695";
+                      var whatsappUrl = "whatsapp://send?phone=+9710504788482";
                       await canLaunch(whatsappUrl)
                           ? launch(whatsappUrl)
                           : showAlert();

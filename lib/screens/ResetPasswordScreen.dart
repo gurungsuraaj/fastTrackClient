@@ -41,11 +41,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(ExtraColors.DARK_BLUE),
       body: ModalProgressHUD(
-          inAsyncCall: isProgressBarShown,
-              child: Column(
+        inAsyncCall: isProgressBarShown,
+        child: Column(
           children: <Widget>[
             ReusableAppBar.getAppBar(0, 0, height, width),
             Center(
@@ -132,22 +132,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       await NetworkOperationManager.saveNewPassword(
               widget.email, passwordController.text, client)
           .then((res) {
-            hideProgressBar();
+        hideProgressBar();
         print("Response password ${res.responseBody}");
         if (res.status == 200) {
-        
           if (res.responseBody == "true") {
             ShowToast.showToast(context, "Password reset successfully");
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => LoginActivity()),
             );
-          }else{
-       ShowToast.showToast(context, "No response ${res.responseBody}");
-
+          } else {
+            ShowToast.showToast(context, "No response ${res.responseBody}");
           }
-        }else{
-       ShowToast.showToast(context, res.responseBody);
+        } else {
+          ShowToast.showToast(context, res.responseBody);
         }
       }).catchError((err) {
         displaySnackbar(context, err);

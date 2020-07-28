@@ -1,9 +1,11 @@
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
+import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math' as math;
 
@@ -19,6 +21,7 @@ class BrakeInquiry extends StatefulWidget {
 class _BrakeInquiryState extends State<BrakeInquiry>with TickerProviderStateMixin {
   List<String> makeList = List();
   List<String> locationList = List();
+  String nearestStorePhn;
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -48,7 +51,11 @@ class _BrakeInquiryState extends State<BrakeInquiry>with TickerProviderStateMixi
   void initState() {
     // TODO: implement initState
     super.initState();
-    getInquiryDataForBrake().whenComplete(() {
+    getInquiryDataForBrake().whenComplete(()async {
+       final prefs = await SharedPreferences.getInstance();
+      setState(() async{
+        nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      });
       getMakeList();
       getYearList();
     });
@@ -475,7 +482,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>with TickerProviderStateMixi
                   onPressed: () async {
                     if (index == 0) {
                       print("hello 0");
-                      const url = "tel:+971553425400";
+                      var url = "tel:$nearestStorePhn";
                       if (await canLaunch(url)) {
                         await launch(url);
                       } else {
@@ -483,7 +490,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>with TickerProviderStateMixi
                       }
                     } else if (index == 1) {
                       print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=9806522695";
+                      var whatsappUrl = "whatsapp://send?phone=+9710504788482";
                       await canLaunch(whatsappUrl)
                           ? launch(whatsappUrl)
                           : showAlert();
