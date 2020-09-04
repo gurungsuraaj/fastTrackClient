@@ -6,6 +6,7 @@ import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
+import 'package:fasttrackgarage_app/models/VehicleListModel.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +16,10 @@ import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkOperationManager {
-  static Future<NetworkResponse> signUp(String mobileNum, String custName, String email,String password, NTLMClient client) async {
+  static Future<NetworkResponse> signUp(String mobileNum, String custName,
+      String email, String password, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
-    var url =Uri.encodeFull(Api.WEB_SERVICE);
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
     var envelope =
         '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
@@ -43,7 +45,7 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-          print("status ${res.statusCode}  ${res.body}");
+      print("status ${res.statusCode}  ${res.body}");
       var rawXmlResponse = res.body;
       var code = res.statusCode;
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
@@ -87,7 +89,7 @@ class NetworkOperationManager {
 </urn:Customerlogin>
 </soapenv:Body>
 </soapenv:Envelope>''';
-
+    print(envelope);
     await client
         .post(
       url,
@@ -131,11 +133,10 @@ class NetworkOperationManager {
         });
       } else {
         resValue = parsedXml.findAllElements("faultstring");
-        
+
         formattedResVal = resValue.map((node) => node.text);
         response_message = formattedResVal.first;
         loginModel.errResponse = response_message;
-
       }
     });
 
@@ -208,7 +209,8 @@ class NetworkOperationManager {
         "priority": "high",
         "notitification": {
           "title": "Pleases response to the distress call!",
-          "body": "Tap for more info!"
+          "body": "Tap for more info!",
+          "sound": "default"
         },
         "data": {
           // 'status':'done',
@@ -661,6 +663,136 @@ class NetworkOperationManager {
       var response_message;
       if (code == Rcode.SUCCESS_CODE) {
         resValue = parsedXml.findAllElements("return_value");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
+
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
+    });
+
+    return rs;
+  }
+
+  static Future<List<VehicleListModel>> getVehicleList(
+      String customerNumber, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.VEHICLE_LIST);
+    String response = "";
+    List<VehicleListModel> vehicleArrayList = new List();
+    Xml2Json xml2json = new Xml2Json();
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/vehiclelist">
+<soapenv:Body>
+<tns:ReadMultiple>
+<tns:filter>
+<tns:Field>Customer_No</tns:Field>
+<tns:Criteria>$customerNumber</tns:Criteria>
+</tns:filter>
+<tns:bookmarkKey></tns:bookmarkKey>
+<tns:setSize></tns:setSize>
+</tns:ReadMultiple>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    print(envelope);
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/page/vehiclelist",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      parsedXml.findAllElements("VehicleList").forEach((val) {
+        VehicleListModel vehicleList = new VehicleListModel();
+        // print("This is loop $val");
+        xml2json.parse(val.toString());
+        var json = xml2json.toParker();
+        var data = jsonDecode(json);
+        vehicleList.Customer_No = data["VehicleList"]["Customer_No"] ?? "";
+        vehicleList.Make_Code = data["VehicleList"]["Make_Code"] ?? "";
+        vehicleList.VIN = data["VehicleList"]["VIN"] ?? "";
+        vehicleList.Model_Code = data["VehicleList"]["Model_Code"] ?? "";
+        vehicleList.vehicleCode =
+            data["VehicleList"]["Variable_Field_25006800"] ?? "";
+        vehicleList.vehicleEmirates =
+            data["VehicleList"]["Variable_Field_25006802"] ?? "";
+        vehicleList.vehicleCategory =
+            data["VehicleList"]["Variable_Field_25006801"] ?? "";
+        vehicleList.Serial_No = data["VehicleList"]["Serial_No"] ?? "";
+        vehicleList.Type_Code = data["VehicleList"]["Type_Code"] ?? "";
+        vehicleList.Registration_No =
+            data["VehicleList"]["Registration_No"] ?? "";
+        vehicleList.Production_Year =
+            data["VehicleList"]["Production_Year"] ?? "";
+        vehicleList.odometer = data["VehicleList"]["Kilometrage"] ?? "";
+        vehicleList.StatusCode = res.statusCode;
+
+        //  print("This is Model Code inside loop ======> ${vehicleList.Model_Code}");
+        vehicleArrayList.add(vehicleList);
+      });
+
+      print("This is response body: $response");
+    });
+
+    return vehicleArrayList;
+  }
+
+
+   static Future<NetworkResponse> checkServiceDate(
+      String customerNo, String vehicleSerialNo, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.JOB_ORDER_PROCESS);
+    String response = "";
+    print("This is the url $url");
+
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/JobOrderProcess">
+<soapenv:Body>
+<urn:CheckNextServiceDate>
+<urn:customerNo>$customerNo</urn:customerNo>
+<urn:vehicalSerialNo>$vehicleSerialNo</urn:vehicalSerialNo>
+<urn:nextServiceDate>0001-01-01</urn:nextServiceDate>
+</urn:CheckNextServiceDate>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/JobOrderProcess",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
+
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("CheckNextServiceDate_Result");
         formattedResVal = resValue.map((node) => node.text);
         response_message = formattedResVal.first;
       } else {

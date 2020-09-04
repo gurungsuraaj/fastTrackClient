@@ -6,6 +6,7 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models//LocateModel.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +28,7 @@ class _LocateActivityState extends State<LocateActivity> {
     // TODO: implement initState
     super.initState();
     getBranchList();
+    // calculateOpeningHour();
   }
 
   @override
@@ -149,6 +151,29 @@ class _LocateActivityState extends State<LocateActivity> {
                                 Row(
                                   children: <Widget>[
                                     Container(
+                                        height: 32,
+                                        width: 100,
+                                        decoration: new BoxDecoration(
+                                          color:
+                                              locationlist[index].openingStatus
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                          borderRadius:
+                                              new BorderRadius.circular(10.0),
+                                        ),
+                                        child: new Center(
+                                          child: Text(
+                                            locationlist[index].openingStatus
+                                                ? "Opened"
+                                                : "Closed",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                        )),
+                                    SizedBox(width: 8),
+                                    Container(
                                       child: InkWell(
                                         onTap: () async {
                                           var location = locationlist[index]
@@ -195,8 +220,9 @@ class _LocateActivityState extends State<LocateActivity> {
                                     ),
                                     Container(
                                       child: new Container(
+                                        alignment: Alignment.center,
                                         height: 32.0,
-                                        width: 150,
+                                        width: 120,
                                         decoration: new BoxDecoration(
                                           color: Color(ExtraColors.DARK_BLUE),
                                           // border: new Border.all(
@@ -227,9 +253,9 @@ class _LocateActivityState extends State<LocateActivity> {
                                             child: Text(
                                               "Open Google Map",
                                               style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 14,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
+                                                  color: Colors.white),textAlign: TextAlign.center,
                                             ),
                                           ),
                                         ),
@@ -295,5 +321,37 @@ class _LocateActivityState extends State<LocateActivity> {
     setState(() {
       isProgressBarShown = false;
     });
+  }
+
+  void calculateOpeningHour() async {
+    final startTime = DateTime(2020, 8, 23, 01, 30);
+    final endTime = DateTime(2020, 10, 23, 13, 00);
+
+    DateFormat dateFormat = DateFormat("HH:mm");
+    DateTime now = DateTime.now();
+    final time = dateFormat.parse(DateFormat.Hm().format(now));
+    String dateFromAPI = "08:00 am - 11:00 pm";
+
+    String openingTime = dateFromAPI.substring(0, 6);
+    String closingTime = dateFromAPI.substring(11, 16);
+    String updatedClosingTime;
+
+    // print("opening time ${ }");
+
+    String extractPM =
+        dateFromAPI.substring((dateFromAPI.length - 2), dateFromAPI.length);
+    if (extractPM == "pm") {
+      String finalTime =
+          ((int.parse(closingTime.substring(0, 2)) + 12)).toString();
+      updatedClosingTime = "$finalTime:${closingTime.substring(3, 5)}";
+      print("Time $updatedClosingTime");
+    } else {}
+
+    final prevDate = dateFormat.parse(openingTime);
+    final afterDate = dateFormat.parse(updatedClosingTime);
+
+    if (time.isAfter(prevDate) && time.isBefore(afterDate)) {
+      print("Inside  $time $prevDate $afterDate");
+    }
   }
 }

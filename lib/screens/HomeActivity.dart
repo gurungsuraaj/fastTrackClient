@@ -9,6 +9,7 @@ import 'package:fasttrackgarage_app/models/UserList.dart';
 import 'package:fasttrackgarage_app/models/person.dart';
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
+import 'package:fasttrackgarage_app/screens/NextServiceDateScreen.dart';
 import 'package:fasttrackgarage_app/screens/OfferPromo.dart';
 import 'package:fasttrackgarage_app/screens/PostedSalesInvoiceScreen.dart';
 import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
@@ -22,6 +23,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/PrefsManager.dart';
 import 'CheckInventory.dart';
 import 'InquiryListScreen.dart';
@@ -446,6 +448,34 @@ class _HomeActivityState extends State<HomeActivity>
                                         child: Text("Inquiry"))
                                   ],
                                 )))),
+                    Card(
+                        child: Container(
+                            child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NextServiceDateScreen()),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/inquiry.png",
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Next Service Date",
+                                          textAlign: TextAlign.center,
+                                        ))
+                                  ],
+                                )))),
                     // Card(
                     //     child: Container(
                     //         child: InkWell(
@@ -520,56 +550,118 @@ class _HomeActivityState extends State<HomeActivity>
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.all(0.0),
-          content: Container(
-            height: 290,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: 120,
-                  //                  width: queryData.size.width,
-                  color: Color(ExtraColors.DARK_BLUE),
-                  child: Center(
-                      child: Image.asset(
-                    "images/message.png",
-                    height: 90,
-                  )),
-                ),
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
-                        child: Text("Need Help?"),
-                      ),
-                      Container(
-                        width: 120,
-                        child: RaisedButton(
-                          onPressed: () {
-                            print("Hello");
-                            // Navigator.pop(context);
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.all(0.0),
+            content: Container(
+              height: 350,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 120,
+                    //                  width: queryData.size.width,
+                    color: Color(ExtraColors.DARK_BLUE),
+                    child: Center(
+                        child: Image.asset(
+                      "images/message.png",
+                      height: 90,
+                    )),
+                  ),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+                          child: Text("Need Help?"),
+                        ),
+                        Container(
+                          width: 120,
+                          child: RaisedButton(
+                            onPressed: () {
+                              print("Hello");
+                              // Navigator.pop(context);
 
-                            getUserList();
-                          },
-                          color: Colors.blue[700],
-                          child: Text(
-                            'SEND ALERT',
-                            style: TextStyle(
-                              color: Colors.white,
+                              getUserList();
+                            },
+                            color: Colors.blue[700],
+                            child: Text(
+                              'SEND ALERT',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "-----------------------OR-----------------------",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.of(context).pop();
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  String nearestPhoneNo = prefs.getString(
+                                      Constants.NEAREST_STORE_PHONENO);
+                                  var url = "tel:$nearestPhoneNo";
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                                child: Image.asset(
+                                  "images/call.png",
+                                  height: 40,
+                                  width: 40,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.of(context).pop();
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  String whatappNO = prefs
+                                      .getString(Constants.WHATS_APP_NUMBER);
+                                  var whatsappUrl =
+                                      "whatsapp://send?phone=$whatappNO";
+                                  await canLaunch(whatsappUrl)
+                                      ? launch(whatsappUrl)
+                                      : showAlert();
+                                },
+                                child: Image.asset(
+                                  "images/whatsapp.png",
+                                  height: 40,
+                                  width: 40,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        });
       },
     );
 
@@ -626,6 +718,54 @@ class _HomeActivityState extends State<HomeActivity>
     //      ),
     //    );
     //    showDialog(context: context, child: dialog);
+  }
+
+  showAlert() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(10.0),
+          actions: <Widget>[
+            Container(
+              width: 100,
+              child: FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                // color: Colors.blue[700],
+                child: Text(
+                  'Ok',
+                  style: TextStyle(
+                    color: Colors.blue[700],
+                  ),
+                ),
+              ),
+            ),
+          ],
+          content: Container(
+            height: 100,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+                        child: Text(
+                            "There is no whatsapp installed on your mobile device"),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   showOffer() async {
@@ -695,14 +835,21 @@ class _HomeActivityState extends State<HomeActivity>
 
   getUserList() async {
     showProgressBar();
-    NetworkOperationManager.getAdminUserList(client).then((val) {
+    NetworkOperationManager.getAdminUserList(client).then((val) async {
       debugPrint("This is the response $val");
       hideProgressBar();
       setState(() {
         userList = val;
       });
       print("This is the first token $val ${val[0].token}");
-      calculateDistance();
+
+      bool isLocationEnabled = await Geolocator().isLocationServiceEnabled();
+      if (isLocationEnabled != false) {
+        calculateDistance();
+      } else {
+        Navigator.pop(context);
+        showInSnackBar("Couldn't locate your position. Is your GPS turned on?");
+      }
     }).catchError((err) {
       hideProgressBar();
       print("There is an error: $err");
@@ -763,8 +910,7 @@ class _HomeActivityState extends State<HomeActivity>
                 "Send alert successfully ! You will get call from the nearest branch ");
           } else {
             //            showInSnackBar("Something went wrong while sending alert");
-            showInSnackBar(
-                "Error: ${res.responseBody}");
+            showInSnackBar("Error: ${res.responseBody}");
           }
         });
       } else {
@@ -830,7 +976,9 @@ class _HomeActivityState extends State<HomeActivity>
   void calculateDistanceForPhone() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    if (position != null) {
+    bool isLocationEnabled = await Geolocator().isLocationServiceEnabled();
+    print("!!!!!!!!!!!!!!!!!!!! $isLocationEnabled");
+    if (isLocationEnabled != false) {
       for (LocateModel branch in branchList) {
         var location = branch.latlng.split(",");
         double branchLatitude = double.parse(location[0]);
@@ -863,6 +1011,8 @@ class _HomeActivityState extends State<HomeActivity>
         // _center = LatLng(shortDistBranchlat, shortDistBranchLong);
       });
     } else {
+      Navigator.pop(context);
+
       showInSnackBar("Couldn't locate your position. Is your GPS turned on?");
     }
 

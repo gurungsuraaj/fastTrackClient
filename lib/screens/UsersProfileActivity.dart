@@ -12,7 +12,9 @@ class UsersProfileActivity extends StatefulWidget {
 }
 
 class _UsersProfileActivityState extends State<UsersProfileActivity> {
-  String customerName, mobNumber, customerEmail;
+  String customerName, mobNumber, customerEmail,customerNumber;
+  bool isProgressBarShown = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -36,7 +38,7 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
         ),
       ),
       body: Container(
-        height: 358,
+        height: 430,
         width: MediaQuery.of(context).size.width,
         child: Card(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -74,6 +76,18 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
               height: 10,
             ),
             ListTile(
+              leading: Text("Customer No."),
+              trailing: customerNumber == null
+                  ? Container(
+                      child: Text(""),
+                    )
+                  : Text(customerNumber),
+            ),
+             Divider(
+              color: Colors.grey,
+              height: 10,
+            ),
+             ListTile(
               leading: Text("Phone No."),
               trailing: mobNumber == null
                   ? Container(
@@ -114,6 +128,21 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
     customerName = await prefs.getString((Constants.CUSTOMER_NAME));
     mobNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
     customerEmail = await prefs.getString((Constants.CUSTOMER_EMAIL));
+    customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
+    setState(() {
+      
+    });
     //  return serviceOrderNum;
+  }
+    void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
   }
 }

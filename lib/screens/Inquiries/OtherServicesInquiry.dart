@@ -37,7 +37,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
   TextEditingController emailController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  String nearestStorePhn,whatsAppNum;
+  String nearestStorePhn, whatsAppNum;
   TimeOfDay time = TimeOfDay.now();
   AnimationController _controller;
   static const List<String> imageList = const [
@@ -50,14 +50,9 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
     super.initState();
 
     getMakeList().whenComplete(() async {
-      final prefs = await SharedPreferences.getInstance();
-      setState(() async {
-        nearestStorePhn =
-            await prefs.getString(Constants.NEAREST_STORE_PHONENO);
-        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
-
+      getPrefs().whenComplete(() {
+        getLocation();
       });
-      getLocation();
     });
     _controller = new AnimationController(
       vsync: this,
@@ -427,21 +422,21 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                   imageList[index],
                 ),
                 onPressed: () async {
-                 if (index == 0) {
-                      print("hello 0");
-                      var url = "tel:$nearestStorePhn";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    } else if (index == 1) {
-                      print("hello 1");
-                      var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
-                      await canLaunch(whatsappUrl)
-                          ? launch(whatsappUrl)
-                          : showAlert();
+                  if (index == 0) {
+                    print("hello 0");
+                    var url = "tel:$nearestStorePhn";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
                     }
+                  } else if (index == 1) {
+                    print("hello 1");
+                    var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
+                    await canLaunch(whatsappUrl)
+                        ? launch(whatsappUrl)
+                        : showAlert();
+                  }
                 },
               ),
             ),
@@ -686,5 +681,22 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
       duration: const Duration(seconds: 2),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  Future<void> getPrefs() async {
+    String customerName, customerNumber, customerEmail;
+
+    final prefs = await SharedPreferences.getInstance();
+    setState(() async {
+      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+      customerName = await prefs.getString(Constants.CUSTOMER_NAME);
+      customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);
+      customerEmail = await prefs.getString(Constants.CUSTOMER_EMAIL);
+
+      nameController.text = customerName;
+      phoneController.text = customerNumber;
+      emailController.text = customerEmail;
+    });
   }
 }

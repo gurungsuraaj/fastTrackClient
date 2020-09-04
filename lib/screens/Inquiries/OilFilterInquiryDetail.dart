@@ -39,7 +39,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   TimeOfDay time = TimeOfDay.now();
   bool isProgressBarShown = false;
   List<int> yearList = List();
-  String nearestStorePhn,whatsAppNum;
+  String nearestStorePhn, whatsAppNum;
   var _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> modelList = List();
@@ -57,14 +57,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
     super.initState();
     getMakeList().whenComplete(() async {
       getLocation().then((value) async {
-        final prefs = await SharedPreferences.getInstance();
-
-        setState(() async {
-          nearestStorePhn =
-              await prefs.getString(Constants.NEAREST_STORE_PHONENO);
-        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
-
-        });
+        getPrefs();
       });
       getYearList();
     });
@@ -818,6 +811,22 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
           modelList = item.model;
         });
       }
+    });
+  }
+
+  Future<void> getPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    String customerName, customerNumber, customerEmail;
+    setState(() async {
+      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+      customerName = await prefs.getString(Constants.CUSTOMER_NAME);
+      customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);
+      customerEmail = await prefs.getString(Constants.CUSTOMER_EMAIL);
+
+      nameController.text = customerName;
+      phoneController.text = customerNumber;
+      emailController.text = customerEmail;
     });
   }
 }

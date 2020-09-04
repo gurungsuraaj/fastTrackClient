@@ -58,16 +58,10 @@ class _BatteryInquiryState extends State<BatteryInquiry>
     // TODO: implement initState
     super.initState();
     getInquiryDataForBatttery().whenComplete(() async {
-      final prefs = await SharedPreferences.getInstance();
-
-      setState(() async {
-        nearestStorePhn =
-            await prefs.getString(Constants.NEAREST_STORE_PHONENO);
-        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+      getPrefs().whenComplete(() {
+        getMakeList();
+        getYearList();
       });
-
-      getMakeList();
-      getYearList();
     });
     _controller = new AnimationController(
       vsync: this,
@@ -743,5 +737,22 @@ class _BatteryInquiryState extends State<BatteryInquiry>
       yearList.add(i);
     }
     setState(() {});
+  }
+
+  Future<void> getPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    String customerName, customerNumber, customerEmail;
+
+    setState(() async {
+      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+      customerName = await prefs.getString(Constants.CUSTOMER_NAME);
+      customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);
+      customerEmail = await prefs.getString(Constants.CUSTOMER_EMAIL);
+
+      nameController.text = customerName;
+      phoneController.text = customerNumber;
+      emailController.text = customerEmail;
+    });
   }
 }

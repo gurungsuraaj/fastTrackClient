@@ -55,7 +55,11 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   var _formKey1 = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   AnimationController _controller;
-  String nearestStorePhn, whatsAppNum;
+  String nearestStorePhn,
+      whatsAppNum,
+      customerName,
+      customerNumber,
+      customerEmail;
   static const List<IconData> icons = const [Icons.whatshot, Icons.phone];
 
   static const List<String> imageList = const [
@@ -67,14 +71,10 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
     // TODO: implement initState
     super.initState();
     getInquiryDataForTyres().whenComplete(() async {
-      final prefs = await SharedPreferences.getInstance();
-      setState(() async {
-        nearestStorePhn =
-            await prefs.getString(Constants.NEAREST_STORE_PHONENO);
-        whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+      getPrefs().whenComplete(() {
+        getMakeList();
+        getYearList();
       });
-      getMakeList();
-      getYearList();
     });
     _controller = new AnimationController(
       vsync: this,
@@ -85,7 +85,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = Theme.of(context).cardColor;
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -999,6 +998,29 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       } else {
         displaySnackbar(context, "Error: ${res.body}");
       }
+    });
+  }
+
+  Future<void> getPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() async {
+      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
+      customerName = await prefs.getString(Constants.CUSTOMER_NAME);
+      customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);
+      customerEmail = await prefs.getString(Constants.CUSTOMER_EMAIL);
+
+      // There are two tabs with different controller
+
+      // Search by trye tab
+      nameControllerSize.text = customerName;
+      phoneControllerSize.text = customerNumber;
+      emailControllerSize.text = customerEmail;
+
+      //Search by car model
+      nameControllerModel.text = customerName;
+      phoneControllerModel.text = customerNumber;
+      emailControllerModel.text = customerEmail;
     });
   }
 }

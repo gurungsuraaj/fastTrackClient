@@ -260,7 +260,7 @@ class _LoginActivityState extends State<LoginActivity> {
                               ),
                               Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.only(bottom:80),
+                                  padding: EdgeInsets.only(bottom:90),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
