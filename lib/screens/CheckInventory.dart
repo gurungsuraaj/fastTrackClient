@@ -54,6 +54,7 @@ class _CheckInventoryState extends State<CheckInventory> {
   List<TextEditingController> textEditContollerlist = new List();
   List<SearchItemModel> searchList = new List();
 
+
   //List<String> value = new List<String>();
 
   @override
