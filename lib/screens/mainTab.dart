@@ -61,8 +61,8 @@ class _MainTabState extends State<MainTab> {
         HomeActivity(),
         UsersProfileActivity(),
         NotificationScreen(),
-        StoreLocationScreen(),
-        OfferPromo(),
+        // StoreLocationScreen(),
+        // OfferPromo(),
 
 //        HomeButtons(),
 //        RequestButtons(),
@@ -107,24 +107,24 @@ class _MainTabState extends State<MainTab> {
           ),
         ),
       ),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.location_on,color: Color(ExtraColors.DARK_BLUE)),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Text(
-              'Pending',
-              style: bottomTabBarText,
-            ),
-          )),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.view_carousel,color: Color(ExtraColors.DARK_BLUE)),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Text(
-              'Message',
-              style: bottomTabBarText,
-            ),
-          )),
+      // BottomNavigationBarItem(
+      //     icon: Icon(Icons.location_on,color: Color(ExtraColors.DARK_BLUE)),
+      //     title: Padding(
+      //       padding: const EdgeInsets.only(top: 2.0),
+      //       child: Text(
+      //         'Pending',
+      //         style: bottomTabBarText,
+      //       ),
+      //     )),
+      // BottomNavigationBarItem(
+      //     icon: Icon(Icons.view_carousel,color: Color(ExtraColors.DARK_BLUE)),
+      //     title: Padding(
+      //       padding: const EdgeInsets.only(top: 2.0),
+      //       child: Text(
+      //         'Message',
+      //         style: bottomTabBarText,
+      //       ),
+      //     )),
 
     ];
   }

@@ -314,7 +314,7 @@ class _HomeActivityState extends State<HomeActivity>
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
-                                        child: Text("Invoice Sales"))
+                                        child: Text("Check History"))
                                   ],
                                 )))),
                     // Card(
@@ -414,7 +414,7 @@ class _HomeActivityState extends State<HomeActivity>
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
-                                        child: Text("Locate"))
+                                        child: Text("Locate A Branch"))
                                   ],
                                 )))),
 
@@ -445,7 +445,7 @@ class _HomeActivityState extends State<HomeActivity>
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
-                                        child: Text("Inquiry"))
+                                        child: Text("Make An Inquiry"))
                                   ],
                                 )))),
                     Card(

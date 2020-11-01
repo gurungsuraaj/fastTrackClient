@@ -41,7 +41,7 @@ String customerNumber = "";
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
 
-        title: Text("Posted Sales Invoice List"),
+        title: Text("Check History"),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
