@@ -1,7 +1,9 @@
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
+import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
@@ -14,8 +16,9 @@ import 'package:pinput/pin_put/pin_put.dart';
 import 'ResetPasswordScreen.dart';
 
 class OTP extends StatefulWidget {
-  String email;
-  OTP(this.email);
+  String query;
+  int mode;
+  OTP(this.query, this.mode);
   @override
   _OTP createState() => _OTP();
 }
@@ -91,7 +94,11 @@ class _OTP extends State<OTP> {
                                     },
                                     onSubmit: (String pin) {
                                       //_showSnackBar(pin, context);
-                                      submitOTP(pin);
+                                      if (widget.mode == 1) {
+                                        submitOtpForRegistration(pin);
+                                      } else if (widget.mode == 2) {
+                                        submitOTP(pin);
+                                      }
                                     },
                                   ),
                                 ),
@@ -111,7 +118,7 @@ class _OTP extends State<OTP> {
 
   submitOTP(String otpPin) async {
     showProgressBar();
-    await NetworkOperationManager.SubmitOTP(widget.email, otpPin, client)
+    await NetworkOperationManager.SubmitOTP(widget.query, otpPin, client)
         .then((res) {
       hideProgressBar();
       print("response ${res.responseBody}");
@@ -120,15 +127,36 @@ class _OTP extends State<OTP> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: ((context) => ResetPasswordScreen(widget.email))));
-        }else{
+                  builder: ((context) => ResetPasswordScreen(widget.query))));
+        } else {
           ShowToast.showToast(context, "No response ${res.responseBody}");
         }
       } else {
-       ShowToast.showToast(context, res.responseBody);
+        ShowToast.showToast(context, res.responseBody);
       }
     }).catchError((err) {
       ShowToast.showToast(context, err);
+    });
+  }
+
+  submitOtpForRegistration(String otpPin) async {
+    showProgressBar();
+
+    NetworkOperationManager.SubmitSignUpOTP(widget.query, otpPin, client)
+        .then((res) {
+      if (res.status == Rcode.SUCCESS_CODE) {
+        hideProgressBar();
+        if (res.responseBody == "Login created successfully.") {
+          ShowToast.showToast(context, res.responseBody);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginActivity()),
+              ModalRoute.withName("/LoginActivity"));
+        }
+      } else {
+        print("suraj ${res.responseBody}");
+        ShowToast.showToast(context, "Error :" + "${res.responseBody}");
+      }
     });
   }
 
@@ -141,6 +169,25 @@ class _OTP extends State<OTP> {
   void hideProgressBar() {
     setState(() {
       isProgressBarShown = false;
+    });
+  }
+
+  resendOtpForSignUp() async {
+    showProgressBar();
+    NetworkOperationManager.resendOtpForSignUp(widget.query, client)
+        .then((res) {
+      hideProgressBar();
+    }).catchError((err) {
+      hideProgressBar();
+    });
+  }
+
+  resendOtpForForgotPw() async {
+    showProgressBar();
+    NetworkOperationManager.resendOtpForForgetPw(widget.query, client)
+        .then((value) {})
+        .catchError((err) {
+      hideProgressBar();
     });
   }
 }

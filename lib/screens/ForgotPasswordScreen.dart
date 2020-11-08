@@ -28,7 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   var fontSizeTextField = 14.0;
-  TextEditingController emailController = new TextEditingController();
+  TextEditingController mobileController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -63,11 +63,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 padding: EdgeInsets.only(top: 15),
                 width: width * 0.8,
                 child: TextFormField(
+                  keyboardType: TextInputType.number,
                   validator: (val) =>
                       !val.contains('@') ? 'Invalid Email' : null,
                   style: TextStyle(
                       fontSize: fontSizeTextField, color: Colors.white),
-                  controller: emailController,
+                  controller: mobileController,
                   decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
@@ -75,7 +76,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
-                      hintText: 'Your e-mail',
+                      hintText: 'Your mobile number',
                       hintStyle: TextStyle(color: Color(0xffb8b8b8))),
                 ),
               ),
@@ -91,7 +92,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     onPressed: () {
                       // performLogin();
                       FocusScope.of(context).requestFocus(FocusNode());
-                      submitEmail();
+                      submitMobileNum();
                     },
                     child: Text(
                       "Submit",
@@ -107,9 +108,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  void submitEmail() async {
+  // void submitMobileNum() async {
+  //   showProgressBar();
+  //   await NetworkOperationManager.generateOTP(emailController.text, client)
+  //       .then((res) {
+  //         print("suraj ${res.responseBody}");
+  //     hideProgressBar();
+  //     if (res.status == 200) {
+  //       if (res.responseBody == Constants.OTP_GENERATE_SUCCESS) {
+  //         ShowToast.showToast(context, res.responseBody);
+  //         Navigator.push(
+  //             context, MaterialPageRoute(builder: ((context) => OTP(emailController.text,2))));
+  //       }
+  //     } else {}
+  //   }).catchError((err) {
+  //     displaySnackbar(context, err);
+  //   });
+  // }
+
+   void submitMobileNum() async {
     showProgressBar();
-    await NetworkOperationManager.generateOTP(emailController.text, client)
+    await NetworkOperationManager.generateOTP(mobileController.text, client)
         .then((res) {
           print("suraj ${res.responseBody}");
       hideProgressBar();
@@ -117,7 +136,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         if (res.responseBody == Constants.OTP_GENERATE_SUCCESS) {
           ShowToast.showToast(context, res.responseBody);
           Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => OTP(emailController.text))));
+              context, MaterialPageRoute(builder: ((context) => OTP(mobileController.text,2))));
         }
       } else {}
     }).catchError((err) {

@@ -12,8 +12,8 @@ import 'package:ntlm/ntlm.dart';
 import 'OutletActivity.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  String email;
-  ResetPasswordScreen(this.email);
+  String mobile;
+  ResetPasswordScreen(this.mobile);
   @override
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
@@ -130,7 +130,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     showProgressBar();
     if (passwordController.text == confirmPasswordController.text) {
       await NetworkOperationManager.saveNewPassword(
-              widget.email, passwordController.text, client)
+              widget.mobile, passwordController.text, client)
           .then((res) {
         hideProgressBar();
         print("Response password ${res.responseBody}");

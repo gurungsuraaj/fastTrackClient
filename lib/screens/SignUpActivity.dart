@@ -6,6 +6,7 @@ import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -531,7 +532,9 @@ class _SignUpActivity extends State<SignUpActivity> {
       );
 
   void _signUp() async {
-    String mobileNum = phoneCode + mobileController.text;
+    // String mobileNum = phoneCode + mobileController.text;
+    String mobileNum = mobileController.text;
+
     showProgressBar();
     NetworkOperationManager.signUp(mobileNum, nameController.text,
             emailController.text, passwordController.text, client)
@@ -539,8 +542,17 @@ class _SignUpActivity extends State<SignUpActivity> {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
         // Navigator.of(context).pop();
-        Navigator.pushNamed(context, RoutesName.OTP_ACTIVITY);
+        //   // Navigator.pushNamed(context, RoutesName.OTP_ACTIVITY);
         // ShowToast.showToast(context, "Signed up successfully");
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OTP(
+                    "",
+                    1,
+                  )), // 1 is for sign up in otp screen
+        );
       } else {
         print("suraj ${res.responseBody}");
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");
