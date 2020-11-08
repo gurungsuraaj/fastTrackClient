@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:toast/toast.dart';
+import '../utils/RoutesName.dart';
 import 'HomeActivity.dart';
 import 'GenerateOTPActivity.dart';
 import 'package:http/http.dart' as http;
@@ -531,15 +532,15 @@ class _SignUpActivity extends State<SignUpActivity> {
 
   void _signUp() async {
     String mobileNum = phoneCode + mobileController.text;
-
     showProgressBar();
     NetworkOperationManager.signUp(mobileNum, nameController.text,
             emailController.text, passwordController.text, client)
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
-        Navigator.of(context).pop();
-        ShowToast.showToast(context, "Signed up successfully");
+        // Navigator.of(context).pop();
+        Navigator.pushNamed(context, RoutesName.OTP_ACTIVITY);
+        // ShowToast.showToast(context, "Signed up successfully");
       } else {
         print("suraj ${res.responseBody}");
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");
