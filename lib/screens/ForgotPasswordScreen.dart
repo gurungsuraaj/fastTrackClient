@@ -1,3 +1,5 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
@@ -8,6 +10,7 @@ import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
+import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -18,6 +21,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   NTLMClient client;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
+  String signature;
+  String phoneCode = "971";
 
   @override
   void initState() {
@@ -25,6 +30,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+    _getSignatureCode();
+  }
+
+  _getSignatureCode() async {
+    signature = await SmsRetrieved.getAppSignature();
+    print("signature $signature");
   }
 
   var fontSizeTextField = 14.0;
@@ -59,27 +70,37 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               SizedBox(
                 height: 40,
               ),
-              Container(
-                padding: EdgeInsets.only(top: 15),
-                width: width * 0.8,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  validator: (val) =>
-                      !val.contains('@') ? 'Invalid Email' : null,
-                  style: TextStyle(
-                      fontSize: fontSizeTextField, color: Colors.white),
-                  controller: mobileController,
-                  decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      hintText: 'Your mobile number',
-                      hintStyle: TextStyle(color: Color(0xffb8b8b8))),
-                ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 15),
+                    width: width * 0.9,
+                    child: _buildCountryPickerDropdown(),
+                  ),
+                  // Container(
+                  //   padding: EdgeInsets.only(top: 15),
+                  //   width: width * 0.4,
+                  //   child: TextFormField(
+                  //     keyboardType: TextInputType.number,
+                  //     style: TextStyle(
+                  //         fontSize: fontSizeTextField, color: Colors.white),
+                  //     controller: mobileController,
+                  //     decoration: InputDecoration(
+                  //         enabledBorder: UnderlineInputBorder(
+                  //           borderSide: BorderSide(color: Colors.white),
+                  //         ),
+                  //         focusedBorder: UnderlineInputBorder(
+                  //           borderSide: BorderSide(color: Colors.white),
+                  //         ),
+                  //         hintText: 'Your mobile number',
+                  //         hintStyle: TextStyle(color: Color(0xffb8b8b8))),
+                  //   ),
+                  // ),
+                ],
               ),
+
               Center(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
@@ -126,18 +147,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   //   });
   // }
 
-   void submitMobileNum() async {
+  void submitMobileNum() async {
     showProgressBar();
-    await NetworkOperationManager.generateOTP(mobileController.text, client)
-        .then((res) {
-          print("suraj ${res.responseBody}");
+    await NetworkOperationManager.forgotPassOtp(
+      mobileController.text,
+      signature,
+      client,
+    ).then((res) {
+      print("suraj ${res.responseBody}");
       hideProgressBar();
       if (res.status == 200) {
-        if (res.responseBody == Constants.OTP_GENERATE_SUCCESS) {
-          ShowToast.showToast(context, res.responseBody);
-          Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => OTP(mobileController.text,2))));
-        }
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: ((context) =>
+                    OTP(mobileController.text, 2, signature))));
       } else {}
     }).catchError((err) {
       displaySnackbar(context, err);
@@ -163,4 +187,78 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       isProgressBarShown = false;
     });
   }
+
+  _buildCountryPickerDropdown(
+          {bool filtered = false,
+          bool sortedByIsoCode = false,
+          bool hasPriorityList = false}) =>
+      Row(
+        children: <Widget>[
+          CountryPickerDropdown(
+            initialValue: 'AE',
+            itemBuilder: _buildDropdownItem,
+            itemFilter: filtered
+                ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
+                : null,
+            priorityList: hasPriorityList
+                ? [
+                    CountryPickerUtils.getCountryByIsoCode('GB'),
+                    CountryPickerUtils.getCountryByIsoCode('CN'),
+                  ]
+                : null,
+            sortComparator: sortedByIsoCode
+                ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
+                : null,
+            onValuePicked: (Country country) {
+              print(
+                "${country.phoneCode}",
+              );
+              setState(() {
+                phoneCode = country.phoneCode;
+              });
+            },
+          ),
+          SizedBox(
+            width: 8.0,
+          ),
+          Expanded(
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              controller: mobileController,
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: "Phone...",
+                hintStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+              ),
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Please enter your phone number';
+                } else
+                  return null;
+              },
+            ),
+          )
+        ],
+      );
+  Widget _buildDropdownItem(Country country) => Container(
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            SizedBox(
+              width: 8.0,
+            ),
+            Text(
+              "+${country.phoneCode}(${country.isoCode})",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      );
 }

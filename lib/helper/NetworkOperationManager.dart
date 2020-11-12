@@ -16,8 +16,13 @@ import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkOperationManager {
-  static Future<NetworkResponse> signUp(String mobileNum, String custName,
-      String email, String password, NTLMClient client) async {
+  static Future<NetworkResponse> signUp(
+      String mobileNum,
+      String custName,
+      String email,
+      String password,
+      String signature,
+      NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.WEB_SERVICE);
     var envelope =
@@ -28,6 +33,7 @@ class NetworkOperationManager {
 <urn:customerName>$custName</urn:customerName>
 <urn:email>$email</urn:email>
 <urn:passwordTxt>$password</urn:passwordTxt>
+ <urn:signature>$signature</urn:signature>
  <urn:returnTxt></urn:returnTxt>
 </urn:SignUp>
 </soapenv:Body>
@@ -54,7 +60,7 @@ class NetworkOperationManager {
       var formattedResVal;
       var response_message;
       if (code == Rcode.SUCCESS_CODE) {
-        resValue = parsedXml.findAllElements("CustomerSignUp_Result");
+        resValue = parsedXml.findAllElements("returnTxt");
         formattedResVal = resValue.map((node) => node.text);
         response_message = formattedResVal.first;
       } else {
@@ -575,8 +581,9 @@ class NetworkOperationManager {
         '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>
 <urn:CustomerOTPVerification>
-<urn:customerEmail>$email</urn:customerEmail>
+<urn:mobileNo>$email</urn:mobileNo>
 <urn:customerOTP>$OTP</urn:customerOTP>
+<urn:returnTxt></urn:returnTxt>
 </urn:CustomerOTPVerification>
 </soapenv:Body>
 </soapenv:Envelope>''';
@@ -604,7 +611,7 @@ class NetworkOperationManager {
       var formattedResVal;
       var response_message;
       if (code == Rcode.SUCCESS_CODE) {
-        resValue = parsedXml.findAllElements("return_value");
+        resValue = parsedXml.findAllElements("returnTxt");
         formattedResVal = resValue.map((node) => node.text);
         response_message = formattedResVal.first;
       } else {
@@ -865,9 +872,8 @@ class NetworkOperationManager {
     return rs;
   }
 
-
   static Future<NetworkResponse> resendOtpForSignUp(
-      String mobile, NTLMClient client) async {
+      String mobile, String signature, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
@@ -877,6 +883,7 @@ class NetworkOperationManager {
 <soapenv:Body>
 <urn:ResendOTP>
 <urn:mobileNo>$mobile</urn:mobileNo>
+<urn:signature>$signature</urn:signature>
 <urn:returnTxt></urn:returnTxt>
 </urn:ResendOTP>
 </soapenv:Body>
@@ -921,9 +928,8 @@ class NetworkOperationManager {
     return rs;
   }
 
-
   static Future<NetworkResponse> forgotPassOtp(
-      String mobile, NTLMClient client) async {
+      String mobile, String signature, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
@@ -933,6 +939,7 @@ class NetworkOperationManager {
 <soapenv:Body>
 <urn:CustomerForgotPassword>
 <urn:mobileNo>$mobile</urn:mobileNo>
+<urn:signature>$signature</urn:signature>
 <urn:returnTxt></urn:returnTxt>
 </urn:CustomerForgotPassword>
 </soapenv:Body>
@@ -977,9 +984,8 @@ class NetworkOperationManager {
     return rs;
   }
 
-
   static Future<NetworkResponse> resendOtpForForgetPw(
-      String mobile, NTLMClient client) async {
+      String mobile, String signature, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.WEB_SERVICE);
     String response = "";
@@ -989,6 +995,7 @@ class NetworkOperationManager {
 <soapenv:Body>
 <urn:CustomerResendOTP>
 <urn:mobileNo>$mobile</urn:mobileNo>
+<urn:signature>$signature</urn:signature>
 <urn:returnTxt></urn:returnTxt>
 </urn:CustomerResendOTP>
 </soapenv:Body>

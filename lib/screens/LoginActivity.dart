@@ -515,7 +515,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
   void _performLogin() async {
     showProgressBar();
-    String mobileNumber = phoneCode + mobileController.text;
+    String mobileNumber = mobileController.text;
     NetworkOperationManager.logIn(mobileNumber, passwordController.text, client)
         .then((res) {
       hideProgressBar();

@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
+import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 import 'package:toast/toast.dart';
 import '../utils/RoutesName.dart';
 import 'HomeActivity.dart';
@@ -48,6 +49,7 @@ class _SignUpActivity extends State<SignUpActivity> {
   bool _termsChecked = false;
   String phoneCode = "971", mobileNumber;
   NTLMClient client;
+  String signature;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -65,6 +67,13 @@ class _SignUpActivity extends State<SignUpActivity> {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+    _getSignatureCode();
+  }
+
+  /// get signature code
+  _getSignatureCode() async {
+     signature = await SmsRetrieved.getAppSignature();
+    print("signature $signature");
   }
 
   @override
@@ -537,7 +546,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
     showProgressBar();
     NetworkOperationManager.signUp(mobileNum, nameController.text,
-            emailController.text, passwordController.text, client)
+            emailController.text, passwordController.text,signature, client)
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
@@ -549,8 +558,8 @@ class _SignUpActivity extends State<SignUpActivity> {
           context,
           MaterialPageRoute(
               builder: (context) => OTP(
-                    "",
-                    1,
+                    mobileNum,
+                    1,signature
                   )), // 1 is for sign up in otp screen
         );
       } else {
@@ -558,6 +567,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");
       }
     }).catchError((err) {
+      hideProgressBar();
       ShowToast.showToast(context, "Error :" + err);
     });
   }

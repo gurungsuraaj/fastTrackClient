@@ -135,15 +135,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         hideProgressBar();
         print("Response password ${res.responseBody}");
         if (res.status == 200) {
-          if (res.responseBody == "true") {
-            ShowToast.showToast(context, "Password reset successfully");
+   
+            ShowToast.showToast(context, res.responseBody);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => LoginActivity()),
             );
-          } else {
-            ShowToast.showToast(context, "No response ${res.responseBody}");
-          }
+         
         } else {
           ShowToast.showToast(context, res.responseBody);
         }
