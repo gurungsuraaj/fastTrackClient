@@ -55,7 +55,8 @@ class _OfferPromoState extends State<OfferPromo> {
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
                   imageUrl: promoList[index].banner,
-                  placeholder: (context, url) => Container(height:40,width:50,child: CircularProgressIndicator()),
+                  placeholder: (context, url) => Container(height:40,width:50,
+                  child: Center(child: CircularProgressIndicator()),),
                   errorWidget: (context, url, error) => new Icon(Icons.error),
                 ));
           },
