@@ -102,7 +102,7 @@ class _MainTabState extends State<MainTab> {
         title: Padding(
           padding: const EdgeInsets.only(top: 2.0),
           child: new Text(
-            'Request',
+            'Notifications',
             style: bottomTabBarText,
           ),
         ),

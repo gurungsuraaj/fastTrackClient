@@ -38,7 +38,7 @@ class _LocateActivityState extends State<LocateActivity> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(ExtraColors.DARK_BLUE),
-          title: Text("Locate"),
+          title: Text("Locate a Branch"),
         ),
         backgroundColor: Color(0xFFD9D9D9),
         body: ModalProgressHUD(
@@ -173,51 +173,51 @@ class _LocateActivityState extends State<LocateActivity> {
                                           ),
                                         )),
                                     SizedBox(width: 8),
-                                    Container(
-                                      child: InkWell(
-                                        onTap: () async {
-                                          var location = locationlist[index]
-                                              .latlng
-                                              .split(",");
-                                          double longitude =
-                                              double.parse(location[0]);
-                                          double latitude =
-                                              double.parse(location[1]);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    GoogleMapActivity(
-                                                        latitude,
-                                                        longitude,
-                                                        locationlist[index]
-                                                            .name)),
-                                          );
-                                        },
-                                        child: new Container(
-                                            height: 32,
-                                            width: 100,
-                                            decoration: new BoxDecoration(
-                                              color:
-                                                  Color(ExtraColors.DARK_BLUE),
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      10.0),
-                                            ),
-                                            child: new Center(
-                                              child: Text(
-                                                "Show Map",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                            )),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
+                                    // Container(
+                                    //   child: InkWell(
+                                    //     onTap: () async {
+                                    //       var location = locationlist[index]
+                                    //           .latlng
+                                    //           .split(",");
+                                    //       double longitude =
+                                    //           double.parse(location[0]);
+                                    //       double latitude =
+                                    //           double.parse(location[1]);
+                                    //       Navigator.push(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 GoogleMapActivity(
+                                    //                     latitude,
+                                    //                     longitude,
+                                    //                     locationlist[index]
+                                    //                         .name)),
+                                    //       );
+                                    //     },
+                                    //     child: new Container(
+                                    //         height: 32,
+                                    //         width: 100,
+                                    //         decoration: new BoxDecoration(
+                                    //           color:
+                                    //               Color(ExtraColors.DARK_BLUE),
+                                    //           borderRadius:
+                                    //               new BorderRadius.circular(
+                                    //                   10.0),
+                                    //         ),
+                                    //         child: new Center(
+                                    //           child: Text(
+                                    //             "Show Map",
+                                    //             style: TextStyle(
+                                    //                 fontSize: 16,
+                                    //                 fontWeight: FontWeight.bold,
+                                    //                 color: Colors.white),
+                                    //           ),
+                                    //         )),
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   width: 10,
+                                    // ),
                                     Container(
                                       child: new Container(
                                         alignment: Alignment.center,

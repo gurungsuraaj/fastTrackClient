@@ -37,69 +37,71 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
           ),
         ),
       ),
-      body: Container(
-        height: 430,
-        width: MediaQuery.of(context).size.width,
-        child: Card(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Image.asset(
-              "images/userProfile.png",
-              height: 150,
-              width: 150,
+      body: Column(
+        children: [
+          Container(
+            // height: 530,
+            width: MediaQuery.of(context).size.width,
+            child: Card(
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Image.asset(
+                  "images/fastTrackSingleLogo.png",
+                  height: 150,
+                  width: 150,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ListTile(
+                  dense: true,
+                  leading: Text("User Name"),
+                  trailing: customerName == null
+                      ? Container(
+                          child: Text(""),
+                        )
+                      : Text(customerName),
+                ),
+                Divider(
+                  color: Colors.grey,
+                  height: 10,
+                ),
+                ListTile(
+                  leading: Text("Email"),
+                  trailing: customerEmail == null
+                      ? Container(
+                          child: Text(""),
+                        )
+                      : Text(customerEmail),
+                ),
+                Divider(
+                  color: Colors.grey,
+                  height: 10,
+                ),
+                ListTile(
+                  leading: Text("Customer No."),
+                  trailing: customerNumber == null
+                      ? Container(
+                          child: Text(""),
+                        )
+                      : Text(customerNumber),
+                ),
+                 Divider(
+                  color: Colors.grey,
+                  height: 10,
+                ),
+                 ListTile(
+                  leading: Text("Phone No."),
+                  trailing: mobNumber == null
+                      ? Container(
+                          child: Text(""),
+                        )
+                      : Text(mobNumber),
+                ),
+              ]),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            ListTile(
-              dense: true,
-              leading: Text("User Name"),
-              trailing: customerName == null
-                  ? Container(
-                      child: Text(""),
-                    )
-                  : Text(customerName),
-            ),
-            Divider(
-              color: Colors.grey,
-              height: 10,
-            ),
-            ListTile(
-              leading: Text("Email"),
-              trailing: customerEmail == null
-                  ? Container(
-                      child: Text(""),
-                    )
-                  : Text(customerEmail),
-            ),
-            Divider(
-              color: Colors.grey,
-              height: 10,
-            ),
-            ListTile(
-              leading: Text("Customer No."),
-              trailing: customerNumber == null
-                  ? Container(
-                      child: Text(""),
-                    )
-                  : Text(customerNumber),
-            ),
-             Divider(
-              color: Colors.grey,
-              height: 10,
-            ),
-             ListTile(
-              leading: Text("Phone No."),
-              trailing: mobNumber == null
-                  ? Container(
-                      child: Text(""),
-                    )
-                  : Text(mobNumber),
-            ),
-          ]),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
+          ),
+          Spacer(),
+            Container(
         width: MediaQuery.of(context).size.width * 0.8,
         height: 55,
         child: FloatingActionButton(
@@ -120,6 +122,30 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
           },
         ),
       ),
+        ],
+      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: Container(
+      //   width: MediaQuery.of(context).size.width * 0.8,
+      //   height: 55,
+      //   child: FloatingActionButton(
+      //     shape: RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.all(Radius.circular(5))),
+      //     child: Text(
+      //       "Log Out",
+      //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      //     ),
+      //     backgroundColor: Color(ExtraColors.DARK_BLUE),
+      //     onPressed: () {
+      //       PrefsManager.clearSession().then((val) {
+      //         Navigator.pushAndRemoveUntil(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => LoginActivity()),
+      //             ModalRoute.withName("/Login"));
+      //       });
+      //     },
+      //   ),
+      // ),
     );
   }
 

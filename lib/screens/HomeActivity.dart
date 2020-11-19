@@ -289,7 +289,7 @@ class _HomeActivityState extends State<HomeActivity>
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
-                                        child: Text("Service"))
+                                        child: Text("Services"))
                                   ],
                                 )))),
                     Card(

@@ -20,7 +20,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Inquiry List"),
+        title: Text("Make An Inquiry"),
         backgroundColor: Color(ExtraColors.DARK_BLUE),
       ),
       body: GridView.count(
@@ -61,7 +61,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             ),
                             Container(
                                 padding: EdgeInsets.only(top: 5),
-                                child: Text("Tyre-S"))
+                                child: Text("Tyres"))
                           ],
                         )))),
             Card(
@@ -86,7 +86,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             ),
                             Container(
                                 padding: EdgeInsets.only(top: 5),
-                                child: Text("Oil Filter"))
+                                child: Text("Oil & Filters"))
                           ],
                         )))),
             Card(
