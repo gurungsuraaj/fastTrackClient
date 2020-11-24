@@ -160,8 +160,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: ((context) =>
-                    OTP(mobileController.text, 2, signature))));
+                builder: ((context) => OTP(
+                    query: mobileController.text,
+                    mode: 2,
+                    signature: signature))));
       } else {}
     }).catchError((err) {
       displaySnackbar(context, err);
