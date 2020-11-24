@@ -195,7 +195,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                             obscureText: true,
                                             style: TextStyle(
                                                 fontSize: fontSizeTextField,
-                                                color: Colors.white),
+                                                color: Color(ExtraColors.DARK_BLUE_ACCENT)),
                                             controller: passwordController,
                                             decoration: InputDecoration(
                                                 hintText: 'Your password',
