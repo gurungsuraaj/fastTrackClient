@@ -13,6 +13,7 @@ import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
+import 'package:fasttrackgarage_app/widgets/CustomClipper.dart';
 import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
@@ -92,49 +93,54 @@ class _LoginActivityState extends State<LoginActivity> {
         statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
 
     return Scaffold(
-      backgroundColor: Color(ExtraColors.DARK_BLUE),
+      // backgroundColor: Color(ExtraColors.DARK_BLUE),
+      backgroundColor: Color(0xffe6a764),
       key: _scaffoldKey,
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         dismissible: false,
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ReusableAppBar.getAppBar(0, 0, height, width),
-              Center(
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  child: Text(
-                    "Login to your account",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              ), //Container
-              Expanded(
-                child: Form(
-                  key: formKey,
-                  child: ListView(
-                    children: <Widget>[
-                      Center(
-                        child: Container(
-                          margin: EdgeInsets.only(top: MARGIN),
-                          height: height,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(top: 15),
-                                      width: width * 0.7,
-                                      child: _buildCountryPickerDropdown(),
-                                    ),
+          child: Stack(
+            children: [
+              customContainer(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ReusableAppBar.getAppBar(0, 0, height, width),
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                      child: Text(
+                        "Login to your account",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                  ), //Container
+                  Expanded(
+                    child: Form(
+                      key: formKey,
+                      child: ListView(
+                        children: <Widget>[
+                          Center(
+                            child: Container(
+                              margin: EdgeInsets.only(top: MARGIN),
+                              height: height,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Center(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(top: 15),
+                                          width: width * 0.7,
+                                          child: _buildCountryPickerDropdown(),
+                                        ),
 
 //                                    Container(
 //                                      padding: EdgeInsets.only(top: 15),
@@ -165,13 +171,14 @@ class _LoginActivityState extends State<LoginActivity> {
 //                                        ),
 //                                      ),
 //                                    ),
-                                  ],
-                                ),
-                              ),
-                              Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
+                                      ],
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
 //                                    Container(
 //                                      margin: EdgeInsets.only(top: MARGIN),
 //                                      child: Text(
@@ -181,151 +188,194 @@ class _LoginActivityState extends State<LoginActivity> {
 //                                            fontSize: fontSizeText),
 //                                      ),
 //                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(top: 15),
-                                      width: width * 0.7,
-                                      child: TextField(
-                                        obscureText: true,
-                                        style: TextStyle(
-                                            fontSize: fontSizeTextField,
-                                            color: Colors.white),
-                                        controller: passwordController,
-                                        decoration: InputDecoration(
-                                          hintText: 'Your password',
-                                          hintStyle: TextStyle(
-                                              color: Color(0xffb8b8b8)),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
+                                        Container(
+                                          padding: EdgeInsets.only(top: 15),
+                                          width: width * 0.7,
+                                          child: TextField(
+                                            obscureText: true,
+                                            style: TextStyle(
+                                                fontSize: fontSizeTextField,
+                                                color: Colors.white),
+                                            controller: passwordController,
+                                            decoration: InputDecoration(
+                                                hintText: 'Your password',
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xffb8b8b8)),
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                prefixIcon: Container(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      10, 0, 20, 0),
+                                                  child: CircleAvatar(
+                                                      // radius: 5,
+                                                      backgroundColor:
+                                                          Color(0xffe6a764),
+                                                      child: Icon(
+                                                        Icons.lock_outline,
+                                                        color: Colors.white,
+                                                        size: 30,
+                                                      )),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30),
+                                                        borderSide: BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors
+                                                                        .grey[
+                                                                    300])),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30),
+                                                        borderSide: BorderSide(
+                                                            width: 1,
+                                                            color: Colors
+                                                                .grey[300]))),
                                           ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
+                                      width: width * 0.45,
+                                      child: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(18.0),
+                                          // side: BorderSide(color: Colors.black),
+                                        ),
+                                        color: Colors.white,
+                                        onPressed: () {
+                                          // performLogin();
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+                                          _submit();
+                                        },
+                                        child: Text(
+                                          "Continue",
+                                          style: TextStyle(
+                                              color:
+                                                  Color(ExtraColors.DARK_BLUE)),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Center(
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
-                                  width: width * 0.45,
-                                  child: RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(18.0),
-                                      // side: BorderSide(color: Colors.black),
-                                    ),
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      // performLogin();
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                      _submit();
-                                    },
-                                    child: Text(
-                                      "Continue",
-                                      style: TextStyle(
-                                          color: Color(ExtraColors.DARK_BLUE)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "Dont have account?",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                RoutesName.SIGNUP_ACTIVITY);
+                                          },
+                                          child: Container(
+                                              padding: EdgeInsets.all(6),
+                                              child: Text(
+                                                "Register",
+                                                style: TextStyle(
+                                                    color: Colors.yellow),
+                                              )),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "Dont have account?",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pushNamed(context,
-                                            RoutesName.SIGNUP_ACTIVITY);
-                                      },
-                                      child: Container(
-                                          padding: EdgeInsets.all(6),
-                                          child: Text(
-                                            "Register",
-                                            style:
-                                                TextStyle(color: Colors.yellow),
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.only(bottom:90),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Column(
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 90),
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ForgotPasswordScreen()));
-                                            },
-                                            child: Text(
-                                              "Forgot Password?",
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: <Widget>[
-                                              Text(
-                                                "All right reserve © 2020",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                              SizedBox(width: 10),
-                                              FutureBuilder(
-                                                future: getVersionNumber(),
-                                                builder: (BuildContext context,
-                                                        AsyncSnapshot<String>
-                                                            snapshot) =>
-                                                    Text(
-                                                  snapshot.hasData
-                                                      ? "v${snapshot.data}" 
-                                                      : "Loading ...",
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ForgotPasswordScreen()));
+                                                },
+                                                child: Text(
+                                                  "Forgot Password?",
                                                   style: TextStyle(
                                                       color: Colors.white),
                                                 ),
                                               ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                children: <Widget>[
+                                                  Text(
+                                                    "All right reserve © 2020",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  FutureBuilder(
+                                                    future: getVersionNumber(),
+                                                    builder:
+                                                        (BuildContext context,
+                                                                AsyncSnapshot<
+                                                                        String>
+                                                                    snapshot) =>
+                                                            Text(
+                                                      snapshot.hasData
+                                                          ? "v${snapshot.data}"
+                                                          : "Loading ...",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
                                             ],
                                           )
                                         ],
-                                      )
-                                    ],
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget customContainer() {
+    return ClipPath(
+        clipper: CustomShapeClipper(),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.7,
+          color: Color(ExtraColors.DARK_BLUE),
+        ));
   }
 
   void showProgressBar() {

@@ -40,8 +40,7 @@ Future<void> main() async {
       onMessage: (Map<String, dynamic> msg) {
         print("Inside message -------------------");
         // showNotification(msg);
-       showBackGroundNotification(msg);
-
+        showBackGroundNotification(msg);
       },
       onLaunch: (Map<String, dynamic> msg) async {
         print(msg);
@@ -51,7 +50,7 @@ Future<void> main() async {
         print(msg);
         print("on resume");
         saveBackgorundNotificatonDataOnDB(msg);
-      //  showBackGroundNotification(msg);
+        //  showBackGroundNotification(msg);
       },
       onBackgroundMessage: onBackgroundMessage);
 
@@ -80,7 +79,8 @@ Future<void> main() async {
             new LoginActivity(),
         RoutesName.SIGNUP_ACTIVITY: (BuildContext context) =>
             new SignUpActivity(),
-        RoutesName.OTP_ACTIVITY: (BuildContext context) => new OTP("",0,""),
+        RoutesName.OTP_ACTIVITY: (BuildContext context) =>
+            new OTP(query: '', mode: 0, signature: ''),
         RoutesName.GENERATE_OTP_ACTIVITY: (BuildContext context) =>
             new GenerateOTP(),
         RoutesName.HOME_ACTIVITY: (BuildContext context) => new Home(),
@@ -267,6 +267,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
 Future onBackgroundMessage(Map<String, dynamic> message) async {
   print("on background messae");
-  debugPrint(message.toString() );
+  debugPrint(message.toString());
   showBackGroundNotification(message);
 }

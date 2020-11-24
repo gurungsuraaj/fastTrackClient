@@ -4,8 +4,10 @@ import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
 import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
+import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
@@ -20,9 +22,9 @@ import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 import 'ResetPasswordScreen.dart';
 
 class OTP extends StatefulWidget {
-  String query, signature;
-  int mode;
-  OTP(this.query, this.mode, this.signature);
+  final String query, signature, loginPassword;
+  final int mode;
+  OTP({this.query, this.mode, this.signature, this.loginPassword});
   @override
   _OTP createState() => _OTP();
 }
@@ -243,15 +245,41 @@ class _OTP extends State<OTP> {
         hideProgressBar();
         if (res.responseBody == "Login created successfully.") {
           ShowToast.showToast(context, res.responseBody);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LoginActivity()),
-          );
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => LoginActivity()),
+          // );
+
+          //Automatically login after register
+          _performLogin();
         }
       } else {
         print("suraj ${res.responseBody}");
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");
       }
+    });
+  }
+
+  void _performLogin() async {
+    showProgressBar();
+    NetworkOperationManager.logIn(widget.query, widget.loginPassword, client)
+        .then((res) {
+      hideProgressBar();
+      if (res.status == Rcode.SUCCESS_CODE) {
+        print("${res.customerEmail} ${res.customerName}");
+        PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
+            res.customerName, res.customerEmail, "", widget.query);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MainTab()),
+          );
+        ShowToast.showToast(context, "Login Success");
+      } else {
+        print(res.errResponse);
+        ShowToast.showToast(context, res.errResponse);
+      }
+    }).catchError((err) {
+      ShowToast.showToast(context, err);
     });
   }
 

@@ -72,7 +72,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
   /// get signature code
   _getSignatureCode() async {
-     signature = await SmsRetrieved.getAppSignature();
+    signature = await SmsRetrieved.getAppSignature();
     print("signature $signature");
   }
 
@@ -144,19 +144,35 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 controller: nameController,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Colors.white),
+                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
                                 decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    prefixIcon: Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(10, 0, 20, 0),
+                                      child: CircleAvatar(
+                                          // radius: 5,
+                                          backgroundColor: Color(0xffe6a764),
+                                          child: Icon(
+                                            Icons.person_outline,
+                                            color: Colors.white,
+                                            size: 30,
+                                          )),
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.grey[300])),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.grey[300])),
                                     hintText: 'Full name...',
-                                    hintStyle:
-                                        TextStyle(color: Color(0xffb8b8b8))),
+                                    hintStyle: TextStyle(
+                                      // color: Color(0xffb8b8b8),
+                                      color: Colors.grey[500],
+                                    )),
                               ),
                             ),
 //                            Container(
@@ -176,20 +192,36 @@ class _SignUpActivity extends State<SignUpActivity> {
                                     !val.contains('@') ? 'Invalid Email' : null,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Colors.white),
+                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
                                 controller: emailController,
                                 decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    prefixIcon: Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(10, 0, 20, 0),
+                                      child: CircleAvatar(
+                                          // radius: 5,
+                                          backgroundColor: Color(0xffe6a764),
+                                          child: Icon(
+                                            Icons.mail_outline,
+                                            color: Colors.white,
+                                            size: 30,
+                                          )),
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.grey[300])),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.grey[300])),
                                     hintText: 'Your e-mail',
-                                    hintStyle:
-                                        TextStyle(color: Color(0xffb8b8b8))),
+                                    hintStyle: TextStyle(
+                                      // color: Color(0xffb8b8b8),
+                                      color: Colors.grey[500],
+                                    )),
                               ),
                             ),
 //                            Container(
@@ -252,17 +284,31 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 obscureText: true,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Colors.white),
+                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
                                 controller: passwordController,
                                 decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    prefixIcon: Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(10, 0, 20, 0),
+                                      child: CircleAvatar(
+                                          // radius: 5,
+                                          backgroundColor: Color(0xffe6a764),
+                                          child: Icon(
+                                            Icons.lock_outline,
+                                            color: Colors.white,
+                                            size: 30,
+                                          )),
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.grey[300])),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.grey[300])),
                                     hintText: 'Your password',
                                     hintStyle:
                                         TextStyle(color: Color(0xffb8b8b8))),
@@ -501,24 +547,34 @@ class _SignUpActivity extends State<SignUpActivity> {
               });
             },
           ),
-          SizedBox(
-            width: 8.0,
-          ),
           Expanded(
             child: TextField(
               controller: mobileController,
               keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Color(ExtraColors.DARK_BLUE_ACCENT)),
               decoration: InputDecoration(
                 hintText: "Phone",
-                hintStyle: TextStyle(color: Colors.white),
-                labelStyle: TextStyle(color: Colors.white),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                labelStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white,
+                filled: true,
+                // prefixIcon: Container(
+                //   padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                //   child: CircleAvatar(
+                //       radius: 18,
+                //       backgroundColor: Color(0xffe6a764),
+                //       child: Icon(
+                //         Icons.phone,
+                //         color: Colors.white,
+                //         size: 25,
+                //       )),
+                // ),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(width: 1, color: Colors.grey[300])),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(width: 1, color: Colors.grey[300])),
               ),
             ),
           )
@@ -546,7 +602,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
     showProgressBar();
     NetworkOperationManager.signUp(mobileNum, nameController.text,
-            emailController.text, passwordController.text,signature, client)
+            emailController.text, passwordController.text, signature, client)
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
@@ -558,8 +614,10 @@ class _SignUpActivity extends State<SignUpActivity> {
           context,
           MaterialPageRoute(
               builder: (context) => OTP(
-                    mobileNum,
-                    1,signature
+                    query: mobileNum,
+                    mode: 1,
+                    signature: signature,
+                    loginPassword: passwordController.text,
                   )), // 1 is for sign up in otp screen
         );
       } else {
