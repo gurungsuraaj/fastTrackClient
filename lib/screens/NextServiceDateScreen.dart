@@ -71,8 +71,24 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
         setState(() {});
         getNextServiceDate();
       } else {
-        showSnackBar('No Vehicle list available');
+        // showSnackBar('No Vehicle list available');
+        getCompanyInfo();
       }
+    }).catchError((err) {
+      hideProgressBar();
+      showSnackBar(err);
+    });
+  }
+
+  Future<void> getCompanyInfo() async {
+    showProgressBar();
+    NetworkOperationManager.getCompanyInfo(client).then((res) {
+      hideProgressBar();
+      if (res.length > 0) {
+        print('${res[0].serviceDateComment}');
+        showAlert(res[0].serviceDateComment);
+      }
+      print('the fetching of company information is successful');
     }).catchError((err) {
       hideProgressBar();
       showSnackBar(err);
@@ -136,5 +152,53 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
       hideProgressBar();
       print(err);
     });
+  }
+
+  showAlert(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(10.0),
+          actions: <Widget>[
+            Container(
+              width: 100,
+              child: FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                // color: Colors.blue[700],
+                child: Text(
+                  'Ok',
+                  style: TextStyle(
+                    color: Colors.blue[700],
+                  ),
+                ),
+              ),
+            ),
+          ],
+          content: Container(
+            height: 150,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+                        child: Text(message),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

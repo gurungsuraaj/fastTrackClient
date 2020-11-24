@@ -29,6 +29,8 @@ class Api {
       "$BASE_URL/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory";
   static final String POSTED_SALES_INVOICE =
       "$BASE_URL/DynamicsNAV/ws/Fasttrack/Page/PostedSalesInvoiceList";
+      static final String GET_COMPANY_INFO =
+      "$BASE_URL/DynamicsNAV/ws/Fasttrack/Page/CompanyInformation";
   // static final String WEB_SERVICE =
   //     "$BASE_URL/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory";
 

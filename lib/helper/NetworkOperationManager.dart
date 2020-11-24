@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
+import 'package:fasttrackgarage_app/models/CompanyInfoModel.dart';
 import 'package:fasttrackgarage_app/models/LoginModel.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
@@ -757,6 +758,59 @@ class NetworkOperationManager {
     });
 
     return vehicleArrayList;
+  }
+
+  static Future<List<CompanyInfoModel>> getCompanyInfo(
+      NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.GET_COMPANY_INFO);
+    String response = "";
+    List<CompanyInfoModel> companyInfoArrayList = new List();
+    Xml2Json xml2json = new Xml2Json();
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:microsoft-dynamics-schemas/page/companyinformation">
+<soapenv:Body>
+<tns:ReadMultiple>
+<tns:filter>
+<tns:Field></tns:Field>
+<tns:Criteria></tns:Criteria>
+</tns:filter>
+<tns:bookmarkKey></tns:bookmarkKey>
+<tns:setSize></tns:setSize>
+</tns:ReadMultiple>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    print(envelope);
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/page/companyinformation",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+      var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      parsedXml.findAllElements("CompanyInformation").forEach((val) {
+        CompanyInfoModel companyInfoList = new CompanyInfoModel();
+        xml2json.parse(val.toString());
+        var json = xml2json.toParker();
+        var data = jsonDecode(json);
+        companyInfoList.serviceDateComment =
+            data["CompanyInformation"]["Service_Date_Comment"] ?? "";
+        companyInfoList.statusCode = res.statusCode;
+        companyInfoArrayList.add(companyInfoList);
+      });
+      print("This is response body: $response");
+    });
+
+    return companyInfoArrayList;
   }
 
   static Future<NetworkResponse> checkServiceDate(
