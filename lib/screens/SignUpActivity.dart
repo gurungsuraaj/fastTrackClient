@@ -93,19 +93,9 @@ class _SignUpActivity extends State<SignUpActivity> {
         dismissible: false,
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center ,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // ReusableAppBar.getAppBar(0, 0, height, width),
-              SizedBox(height: height*0.04,),
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 55,
-                child: Icon(
-                  Icons.person,
-                  size: 95,
-                  color: Color(0xfffbe2c9),
-                ),
-              ),
+              ReusableAppBar.getAppBar(0, 0, height, width),
               Center(
                 child: Container(
                   margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
@@ -138,7 +128,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 //                              ),
 //                            ),
                             Container(
-                              width: width * 0.8,
+                              width: width * 0.9,
                               child: TextFormField(
                                 // validator: (val) => val.length && val.isEmpty > 20
                                 //     ?
@@ -195,7 +185,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 //                            ),
                             Container(
                               padding: EdgeInsets.only(top: 15),
-                              width: width * 0.8,
+                              width: width * 0.9,
                               child: TextFormField(
                                 validator: (val) =>
                                     !val.contains('@') ? 'Invalid Email' : null,
@@ -269,7 +259,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 //                            ),
                             Container(
                               padding: EdgeInsets.only(top: 15),
-                              width: width * 0.8,
+                              width: width * 0.9,
                               child: _buildCountryPickerDropdown(),
                             ),
 
@@ -284,7 +274,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 //                            ),
                             Container(
                               padding: EdgeInsets.only(top: 15),
-                              width: width * 0.8,
+                              width: width * 0.9,
                               child: TextFormField(
                                 validator: (val) => val.length < 6
                                     ? 'Please enter atleast 6 character '
@@ -530,64 +520,93 @@ class _SignUpActivity extends State<SignUpActivity> {
           {bool filtered = false,
           bool sortedByIsoCode = false,
           bool hasPriorityList = false}) =>
-      Row(
-        children: <Widget>[
-          CountryPickerDropdown(
-            initialValue: 'AE',
-            itemBuilder: _buildDropdownItem,
-            itemFilter: filtered
-                ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
-                : null,
-            priorityList: hasPriorityList
-                ? [
-                    CountryPickerUtils.getCountryByIsoCode('GB'),
-                    CountryPickerUtils.getCountryByIsoCode('CN'),
-                  ]
-                : null,
-            sortComparator: sortedByIsoCode
-                ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
-                : null,
-            onValuePicked: (Country country) {
-              print(
-                "${country.phoneCode}",
-              );
-              setState(() {
-                phoneCode = country.phoneCode;
-              });
-            },
-          ),
-          Expanded(
-            child: TextField(
-              controller: mobileController,
-              keyboardType: TextInputType.number,
-              style: TextStyle(color: Color(ExtraColors.DARK_BLUE_ACCENT)),
-              decoration: InputDecoration(
-                hintText: "Phone",
-                hintStyle: TextStyle(color: Colors.grey[500]),
-                labelStyle: TextStyle(color: Colors.grey[500]),
-                fillColor: Colors.white,
-                filled: true,
-                // prefixIcon: Container(
-                //   padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                //   child: CircleAvatar(
-                //       radius: 18,
-                //       backgroundColor: Color(0xffe6a764),
-                //       child: Icon(
-                //         Icons.phone,
-                //         color: Colors.white,
-                //         size: 25,
-                //       )),
-                // ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(width: 1, color: Colors.grey[300])),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(width: 1, color: Colors.grey[300])),
+      Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+              child: CircleAvatar(
+                  radius: 18,
+                  backgroundColor: Color(0xffe6a764),
+                  child: Icon(
+                    Icons.phone,
+                    color: Colors.white,
+                    size: 25,
+                  )),
+            ),
+            SizedBox(width: 3,),
+            Container(
+              // width: 150,
+              child: CountryPickerDropdown(
+                initialValue: 'AE',
+                itemBuilder: _buildDropdownItem,
+                itemFilter: filtered
+                    ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
+                    : null,
+                priorityList: hasPriorityList
+                    ? [
+                        CountryPickerUtils.getCountryByIsoCode('GB'),
+                        CountryPickerUtils.getCountryByIsoCode('CN'),
+                      ]
+                    : null,
+                sortComparator: sortedByIsoCode
+                    ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
+                    : null,
+                onValuePicked: (Country country) {
+                  print(
+                    "${country.phoneCode}",
+                  );
+                  setState(() {
+                    phoneCode = country.phoneCode;
+                  });
+                },
               ),
             ),
-          )
-        ],
+            Expanded(
+              child: TextField(
+                controller: mobileController,
+                keyboardType: TextInputType.number,
+                style: TextStyle(color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                decoration: InputDecoration(
+                  hintText: "Phone",
+                  hintStyle: TextStyle(color: Colors.grey[500]),
+                  labelStyle: TextStyle(color: Colors.grey[500]),
+                  fillColor: Colors.white,
+                  filled: true,
+                  // prefixIcon: Container(
+                  //   padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                  //   child: CircleAvatar(
+                  //       radius: 18,
+                  //       backgroundColor: Color(0xffe6a764),
+                  //       child: Icon(
+                  //         Icons.phone,
+                  //         color: Colors.white,
+                  //         size: 25,
+                  //       )),
+                  // ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.white,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       );
 
   Widget _buildDropdownItem(Country country) => Container(
