@@ -93,8 +93,7 @@ class _LoginActivityState extends State<LoginActivity> {
         statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
 
     return Scaffold(
-      // backgroundColor: Color(ExtraColors.DARK_BLUE),
-      backgroundColor: Color(0xffe6a764),
+      backgroundColor: Color(0xffF39C1B),
       key: _scaffoldKey,
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -195,7 +194,8 @@ class _LoginActivityState extends State<LoginActivity> {
                                             obscureText: true,
                                             style: TextStyle(
                                                 fontSize: fontSizeTextField,
-                                                color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                                color: Color(ExtraColors
+                                                    .DARK_BLUE_ACCENT)),
                                             controller: passwordController,
                                             decoration: InputDecoration(
                                                 hintText: 'Your password',

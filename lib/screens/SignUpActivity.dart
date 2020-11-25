@@ -93,13 +93,22 @@ class _SignUpActivity extends State<SignUpActivity> {
         dismissible: false,
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center ,
             children: <Widget>[
-              ReusableAppBar.getAppBar(0, 0, height, width),
-
+              // ReusableAppBar.getAppBar(0, 0, height, width),
+              SizedBox(height: height*0.04,),
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 55,
+                child: Icon(
+                  Icons.person,
+                  size: 95,
+                  color: Color(0xfffbe2c9),
+                ),
+              ),
               Center(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Text(
                     "Create new account",
                     style: TextStyle(color: Colors.white, fontSize: 16),
