@@ -100,16 +100,17 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
               ]),
             ),
           ),
-          Spacer(),
+          // Spacer(),
+          SizedBox(height: 45,),
             Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        height: 55,
+        width: MediaQuery.of(context).size.width * 0.7,
+        height: 35,
         child: FloatingActionButton(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5))),
           child: Text(
             "Log Out",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, ),
           ),
           backgroundColor: Color(ExtraColors.DARK_BLUE),
           onPressed: () {
