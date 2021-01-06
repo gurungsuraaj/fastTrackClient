@@ -20,6 +20,7 @@ import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,12 +68,14 @@ class _HomeActivityState extends State<HomeActivity>
   NTLMClient client;
   double userLong, userLatitude; //  For location of client user
   bool isProgressBarShown = false;
-  List<Placemark> placemark = List<Placemark>();
+  // List<Placemark> placemark = List<Placemark>();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
   List<double> branchDistanceList = List();
   List<LocateModel> branchList = List();
   int shortDistanceIndex;
+
+  var userCurrentLocation;
 
   @override
   void initState() {
@@ -118,10 +121,11 @@ class _HomeActivityState extends State<HomeActivity>
   showNotification(Map<String, dynamic> msg) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(0, msg['notification']['title'],
         msg['notification']['body'], platformChannelSpecifics,
         payload: 'item x');
@@ -130,19 +134,19 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   Future<void> getLocationOfCLient() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
 
-    placemark = await Geolocator().placemarkFromCoordinates(
-      position.latitude,
-      position.longitude,
-    );
-
+    final coordinates = new Coordinates(position.latitude, position.longitude);
+   userCurrentLocation = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     print(
         "THis is the location latitude ${position.latitude}  location :${position.longitude}");
 
     userLong = position.longitude;
     userLatitude = position.latitude;
+    setState(() {
+      
+    });
   }
 
   @override
@@ -153,12 +157,23 @@ class _HomeActivityState extends State<HomeActivity>
           title: Container(
               height: 35,
               child: Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Image.asset(
-                    'images/fastTrackSingleLogo.png',
-                    height: 30,
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Image.asset(
+                        'images/fastTrackSingleLogo.png',
+                        height: 30,
+                      ),
+                    ),
                   ),
-                  Text("  FastTrack")
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text("   FastTrack")))
                 ],
               )),
           automaticallyImplyLeading: false,
@@ -199,13 +214,13 @@ class _HomeActivityState extends State<HomeActivity>
                           SizedBox(
                             width: 10,
                           ),
-                          placemark.isEmpty
+                          userCurrentLocation == null
                               ? Text(
                                   "Loading...",
                                   style: TextStyle(color: Colors.white),
                                 )
                               : Text(
-                                  "${placemark[0].name.toString()}",
+                                  "${userCurrentLocation.first.featureName}",
                                   style: TextStyle(color: Colors.white),
                                 )
                         ],
@@ -615,7 +630,8 @@ class _HomeActivityState extends State<HomeActivity>
                                   final prefs =
                                       await SharedPreferences.getInstance();
                                   String nearestPhoneNo = prefs.getString(
-                                      Constants.NEAREST_STORE_PHONENO);
+                                      Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+                                      print("this is $nearestPhoneNo");
                                   var url = "tel:$nearestPhoneNo";
                                   if (await canLaunch(url)) {
                                     await launch(url);
@@ -843,7 +859,7 @@ class _HomeActivityState extends State<HomeActivity>
       });
       print("This is the first token $val ${val[0].token}");
 
-      bool isLocationEnabled = await Geolocator().isLocationServiceEnabled();
+      bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
       if (isLocationEnabled != false) {
         calculateDistance();
       } else {
@@ -868,8 +884,8 @@ class _HomeActivityState extends State<HomeActivity>
       double latitude = double.parse(item.latitude);
       debugPrint("long $longitude , lat : $latitude");
 
-      double distanceInMeters = await Geolocator()
-          .distanceBetween(userLatitude, userLong, latitude, longitude);
+      double distanceInMeters = await Geolocator.distanceBetween(
+          userLatitude, userLong, latitude, longitude);
       // item.distanceInMeter = distanceInMeters;
       // calculatedDistanceList.add(item);
       // print("THis is from geolocator $distanceInMeters");
@@ -974,9 +990,9 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   void calculateDistanceForPhone() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    bool isLocationEnabled = await Geolocator().isLocationServiceEnabled();
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
     print("!!!!!!!!!!!!!!!!!!!! $isLocationEnabled");
     if (isLocationEnabled != false) {
       for (LocateModel branch in branchList) {
@@ -984,7 +1000,7 @@ class _HomeActivityState extends State<HomeActivity>
         double branchLatitude = double.parse(location[0]);
         double branchLongitude = double.parse(location[1]);
 
-        double distanceInMeters = await Geolocator().distanceBetween(
+        double distanceInMeters = await Geolocator.distanceBetween(
             position.latitude,
             position.longitude,
             branchLatitude,

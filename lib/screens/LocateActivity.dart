@@ -222,7 +222,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                       child: new Container(
                                         alignment: Alignment.center,
                                         height: 32.0,
-                                        width: 120,
+                                        width: 150,
                                         decoration: new BoxDecoration(
                                           color: Color(ExtraColors.DARK_BLUE),
                                           // border: new Border.all(
@@ -251,7 +251,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                           },
                                           child: new Center(
                                             child: Text(
-                                              "Open Google Map",
+                                              "Show on Google Map",
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.bold,

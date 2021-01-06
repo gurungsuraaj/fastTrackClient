@@ -26,6 +26,7 @@ class NetworkOperationManager {
       NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.WEB_SERVICE);
+    print(url);
     var envelope =
         '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
 <soapenv:Body>

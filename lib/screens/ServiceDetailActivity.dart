@@ -68,7 +68,7 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
 
   onCallPressed() async {
     final prefs = await SharedPreferences.getInstance();
-    String phnNum = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+    String phnNum = await prefs.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
 
     var url = "tel:$phnNum";
     if (await canLaunch(url)) {

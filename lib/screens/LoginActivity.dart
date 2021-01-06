@@ -92,14 +92,13 @@ class _LoginActivityState extends State<LoginActivity> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
 
-    return Scaffold(
-      // backgroundColor: Color(ExtraColors.DARK_BLUE),
-      backgroundColor: Color(0xffe6a764),
-      key: _scaffoldKey,
-      body: ModalProgressHUD(
-        inAsyncCall: isProgressBarShown,
-        dismissible: false,
-        child: SafeArea(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xffF39C1B),
+        key: _scaffoldKey,
+        body: ModalProgressHUD(
+          inAsyncCall: isProgressBarShown,
+          dismissible: false,
           child: Stack(
             children: [
               customContainer(),
@@ -138,7 +137,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(top: 15),
-                                          width: width * 0.7,
+                                          width: width * 0.87,
                                           child: _buildCountryPickerDropdown(),
                                         ),
 
@@ -190,12 +189,13 @@ class _LoginActivityState extends State<LoginActivity> {
 //                                    ),
                                         Container(
                                           padding: EdgeInsets.only(top: 15),
-                                          width: width * 0.7,
+                                          width: width * 0.87,
                                           child: TextField(
                                             obscureText: true,
                                             style: TextStyle(
                                                 fontSize: fontSizeTextField,
-                                                color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                                color: Color(ExtraColors
+                                                    .DARK_BLUE_ACCENT)),
                                             controller: passwordController,
                                             decoration: InputDecoration(
                                                 hintText: 'Your password',
@@ -492,60 +492,87 @@ class _LoginActivityState extends State<LoginActivity> {
           {bool filtered = false,
           bool sortedByIsoCode = false,
           bool hasPriorityList = false}) =>
-      Row(
-        children: <Widget>[
-          CountryPickerDropdown(
-            initialValue: 'AE',
-            itemBuilder: _buildDropdownItem,
-            itemFilter: filtered
-                ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
-                : null,
-            priorityList: hasPriorityList
-                ? [
-                    CountryPickerUtils.getCountryByIsoCode('GB'),
-                    CountryPickerUtils.getCountryByIsoCode('CN'),
-                  ]
-                : null,
-            sortComparator: sortedByIsoCode
-                ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
-                : null,
-            onValuePicked: (Country country) {
-              print(
-                "${country.phoneCode}",
-              );
-              setState(() {
-                phoneCode = country.phoneCode;
-              });
-            },
-          ),
-          SizedBox(
-            width: 8.0,
-          ),
-          Expanded(
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              controller: mobileController,
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: "Phone...",
-                hintStyle: TextStyle(color: Colors.white),
-                labelStyle: TextStyle(color: Colors.white),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-              ),
-              validator: (val) {
-                if (val.isEmpty) {
-                  return 'Please enter your phone number';
-                } else
-                  return null;
+      Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30), color: Colors.white),
+        child: Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+              child: CircleAvatar(
+                  radius: 18,
+                  backgroundColor: Color(0xffe6a764),
+                  child: Icon(
+                    Icons.phone,
+                    color: Colors.white,
+                    size: 25,
+                  )),
+            ),
+            SizedBox(
+              width: 3,
+            ),
+            CountryPickerDropdown(
+              initialValue: 'AE',
+              itemBuilder: _buildDropdownItem,
+              itemFilter: filtered
+                  ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
+                  : null,
+              priorityList: hasPriorityList
+                  ? [
+                      CountryPickerUtils.getCountryByIsoCode('GB'),
+                      CountryPickerUtils.getCountryByIsoCode('CN'),
+                    ]
+                  : null,
+              sortComparator: sortedByIsoCode
+                  ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
+                  : null,
+              onValuePicked: (Country country) {
+                print(
+                  "${country.phoneCode}",
+                );
+                setState(() {
+                  phoneCode = country.phoneCode;
+                });
               },
             ),
-          )
-        ],
+            SizedBox(
+              width: 8.0,
+            ),
+            Expanded(
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: mobileController,
+                decoration: InputDecoration(
+                  hintText: "Phone...",
+                  hintStyle: TextStyle(color: Colors.grey[500]),
+                  labelStyle: TextStyle(color: Colors.grey[500]),
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.white,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                validator: (val) {
+                  if (val.isEmpty) {
+                    return 'Please enter your phone number';
+                  } else
+                    return null;
+                },
+              ),
+            )
+          ],
+        ),
       );
 
   Widget _buildDropdownItem(Country country) => Container(

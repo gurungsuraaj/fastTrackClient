@@ -89,7 +89,7 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
   }
 
   void calculateDistance() async {
-    Position position = await Geolocator()
+    Position position = await Geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     for (LocateModel branch in branchList) {
@@ -97,7 +97,7 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
       double branchLatitude = double.parse(location[0]);
       double branchLongitude = double.parse(location[1]);
 
-      double distanceInMeters = await Geolocator().distanceBetween(
+      double distanceInMeters = await Geolocator.distanceBetween(
           position.latitude,
           position.longitude,
           branchLatitude,

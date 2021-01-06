@@ -688,7 +688,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
 
     final prefs = await SharedPreferences.getInstance();
     setState(() async {
-      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO);
+      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
       whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
       customerName = await prefs.getString(Constants.CUSTOMER_NAME);
       customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);

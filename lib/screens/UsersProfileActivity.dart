@@ -12,7 +12,7 @@ class UsersProfileActivity extends StatefulWidget {
 }
 
 class _UsersProfileActivityState extends State<UsersProfileActivity> {
-  String customerName, mobNumber, customerEmail,customerNumber;
+  String customerName, mobNumber, customerEmail, customerNumber;
   bool isProgressBarShown = false;
 
   @override
@@ -37,93 +37,100 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            // height: 530,
-            width: MediaQuery.of(context).size.width,
-            child: Card(
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Image.asset(
-                  "images/fastTrackSingleLogo.png",
-                  height: 150,
-                  width: 150,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ListTile(
-                  dense: true,
-                  leading: Text("User Name"),
-                  trailing: customerName == null
-                      ? Container(
-                          child: Text(""),
-                        )
-                      : Text(customerName),
-                ),
-                Divider(
-                  color: Colors.grey,
-                  height: 10,
-                ),
-                ListTile(
-                  leading: Text("Email"),
-                  trailing: customerEmail == null
-                      ? Container(
-                          child: Text(""),
-                        )
-                      : Text(customerEmail),
-                ),
-                Divider(
-                  color: Colors.grey,
-                  height: 10,
-                ),
-                ListTile(
-                  leading: Text("Customer No."),
-                  trailing: customerNumber == null
-                      ? Container(
-                          child: Text(""),
-                        )
-                      : Text(customerNumber),
-                ),
-                 Divider(
-                  color: Colors.grey,
-                  height: 10,
-                ),
-                 ListTile(
-                  leading: Text("Phone No."),
-                  trailing: mobNumber == null
-                      ? Container(
-                          child: Text(""),
-                        )
-                      : Text(mobNumber),
-                ),
-              ]),
-            ),
-          ),
-          // Spacer(),
-          SizedBox(height: 45,),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
             Container(
-        width: MediaQuery.of(context).size.width * 0.7,
-        height: 35,
-        child: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: Text(
-            "Log Out",
-            style: TextStyle(fontSize: 20, ),
-          ),
-          backgroundColor: Color(ExtraColors.DARK_BLUE),
-          onPressed: () {
-            PrefsManager.clearSession().then((val) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginActivity()),
-                  ModalRoute.withName("/Login"));
-            });
-          },
+              // height: 530,
+              width: MediaQuery.of(context).size.width,
+              child: Card(
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Image.asset(
+                    "images/FTProfileLogo.png",
+                    height: 150,
+                    width: 150,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ListTile(
+                    dense: true,
+                    leading: Text("User Name"),
+                    trailing: customerName == null
+                        ? Container(
+                            child: Text(""),
+                          )
+                        : Text(customerName),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    height: 10,
+                  ),
+                  ListTile(
+                    leading: Text("Email"),
+                    trailing: customerEmail == null
+                        ? Container(
+                            child: Text(""),
+                          )
+                        : Text(customerEmail),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    height: 10,
+                  ),
+                  ListTile(
+                    leading: Text("Customer No."),
+                    trailing: customerNumber == null
+                        ? Container(
+                            child: Text(""),
+                          )
+                        : Text(customerNumber),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    height: 10,
+                  ),
+                  ListTile(
+                    leading: Text("Phone No."),
+                    trailing: mobNumber == null
+                        ? Container(
+                            child: Text(""),
+                          )
+                        : Text(mobNumber),
+                  ),
+                ]),
+              ),
+            ),
+            // Spacer(),
+            SizedBox(
+              height: 45,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: 35,
+              child: FloatingActionButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: Text(
+                  "Log Out",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                backgroundColor: Color(ExtraColors.DARK_BLUE),
+                onPressed: () {
+                  PrefsManager.clearSession().then((val) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginActivity()),
+                        ModalRoute.withName("/Login"));
+                  });
+                },
+              ),
+            ),
+          ],
         ),
-      ),
-        ],
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       // floatingActionButton: Container(
@@ -156,12 +163,11 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
     mobNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
     customerEmail = await prefs.getString((Constants.CUSTOMER_EMAIL));
     customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
-    setState(() {
-      
-    });
+    setState(() {});
     //  return serviceOrderNum;
   }
-    void showProgressBar() {
+
+  void showProgressBar() {
     setState(() {
       isProgressBarShown = true;
     });

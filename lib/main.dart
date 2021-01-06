@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:fasttrackgarage_app/models/NotificationDbModel.dart';
 import 'package:fasttrackgarage_app/screens/CheckInventory.dart';
@@ -33,12 +34,13 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   _messaging.getToken().then((token) {
-    print("Your FCM Token is : $token");
+    debugPrint("Your FCM Token is : $token");
   });
   _messaging.subscribeToTopic('Notification');
+  _messaging.requestNotificationPermissions();
   _messaging.configure(
       onMessage: (Map<String, dynamic> msg) {
-        print("Inside message -------------------");
+        print("Inside message ------------------- $msg");
         // showNotification(msg);
         showBackGroundNotification(msg);
       },
@@ -62,7 +64,7 @@ Future<void> main() async {
       requestSoundPermission: false,
       onDidReceiveLocalNotification: null);
   var initializationSettings = InitializationSettings(
-      initializationSettingsAndroid, initializationSettingsIOS);
+      android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String payload) async {
     if (payload != null) {
@@ -105,12 +107,13 @@ showNotification(Map<String, dynamic> msg) async {
       'fcm_default_channel',
       'default_notification_channel_id',
       'your channel description',
-      importance: Importance.Max,
-      priority: Priority.High,
+      importance: Importance.max,
+      priority: Priority.high,
       ticker: 'ticker');
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.show(0, msg['notification']['title'],
       msg['notification']['body'], platformChannelSpecifics,
       payload: 'item x');
@@ -123,16 +126,29 @@ showBackGroundNotification(Map<String, dynamic> msg) async {
       'fcm_default_channel',
       'default_notification_channel_id',
       'your channel description',
-      importance: Importance.Max,
-      priority: Priority.High,
+      importance: Importance.max,
+      priority: Priority.high,
       ticker: 'ticker');
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics);
 
-  await flutterLocalNotificationsPlugin.show(
+// print("Local notification ${msg['aps']['alert']}");
+
+  if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin.show(
       0, msg['data']['title'], msg['data']['body'], platformChannelSpecifics,
       payload: 'item x');
+  } else if (Platform.isIOS) {
+  await flutterLocalNotificationsPlugin.show(
+      0, msg['title'], msg['body'], platformChannelSpecifics,
+      payload: 'item x');
+  }
+
+  // await flutterLocalNotificationsPlugin.show(0, msg['aps']['alert']['title'],
+  //     msg['aps']['alert']['body'], platformChannelSpecifics,
+  //     payload: 'item x');
 
   saveBackgorundNotificatonDataOnDB(msg);
 }
@@ -157,8 +173,16 @@ void saveBackgorundNotificatonDataOnDB(Map<String, dynamic> msg) async {
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
   notification.id = PrimaryKeyGenerator.generateKey();
+
+if(Platform.isAndroid){
   notification.notificationTitle = msg['data']['title'];
   notification.notificationBody = msg['data']['body'];
+}else if(Platform.isIOS){
+    notification.notificationTitle = msg['title'];
+  notification.notificationBody = msg['body'];
+}
+
+
   notification.dateTime = DateTime.now().toString();
   await database.notificationDao.insertNotification(notification);
 }
