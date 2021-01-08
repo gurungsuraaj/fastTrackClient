@@ -47,15 +47,15 @@ dependencies:
   # barcode_scan:
   url_launcher: ^5.7.10
   intl:
-  country_pickers: 
+  country_pickers:
   carousel_slider: ^1.4.1
   cached_network_image: 2.0.0-rc
   custom_navigator: ^0.2.0
   flutter_local_notifications:
-  package_info: 
+  package_info:
   sms_otp_auto_verify: ^1.2.2
   geocoder: ^0.2.1
-
+  country_icons: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -116,12 +116,6 @@ flutter:
     - images/call.png
     - images/userProfile.png
     - images/FTProfileLogo.png
-
-
-
-
-
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
