@@ -805,6 +805,8 @@ class NetworkOperationManager {
         var data = jsonDecode(json);
         companyInfoList.serviceDateComment =
             data["CompanyInformation"]["Service_Date_Comment"] ?? "";
+              companyInfoList.versionNo =
+            data["CompanyInformation"]["Version_No"] ?? "";
         companyInfoList.statusCode = res.statusCode;
         companyInfoArrayList.add(companyInfoList);
       });

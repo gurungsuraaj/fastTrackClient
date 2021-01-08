@@ -45,4 +45,9 @@ class PrefsManager {
     await prefs.setString(Constants.CUSTOMER_EMAIL, "");
     await prefs.setString(Constants.BASIC_TOKEN, "");
   }
+
+  static Future<void> saveAndroidVersion(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(Constants.VERSION_NO, value);
+  }
 }

@@ -25,4 +25,8 @@ class Constants {
   static final String WHATS_APP_NUMBER = "WHATS_APP_NUMBER";
 
 
+//Version No
+static final String VERSION_NO = "VERSION_NO";
+
+
 }

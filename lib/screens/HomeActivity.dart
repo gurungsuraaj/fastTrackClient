@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fasttrackgarage_app/database/AppDatabase.dart';
 import 'package:fasttrackgarage_app/database/dao/NotificationDao.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
@@ -18,11 +20,13 @@ import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/PrefsManager.dart';
@@ -50,6 +54,11 @@ class Home extends StatelessWidget {
     return HomeActivity();
   }
 }
+
+const APP_STORE_URL =
+    'https://apps.apple.com/us/app/pokhara-food-delivery/id1487359029?ls=1';
+const PLAY_STORE_URL =
+    'https://play.google.com/store/apps/details?id=pokharafooddelivery.nipuna';
 
 class HomeActivity extends StatefulWidget {
   @override
@@ -113,6 +122,7 @@ class _HomeActivityState extends State<HomeActivity>
     getPrefs().then((val) async {
       getLocationOfCLient().whenComplete(() {
         fetchBranchList();
+        checkVersionUpdate();
       });
       showOffer();
     });
@@ -138,15 +148,14 @@ class _HomeActivityState extends State<HomeActivity>
         desiredAccuracy: LocationAccuracy.high);
 
     final coordinates = new Coordinates(position.latitude, position.longitude);
-   userCurrentLocation = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    userCurrentLocation =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     print(
         "THis is the location latitude ${position.latitude}  location :${position.longitude}");
 
     userLong = position.longitude;
     userLatitude = position.latitude;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -629,9 +638,12 @@ class _HomeActivityState extends State<HomeActivity>
                                   Navigator.of(context).pop();
                                   final prefs =
                                       await SharedPreferences.getInstance();
-                                  String nearestPhoneNo = prefs.getString(
-                                      Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-                                      print("this is $nearestPhoneNo");
+                                  String nearestPhoneNo = prefs
+                                      .getString(
+                                          Constants.NEAREST_STORE_PHONENO)
+                                      .replaceAll(
+                                          new RegExp(r"\s+\b|\b\s"), "");
+                                  print("this is $nearestPhoneNo");
                                   var url = "tel:$nearestPhoneNo";
                                   if (await canLaunch(url)) {
                                     await launch(url);
@@ -911,7 +923,7 @@ class _HomeActivityState extends State<HomeActivity>
     NetworkOperationManager.sendNotification(shortDistanceToken).then((res) {
       //      hideProgressBar();
 
-// print("${res.responseBodyForFireBase["results"][0]['']}")
+      // print("${res.responseBodyForFireBase["results"][0]['']}")
       // print(
       //     "Response +++++++++++++++++++++++++++++++++ ${res.responseBodyForFireBase["success"].toString()}");
       Navigator.pop(context);
@@ -1034,5 +1046,80 @@ class _HomeActivityState extends State<HomeActivity>
 
     hideProgressBar();
     // zoomInMarker();
+  }
+
+  void checkVersionUpdate() async {
+    NetworkOperationManager.getCompanyInfo(client).then((res) async {
+      if (res.length > 0) {
+        final PackageInfo info = await PackageInfo.fromPlatform();
+
+        print('${res[0].versionNo}');
+        double newVersionNo =
+            double.parse(res[0].versionNo.trim().replaceAll(".", ""));
+        double currentVersion =
+            double.parse(info.version.trim().replaceAll(".", ""));
+        if (newVersionNo > currentVersion) {
+          _showVersionDialog(context);
+        }
+      }
+    }).catchError((err) {
+      displaySnackbar(context, err);
+    });
+  }
+
+  _showVersionDialog(context) async {
+    await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        String title = "New Update Available";
+        String message =
+            "There is a newer version of app available please update it now.";
+        String btnLabel = "Update Now";
+        String btnLabelCancel = "Later";
+        return Platform.isIOS
+            ? new CupertinoAlertDialog(
+                title: Text(title),
+                content: Text(message),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      btnLabel,
+                      style: TextStyle(color: Color(0xFF007AFF)),
+                    ),
+                    // onPressed: () => StoreRedirect.redirect(androidAppId: "pokharafooddelivery.nipuna",
+                    // iOSAppId: "1487359029"),
+                  ),
+                  FlatButton(
+                    child: Text(btnLabelCancel,
+                        style: TextStyle(color: Color(0xFF007AFF))),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              )
+            : new AlertDialog(
+                title: Text(title),
+                content: Text(message),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(btnLabel),
+                    onPressed: () => _launchURL(PLAY_STORE_URL),
+                  ),
+                  FlatButton(
+                    child: Text(btnLabelCancel),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              );
+      },
+    );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
