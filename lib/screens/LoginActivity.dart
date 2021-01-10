@@ -478,14 +478,14 @@ class _LoginActivityState extends State<LoginActivity> {
             ),
             Row(
               children: [
-                Container(
-                    height: 25,
-                    width: MediaQuery.of(context).size.width * 0.1,
-                    child: Image.asset('icons/flags/png/ae.png',
-                        package: 'country_icons')),
-                SizedBox(width: 5),
+                // Container(
+                //     height: 25,
+                //     width: MediaQuery.of(context).size.width * 0.1,
+                //     child: Image.asset('icons/flags/png/ae.png',
+                //         package: 'country_icons')),
+                // SizedBox(width: 5),
                 Text(
-                  '+971(AE)',
+                  '+971',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
