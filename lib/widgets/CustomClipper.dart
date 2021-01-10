@@ -5,10 +5,10 @@ class CustomShapeClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height);
-    double radius = 480;
+    double radius = 700;
 
     path.arcToPoint(
-      Offset(size.width, size.height * 0.45),
+      Offset(size.width, size.height * 0.65),
       radius: Radius.circular(radius),
     );
 

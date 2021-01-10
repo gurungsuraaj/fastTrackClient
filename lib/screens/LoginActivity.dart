@@ -96,6 +96,7 @@ class _LoginActivityState extends State<LoginActivity> {
       child: Scaffold(
         backgroundColor: Color(0xffF39C1B),
         key: _scaffoldKey,
+        resizeToAvoidBottomInset : false,
         body: ModalProgressHUD(
           inAsyncCall: isProgressBarShown,
           dismissible: false,

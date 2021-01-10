@@ -93,7 +93,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 40,
-                    width: 170,
+                                     width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     // margin: EdgeInsets.only(top: 10),
                     decoration: BoxDecoration(
@@ -122,7 +123,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 40,
-                    width: 170,
+                                      width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -156,7 +158,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 60,
-                    width: 170,
+                                      width: width * 0.45,
+
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -181,7 +184,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 60,
-                    width: 170,
+                                      width: width * 0.45,
+
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -235,7 +239,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 40,
-                    width: 170,
+                                    width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -261,7 +266,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 40,
-                    width: 170,
+                                      width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     // margin: EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
@@ -294,7 +300,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 60,
-                    width: 170,
+                                      width: width * 0.45,
+
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -318,7 +325,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 60,
-                    width: 170,
+                                      width: width * 0.45,
+
                     child: TextFormField(
                       validator: (value) {
                         bool emailValid = RegExp(
@@ -351,7 +359,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 60,
-                    width: 170,
+                                   width: width * 0.45,
+
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -376,7 +385,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 60,
-                    width: 170,
+                                   width: width * 0.45,
+
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -409,7 +419,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 60,
-                    width: width * 0.9,
+                    width: width * 0.94,
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -443,7 +453,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[],
               )),
               Container(
-                width: width * 0.93,
+                width: width * 0.94,
                 child: TextFormField(
                   validator: (value) {
                     if (value.length == 0) {

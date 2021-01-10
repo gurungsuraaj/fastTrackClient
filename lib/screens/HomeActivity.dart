@@ -252,7 +252,7 @@ class _HomeActivityState extends State<HomeActivity>
                       enlargeCenterPage: true,
                       //                  autoPlay: true,
                       //                  autoPlayInterval: Duration(seconds: 1),
-                      height: 200.0,
+                      // height: 200.0,
                       items: promoList.map((i) {
                         print("${i.banner}");
                         return Builder(
@@ -270,9 +270,9 @@ class _HomeActivityState extends State<HomeActivity>
                                 borderRadius: new BorderRadius.circular(11.0),
                                 child: Image.network(
                                   i.image,
-                                  fit: BoxFit.fitHeight,
-                                  height: 190,
-                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.cover,
+                                  // height: BoxFit.fitHeight,
+                                  // width: MediaQuery.of(context).size.width,
                                 ),
                               ),
                             );
