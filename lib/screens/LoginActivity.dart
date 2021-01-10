@@ -479,7 +479,7 @@ class _LoginActivityState extends State<LoginActivity> {
               children: [
                 Container(
                     height: 25,
-                    width: 50,
+                    width: MediaQuery.of(context).size.width * 0.1,
                     child: Image.asset('icons/flags/png/ae.png',
                         package: 'country_icons')),
                 SizedBox(width: 5),
@@ -487,6 +487,7 @@ class _LoginActivityState extends State<LoginActivity> {
                   '+971(AE)',
                   style: TextStyle(
                     fontSize: 16,
+                    color: Colors.grey,
                   ),
                 ),
               ],

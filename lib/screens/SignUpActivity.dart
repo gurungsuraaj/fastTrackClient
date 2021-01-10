@@ -538,31 +538,50 @@ class _SignUpActivity extends State<SignUpActivity> {
                     size: 25,
                   )),
             ),
-            SizedBox(width: 3,),
-            CountryPickerDropdown(
-              initialValue: 'AE',
-              itemBuilder: _buildDropdownItem,
-              itemFilter: filtered
-                  ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
-                  : null,
-              priorityList: hasPriorityList
-                  ? [
-                      CountryPickerUtils.getCountryByIsoCode('GB'),
-                      CountryPickerUtils.getCountryByIsoCode('CN'),
-                    ]
-                  : null,
-              sortComparator: sortedByIsoCode
-                  ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
-                  : null,
-              onValuePicked: (Country country) {
-                print(
-                  "${country.phoneCode}",
-                );
-                setState(() {
-                  phoneCode = country.phoneCode;
-                });
-              },
+            SizedBox(
+              width: 3,
             ),
+            Row(
+              children: [
+                // Container(
+                //     height: 25,
+                //     width: MediaQuery.of(context).size.width * 0.1,
+                //     child: Image.asset('icons/flags/png/ae.png',
+                //         package: 'country_icons')),
+                // SizedBox(width: 5),
+                Text(
+                  '+971',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+            // CountryPickerDropdown(
+            //   initialValue: 'AE',
+            //   itemBuilder: _buildDropdownItem,
+            //   itemFilter: filtered
+            //       ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
+            //       : null,
+            //   priorityList: hasPriorityList
+            //       ? [
+            //           CountryPickerUtils.getCountryByIsoCode('GB'),
+            //           CountryPickerUtils.getCountryByIsoCode('CN'),
+            //         ]
+            //       : null,
+            //   sortComparator: sortedByIsoCode
+            //       ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
+            //       : null,
+            //   onValuePicked: (Country country) {
+            //     print(
+            //       "${country.phoneCode}",
+            //     );
+            //     setState(() {
+            //       phoneCode = country.phoneCode;
+            //     });
+            //   },
+            // ),
             Expanded(
               child: TextField(
                 controller: mobileController,
