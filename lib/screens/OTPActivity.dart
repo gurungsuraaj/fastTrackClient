@@ -192,6 +192,8 @@ class _OTP extends State<OTP> {
           submitOtpForRegistration(_otpCode);
         } else if (widget.mode == 2) {
           submitOTP(_otpCode);
+        }else{
+          debugPrint("Nothing happened");
         }
       }
       //  else if (otpCode.length == _otpCodeLength && !isAutofill) {
@@ -200,6 +202,7 @@ class _OTP extends State<OTP> {
       // }
       else {
         _enableButton = false;
+
       }
     });
   }

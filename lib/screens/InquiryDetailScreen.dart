@@ -297,7 +297,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               children: <Widget>[
                 Container(
                   height: 40,
-                  width: 170,
+                  width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -325,7 +325,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 40,
-                  width: 170,
+                  width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -359,7 +359,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               children: <Widget>[
                 Container(
                   height: 40,
-                  width: 170,
+                  width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -385,7 +385,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 40,
-                  width: 170,
+                  width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -421,7 +421,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               children: <Widget>[
                 Container(
                   height: 60,
-                  width: 170,
+                  width: width * 0.45,
                   child: TextFormField(
                     validator: (value) {
                       if (value.length == 0) {
@@ -445,7 +445,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 60,
-                  width: 170,
+                  width: width * 0.45,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     validator: (value) {
@@ -473,7 +473,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           ),
           Container(
             height: 60,
-            width: width * 0.9,
+            width: width * 0.94,
             child: TextFormField(
               validator: (value) {
                 bool emailValid = RegExp(
@@ -500,7 +500,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             ),
           ),
           Container(
-            width: width * 0.9,
+            width: width * 0.94,
             child: TextFormField(
               maxLines: 5,
               validator: (value) {
@@ -617,7 +617,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 Container(
                   height: 40,
                   padding: EdgeInsets.only(left: 5),
-                  width: 170,
+                                  width: width * 0.45,
+
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
                       borderRadius: BorderRadius.circular(5)),
@@ -644,7 +645,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 40,
-                  width: 170,
+                                   width: width * 0.45,
+
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -678,7 +680,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               children: <Widget>[
                 Container(
                   height: 60,
-                  width: 170,
+                                    width: width * 0.45,
+
                   margin: EdgeInsets.only(top: 25),
                   // padding: EdgeInsets.only(top:20),
 
@@ -705,7 +708,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 40,
-                  width: 170,
+                                   width: width * 0.45,
+
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -741,7 +745,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               children: <Widget>[
                 Container(
                   height: 60,
-                  width: 170,
+                                width: width * 0.45,
+
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     validator: (value) {
@@ -766,7 +771,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 60,
-                  width: 170,
+                                   width: width * 0.45,
+
                   child: TextFormField(
                     validator: (value) {
                       bool emailValid = RegExp(
@@ -796,7 +802,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             ),
           ),
           Container(
-            width: width * 0.9,
+            width: width * 0.94,
             child: TextFormField(
               validator: (value) {
                 if (value.length == 0) {
@@ -1004,7 +1010,9 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   Future<void> getPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() async {
-      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+      nearestStorePhn = await prefs
+          .getString(Constants.NEAREST_STORE_PHONENO)
+          .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
       whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
       customerName = await prefs.getString(Constants.CUSTOMER_NAME);
       customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);

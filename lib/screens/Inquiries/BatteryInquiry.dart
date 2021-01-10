@@ -95,7 +95,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 40,
-                    width: 170,
+                                      width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -123,7 +124,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 40,
-                    width: 170,
+                                      width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -154,7 +156,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 40,
-                    width: 170,
+                                      width: width * 0.45,
+
                     // margin: EdgeInsets.only(top: 15),
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
@@ -181,7 +184,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 60,
-                    width: 170,
+                                    width: width * 0.45,
+
                     margin: EdgeInsets.only(top: 20),
                     child: TextFormField(
                       validator: (value) {
@@ -214,7 +218,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 60,
-                    width: 170,
+                                    width: width * 0.45,
+
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -239,7 +244,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 60,
-                    width: 170,
+                                    width: width * 0.45,
+
                     // padding: EdgeInsets.only(top: 10)                       ,
                     child: TextFormField(
                       validator: (value) {
@@ -273,7 +279,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 40,
-                    width: 170,
+                                      width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     margin: EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
@@ -300,7 +307,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 60,
-                    width: 170,
+                                      width: width * 0.45,
+
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -333,7 +341,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 60,
-                    width: 170,
+                                      width: width * 0.45,
+
                     // margin: EdgeInsets.only(top: 10),
                     child: TextFormField(
                       validator: (value) {
@@ -362,7 +371,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 40,
-                    width: 170,
+                                     width: width * 0.45,
+
                     padding: EdgeInsets.only(left: 5),
                     margin: EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
@@ -393,7 +403,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
               //   height: 15,
               // ),
               Container(
-                width: width * 0.9,
+                width: width * 0.94,
                 child: TextFormField(
                   validator: (value) {
                     if (value.length == 0) {
