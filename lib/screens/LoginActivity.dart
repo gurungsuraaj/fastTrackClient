@@ -267,7 +267,6 @@ class _LoginActivityState extends State<LoginActivity> {
                                         )
                                       ],
                                     ),
-                                    Spacer(),
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(
@@ -283,6 +282,8 @@ class _LoginActivityState extends State<LoginActivity> {
                                     SizedBox(
                                       height: height * 0.01,
                                     ),
+                                    Spacer(),
+
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

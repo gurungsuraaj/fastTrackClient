@@ -8,6 +8,8 @@ class CompanyInfoModel {
   String phone;
   String serviceDateComment;
   String versionNo;
+  String appStoreUrl;
+  String playStoreUrl;
 
   CompanyInfoModel(
       {this.statusCode,
@@ -18,5 +20,8 @@ class CompanyInfoModel {
       this.city,
       this.phone,
       this.serviceDateComment,
-      this.versionNo});
+      this.versionNo,
+      this.appStoreUrl,
+      this.playStoreUrl
+      });
 }

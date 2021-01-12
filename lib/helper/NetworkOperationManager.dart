@@ -807,6 +807,8 @@ class NetworkOperationManager {
             data["CompanyInformation"]["Service_Date_Comment"] ?? "";
               companyInfoList.versionNo =
             data["CompanyInformation"]["Version_No"] ?? "";
+        companyInfoList.appStoreUrl = data["CompanyInformation"]["AppStore_Url"] ?? "";
+        companyInfoList.playStoreUrl = data["CompanyInformation"]["PlayStore_Url"] ?? "";
         companyInfoList.statusCode = res.statusCode;
         companyInfoArrayList.add(companyInfoList);
       });

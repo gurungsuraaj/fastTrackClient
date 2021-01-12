@@ -1053,13 +1053,15 @@ class _HomeActivityState extends State<HomeActivity>
       if (res.length > 0) {
         final PackageInfo info = await PackageInfo.fromPlatform();
 
-        print('${res[0].versionNo}');
+        print('${res[0].playStoreUrl} ${res[0].appStoreUrl}');
         double newVersionNo =
             double.parse(res[0].versionNo.trim().replaceAll(".", ""));
         double currentVersion =
             double.parse(info.version.trim().replaceAll(".", ""));
+
+            print(" $newVersionNo $currentVersion");
         if (newVersionNo > currentVersion) {
-          _showVersionDialog(context);
+          _showVersionDialog(context, res[0].appStoreUrl, res[0].playStoreUrl);
         }
       }
     }).catchError((err) {
@@ -1067,7 +1069,7 @@ class _HomeActivityState extends State<HomeActivity>
     });
   }
 
-  _showVersionDialog(context) async {
+  _showVersionDialog(context, String appStoreUrl, String playStoreUrl) async {
     await showDialog<String>(
       context: context,
       barrierDismissible: false,
@@ -1087,8 +1089,10 @@ class _HomeActivityState extends State<HomeActivity>
                       btnLabel,
                       style: TextStyle(color: Color(0xFF007AFF)),
                     ),
-                    // onPressed: () => StoreRedirect.redirect(androidAppId: "pokharafooddelivery.nipuna",
-                    // iOSAppId: "1487359029"),
+                    onPressed: () => _launchURL(appStoreUrl)
+                    //  StoreRedirect.redirect(androidAppId: "com.ebt.ftclient",
+                    // iOSAppId: "1487359029")
+                    ,
                   ),
                   FlatButton(
                     child: Text(btnLabelCancel,
@@ -1103,7 +1107,7 @@ class _HomeActivityState extends State<HomeActivity>
                 actions: <Widget>[
                   FlatButton(
                     child: Text(btnLabel),
-                    onPressed: () => _launchURL(PLAY_STORE_URL),
+                    onPressed: () => _launchURL(playStoreUrl),
                   ),
                   FlatButton(
                     child: Text(btnLabelCancel),

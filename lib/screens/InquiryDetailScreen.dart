@@ -412,6 +412,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               ],
             ),
           ),
+
           SizedBox(
             height: 20,
           ),
@@ -617,8 +618,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 Container(
                   height: 40,
                   padding: EdgeInsets.only(left: 5),
-                                  width: width * 0.45,
-
+                  width: width * 0.45,
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
                       borderRadius: BorderRadius.circular(5)),
@@ -645,8 +645,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 40,
-                                   width: width * 0.45,
-
+                  width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -680,7 +679,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               children: <Widget>[
                 Container(
                   height: 60,
-                                    width: width * 0.45,
+                  width: width * 0.45,
 
                   margin: EdgeInsets.only(top: 25),
                   // padding: EdgeInsets.only(top:20),
@@ -708,8 +707,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 40,
-                                   width: width * 0.45,
-
+                  width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
@@ -745,8 +743,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               children: <Widget>[
                 Container(
                   height: 60,
-                                width: width * 0.45,
-
+                  width: width * 0.45,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     validator: (value) {
@@ -771,8 +768,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
                 Container(
                   height: 60,
-                                   width: width * 0.45,
-
+                  width: width * 0.45,
                   child: TextFormField(
                     validator: (value) {
                       bool emailValid = RegExp(
