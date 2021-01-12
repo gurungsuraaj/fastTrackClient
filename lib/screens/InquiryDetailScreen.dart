@@ -22,7 +22,11 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   String selectedWidthSize,
       selectedHeightSize,
       selectedRimSize,
-      selectedBrandSize;
+      selectedBrandSize,
+      selectedRearWidthSize,
+      selectedRearHeightSize,
+      selectedRearRimSize;
+  bool isRearTyreVisible = false;
   List<String> widthListSize = List();
   List<String> heightListSize = List();
   List<String> rimSizeListSize = List();
@@ -408,6 +412,124 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       },
                     ),
                   ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Checkbox(
+                  value: isRearTyreVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      isRearTyreVisible = value;
+                    });
+                  }),
+              Text('Add different rear size tyre'),
+            ],
+          ),
+          Visibility(
+            visible: isRearTyreVisible,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.3),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          hint: Text("width"),
+                          isExpanded: true,
+                          items: widthListSize.map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: new Text(value)),
+                            );
+                          }).toList(),
+                          value: selectedRearWidthSize,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRearWidthSize = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.3),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          hint: Text("height"),
+                          isExpanded: true,
+                          items: heightListSize.map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          value: selectedRearHeightSize,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRearHeightSize = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.3),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          hint: Text("rim-size"),
+                          isExpanded: true,
+                          items: rimSizeListSize.map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          value: selectedRearRimSize,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRearRimSize = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                    ),
+                  ],
                 ),
               ],
             ),
