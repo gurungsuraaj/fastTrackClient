@@ -424,6 +424,9 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   onChanged: (value) {
                     setState(() {
                       isRearTyreVisible = value;
+                      selectedRearHeightSize = '';
+                      selectedRearRimSize = '';
+                      selectedRearWidthSize = '';
                     });
                   }),
               Text('Add different rear size tyre'),
@@ -1040,6 +1043,9 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       "tyre-width": selectedWidthSize,
       "tyre-height": selectedHeightSize,
       "rim-size": selectedRimSize,
+      "tyre-width1": selectedRearWidthSize,
+      "tyre-height1": selectedRearHeightSize,
+      "rim-size1": selectedRearRimSize,
       "car-brand": selectedBrandSize,
       "name": nameControllerSize.text,
       "email": emailControllerSize.text,
@@ -1068,6 +1074,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           selectedBrandSize = null;
         });
       } else {
+        print('**** Error ${res.body}******');
         displaySnackbar(context, "Error: ${res.body}");
       }
     });
@@ -1076,7 +1083,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 10),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
