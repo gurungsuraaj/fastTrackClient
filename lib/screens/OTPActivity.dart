@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
@@ -15,6 +16,7 @@ import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
+import 'package:pin_code_fields/pin_code_fields.dart' as iosText;
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
@@ -45,6 +47,8 @@ class _OTP extends State<OTP> {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+
+    // FocusScope.of(context).requestFocus(FocusNode());
   }
 
   @override
@@ -114,19 +118,55 @@ class _OTP extends State<OTP> {
                                 //     },
                                 //   ),
                                 // ),
-                                TextFieldPin(
-                                  filled: true,
-                                  filledColor: Colors.white,
-                                  codeLength: _otpCodeLength,
-                                  boxSize: 46,
-                                  filledAfterTextChange: false,
-                                  textStyle: TextStyle(fontSize: 16),
-                                  borderStyle: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(0)),
-                                  onOtpCallback: (code, isAutofill) =>
-                                      _onOtpCallBack(code, isAutofill),
-                                ),
+                                Platform.isAndroid
+                                    ? TextFieldPin(
+                                        filled: true,
+                                        filledColor: Colors.white,
+                                        codeLength: _otpCodeLength,
+                                        boxSize: 46,
+                                        filledAfterTextChange: false,
+                                        textStyle: TextStyle(fontSize: 16),
+                                        borderStyle: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(0)),
+                                        onOtpCallback: (code, isAutofill) =>
+                                            _onOtpCallBack(code, isAutofill),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: iosText.PinCodeTextField(
+                                          autoFocus: true,
+                                          textInputType: TextInputType.number,
+                                          length: 6,
+                                          obsecureText: false,
+                                          animationType:
+                                              iosText.AnimationType.fade,
+                                          shape: iosText
+                                              .PinCodeFieldShape.underline,
+                                          animationDuration:
+                                              Duration(milliseconds: 300),
+                                          fieldHeight: 50,
+                                          fieldWidth: 35,
+                                          onChanged: (value) {
+                                            _otpCode = value;
+                                            print(_otpCode);
+
+                                            if (_otpCode.length == 6) {
+                                              if (widget.mode == 1) {
+                                                submitOtpForRegistration(
+                                                    _otpCode);
+                                              } else if (widget.mode == 2) {
+                                                submitOTP(_otpCode);
+                                              } else {
+                                                debugPrint("Nothing happened");
+                                              }
+                                            }
+                                          },
+                                        ),
+                                      ),
+
                                 SizedBox(
                                   height: 32,
                                 ),
@@ -192,7 +232,7 @@ class _OTP extends State<OTP> {
           submitOtpForRegistration(_otpCode);
         } else if (widget.mode == 2) {
           submitOTP(_otpCode);
-        }else{
+        } else {
           debugPrint("Nothing happened");
         }
       }
@@ -202,7 +242,6 @@ class _OTP extends State<OTP> {
       // }
       else {
         _enableButton = false;
-
       }
     });
   }
@@ -273,9 +312,9 @@ class _OTP extends State<OTP> {
         PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
             res.customerName, res.customerEmail, "", widget.query);
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MainTab()),
-          );
+          context,
+          MaterialPageRoute(builder: (context) => MainTab()),
+        );
         ShowToast.showToast(context, "Login Success");
       } else {
         print(res.errResponse);
