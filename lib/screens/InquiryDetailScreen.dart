@@ -22,7 +22,11 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   String selectedWidthSize,
       selectedHeightSize,
       selectedRimSize,
-      selectedBrandSize;
+      selectedBrandSize,
+      selectedRearWidthSize,
+      selectedRearHeightSize,
+      selectedRearRimSize;
+  bool isRearTyreVisible = false;
   List<String> widthListSize = List();
   List<String> heightListSize = List();
   List<String> rimSizeListSize = List();
@@ -408,6 +412,127 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       },
                     ),
                   ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Checkbox(
+                  value: isRearTyreVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      isRearTyreVisible = value;
+                      // selectedRearHeightSize = '';
+                      // selectedRearRimSize = '';
+                      // selectedRearWidthSize = '';
+                    });
+                  }),
+              Text('Add different rear size tyre'),
+            ],
+          ),
+          Visibility(
+            visible: isRearTyreVisible,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.3),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          hint: Text("width"),
+                          isExpanded: true,
+                          items: widthListSize.map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: new Text(value)),
+                            );
+                          }).toList(),
+                          value: selectedRearWidthSize,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRearWidthSize = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.3),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          hint: Text("height"),
+                          isExpanded: true,
+                          items: heightListSize.map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          value: selectedRearHeightSize,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRearHeightSize = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.3),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          hint: Text("rim-size"),
+                          isExpanded: true,
+                          items: rimSizeListSize.map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          value: selectedRearRimSize,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRearRimSize = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: width * 0.45,
+                      padding: EdgeInsets.only(left: 5),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -913,17 +1038,37 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       "Content-Type": "application/json",
       "Accept": "application/json"
     };
+    var body;
+    if (isRearTyreVisible) {
+      body = jsonEncode({
+        "tyre-width": selectedWidthSize,
+        "tyre-height": selectedHeightSize,
+        "rim-size": selectedRimSize,
+        "tyre-width1": selectedRearWidthSize,
+        "tyre-height1": selectedRearHeightSize,
+        "rim-size1": selectedRearRimSize,
+        "car-brand": selectedBrandSize,
+        "name": nameControllerSize.text,
+        "email": emailControllerSize.text,
+        "phone": phoneControllerSize.text,
+        "message": commentControllerSize.text
+      });
+    } else {
+      body = jsonEncode({
+        "tyre-width": selectedWidthSize,
+        "tyre-height": selectedHeightSize,
+        "rim-size": selectedRimSize,
+        // "tyre-width1": selectedRearWidthSize,
+        // "tyre-height1": selectedRearHeightSize,
+        // "rim-size1": selectedRearRimSize,
+        "car-brand": selectedBrandSize,
+        "name": nameControllerSize.text,
+        "email": emailControllerSize.text,
+        "phone": phoneControllerSize.text,
+        "message": commentControllerSize.text
+      });
+    }
 
-    final body = jsonEncode({
-      "tyre-width": selectedWidthSize,
-      "tyre-height": selectedHeightSize,
-      "rim-size": selectedRimSize,
-      "car-brand": selectedBrandSize,
-      "name": nameControllerSize.text,
-      "email": emailControllerSize.text,
-      "phone": phoneControllerSize.text,
-      "message": commentControllerSize.text
-    });
     await http
         .post(
             "https://fasttrackemarat.com/contact-from-app/search-by-tyre-size.php",
@@ -931,21 +1076,25 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             body: body)
         .then((res) {
       hideProgressBar();
-      print(body);
+      print("Json body $body");
       if (res.statusCode == Rcode.SUCCESS_CODE) {
         print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
-          nameControllerSize.text = "";
-          phoneControllerSize.text = "";
-          emailControllerSize.text = "";
+          // nameControllerSize.text = "";
+          // phoneControllerSize.text = "";
+          // emailControllerSize.text = "";
           commentControllerSize.text = "";
           selectedWidthSize = null;
           selectedHeightSize = null;
           selectedRimSize = null;
           selectedBrandSize = null;
+          selectedRearWidthSize = null;
+          selectedRearHeightSize = null;
+          selectedRearRimSize = null;
         });
       } else {
+        print('**** Error ${res.body}******');
         displaySnackbar(context, "Error: ${res.body}");
       }
     });
@@ -954,7 +1103,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 10),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
@@ -989,9 +1138,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
         print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
-          nameControllerModel.text = "";
-          emailControllerModel.text = "";
-          phoneControllerModel.text = "";
+          
           commentControllerModel.text = "";
           selectedMakeCode = null;
           selectedModel = null;

@@ -282,7 +282,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                     SizedBox(
                                       height: height * 0.01,
                                     ),
-                                    Spacer(),
+                                    SizedBox(
+                                      height: 60,
+                                    ),
 
                                     Row(
                                       mainAxisAlignment:

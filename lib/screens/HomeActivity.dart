@@ -283,7 +283,7 @@ class _HomeActivityState extends State<HomeActivity>
               new GridView.count(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  crossAxisCount: 3,
+                  crossAxisCount: 2,
                   childAspectRatio: 1,
                   padding: const EdgeInsets.all(15.0),
                   mainAxisSpacing: 10.0,
@@ -307,9 +307,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/ServicesLogo.png",
-                                      height: 70,
-                                      width: 50,
+                                      "images/service1.png",
+                                      height: 90,
+                                      width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
@@ -332,9 +332,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/ServiceHistory.png",
-                                      height: 70,
-                                      width: 50,
+                                      "images/invoiceSales1.png",
+                                       height: 100,
+                                      width: 80,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
@@ -383,9 +383,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/promotionLogo.png",
-                                      height: 70,
-                                      width: 50,
+                                      "images/promotions1.png",
+                                    height: 90,
+                                      width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
@@ -403,9 +403,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/distressCall.png",
-                                      height: 70,
-                                      width: 50,
+                                      "images/distress.png",
+                                      height: 90,
+                                      width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
@@ -432,9 +432,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/LocationLogo.png",
-                                      height: 70,
-                                      width: 50,
+                                      "images/locate1.png",
+                                       height: 90,
+                                      width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
@@ -463,9 +463,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/inquiry.png",
-                                      height: 70,
-                                      width: 50,
+                                      "images/inquiry1.png",
+                                       height: 90,
+                                      width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
@@ -489,8 +489,8 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/inquiry.png",
-                                      height: 70,
-                                      width: 50,
+                                    height: 90,
+                                      width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
@@ -1059,7 +1059,7 @@ class _HomeActivityState extends State<HomeActivity>
         double currentVersion =
             double.parse(info.version.trim().replaceAll(".", ""));
 
-            print(" $newVersionNo $currentVersion");
+        print(" $newVersionNo $currentVersion");
         if (newVersionNo > currentVersion) {
           _showVersionDialog(context, res[0].appStoreUrl, res[0].playStoreUrl);
         }

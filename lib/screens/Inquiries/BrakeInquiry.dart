@@ -731,9 +731,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
           winNoController.text = "";
           dateController.text = "";
           timeController.text = "";
-          nameController.text = "";
-          emailController.text = "";
-          phoneController.text = "";
+          
           commentController.text = "";
           selectedMake = null;
           selectedModel = null;

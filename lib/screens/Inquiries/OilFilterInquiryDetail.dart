@@ -790,9 +790,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
         setState(() {
           dateController.text = "";
           timeController.text = "";
-          nameController.text = "";
-          emailController.text = "";
-          phoneController.text = "";
           commentController.text = "";
           mileageController.text = "";
           winController.text = "";

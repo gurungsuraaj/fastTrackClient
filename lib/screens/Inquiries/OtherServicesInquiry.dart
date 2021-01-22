@@ -669,9 +669,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
           serviceController.text = "";
           dateController.text = "";
           timeController.text = "";
-          nameController.text = "";
-          emailController.text = "";
-          phoneController.text = "";
+       
           commentController.text = "";
           selectedMake = null;
           selectedModel = null;

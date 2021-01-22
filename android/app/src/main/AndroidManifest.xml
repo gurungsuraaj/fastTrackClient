@@ -15,7 +15,7 @@
     <application
         android:name=".Application"
         android:icon="@mipmap/launcher_icon"
-        android:label="fasttrackgarage_app"
+        android:label="Fasttrack"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"

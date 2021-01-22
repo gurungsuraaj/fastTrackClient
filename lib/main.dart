@@ -28,50 +28,11 @@ import 'package:flutter/material.dart';
 import 'database/AppDatabase.dart';
 
 //GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
-final FirebaseMessaging _messaging = FirebaseMessaging();
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    new FlutterLocalNotificationsPlugin();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _messaging.getToken().then((token) {
-    debugPrint("Your FCM Token is : $token");
-  });
-  _messaging.subscribeToTopic('Notification');
-  _messaging.requestNotificationPermissions();
-  _messaging.configure(
-      onMessage: (Map<String, dynamic> msg) {
-        print("Inside message ------------------- $msg");
-        // showNotification(msg);
-        showBackGroundNotification(msg);
-      },
-      onLaunch: (Map<String, dynamic> msg) async {
-        print(msg);
-        print("on launch");
-      },
-      onResume: (Map<String, dynamic> msg) async {
-        print(msg);
-        print("on resume");
-        saveBackgorundNotificatonDataOnDB(msg);
-        //  showBackGroundNotification(msg);
-      },
-      onBackgroundMessage: onBackgroundMessage);
-
-  var initializationSettingsAndroid =
-      AndroidInitializationSettings('mipmap/ic_launcher');
-  var initializationSettingsIOS = IOSInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
-      onDidReceiveLocalNotification: null);
-  var initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
-    debugPrint('called from local notificaiton');
-  });
+  
+  
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -102,90 +63,8 @@ Future<void> main() async {
   );
 }
 
-showNotification(Map<String, dynamic> msg) async {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'fcm_default_channel',
-      'default_notification_channel_id',
-      'your channel description',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker');
-  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.show(0, msg['notification']['title'],
-      msg['notification']['body'], platformChannelSpecifics,
-      payload: 'item x');
-
-  saveNotificatonDataOnDB(msg);
-}
-
-showBackGroundNotification(Map<String, dynamic> msg) async {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'fcm_default_channel',
-      'default_notification_channel_id',
-      'your channel description',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker');
-  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics);
-
-// print("Local notification ${msg['aps']['alert']}");
-
-  if (Platform.isAndroid) {
-      await flutterLocalNotificationsPlugin.show(
-      0, msg['data']['title'], msg['data']['body'], platformChannelSpecifics,
-      payload: 'item x');
-  } else if (Platform.isIOS) {
-  await flutterLocalNotificationsPlugin.show(
-      0, msg['title'], msg['body'], platformChannelSpecifics,
-      payload: 'item x');
-  }
-
-  // await flutterLocalNotificationsPlugin.show(0, msg['aps']['alert']['title'],
-  //     msg['aps']['alert']['body'], platformChannelSpecifics,
-  //     payload: 'item x');
-
-  saveBackgorundNotificatonDataOnDB(msg);
-}
-
-void saveNotificatonDataOnDB(Map<String, dynamic> msg) async {
-  print(DateTime.now().toString());
-  print("${msg['notification']['title']} ${msg['notification']['body']}");
-  final database =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
-  notification.id = PrimaryKeyGenerator.generateKey();
-  notification.notificationTitle = msg['notification']['title'];
-  notification.notificationBody = msg['notification']['body'];
-  notification.dateTime = DateTime.now().toString();
-  await database.notificationDao.insertNotification(notification);
-}
-
-void saveBackgorundNotificatonDataOnDB(Map<String, dynamic> msg) async {
-  print(DateTime.now().toString());
-
-  final database =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
-  notification.id = PrimaryKeyGenerator.generateKey();
-
-if(Platform.isAndroid){
-  notification.notificationTitle = msg['data']['title'];
-  notification.notificationBody = msg['data']['body'];
-}else if(Platform.isIOS){
-    notification.notificationTitle = msg['title'];
-  notification.notificationBody = msg['body'];
-}
 
 
-  notification.dateTime = DateTime.now().toString();
-  await database.notificationDao.insertNotification(notification);
-}
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -289,8 +168,4 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-Future onBackgroundMessage(Map<String, dynamic> message) async {
-  print("on background messae");
-  debugPrint(message.toString());
-  showBackGroundNotification(message);
-}
+

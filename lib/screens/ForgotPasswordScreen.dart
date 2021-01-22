@@ -79,25 +79,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     width: width * 0.9,
                     child: _buildCountryPickerDropdown(),
                   ),
-                  // Container(
-                  //   padding: EdgeInsets.only(top: 15),
-                  //   width: width * 0.4,
-                  //   child: TextFormField(
-                  //     keyboardType: TextInputType.number,
-                  //     style: TextStyle(
-                  //         fontSize: fontSizeTextField, color: Colors.white),
-                  //     controller: mobileController,
-                  //     decoration: InputDecoration(
-                  //         enabledBorder: UnderlineInputBorder(
-                  //           borderSide: BorderSide(color: Colors.white),
-                  //         ),
-                  //         focusedBorder: UnderlineInputBorder(
-                  //           borderSide: BorderSide(color: Colors.white),
-                  //         ),
-                  //         hintText: 'Your mobile number',
-                  //         hintStyle: TextStyle(color: Color(0xffb8b8b8))),
-                  //   ),
-                  // ),
                 ],
               ),
 
@@ -191,34 +172,40 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   _buildCountryPickerDropdown(
-          {bool filtered = false,
-          bool sortedByIsoCode = false,
-          bool hasPriorityList = false}) =>
+        ) =>
       Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          CountryPickerDropdown(
-            initialValue: 'AE',
-            itemBuilder: _buildDropdownItem,
-            itemFilter: filtered
-                ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
-                : null,
-            priorityList: hasPriorityList
-                ? [
-                    CountryPickerUtils.getCountryByIsoCode('GB'),
-                    CountryPickerUtils.getCountryByIsoCode('CN'),
-                  ]
-                : null,
-            sortComparator: sortedByIsoCode
-                ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
-                : null,
-            onValuePicked: (Country country) {
-              print(
-                "${country.phoneCode}",
-              );
-              setState(() {
-                phoneCode = country.phoneCode;
-              });
-            },
+          // CountryPickerDropdown(
+          //   initialValue: 'AE',
+          //   itemBuilder: _buildDropdownItem,
+          //   itemFilter: filtered
+          //       ? (c) => ['AE', 'DE', 'GB', 'CN'].contains(c.isoCode)
+          //       : null,
+          //   priorityList: hasPriorityList
+          //       ? [
+          //           CountryPickerUtils.getCountryByIsoCode('GB'),
+          //           CountryPickerUtils.getCountryByIsoCode('CN'),
+          //         ]
+          //       : null,
+          //   sortComparator: sortedByIsoCode
+          //       ? (Country a, Country b) => a.isoCode.compareTo(b.isoCode)
+          //       : null,
+          //   onValuePicked: (Country country) {
+          //     print(
+          //       "${country.phoneCode}",
+          //     );
+          //     setState(() {
+          //       phoneCode = country.phoneCode;
+          //     });
+          //   },
+          // ),
+          Text(
+            '+971',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
           ),
           SizedBox(
             width: 8.0,

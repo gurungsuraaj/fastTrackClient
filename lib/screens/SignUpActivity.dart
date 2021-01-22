@@ -6,6 +6,7 @@ import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/screens/ForgotPasswordScreen.dart';
 import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
@@ -361,7 +362,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                           });
                                         },
                                         child: Text(
-                                          "Subscribe for share locally program to earn & redeem.\n Read Share terms and condition",
+                                          "Subscribe for share locally program to earn &\n redeem.Read Share terms and condition",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 10),
@@ -401,7 +402,23 @@ class _SignUpActivity extends State<SignUpActivity> {
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 12),
                                   )),
-                            )
+                            ),
+SizedBox(
+
+  height: 20,
+),
+                            GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgotPasswordScreen()));
+                                      },
+                                      child: Text(
+                                        "Forgot Password?",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
                           ],
                         ),
                       ),
@@ -452,7 +469,14 @@ class _SignUpActivity extends State<SignUpActivity> {
   Future<void> displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
-      duration: const Duration(seconds: 2),
+      duration: const Duration(minutes: 5),
+      action: SnackBarAction(
+          label: "OK",
+          onPressed: () {
+            _scaffoldKey.currentState.removeCurrentSnackBar();
+           
+          },
+        ),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
@@ -496,7 +520,8 @@ class _SignUpActivity extends State<SignUpActivity> {
         ShowToast.showToast(context, "Signed up successfully");
       } else {
         hideProgressBar();
-        ShowToast.showToast(context, "Error : " + message);
+        // ShowToast.showToast(context, "Error : " + message);
+        displaySnackbar(context, "Error : $message");
       }
     }).catchError((val) {
       hideProgressBar();
@@ -666,7 +691,8 @@ class _SignUpActivity extends State<SignUpActivity> {
         );
       } else {
         print("suraj ${res.responseBody}");
-        ShowToast.showToast(context, "Error :" + "${res.responseBody}");
+                displaySnackbar(context, "Error : ${res.responseBody}");
+
       }
     }).catchError((err) {
       hideProgressBar();

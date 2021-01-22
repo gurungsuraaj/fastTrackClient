@@ -118,6 +118,16 @@ flutter:
     - images/userProfile.png
     - images/FTProfileLogo.png
 
+    - images/distress.png
+    - images/inquiry1.png
+    - images/invoiceSales1.png
+    - images/locate1.png
+    - images/promotions1.png
+    - images/service1.png
+
+
+
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

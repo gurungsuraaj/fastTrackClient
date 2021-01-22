@@ -1,8 +1,15 @@
+import 'dart:io';
+
+import 'package:fasttrackgarage_app/database/AppDatabase.dart';
+import 'package:fasttrackgarage_app/models/NotificationDbModel.dart';
 import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
 import 'package:fasttrackgarage_app/screens/NotificationScreen.dart';
 import 'package:fasttrackgarage_app/screens/UsersProfileActivity.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
+import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'OfferPromo.dart';
 import 'StoreLocationScreen.dart';
@@ -16,10 +23,12 @@ class _MainTabState extends State<MainTab> {
   int bottomSelectedIndex = 0;
   var bottomTabBarText = TextStyle(fontSize: 12);
 
-
   PageController pageController;
 
-
+  final FirebaseMessaging _messaging = FirebaseMessaging();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      new FlutterLocalNotificationsPlugin();
+  var googleID;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,16 +37,74 @@ class _MainTabState extends State<MainTab> {
       initialPage: 0,
       keepPage: true,
     );
+
+    _messaging.getToken().then((token) {
+      debugPrint("Your FCM Token is : $token");
+    });
+
+    _messaging.subscribeToTopic('Notification');
+    _messaging.requestNotificationPermissions();
+    _messaging.configure(
+      onMessage: (Map<String, dynamic> msg) {
+        print("Inside message ------------------- $msg");
+
+        if (Platform.isAndroid) {
+          showBackGroundNotification(msg['data']['title'], msg['data']['body']);
+        } else {
+          if (googleID == msg['google.c.sender.id']) {
+            googleID = null;
+          } else {
+            if (googleID == null) {
+              print("PRint $googleID");
+              googleID = msg['google.c.sender.id'];
+              print("Inside gogole id $googleID");
+            }
+            showBackGroundNotification(msg['title'], msg['body']);
+          }
+        }
+      },
+      onLaunch: (Map<String, dynamic> msg) async {
+        print("Launch  $msg");
+        saveBackgorundNotificatonDataOnDB(
+            msg['data']['title'], msg['data']['body']);
+      },
+      onResume: (Map<String, dynamic> msg) async {
+        print("On resume $msg");
+
+        if (Platform.isAndroid) {
+          saveBackgorundNotificatonDataOnDB(
+              msg['data']['title'], msg['data']['body']);
+        } else {
+          saveBackgorundNotificatonDataOnDB(msg['title'], msg['body']);
+        }
+      },
+      // onBackgroundMessage: onBackgroundMessage
+    );
+
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('mipmap/ic_launcher');
+    var initializationSettingsIOS = IOSInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+        onDidReceiveLocalNotification: null);
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (String payload) async {
+      if (payload != null) {
+        debugPrint('notification payload: ' + payload);
+      }
+      debugPrint('called from local notificaiton');
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: buildPageView(),
       bottomNavigationBar: Container(
-
         child: BottomNavigationBar(
-
           currentIndex: bottomSelectedIndex,
           onTap: (index) {
             bottomTapped(index);
@@ -45,11 +112,8 @@ class _MainTabState extends State<MainTab> {
           items: buildBottomNavBarItems(),
         ),
       ),
-
-
     );
   }
-
 
   Widget buildPageView() {
     return PageView(
@@ -72,15 +136,20 @@ class _MainTabState extends State<MainTab> {
       ],
     );
   }
+
   void pageChanged(int index) {
     setState(() {
       bottomSelectedIndex = index;
     });
   }
+
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
       BottomNavigationBarItem(
-          icon: new Icon(Icons.home,color: Color(ExtraColors.DARK_BLUE),),
+          icon: new Icon(
+            Icons.home,
+            color: Color(ExtraColors.DARK_BLUE),
+          ),
           title: Padding(
             padding: const EdgeInsets.only(top: 2.0),
             child: new Text(
@@ -89,7 +158,7 @@ class _MainTabState extends State<MainTab> {
             ),
           )),
       BottomNavigationBarItem(
-          icon: Icon(Icons.person,color: Color(ExtraColors.DARK_BLUE)),
+          icon: Icon(Icons.person, color: Color(ExtraColors.DARK_BLUE)),
           title: Padding(
             padding: const EdgeInsets.only(top: 2.0),
             child: Text(
@@ -98,7 +167,8 @@ class _MainTabState extends State<MainTab> {
             ),
           )),
       BottomNavigationBarItem(
-        icon: new Icon(Icons.notifications,color: Color(ExtraColors.DARK_BLUE)),
+        icon:
+            new Icon(Icons.notifications, color: Color(ExtraColors.DARK_BLUE)),
         title: Padding(
           padding: const EdgeInsets.only(top: 2.0),
           child: new Text(
@@ -125,9 +195,9 @@ class _MainTabState extends State<MainTab> {
       //         style: bottomTabBarText,
       //       ),
       //     )),
-
     ];
   }
+
   void bottomTapped(int index) {
     debugPrint("this is index");
     setState(() {
@@ -137,4 +207,93 @@ class _MainTabState extends State<MainTab> {
     });
   }
 
+  showNotification(Map<String, dynamic> msg) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'fcm_default_channel',
+        'default_notification_channel_id',
+        'your channel description',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(0, msg['notification']['title'],
+        msg['notification']['body'], platformChannelSpecifics,
+        payload: 'item x');
+
+    saveNotificatonDataOnDB(msg);
+  }
+
+  showBackGroundNotification(String title, String body) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'fcm_default_channel',
+        'default_notification_channel_id',
+        'your channel description',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    // if (Platform.isAndroid) {
+    //   await flutterLocalNotificationsPlugin.show(0, msg['data']['title'],
+    //       msg['data']['body'], platformChannelSpecifics,
+    //       payload: 'item x');
+    // } else if (Platform.isIOS) {
+    //   await flutterLocalNotificationsPlugin.show(
+    //       0, msg['title'], msg['body'], platformChannelSpecifics,
+    //       payload: 'item x');
+    // }
+
+    await flutterLocalNotificationsPlugin
+        .show(0, title, body, platformChannelSpecifics, payload: 'item x');
+
+    saveBackgorundNotificatonDataOnDB(title, body);
+  }
+
+  // Future onBackgroundMessage(Map<String, dynamic> message) async {
+  //   print("on background messae");
+  //   debugPrint(message.toString());
+  //   showBackGroundNotification(message);
+  // }
+
+  void saveNotificatonDataOnDB(Map<String, dynamic> msg) async {
+    print(DateTime.now().toString());
+    print("${msg['notification']['title']} ${msg['notification']['body']}");
+    final database =
+        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
+    notification.id = PrimaryKeyGenerator.generateKey();
+    notification.notificationTitle = msg['notification']['title'];
+    notification.notificationBody = msg['notification']['body'];
+    notification.dateTime = DateTime.now().toString();
+    await database.notificationDao.insertNotification(notification);
+  }
+
+  void saveBackgorundNotificatonDataOnDB(String title, String body) async {
+    print(DateTime.now().toString());
+
+    final database =
+        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
+    notification.id = PrimaryKeyGenerator.generateKey();
+
+// if(Platform.isAndroid){
+//   notification.notificationTitle = msg['data']['title'];
+//   notification.notificationBody = msg['data']['body'];
+// }else if(Platform.isIOS){
+//     notification.notificationTitle = msg['title'];
+//   notification.notificationBody = msg['body'];
+// }
+
+    notification.notificationTitle = title;
+    notification.notificationBody = body;
+
+    notification.dateTime = DateTime.now().toString();
+    await database.notificationDao.insertNotification(notification);
+  }
 }

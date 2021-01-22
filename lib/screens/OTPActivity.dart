@@ -119,20 +119,24 @@ class _OTP extends State<OTP> {
                                 //   ),
                                 // ),
                                 Platform.isAndroid
-                                    ? TextFieldPin(
-                                        filled: true,
-                                        filledColor: Colors.white,
-                                        codeLength: _otpCodeLength,
-                                        boxSize: 46,
-                                        filledAfterTextChange: false,
-                                        textStyle: TextStyle(fontSize: 16),
-                                        borderStyle: OutlineInputBorder(
-                                            borderSide: BorderSide.none,
-                                            borderRadius:
-                                                BorderRadius.circular(0)),
-                                        onOtpCallback: (code, isAutofill) =>
-                                            _onOtpCallBack(code, isAutofill),
-                                      )
+                                    ? Container(
+                                      width: width,
+                                      child: TextFieldPin(
+                                      
+                                          filled: true,
+                                          filledColor: Colors.white,
+                                          codeLength: _otpCodeLength,
+                                          boxSize: 35,
+                                          filledAfterTextChange: false,
+                                          textStyle: TextStyle(fontSize: 16),
+                                          borderStyle: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius:
+                                                  BorderRadius.circular(0)),
+                                          onOtpCallback: (code, isAutofill) =>
+                                              _onOtpCallBack(code, isAutofill),
+                                        ),
+                                    )
                                     : Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 50),
@@ -148,7 +152,7 @@ class _OTP extends State<OTP> {
                                           animationDuration:
                                               Duration(milliseconds: 300),
                                           fieldHeight: 50,
-                                          fieldWidth: 35,
+                                          fieldWidth: 30,
                                           onChanged: (value) {
                                             _otpCode = value;
                                             print(_otpCode);
@@ -285,8 +289,8 @@ class _OTP extends State<OTP> {
         .then((res) {
       if (res.status == Rcode.SUCCESS_CODE) {
         hideProgressBar();
-        if (res.responseBody == "Login created successfully.") {
-          ShowToast.showToast(context, res.responseBody);
+        if (res.status == Rcode.SUCCESS_CODE) {
+          // ShowToast.showToast(context, res.responseBody);
           // Navigator.pushReplacement(
           //   context,
           //   MaterialPageRoute(builder: (context) => LoginActivity()),

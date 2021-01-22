@@ -669,9 +669,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
         print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
-          nameController.text = "";
-          phoneController.text = "";
-          emailController.text = "";
+       
           timeController.text = "";
           dateController.text = "";
           commentController.text = "";

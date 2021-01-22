@@ -4,8 +4,8 @@ class Api {
   static final String BASE_URL =
       // "http://202.166.211.230:7747"; // This is the main url for both admin and client api
       // "http://192.168.0.57:7747"; // This is the main url for both admin and client api
-      // "http://fatnav.dyndns.org:7047";
-      "http://fatnav.dyndns.org:7347";
+      // "http://fatnav.dyndns.org:7047";  // Live
+      "http://fatnav.dyndns.org:7347";  //Dev 
 
   static final String POST_CHECKINVENTORY =
       "$URL/api/FastrackPostApi/CheckInventory";
