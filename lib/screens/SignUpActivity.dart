@@ -26,8 +26,14 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import "./TermsAndConditionScreen.dart";
 import 'package:country_pickers/country_pickers.dart';
+import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 
 class SignUpActivity extends StatefulWidget {
+  final CustomerModel customerDetails;
+  final String mobileNumber;
+
+  const SignUpActivity({Key key, this.customerDetails, this.mobileNumber})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -66,6 +72,14 @@ class _SignUpActivity extends State<SignUpActivity> {
   @override
   void initState() {
     super.initState();
+    if (widget.customerDetails != null) {
+      nameController.text = widget.customerDetails.name;
+      mobileController.text = widget.customerDetails.phoneNumber;
+      emailController.text = widget.customerDetails.email;
+    }
+    if (widget.mobileNumber != null) {
+      mobileController.text = widget.customerDetails.phoneNumber;
+    }
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
     _getSignatureCode();
@@ -403,22 +417,20 @@ class _SignUpActivity extends State<SignUpActivity> {
                                         color: Colors.white, fontSize: 12),
                                   )),
                             ),
-SizedBox(
-
-  height: 20,
-),
+                            SizedBox(
+                              height: 20,
+                            ),
                             GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ForgotPasswordScreen()));
-                                      },
-                                      child: Text(
-                                        "Forgot Password?",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ForgotPasswordScreen()));
+                              },
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -471,12 +483,11 @@ SizedBox(
       content: Text('$msg'),
       duration: const Duration(minutes: 5),
       action: SnackBarAction(
-          label: "OK",
-          onPressed: () {
-            _scaffoldKey.currentState.removeCurrentSnackBar();
-           
-          },
-        ),
+        label: "OK",
+        onPressed: () {
+          _scaffoldKey.currentState.removeCurrentSnackBar();
+        },
+      ),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
@@ -691,8 +702,7 @@ SizedBox(
         );
       } else {
         print("suraj ${res.responseBody}");
-                displaySnackbar(context, "Error : ${res.responseBody}");
-
+        displaySnackbar(context, "Error : ${res.responseBody}");
       }
     }).catchError((err) {
       hideProgressBar();
