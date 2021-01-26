@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/CompanyInfoModel.dart';
+import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 import 'package:fasttrackgarage_app/models/LoginModel.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
@@ -805,10 +806,12 @@ class NetworkOperationManager {
         var data = jsonDecode(json);
         companyInfoList.serviceDateComment =
             data["CompanyInformation"]["Service_Date_Comment"] ?? "";
-              companyInfoList.versionNo =
+        companyInfoList.versionNo =
             data["CompanyInformation"]["Version_No"] ?? "";
-        companyInfoList.appStoreUrl = data["CompanyInformation"]["AppStore_Url"] ?? "";
-        companyInfoList.playStoreUrl = data["CompanyInformation"]["PlayStore_Url"] ?? "";
+        companyInfoList.appStoreUrl =
+            data["CompanyInformation"]["AppStore_Url"] ?? "";
+        companyInfoList.playStoreUrl =
+            data["CompanyInformation"]["PlayStore_Url"] ?? "";
         companyInfoList.statusCode = res.statusCode;
         companyInfoArrayList.add(companyInfoList);
       });
@@ -1096,6 +1099,221 @@ class NetworkOperationManager {
       rs.responseBody = response_message;
     });
 
+    return rs;
+  }
+
+  static Future<CustomerModel> getCustomerList(
+      String mobileNumber, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.CUSTOMER_LIST);
+    Xml2Json xml2json = new Xml2Json();
+    print("This is the url $url");
+    CustomerModel customerModel = new CustomerModel();
+    var envelope =
+        '''<soap:Envelope xmlns:tns="urn:microsoft-dynamics-schemas/page/customerlist" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <tns:ReadMultiple>
+            <tns:filter>
+                <tns:Field>Phone_No</tns:Field>
+                <tns:Criteria>$mobileNumber</tns:Criteria>
+            </tns:filter>
+            <tns:setSize>1</tns:setSize>
+        </tns:ReadMultiple>
+    </soap:Body>
+</soap:Envelope>''';
+
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/page/customerlist",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      print("This is the response ${res.body}");
+
+      var rawXmlResponse = res.body;
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      parsedXml.findAllElements("CustomerList").forEach((val) {
+        xml2json.parse(val.toString());
+        var json = xml2json.toParker();
+        var data = jsonDecode(json);
+        customerModel.name = data["CustomerList"]["Name"] ?? "";
+        customerModel.phoneNumber = data["CustomerList"]["Phone_No"] ?? "";
+        customerModel.email = data["CustomerList"]["E_Mail"] ?? "";
+        customerModel.status = res.statusCode;
+      });
+    });
+
+    return customerModel;
+  }
+
+
+  static Future<NetworkResponse> sendExistingCustomerOTP(
+      String mobile, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:SendCustomerOTP>
+<urn:mobileNo>$mobile</urn:mobileNo>
+<urn:returnTxt></urn:returnTxt>
+</urn:SendCustomerOTP>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
+
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("returnTxt");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
+
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
+    });
+
+    return rs;
+  }
+
+  static Future<NetworkResponse> resendExistingCustomerOTP(
+      String mobile, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:ResendCustomerOTP>
+<urn:mobileNo>$mobile</urn:mobileNo>
+<urn:returnTxt></urn:returnTxt>
+</urn:ResendCustomerOTP>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
+
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("returnTxt");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
+
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
+    });
+    return rs;
+  }
+
+  static Future<NetworkResponse> verifyExistingCustomerOTP(
+      String mobile,String customerName,String email,String password, String otp, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:VerifiyCustomerOTP>
+<urn:mobileNo>$mobile</urn:mobileNo>
+<urn:customerName>$customerName</urn:customerName>
+<urn:email>$email</urn:email>
+<urn:passwordTxt>$password</urn:passwordTxt>
+<urn:customerOTP>$otp</urn:customerOTP>
+<urn:returnTxt></urn:returnTxt>
+</urn:VerifiyCustomerOTP>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
+
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("returnTxt");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
+
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
+    });
     return rs;
   }
 }

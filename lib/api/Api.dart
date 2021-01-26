@@ -34,7 +34,7 @@ class Api {
   // static final String WEB_SERVICE =
   //     "$BASE_URL/DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory";
 
-  
+
     static final String WEB_SERVICE =
       "$BASE_URL/DynamicsNAV/ws/Fasttrack/Codeunit/CheckInventory";
 
@@ -43,4 +43,7 @@ class Api {
 
       static final String JOB_ORDER_PROCESS =
       "$BASE_URL/DynamicsNAV/WS/Fasttrack/Codeunit/JobOrderProcess";
+
+      static final String CUSTOMER_LIST =
+      "$BASE_URL/DynamicsNAV/ws/Fasttrack/Page/CustomerList";
 }
