@@ -26,6 +26,7 @@ import 'package:http/http.dart' as http;
 import 'SignUpActivity.dart';
 import 'package:flutter/services.dart';
 import 'package:imei_plugin/imei_plugin.dart';
+import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 
 class LoginActivity extends StatefulWidget {
   @override
@@ -41,6 +42,7 @@ class _LoginActivityState extends State<LoginActivity> {
   var fontSizeText = 16.0;
   NTLMClient client;
   String phoneCode = "971";
+  CustomerModel customeretails;
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
@@ -96,7 +98,7 @@ class _LoginActivityState extends State<LoginActivity> {
       child: Scaffold(
         backgroundColor: Color(0xffF39C1B),
         key: _scaffoldKey,
-        resizeToAvoidBottomInset : false,
+        resizeToAvoidBottomInset: false,
         body: ModalProgressHUD(
           inAsyncCall: isProgressBarShown,
           dismissible: false,
@@ -116,6 +118,9 @@ class _LoginActivityState extends State<LoginActivity> {
                       child: Column(
                         children: <Widget>[
                           ReusableAppBar.getAppBar(0, 0, height, width),
+                          SizedBox(
+                            height: height * 0.1,
+                          ),
                           Container(
                             margin:
                                 EdgeInsets.fromLTRB(0, height * 0.042, 0, 0),
@@ -174,50 +179,50 @@ class _LoginActivityState extends State<LoginActivity> {
                                     //         fontSize: fontSizeText),
                                     //   ),
                                     // ),
-                                    Container(
-                                      child: TextField(
-                                        obscureText: true,
-                                        style: TextStyle(
-                                            fontSize: fontSizeTextField,
-                                            color: Color(
-                                                ExtraColors.DARK_BLUE_ACCENT)),
-                                        controller: passwordController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Your password',
-                                            hintStyle: TextStyle(
-                                                color: Color(0xffb8b8b8)),
-                                            fillColor: Colors.white,
-                                            filled: true,
-                                            prefixIcon: Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  10, 0, 20, 0),
-                                              child: CircleAvatar(
-                                                  // radius: 5,
-                                                  backgroundColor:
-                                                      Color(0xffe6a764),
-                                                  child: Icon(
-                                                    Icons.lock_outline,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: Colors.grey[300])),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: Colors.grey[300]))),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: height * 0.03,
-                                    ),
+                                    // Container(
+                                    //   child: TextField(
+                                    //     obscureText: true,
+                                    //     style: TextStyle(
+                                    //         fontSize: fontSizeTextField,
+                                    //         color: Color(
+                                    //             ExtraColors.DARK_BLUE_ACCENT)),
+                                    //     controller: passwordController,
+                                    //     decoration: InputDecoration(
+                                    //         hintText: 'Your password',
+                                    //         hintStyle: TextStyle(
+                                    //             color: Color(0xffb8b8b8)),
+                                    //         fillColor: Colors.white,
+                                    //         filled: true,
+                                    //         prefixIcon: Container(
+                                    //           padding: EdgeInsets.fromLTRB(
+                                    //               10, 0, 20, 0),
+                                    //           child: CircleAvatar(
+                                    //               // radius: 5,
+                                    //               backgroundColor:
+                                    //                   Color(0xffe6a764),
+                                    //               child: Icon(
+                                    //                 Icons.lock_outline,
+                                    //                 color: Colors.white,
+                                    //                 size: 30,
+                                    //               )),
+                                    //         ),
+                                    //         enabledBorder: OutlineInputBorder(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(30),
+                                    //             borderSide: BorderSide(
+                                    //                 width: 1,
+                                    //                 color: Colors.grey[300])),
+                                    //         focusedBorder: OutlineInputBorder(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(30),
+                                    //             borderSide: BorderSide(
+                                    //                 width: 1,
+                                    //                 color: Colors.grey[300]))),
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   height: height * 0.03,
+                                    // ),
                                     Container(
                                       width: width * 0.45,
                                       child: RaisedButton(
@@ -244,29 +249,29 @@ class _LoginActivityState extends State<LoginActivity> {
                                     SizedBox(
                                       height: height * 0.02,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "Dont have account?",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.pushNamed(context,
-                                                RoutesName.SIGNUP_ACTIVITY);
-                                          },
-                                          child: Container(
-                                              padding: EdgeInsets.all(6),
-                                              child: Text(
-                                                "Register",
-                                                style: TextStyle(
-                                                    color: Colors.yellow),
-                                              )),
-                                        )
-                                      ],
-                                    ),
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.center,
+                                    //   children: <Widget>[
+                                    //     Text(
+                                    //       "Dont have account?",
+                                    //       style: TextStyle(color: Colors.white),
+                                    //     ),
+                                    //     InkWell(
+                                    //       onTap: () {
+                                    //         Navigator.pushNamed(context,
+                                    //             RoutesName.SIGNUP_ACTIVITY);
+                                    //       },
+                                    //       child: Container(
+                                    //           padding: EdgeInsets.all(6),
+                                    //           child: Text(
+                                    //             "Register",
+                                    //             style: TextStyle(
+                                    //                 color: Colors.yellow),
+                                    //           )),
+                                    //     )
+                                    //   ],
+                                    // ),
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(
@@ -440,8 +445,8 @@ class _LoginActivityState extends State<LoginActivity> {
       var connectivityResult = await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.mobile ||
           connectivityResult == ConnectivityResult.wifi) {
-        // performLogin();
-        _performLogin();
+        _navAuthentication();
+        // _performLogin();
       } else {
         ShowToast.showToast(context, "No internet connection");
       }
@@ -599,11 +604,102 @@ class _LoginActivityState extends State<LoginActivity> {
     });
   }
 
+  void _navAuthentication() async {
+    showProgressBar();
+    String mobileNumber = mobileController.text;
+    NetworkOperationManager.getCustomerList(mobileNumber, client).then((res) {
+      hideProgressBar();
+      if (res.status == Rcode.SUCCESS_CODE) {
+        customeretails = res;
+        String message =
+            'Dear ${customeretails.name}, We have recognized you as an existing customer of Fasttrack. Please click "Proceed" to update/confirm your details and choose a password';
+        showAlert(message, customeretails);
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignUpActivity(
+                      mobileNumber: mobileController.text,
+                    )));
+      }
+    }).catchError((err) {
+      ShowToast.showToast(context, err);
+    });
+  }
+
   Future<String> getVersionNumber() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
     print(version);
 
     return version;
+  }
+
+  showAlert(String message, CustomerModel customerDetails) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(10.0),
+          actions: <Widget>[
+            Container(
+              width: 100,
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SignUpActivity(
+                                customerDetails: customerDetails,
+                              )));
+                },
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  side: BorderSide(
+                    color: Colors.blue[700],
+                    width: 2,
+                  ),
+                ),
+                child: Text(
+                  'Proceed',
+                  style: TextStyle(
+                    color: Colors.blue[700],
+                  ),
+                ),
+              ),
+            ),
+          ],
+          title: Text(
+            'Notice',
+            style: TextStyle(
+              fontSize: 24,
+              color: Theme.of(context).primaryColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Container(
+            height: 150,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+                        child: Text(message),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

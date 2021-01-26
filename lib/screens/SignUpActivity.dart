@@ -28,13 +28,14 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import "./TermsAndConditionScreen.dart";
 import 'package:country_pickers/country_pickers.dart';
+import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 
 class SignUpActivity extends StatefulWidget {
-  int customerMode; // mode to check if it is existed or new customer
-  CustomerModel customerInfo;
+  final CustomerModel customerDetails;
+  final String mobileNumber;
 
-  SignUpActivity({this.customerMode});
-
+  const SignUpActivity({Key key, this.customerDetails, this.mobileNumber})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -73,6 +74,14 @@ class _SignUpActivity extends State<SignUpActivity> {
   @override
   void initState() {
     super.initState();
+    if (widget.customerDetails != null) {
+      nameController.text = widget.customerDetails.name;
+      mobileController.text = widget.customerDetails.phoneNumber;
+      emailController.text = widget.customerDetails.email;
+    }
+    if (widget.mobileNumber != null) {
+      mobileController.text = widget.customerDetails.phoneNumber;
+    }
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
     _getSignatureCode();
@@ -677,7 +686,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
-        if (widget.customerMode == ModeConstants.MODE_NEW_CUSTOMER) {
+        if (widget.customerDetails == null) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -688,7 +697,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                       loginPassword: passwordController.text,
                     )), // 1 is for sign up in otp screen
           );
-        } else if (widget.customerMode == ModeConstants.MODE_EXISTED_CUSTOMER) {
+        } else {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -699,7 +708,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                       loginPassword: passwordController.text,
                       customerName: nameController.text,
                       mobileNum: mobileController.text,
-                    )), // 1 is for sign up in otp screen
+                    )), // 3 is for sign up in existing customer
           );
         }
       } else {
