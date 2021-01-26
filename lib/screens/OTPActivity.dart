@@ -12,6 +12,7 @@ import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
+import 'package:fasttrackgarage_app/utils/Rstring.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -26,7 +27,15 @@ import 'ResetPasswordScreen.dart';
 class OTP extends StatefulWidget {
   final String query, signature, loginPassword;
   final int mode;
-  OTP({this.query, this.mode, this.signature, this.loginPassword});
+
+  String customerName, mobileNum;
+  OTP(
+      {this.query,
+      this.mode,
+      this.signature,
+      this.loginPassword,
+      this.customerName,
+      this.mobileNum});
   @override
   _OTP createState() => _OTP();
 }
@@ -120,9 +129,8 @@ class _OTP extends State<OTP> {
                                 // ),
                                 Platform.isAndroid
                                     ? Container(
-                                      width: width,
-                                      child: TextFieldPin(
-                                      
+                                        width: width,
+                                        child: TextFieldPin(
                                           filled: true,
                                           filledColor: Colors.white,
                                           codeLength: _otpCodeLength,
@@ -136,7 +144,7 @@ class _OTP extends State<OTP> {
                                           onOtpCallback: (code, isAutofill) =>
                                               _onOtpCallBack(code, isAutofill),
                                         ),
-                                    )
+                                      )
                                     : Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 50),
@@ -163,8 +171,9 @@ class _OTP extends State<OTP> {
                                                     _otpCode);
                                               } else if (widget.mode == 2) {
                                                 submitOTP(_otpCode);
-                                              } else {
-                                                debugPrint("Nothing happened");
+                                              } else if (widget.mode == 3) {
+                                                updateExistedCustomerInfo(
+                                                    _otpCode);
                                               }
                                             }
                                           },
@@ -182,6 +191,8 @@ class _OTP extends State<OTP> {
                                         submitOtpForRegistration(_otpCode);
                                       } else if (widget.mode == 2) {
                                         submitOTP(_otpCode);
+                                      } else if (widget.mode == 3) {
+                                        updateExistedCustomerInfo(_otpCode);
                                       }
                                     },
                                     child: _setUpButtonChild(),
@@ -198,6 +209,8 @@ class _OTP extends State<OTP> {
                                       resendOtpForSignUp();
                                     } else if (widget.mode == 2) {
                                       resendOtpForForgotPw();
+                                    } else if (widget.mode == 3) {
+                                      resendOtpForExistingCustomer();
                                     }
                                   },
                                   child: Text(
@@ -287,18 +300,17 @@ class _OTP extends State<OTP> {
 
     NetworkOperationManager.SubmitSignUpOTP(widget.query, otpPin, client)
         .then((res) {
-      if (res.status == Rcode.SUCCESS_CODE) {
-        hideProgressBar();
-        if (res.status == Rcode.SUCCESS_CODE) {
-          // ShowToast.showToast(context, res.responseBody);
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => LoginActivity()),
-          // );
+      hideProgressBar();
 
-          //Automatically login after register
-          _performLogin();
-        }
+      if (res.status == Rcode.SUCCESS_CODE) {
+        // ShowToast.showToast(context, res.responseBody);
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => LoginActivity()),
+        // );
+
+        //Automatically login after register
+        _performLogin();
       } else {
         print("suraj ${res.responseBody}");
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");
@@ -359,6 +371,46 @@ class _OTP extends State<OTP> {
         .then((value) {})
         .catchError((err) {
       hideProgressBar();
+    });
+  }
+
+  void updateExistedCustomerInfo(String otp) async {
+    showProgressBar();
+
+    NetworkOperationManager.verifyExistingCustomerOTP(
+            widget.mobileNum,
+            widget.customerName,
+            widget.query,
+            widget.loginPassword,
+            otp,
+            client)
+        .then((res) {
+      hideProgressBar();
+      if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
+        // Save the data locally and navigate to the Home screen.
+      } else {
+        ShowToast.showToast(context, "Error :" + "${res.responseBody}");
+      }
+    }).catchError((e) {
+      hideProgressBar();
+      print("Error $e");
+    });
+  }
+
+  void resendOtpForExistingCustomer() async {
+    showProgressBar();
+
+    NetworkOperationManager.resendExistingCustomerOTP(widget.mobileNum, client)
+        .then((res) {
+      hideProgressBar();
+      if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
+        ShowToast.showToast(context, "${res.responseBody}");
+      } else {
+        ShowToast.showToast(context, "Error :" + "${res.responseBody}");
+      }
+    }).catchError((e) {
+      hideProgressBar();
+      print(e);
     });
   }
 }

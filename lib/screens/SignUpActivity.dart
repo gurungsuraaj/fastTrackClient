@@ -6,10 +6,12 @@ import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
+import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 import 'package:fasttrackgarage_app/screens/ForgotPasswordScreen.dart';
 import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
+import 'package:fasttrackgarage_app/utils/ModeConstants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
@@ -28,6 +30,11 @@ import "./TermsAndConditionScreen.dart";
 import 'package:country_pickers/country_pickers.dart';
 
 class SignUpActivity extends StatefulWidget {
+  int customerMode; // mode to check if it is existed or new customer
+  CustomerModel customerInfo;
+
+  SignUpActivity({this.customerMode});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -403,22 +410,20 @@ class _SignUpActivity extends State<SignUpActivity> {
                                         color: Colors.white, fontSize: 12),
                                   )),
                             ),
-SizedBox(
-
-  height: 20,
-),
+                            SizedBox(
+                              height: 20,
+                            ),
                             GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ForgotPasswordScreen()));
-                                      },
-                                      child: Text(
-                                        "Forgot Password?",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ForgotPasswordScreen()));
+                              },
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -448,12 +453,10 @@ SizedBox(
     final form = formKey.currentState;
     if (form.validate()) {
       if (checkBoxValue) {
-        //proceed to post
         debugPrint("password Saved succesfully");
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile ||
             connectivityResult == ConnectivityResult.wifi) {
-          // signUp();
           _signUp();
         } else {
           ShowToast.showToast(context, "No internet connection");
@@ -471,12 +474,11 @@ SizedBox(
       content: Text('$msg'),
       duration: const Duration(minutes: 5),
       action: SnackBarAction(
-          label: "OK",
-          onPressed: () {
-            _scaffoldKey.currentState.removeCurrentSnackBar();
-           
-          },
-        ),
+        label: "OK",
+        onPressed: () {
+          _scaffoldKey.currentState.removeCurrentSnackBar();
+        },
+      ),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
@@ -675,24 +677,34 @@ SizedBox(
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
-        // Navigator.of(context).pop();
-        //   // Navigator.pushNamed(context, RoutesName.OTP_ACTIVITY);
-        // ShowToast.showToast(context, "Signed up successfully");
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OTP(
-                    query: mobileNum,
-                    mode: 1,
-                    signature: signature,
-                    loginPassword: passwordController.text,
-                  )), // 1 is for sign up in otp screen
-        );
+        if (widget.customerMode == ModeConstants.MODE_NEW_CUSTOMER) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OTP(
+                      query: mobileNum,
+                      mode: 1,
+                      signature: signature,
+                      loginPassword: passwordController.text,
+                    )), // 1 is for sign up in otp screen
+          );
+        } else if (widget.customerMode == ModeConstants.MODE_EXISTED_CUSTOMER) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OTP(
+                      query: mobileNum,
+                      mode: 3,
+                      signature: signature,
+                      loginPassword: passwordController.text,
+                      customerName: nameController.text,
+                      mobileNum: mobileController.text,
+                    )), // 1 is for sign up in otp screen
+          );
+        }
       } else {
         print("suraj ${res.responseBody}");
-                displaySnackbar(context, "Error : ${res.responseBody}");
-
+        displaySnackbar(context, "Error : ${res.responseBody}");
       }
     }).catchError((err) {
       hideProgressBar();
