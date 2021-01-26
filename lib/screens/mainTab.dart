@@ -65,8 +65,12 @@ class _MainTabState extends State<MainTab> {
       },
       onLaunch: (Map<String, dynamic> msg) async {
         print("Launch  $msg");
-        saveBackgorundNotificatonDataOnDB(
-            msg['data']['title'], msg['data']['body']);
+        if (Platform.isAndroid) {
+          saveBackgorundNotificatonDataOnDB(
+              msg['data']['title'], msg['data']['body']);
+        } else {
+          saveBackgorundNotificatonDataOnDB(msg['title'], msg['body']);
+        }
       },
       onResume: (Map<String, dynamic> msg) async {
         print("On resume $msg");
@@ -75,7 +79,25 @@ class _MainTabState extends State<MainTab> {
           saveBackgorundNotificatonDataOnDB(
               msg['data']['title'], msg['data']['body']);
         } else {
-          saveBackgorundNotificatonDataOnDB(msg['title'], msg['body']);
+          if (googleID == msg['google.c.sender.id']) {
+            print("Do nothing");
+            googleID = null;
+            setState(() {});
+          } else {
+            if (googleID == null) {
+              setState(() {
+                googleID = msg['google.c.sender.id'];
+              });
+            }
+            print("PRint $googleID");
+
+            print("Inside gogole id $googleID");
+
+            saveBackgorundNotificatonDataOnDB(msg['title'], msg['body'])
+                .whenComplete(() {
+              Future.delayed(const Duration(seconds: 3), () => googleID = null);
+            });
+          }
         }
       },
       // onBackgroundMessage: onBackgroundMessage
@@ -177,24 +199,6 @@ class _MainTabState extends State<MainTab> {
           ),
         ),
       ),
-      // BottomNavigationBarItem(
-      //     icon: Icon(Icons.location_on,color: Color(ExtraColors.DARK_BLUE)),
-      //     title: Padding(
-      //       padding: const EdgeInsets.only(top: 2.0),
-      //       child: Text(
-      //         'Pending',
-      //         style: bottomTabBarText,
-      //       ),
-      //     )),
-      // BottomNavigationBarItem(
-      //     icon: Icon(Icons.view_carousel,color: Color(ExtraColors.DARK_BLUE)),
-      //     title: Padding(
-      //       padding: const EdgeInsets.only(top: 2.0),
-      //       child: Text(
-      //         'Message',
-      //         style: bottomTabBarText,
-      //       ),
-      //     )),
     ];
   }
 
@@ -252,7 +256,7 @@ class _MainTabState extends State<MainTab> {
     await flutterLocalNotificationsPlugin
         .show(0, title, body, platformChannelSpecifics, payload: 'item x');
 
-    saveBackgorundNotificatonDataOnDB(title, body);
+    saveBackgorundNotificatonDataOnDB(title, body).whenComplete(() {});
   }
 
   // Future onBackgroundMessage(Map<String, dynamic> message) async {
@@ -274,7 +278,8 @@ class _MainTabState extends State<MainTab> {
     await database.notificationDao.insertNotification(notification);
   }
 
-  void saveBackgorundNotificatonDataOnDB(String title, String body) async {
+  Future<void> saveBackgorundNotificatonDataOnDB(
+      String title, String body) async {
     print(DateTime.now().toString());
 
     final database =
