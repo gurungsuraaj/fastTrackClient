@@ -174,50 +174,50 @@ class _LoginActivityState extends State<LoginActivity> {
                                     //         fontSize: fontSizeText),
                                     //   ),
                                     // ),
-                                    Container(
-                                      child: TextField(
-                                        obscureText: true,
-                                        style: TextStyle(
-                                            fontSize: fontSizeTextField,
-                                            color: Color(
-                                                ExtraColors.DARK_BLUE_ACCENT)),
-                                        controller: passwordController,
-                                        decoration: InputDecoration(
-                                            hintText: 'Your password',
-                                            hintStyle: TextStyle(
-                                                color: Color(0xffb8b8b8)),
-                                            fillColor: Colors.white,
-                                            filled: true,
-                                            prefixIcon: Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  10, 0, 20, 0),
-                                              child: CircleAvatar(
-                                                  // radius: 5,
-                                                  backgroundColor:
-                                                      Color(0xffe6a764),
-                                                  child: Icon(
-                                                    Icons.lock_outline,
-                                                    color: Colors.white,
-                                                    size: 30,
-                                                  )),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: Colors.grey[300])),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: Colors.grey[300]))),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: height * 0.03,
-                                    ),
+                                    // Container(
+                                    //   child: TextField(
+                                    //     obscureText: true,
+                                    //     style: TextStyle(
+                                    //         fontSize: fontSizeTextField,
+                                    //         color: Color(
+                                    //             ExtraColors.DARK_BLUE_ACCENT)),
+                                    //     controller: passwordController,
+                                    //     decoration: InputDecoration(
+                                    //         hintText: 'Your password',
+                                    //         hintStyle: TextStyle(
+                                    //             color: Color(0xffb8b8b8)),
+                                    //         fillColor: Colors.white,
+                                    //         filled: true,
+                                    //         prefixIcon: Container(
+                                    //           padding: EdgeInsets.fromLTRB(
+                                    //               10, 0, 20, 0),
+                                    //           child: CircleAvatar(
+                                    //               // radius: 5,
+                                    //               backgroundColor:
+                                    //                   Color(0xffe6a764),
+                                    //               child: Icon(
+                                    //                 Icons.lock_outline,
+                                    //                 color: Colors.white,
+                                    //                 size: 30,
+                                    //               )),
+                                    //         ),
+                                    //         enabledBorder: OutlineInputBorder(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(30),
+                                    //             borderSide: BorderSide(
+                                    //                 width: 1,
+                                    //                 color: Colors.grey[300])),
+                                    //         focusedBorder: OutlineInputBorder(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(30),
+                                    //             borderSide: BorderSide(
+                                    //                 width: 1,
+                                    //                 color: Colors.grey[300]))),
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   height: height * 0.03,
+                                    // ),
                                     Container(
                                       width: width * 0.45,
                                       child: RaisedButton(
@@ -606,4 +606,53 @@ class _LoginActivityState extends State<LoginActivity> {
 
     return version;
   }
+
+  showAlert(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(10.0),
+          actions: <Widget>[
+            Container(
+              width: 100,
+              child: FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                // color: Colors.blue[700],
+                child: Text(
+                  'Ok',
+                  style: TextStyle(
+                    color: Colors.blue[700],
+                  ),
+                ),
+              ),
+            ),
+          ],
+          content: Container(
+            height: 150,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+                        child: Text(message),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }
