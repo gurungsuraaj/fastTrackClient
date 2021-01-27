@@ -28,14 +28,15 @@ class OTP extends StatefulWidget {
   final String query, signature, loginPassword;
   final int mode;
 
-  String customerName, mobileNum;
+  String customerName, mobileNum, customerNo;
   OTP(
       {this.query,
       this.mode,
       this.signature,
       this.loginPassword,
       this.customerName,
-      this.mobileNum});
+      this.mobileNum,
+      this.customerNo});
   @override
   _OTP createState() => _OTP();
 }
@@ -385,9 +386,17 @@ class _OTP extends State<OTP> {
             otp,
             client)
         .then((res) {
+      print("Inside existed customer");
       hideProgressBar();
-      if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
+      if (res.responseBody == Rstring.OTP_VERIFIED) {
         // Save the data locally and navigate to the Home screen.
+
+        PrefsManager.saveLoginCredentialsToPrefs(widget.customerNo,
+            widget.customerName, widget.query, "", widget.mobileNum);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainTab()),
+        );
       } else {
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");
       }

@@ -14,6 +14,7 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/ModeConstants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
+import 'package:fasttrackgarage_app/utils/Rstring.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,6 +79,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       nameController.text = widget.customerDetails.name;
       mobileController.text = widget.customerDetails.phoneNumber;
       emailController.text = widget.customerDetails.email;
+      passwordController.text = widget.customerDetails.password;
     }
     if (widget.mobileNumber != null) {
       mobileController.text = widget.customerDetails.phoneNumber;
@@ -466,7 +468,12 @@ class _SignUpActivity extends State<SignUpActivity> {
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile ||
             connectivityResult == ConnectivityResult.wifi) {
-          _signUp();
+          if (widget.customerDetails == null) {
+            _signUp();
+          } else {
+            sendExistingCustomerOTP();
+            print("Existed Customer");
+          }
         } else {
           ShowToast.showToast(context, "No internet connection");
         }
@@ -686,31 +693,16 @@ class _SignUpActivity extends State<SignUpActivity> {
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
-        if (widget.customerDetails == null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => OTP(
-                      query: mobileNum,
-                      mode: 1,
-                      signature: signature,
-                      loginPassword: passwordController.text,
-                    )), // 1 is for sign up in otp screen
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => OTP(
-                      query: mobileNum,
-                      mode: 3,
-                      signature: signature,
-                      loginPassword: passwordController.text,
-                      customerName: nameController.text,
-                      mobileNum: mobileController.text,
-                    )), // 3 is for sign up in existing customer
-          );
-        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OTP(
+                    query: mobileNum,
+                    mode: 1,
+                    signature: signature,
+                    loginPassword: passwordController.text,
+                  )), // 1 is for sign up in otp screen
+        );
       } else {
         print("suraj ${res.responseBody}");
         displaySnackbar(context, "Error : ${res.responseBody}");
@@ -718,6 +710,36 @@ class _SignUpActivity extends State<SignUpActivity> {
     }).catchError((err) {
       hideProgressBar();
       ShowToast.showToast(context, "Error :" + err);
+    });
+  }
+
+  void sendExistingCustomerOTP() async {
+    showProgressBar();
+    NetworkOperationManager.sendExistingCustomerOTP(
+            mobileController.text, client)
+        .then((res) {
+      if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
+        ShowToast.showToast(context, res.responseBody);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OTP(
+                    query: emailController.text,
+                    mode: 3,
+                    signature: signature,
+                    loginPassword: passwordController.text,
+                    customerName: nameController.text,
+                    mobileNum: mobileController.text,
+                    customerNo: widget.customerDetails.customerNo,
+                  )), // 3 is for sign up in existing customer
+        );
+      } else {
+        displaySnackbar(context, "Error : ${res.responseBody}");
+      }
+
+      hideProgressBar();
+    }).catchError((e) {
+      hideProgressBar();
     });
   }
 }
