@@ -164,7 +164,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                         child: new Center(
                                           child: Text(
                                             locationlist[index].openingStatus
-                                                ? "Opened"
+                                                ? "Open"
                                                 : "Closed",
                                             style: TextStyle(
                                                 fontSize: 16,

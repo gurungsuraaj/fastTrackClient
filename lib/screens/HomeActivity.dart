@@ -182,7 +182,7 @@ class _HomeActivityState extends State<HomeActivity>
                       flex: 2,
                       child: Container(
                           alignment: Alignment.centerLeft,
-                          child: Text("   FastTrack")))
+                          child: Text("   Fasttrack")))
                 ],
               )),
           automaticallyImplyLeading: false,
@@ -250,6 +250,7 @@ class _HomeActivityState extends State<HomeActivity>
                     )
                   : CarouselSlider(
                       enlargeCenterPage: true,
+                      viewportFraction: 1.0,
                       //                  autoPlay: true,
                       //                  autoPlayInterval: Duration(seconds: 1),
                       // height: 200.0,
@@ -280,17 +281,23 @@ class _HomeActivityState extends State<HomeActivity>
                         );
                       }).toList(),
                     ),
-              new GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  childAspectRatio: 1,
-                  padding: const EdgeInsets.all(15.0),
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 4.0,
+              Wrap(
+                  // crossAxisAlignment: WrapCrossAlignment.center,
+                  alignment: WrapAlignment.center,
+
+                  // new GridView.count(
+                  // physics: NeverScrollableScrollPhysics(),
+                  // shrinkWrap: true,
+                  // crossAxisCount: 2,
+                  // childAspectRatio: 1,
+                  // padding: const EdgeInsets.all(15.0),
+                  // mainAxisSpacing: 10.0,
+                  // crossAxisSpacing: 4.0,
                   children: <Widget>[
                     Card(
                         child: Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
                                   //                                    Navigator.push(
@@ -318,6 +325,8 @@ class _HomeActivityState extends State<HomeActivity>
                                 )))),
                     Card(
                         child: Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -333,7 +342,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/invoiceSales1.png",
-                                       height: 100,
+                                      height: 100,
                                       width: 80,
                                     ),
                                     Container(
@@ -369,6 +378,8 @@ class _HomeActivityState extends State<HomeActivity>
                     //             )))),
                     Card(
                         child: Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -384,7 +395,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/promotions1.png",
-                                    height: 90,
+                                      height: 90,
                                       width: 60,
                                     ),
                                     Container(
@@ -394,26 +405,39 @@ class _HomeActivityState extends State<HomeActivity>
                                 )))),
                     Card(
                         child: Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
-                                  _showAlert();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NextServiceDateScreen()),
+                                  );
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/distress.png",
+                                      "images/inquiry.png",
                                       height: 90,
                                       width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
-                                        child: Text("Distress Call"))
+                                        child: Text(
+                                          "Next Service Date",
+                                          textAlign: TextAlign.center,
+                                        ))
                                   ],
                                 )))),
+
                     Card(
                         child: Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
                                   // Navigator.push(
@@ -433,7 +457,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/locate1.png",
-                                       height: 90,
+                                      height: 90,
                                       width: 60,
                                     ),
                                     Container(
@@ -444,6 +468,8 @@ class _HomeActivityState extends State<HomeActivity>
 
                     Card(
                         child: Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
                                   // Navigator.push(
@@ -464,7 +490,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/inquiry1.png",
-                                       height: 90,
+                                      height: 90,
                                       width: 60,
                                     ),
                                     Container(
@@ -472,34 +498,30 @@ class _HomeActivityState extends State<HomeActivity>
                                         child: Text("Make An Inquiry"))
                                   ],
                                 )))),
+
                     Card(
                         child: Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NextServiceDateScreen()),
-                                  );
+                                  _showAlert();
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/inquiry.png",
-                                    height: 90,
+                                      "images/distress.png",
+                                      height: 90,
                                       width: 60,
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Next Service Date",
-                                          textAlign: TextAlign.center,
-                                        ))
+                                        child: Text("Distress Call"))
                                   ],
                                 )))),
+
                     // Card(
                     //     child: Container(
                     //         child: InkWell(
@@ -622,8 +644,8 @@ class _HomeActivityState extends State<HomeActivity>
                           height: 10,
                         ),
                         Text(
-                          "-----------------------OR-----------------------",
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          "OR",
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
                         SizedBox(
                           height: 15,
@@ -658,7 +680,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 ),
                               ),
                               SizedBox(
-                                width: 20,
+                                width: 50,
                               ),
                               GestureDetector(
                                 onTap: () async {

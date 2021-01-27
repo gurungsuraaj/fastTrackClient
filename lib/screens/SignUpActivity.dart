@@ -330,59 +330,59 @@ class _SignUpActivity extends State<SignUpActivity> {
                               ),
                             ),
 
-                            Container(
-                                margin: EdgeInsets.only(top: MARGIN),
-                                height: 40,
-                                child: Row(
-                                  children: <Widget>[
-                                    // CheckboxListTile(
-                                    //   title: new Text('Terms and Conditions'),
-                                    //   value: _termsChecked,
-                                    //   onChanged: (val) {
-                                    //     setState(() {
-                                    //       _termsChecked = val;
-                                    //       debugPrint("checkbox val $val");
-                                    //     });
-                                    //   },
-                                    //   controlAffinity:
-                                    //       ListTileControlAffinity.leading,
-                                    //   activeColor: Colors.green,
-                                    // ),
-                                    Checkbox(
-                                      value: checkBoxValue,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          checkBoxValue = val;
-                                        });
-                                        debugPrint("$val");
-                                      },
-                                    ),
-                                    GestureDetector(
-                                        onTap: () {
-                                          final callback = Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TermsAndConditionScreen()),
-                                          );
+                            // Container(
+                            //     margin: EdgeInsets.only(top: MARGIN),
+                            //     height: 40,
+                            //     child: Row(
+                            //       children: <Widget>[
+                            //         // CheckboxListTile(
+                            //         //   title: new Text('Terms and Conditions'),
+                            //         //   value: _termsChecked,
+                            //         //   onChanged: (val) {
+                            //         //     setState(() {
+                            //         //       _termsChecked = val;
+                            //         //       debugPrint("checkbox val $val");
+                            //         //     });
+                            //         //   },
+                            //         //   controlAffinity:
+                            //         //       ListTileControlAffinity.leading,
+                            //         //   activeColor: Colors.green,
+                            //         // ),
+                            //         Checkbox(
+                            //           value: checkBoxValue,
+                            //           onChanged: (val) {
+                            //             setState(() {
+                            //               checkBoxValue = val;
+                            //             });
+                            //             debugPrint("$val");
+                            //           },
+                            //         ),
+                            //         GestureDetector(
+                            //             onTap: () {
+                            //               final callback = Navigator.push(
+                            //                 context,
+                            //                 MaterialPageRoute(
+                            //                     builder: (context) =>
+                            //                         TermsAndConditionScreen()),
+                            //               );
 
-                                          callback.then((res) {
-                                            debugPrint(res);
-                                            if (res == "Agree") {
-                                              setState(() {
-                                                checkBoxValue = true;
-                                              });
-                                            }
-                                          });
-                                        },
-                                        child: Text(
-                                          "Subscribe for share locally program to earn &\n redeem.Read Share terms and condition",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10),
-                                        )),
-                                  ],
-                                )),
+                            //               callback.then((res) {
+                            //                 debugPrint(res);
+                            //                 if (res == "Agree") {
+                            //                   setState(() {
+                            //                     checkBoxValue = true;
+                            //                   });
+                            //                 }
+                            //               });
+                            //             },
+                            //             child: Text(
+                            //               "Subscribe for share locally program to earn &\n redeem.Read Share terms and condition",
+                            //               style: TextStyle(
+                            //                   color: Colors.white,
+                            //                   fontSize: 10),
+                            //             )),
+                            //       ],
+                            //     )),
                             Center(
                               child: Container(
                                 margin: EdgeInsets.only(top: 45.0),
@@ -408,15 +408,15 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 ),
                               ),
                             ),
-                            Center(
-                              child: Container(
-                                  padding: EdgeInsets.only(top: 25),
-                                  child: Text(
-                                    "By proceeding you accept the terms and condition",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                  )),
-                            ),
+                            // Center(
+                            //   child: Container(
+                            //       padding: EdgeInsets.only(top: 25),
+                            //       child: Text(
+                            //         "By proceeding you accept the terms and condition",
+                            //         style: TextStyle(
+                            //             color: Colors.white, fontSize: 12),
+                            //       )),
+                            // ),
                             SizedBox(
                               height: 20,
                             ),
