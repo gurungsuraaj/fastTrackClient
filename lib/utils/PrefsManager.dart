@@ -13,6 +13,7 @@ class PrefsManager {
       String email,
       String basicToken,
       String mobileNumber) async {
+        print("saved login credentials $custNumber $username $email $basicToken $mobileNumber");
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(Constants.CUSTOMER_NUMBER, custNumber);
     await prefs.setString(Constants.CUSTOMER_NAME, username);
