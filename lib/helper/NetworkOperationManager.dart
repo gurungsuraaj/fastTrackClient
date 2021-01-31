@@ -1114,7 +1114,7 @@ class NetworkOperationManager {
     <soap:Body>
         <tns:ReadMultiple>
             <tns:filter>
-                <tns:Field>Phone_No</tns:Field>
+                <tns:Field>Mobile_No</tns:Field>
                 <tns:Criteria>$mobileNumber</tns:Criteria>
             </tns:filter>
             <tns:setSize>1</tns:setSize>
@@ -1143,8 +1143,11 @@ class NetworkOperationManager {
         var json = xml2json.toParker();
         var data = jsonDecode(json);
         customerModel.name = data["CustomerList"]["Name"] ?? "";
-        customerModel.phoneNumber = data["CustomerList"]["Phone_No"] ?? "";
+        customerModel.phoneNumber = data["CustomerList"]["Mobile_No"] ?? "";
         customerModel.email = data["CustomerList"]["E_Mail"] ?? "";
+        customerModel.password = data["CustomerList"]["Password"] ?? "";
+        customerModel.customerNo = data["CustomerList"]["No"] ?? "";
+
         customerModel.status = res.statusCode;
       });
     });

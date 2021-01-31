@@ -82,7 +82,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       passwordController.text = widget.customerDetails.password;
     }
     if (widget.mobileNumber != null) {
-      mobileController.text = widget.customerDetails.phoneNumber;
+      mobileController.text = widget.mobileNumber;
     }
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
@@ -114,10 +114,10 @@ class _SignUpActivity extends State<SignUpActivity> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              ReusableAppBar.getAppBar(0, 0, height, width),
+              ReusableAppBar.getAppBar(20, 0, height, width),
               Center(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Text(
                     "Create new account",
                     style: TextStyle(color: Colors.white, fontSize: 16),
@@ -424,17 +424,17 @@ class _SignUpActivity extends State<SignUpActivity> {
                             SizedBox(
                               height: 20,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        ForgotPasswordScreen()));
-                              },
-                              child: Text(
-                                "Forgot Password?",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.of(context).push(MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             ForgotPasswordScreen()));
+                            //   },
+                            //   child: Text(
+                            //     "Forgot Password?",
+                            //     style: TextStyle(color: Colors.white),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -463,7 +463,7 @@ class _SignUpActivity extends State<SignUpActivity> {
   void _submit() async {
     final form = formKey.currentState;
     if (form.validate()) {
-      if (checkBoxValue) {
+      // if (checkBoxValue) {
         debugPrint("password Saved succesfully");
         var connectivityResult = await (Connectivity().checkConnectivity());
         if (connectivityResult == ConnectivityResult.mobile ||
@@ -477,11 +477,11 @@ class _SignUpActivity extends State<SignUpActivity> {
         } else {
           ShowToast.showToast(context, "No internet connection");
         }
-      } else {
-        //show snackbar
-        displaySnackbar(context,
-            "You need to agree to our terms and condition to proceed further");
-      }
+      // } else {
+      //   //show snackbar
+      //   displaySnackbar(context,
+      //       "You need to agree to our terms and condition to proceed further");
+      // }
     }
   }
 
@@ -720,6 +720,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         .then((res) {
       if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
         ShowToast.showToast(context, res.responseBody);
+        print("Customer No ${widget.customerDetails.customerNo}");
         Navigator.push(
           context,
           MaterialPageRoute(

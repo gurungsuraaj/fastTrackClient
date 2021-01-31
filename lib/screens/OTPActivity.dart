@@ -83,7 +83,7 @@ class _OTP extends State<OTP> {
             builder: (context) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ReusableAppBar.getAppBar(0, PADDING, height, width),
+                ReusableAppBar.getAppBar(0, 0, height, width),
                 //Container
                 Expanded(
                   child: ListView(

@@ -12,6 +12,7 @@ import 'package:fasttrackgarage_app/screens/ServiceActivity.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryActivity.dart';
 import 'package:fasttrackgarage_app/screens/SignUpActivity.dart';
 import 'package:fasttrackgarage_app/screens/StoreLocationScreen.dart';
+import 'package:fasttrackgarage_app/screens/UsersProfileActivity.dart';
 import 'package:fasttrackgarage_app/screens/app.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
@@ -120,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Container(
                 margin: EdgeInsets.only(bottom: 30),
                 child: Text(
-                  "My FastTrack",
+                  "My Fasttrack",
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,

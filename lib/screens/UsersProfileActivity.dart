@@ -1,5 +1,6 @@
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
+import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
@@ -24,6 +25,8 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
 
   @override
   Widget build(BuildContext context) {
+       var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text("User Profile"),
@@ -45,11 +48,13 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
               width: MediaQuery.of(context).size.width,
               child: Card(
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  Image.asset(
-                    "images/FTProfileLogo.png",
-                    height: 150,
-                    width: 150,
-                  ),
+                  // Image.asset(
+                  //   "images/FTProfileLogo.png",
+                  //   height: 150,
+                  //   width: 150,
+                  // ),
+                  ReusableAppBar.getAppBar(0, 0, height, width),
+
                   SizedBox(
                     height: 20,
                   ),

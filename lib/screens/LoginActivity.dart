@@ -117,10 +117,13 @@ class _LoginActivityState extends State<LoginActivity> {
                       padding: EdgeInsets.only(bottom: height * 0.05),
                       child: Column(
                         children: <Widget>[
-                          ReusableAppBar.getAppBar(0, 0, height, width),
                           SizedBox(
-                            height: height * 0.1,
+                            height: 40,
                           ),
+                          ReusableAppBar.getAppBar(20, 0, height, width),
+                          // SizedBox(
+                          //   height: height * 0.1,
+                          // ),
                           Container(
                             margin:
                                 EdgeInsets.fromLTRB(0, height * 0.042, 0, 0),
@@ -272,18 +275,18 @@ class _LoginActivityState extends State<LoginActivity> {
                                     //     )
                                     //   ],
                                     // ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ForgotPasswordScreen()));
-                                      },
-                                      child: Text(
-                                        "Forgot Password?",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
+                                    // GestureDetector(
+                                    //   onTap: () {
+                                    //     Navigator.of(context).push(
+                                    //         MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 ForgotPasswordScreen()));
+                                    //   },
+                                    //   child: Text(
+                                    //     "Forgot Password?",
+                                    //     style: TextStyle(color: Colors.white),
+                                    //   ),
+                                    // ),
                                     SizedBox(
                                       height: height * 0.01,
                                     ),
