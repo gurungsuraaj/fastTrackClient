@@ -41,7 +41,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.DARK_BLUE),
-        title: Text("Next Serivce Date"),
+        title: Text("Next Service Date"),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -53,7 +53,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                   title: Text(
                       "Vehicle Serial No :  ${nextSerivceDateList[index].vehicleSerialNo}"),
                   subtitle: Text(
-                      "Next Serivce Date :     ${nextSerivceDateList[index].nextServiceDate}"),
+                      "Next Service Date :     ${nextSerivceDateList[index].nextServiceDate}"),
                 ),
               );
             }),

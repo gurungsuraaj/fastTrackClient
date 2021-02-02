@@ -182,7 +182,12 @@ class _HomeActivityState extends State<HomeActivity>
                       flex: 2,
                       child: Container(
                           alignment: Alignment.centerLeft,
-                          child: Text("   Fasttrack")))
+                          child: Text(
+                            "   My Fasttrack",
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                            ),
+                          )))
                 ],
               )),
           automaticallyImplyLeading: false,

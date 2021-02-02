@@ -102,232 +102,239 @@ class _LoginActivityState extends State<LoginActivity> {
         body: ModalProgressHUD(
           inAsyncCall: isProgressBarShown,
           dismissible: false,
-          child: Stack(
-            children: [
-              OrientationBuilder(builder: (context, orientation) {
-                return customContainer(orientation);
-              }),
-              SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Center(
-                    child: Container(
-                      height: height,
-                      width: width * 0.87,
-                      padding: EdgeInsets.only(bottom: height * 0.05),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 40,
-                          ),
-                          ReusableAppBar.getAppBar(20, 0, height, width),
-                          // SizedBox(
-                          //   height: height * 0.1,
-                          // ),
-                          Container(
-                            margin:
-                                EdgeInsets.fromLTRB(0, height * 0.042, 0, 0),
-                            child: Text(
-                              "Login to your account",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
+            child: Stack(
+              children: [
+                OrientationBuilder(builder: (context, orientation) {
+                  return customContainer(orientation);
+                }),
+                SingleChildScrollView(
+                  child: Form(
+                    key: formKey,
+                    child: Center(
+                      child: Container(
+                        height: height,
+                        width: width * 0.87,
+                        padding: EdgeInsets.only(bottom: height * 0.05),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 40,
                             ),
-                          ), //Container
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Expanded(
-                            child: Container(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      child: _buildCountryPickerDropdown(),
-                                    ),
-                                    SizedBox(
-                                      height: height * 0.03,
-                                    ),
-                                    // Container(
-                                    //   padding: EdgeInsets.only(top: 15),
-                                    //   width: width * 0.7,
-                                    //   child: TextFormField(
-                                    //     keyboardType: TextInputType.number,
-                                    //     validator: (val) {
-                                    //       if (val.isEmpty) {
-                                    //         return 'Please enter your phone number';
-                                    //       } else
-                                    //         return null;
-                                    //     },
-                                    //     style: TextStyle(
-                                    //         color: Colors.white, fontSize: fontSizeTextField),
-                                    //     controller: mobileController,
-                                    //     decoration: InputDecoration(
-                                    //       hintText: 'Your Number...',
-                                    //       hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                                    //       enabledBorder: UnderlineInputBorder(
-                                    //         borderSide: BorderSide(color: Colors.white),
-                                    //       ),
-                                    //       focusedBorder: UnderlineInputBorder(
-                                    //         borderSide: BorderSide(color: Colors.white),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // Container(
-                                    //   margin: EdgeInsets.only(top: MARGIN),
-                                    //   child: Text(
-                                    //     'Password',
-                                    //     style: TextStyle(
-                                    //         fontWeight: fontWeightText,
-                                    //         fontSize: fontSizeText),
-                                    //   ),
-                                    // ),
-                                    // Container(
-                                    //   child: TextField(
-                                    //     obscureText: true,
-                                    //     style: TextStyle(
-                                    //         fontSize: fontSizeTextField,
-                                    //         color: Color(
-                                    //             ExtraColors.DARK_BLUE_ACCENT)),
-                                    //     controller: passwordController,
-                                    //     decoration: InputDecoration(
-                                    //         hintText: 'Your password',
-                                    //         hintStyle: TextStyle(
-                                    //             color: Color(0xffb8b8b8)),
-                                    //         fillColor: Colors.white,
-                                    //         filled: true,
-                                    //         prefixIcon: Container(
-                                    //           padding: EdgeInsets.fromLTRB(
-                                    //               10, 0, 20, 0),
-                                    //           child: CircleAvatar(
-                                    //               // radius: 5,
-                                    //               backgroundColor:
-                                    //                   Color(0xffe6a764),
-                                    //               child: Icon(
-                                    //                 Icons.lock_outline,
-                                    //                 color: Colors.white,
-                                    //                 size: 30,
-                                    //               )),
-                                    //         ),
-                                    //         enabledBorder: OutlineInputBorder(
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(30),
-                                    //             borderSide: BorderSide(
-                                    //                 width: 1,
-                                    //                 color: Colors.grey[300])),
-                                    //         focusedBorder: OutlineInputBorder(
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(30),
-                                    //             borderSide: BorderSide(
-                                    //                 width: 1,
-                                    //                 color: Colors.grey[300]))),
-                                    //   ),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: height * 0.03,
-                                    // ),
-                                    Container(
-                                      width: width * 0.45,
-                                      child: RaisedButton(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(18.0),
-                                          // side: BorderSide(color: Colors.black),
-                                        ),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          // performLogin();
-                                          FocusScope.of(context)
-                                              .requestFocus(FocusNode());
-                                          _submit();
-                                        },
-                                        child: Text(
-                                          "Continue",
-                                          style: TextStyle(
-                                              color:
-                                                  Color(ExtraColors.DARK_BLUE)),
+                            ReusableAppBar.getAppBar(20, 0, height, width),
+                            // SizedBox(
+                            //   height: height * 0.1,
+                            // ),
+                            Container(
+                              margin:
+                                  EdgeInsets.fromLTRB(0, height * 0.042, 0, 0),
+                              child: Text(
+                                "Login to your account",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ), //Container
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Expanded(
+                              child: Container(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        child: _buildCountryPickerDropdown(),
+                                      ),
+                                      SizedBox(
+                                        height: height * 0.03,
+                                      ),
+                                      // Container(
+                                      //   padding: EdgeInsets.only(top: 15),
+                                      //   width: width * 0.7,
+                                      //   child: TextFormField(
+                                      //     keyboardType: TextInputType.number,
+                                      //     validator: (val) {
+                                      //       if (val.isEmpty) {
+                                      //         return 'Please enter your phone number';
+                                      //       } else
+                                      //         return null;
+                                      //     },
+                                      //     style: TextStyle(
+                                      //         color: Colors.white, fontSize: fontSizeTextField),
+                                      //     controller: mobileController,
+                                      //     decoration: InputDecoration(
+                                      //       hintText: 'Your Number...',
+                                      //       hintStyle: TextStyle(color: Color(0xffb8b8b8)),
+                                      //       enabledBorder: UnderlineInputBorder(
+                                      //         borderSide: BorderSide(color: Colors.white),
+                                      //       ),
+                                      //       focusedBorder: UnderlineInputBorder(
+                                      //         borderSide: BorderSide(color: Colors.white),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // Container(
+                                      //   margin: EdgeInsets.only(top: MARGIN),
+                                      //   child: Text(
+                                      //     'Password',
+                                      //     style: TextStyle(
+                                      //         fontWeight: fontWeightText,
+                                      //         fontSize: fontSizeText),
+                                      //   ),
+                                      // ),
+                                      // Container(
+                                      //   child: TextField(
+                                      //     obscureText: true,
+                                      //     style: TextStyle(
+                                      //         fontSize: fontSizeTextField,
+                                      //         color: Color(
+                                      //             ExtraColors.DARK_BLUE_ACCENT)),
+                                      //     controller: passwordController,
+                                      //     decoration: InputDecoration(
+                                      //         hintText: 'Your password',
+                                      //         hintStyle: TextStyle(
+                                      //             color: Color(0xffb8b8b8)),
+                                      //         fillColor: Colors.white,
+                                      //         filled: true,
+                                      //         prefixIcon: Container(
+                                      //           padding: EdgeInsets.fromLTRB(
+                                      //               10, 0, 20, 0),
+                                      //           child: CircleAvatar(
+                                      //               // radius: 5,
+                                      //               backgroundColor:
+                                      //                   Color(0xffe6a764),
+                                      //               child: Icon(
+                                      //                 Icons.lock_outline,
+                                      //                 color: Colors.white,
+                                      //                 size: 30,
+                                      //               )),
+                                      //         ),
+                                      //         enabledBorder: OutlineInputBorder(
+                                      //             borderRadius:
+                                      //                 BorderRadius.circular(30),
+                                      //             borderSide: BorderSide(
+                                      //                 width: 1,
+                                      //                 color: Colors.grey[300])),
+                                      //         focusedBorder: OutlineInputBorder(
+                                      //             borderRadius:
+                                      //                 BorderRadius.circular(30),
+                                      //             borderSide: BorderSide(
+                                      //                 width: 1,
+                                      //                 color: Colors.grey[300]))),
+                                      //   ),
+                                      // ),
+                                      // SizedBox(
+                                      //   height: height * 0.03,
+                                      // ),
+                                      Container(
+                                        width: width * 0.45,
+                                        child: RaisedButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(18.0),
+                                            // side: BorderSide(color: Colors.black),
+                                          ),
+                                          color: Colors.white,
+                                          onPressed: () {
+                                            // performLogin();
+                                            FocusScope.of(context)
+                                                .requestFocus(FocusNode());
+                                            _submit();
+                                          },
+                                          child: Text(
+                                            "Continue",
+                                            style: TextStyle(
+                                                color: Color(
+                                                    ExtraColors.DARK_BLUE)),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: height * 0.02,
-                                    ),
-                                    // Row(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.center,
-                                    //   children: <Widget>[
-                                    //     Text(
-                                    //       "Dont have account?",
-                                    //       style: TextStyle(color: Colors.white),
-                                    //     ),
-                                    //     InkWell(
-                                    //       onTap: () {
-                                    //         Navigator.pushNamed(context,
-                                    //             RoutesName.SIGNUP_ACTIVITY);
-                                    //       },
-                                    //       child: Container(
-                                    //           padding: EdgeInsets.all(6),
-                                    //           child: Text(
-                                    //             "Register",
-                                    //             style: TextStyle(
-                                    //                 color: Colors.yellow),
-                                    //           )),
-                                    //     )
-                                    //   ],
-                                    // ),
-                                    // GestureDetector(
-                                    //   onTap: () {
-                                    //     Navigator.of(context).push(
-                                    //         MaterialPageRoute(
-                                    //             builder: (context) =>
-                                    //                 ForgotPasswordScreen()));
-                                    //   },
-                                    //   child: Text(
-                                    //     "Forgot Password?",
-                                    //     style: TextStyle(color: Colors.white),
-                                    //   ),
-                                    // ),
-                                    SizedBox(
-                                      height: height * 0.01,
-                                    ),
-                                    SizedBox(
-                                      height: 60,
-                                    ),
+                                      SizedBox(
+                                        height: height * 0.02,
+                                      ),
+                                      // Row(
+                                      //   mainAxisAlignment:
+                                      //       MainAxisAlignment.center,
+                                      //   children: <Widget>[
+                                      //     Text(
+                                      //       "Dont have account?",
+                                      //       style: TextStyle(color: Colors.white),
+                                      //     ),
+                                      //     InkWell(
+                                      //       onTap: () {
+                                      //         Navigator.pushNamed(context,
+                                      //             RoutesName.SIGNUP_ACTIVITY);
+                                      //       },
+                                      //       child: Container(
+                                      //           padding: EdgeInsets.all(6),
+                                      //           child: Text(
+                                      //             "Register",
+                                      //             style: TextStyle(
+                                      //                 color: Colors.yellow),
+                                      //           )),
+                                      //     )
+                                      //   ],
+                                      // ),
+                                      // GestureDetector(
+                                      //   onTap: () {
+                                      //     Navigator.of(context).push(
+                                      //         MaterialPageRoute(
+                                      //             builder: (context) =>
+                                      //                 ForgotPasswordScreen()));
+                                      //   },
+                                      //   child: Text(
+                                      //     "Forgot Password?",
+                                      //     style: TextStyle(color: Colors.white),
+                                      //   ),
+                                      // ),
+                                      SizedBox(
+                                        height: height * 0.01,
+                                      ),
+                                      SizedBox(
+                                        height: 60,
+                                      ),
 
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "All right reserve © 2020",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        SizedBox(width: 10),
-                                        FutureBuilder(
-                                          future: getVersionNumber(),
-                                          builder: (BuildContext context,
-                                                  AsyncSnapshot<String>
-                                                      snapshot) =>
-                                              Text(
-                                            snapshot.hasData
-                                                ? "v${snapshot.data}"
-                                                : "Loading ...",
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            "All right reserve © 2020",
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ]),
-                            ),
-                          )
-                        ],
+                                          SizedBox(width: 10),
+                                          FutureBuilder(
+                                            future: getVersionNumber(),
+                                            builder: (BuildContext context,
+                                                    AsyncSnapshot<String>
+                                                        snapshot) =>
+                                                Text(
+                                              snapshot.hasData
+                                                  ? "v${snapshot.data}"
+                                                  : "Loading ...",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ]),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -536,6 +543,7 @@ class _LoginActivityState extends State<LoginActivity> {
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 controller: mobileController,
+                textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   hintText: "Phone...",
                   hintStyle: TextStyle(color: Colors.grey[500]),

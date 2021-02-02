@@ -104,7 +104,7 @@ String customerNumber = "";
                                   height: 5,
                                 ),
                                 Container(
-                                  child: Text("Location Code :",
+                                  child: Text("Location Name :",
                                       style: TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold)),
@@ -174,7 +174,7 @@ String customerNumber = "";
                                 ),
                                 Container(
                                   child: Text(
-                                    postedSaleInvoiceItem.locationCode,
+                                    postedSaleInvoiceItem.locationName,
                                     style: textStyle,
                                   ),
                                 ),

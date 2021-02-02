@@ -15,6 +15,8 @@ class PostedSalesInvoiceModel {
   String shipmentDate;
   String smsSend;
   String serviceOrder;
+  String locationName;
+
 
   PostedSalesInvoiceModel(
       {this.no,
@@ -32,5 +34,5 @@ class PostedSalesInvoiceModel {
       this.paymentDiscountPercent,
       this.shipmentDate,
       this.smsSend,
-      this.serviceOrder});
+      this.serviceOrder,this.locationName});
 }

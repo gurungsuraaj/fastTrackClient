@@ -512,6 +512,8 @@ class NetworkOperationManager {
             data["PostedSalesInvoiceList"]["SMS_Sent"] ?? "";
         postedSalesItem.serviceOrder =
             data["PostedSalesInvoiceList"]["Service_Order_No"] ?? "";
+            postedSalesItem.locationName =
+            data["PostedSalesInvoiceList"]["LocationName"] ?? "";
 
         postedSalesList.add(postedSalesItem);
       });
