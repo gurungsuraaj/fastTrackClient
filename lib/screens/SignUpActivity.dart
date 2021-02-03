@@ -105,7 +105,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Color(ExtraColors.DARK_BLUE),
+      backgroundColor: Color(0xff253983),
       key: _scaffoldKey,
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,

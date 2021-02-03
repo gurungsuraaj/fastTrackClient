@@ -50,8 +50,8 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: ListTile(
-                  title: Text(
-                      "Vehicle Serial No :  ${nextSerivceDateList[index].vehicleSerialNo}"),
+                  title:
+                      Text("Vehicle Reg. No :  ${nextSerivceDateList[index].registerNo}"),
                   subtitle: Text(
                       "Next Service Date :     ${nextSerivceDateList[index].nextServiceDate}"),
                 ),
@@ -128,11 +128,11 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
 
   void getNextServiceDate() async {
     for (VehicleListModel vehicle in vehicleList) {
-      getVehileDataFromNAV(vehicle.Serial_No);
+      getVehileDataFromNAV(vehicle.Serial_No, vehicle.Registration_No);
     }
   }
 
-  void getVehileDataFromNAV(String vehicleSerialNo) async {
+  void getVehileDataFromNAV(String vehicleSerialNo, String regNo) async {
     showProgressBar();
     NetworkOperationManager.checkServiceDate(
             customerNumber, vehicleSerialNo, client)
@@ -142,6 +142,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
         NextServiceDateModel nextService = NextServiceDateModel();
         nextService.vehicleSerialNo = vehicleSerialNo;
         nextService.nextServiceDate = res.responseBody;
+        nextService.registerNo = regNo;
         nextSerivceDateList.add(nextService);
         setState(() {});
       } else {

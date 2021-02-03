@@ -1,5 +1,6 @@
 class NextServiceDateModel {
   String vehicleSerialNo;
   String nextServiceDate;
-  NextServiceDateModel({this.vehicleSerialNo, this.nextServiceDate});
+  String registerNo;
+  NextServiceDateModel({this.vehicleSerialNo, this.nextServiceDate,this.registerNo});
 }

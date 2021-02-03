@@ -7,7 +7,7 @@ class ReusableAppBar {
       margin: EdgeInsets.fromLTRB(0, margin, 0, margin),
       padding:EdgeInsets.fromLTRB(0, padding, 0, padding),
 
-      color: Color(ExtraColors.DARK_BLUE),
+      color: Color(0xff253983),
 //    color: Colors.white,
       height: height / 4,
       child: Align(

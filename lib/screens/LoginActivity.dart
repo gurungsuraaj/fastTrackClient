@@ -348,7 +348,7 @@ class _LoginActivityState extends State<LoginActivity> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.7,
-            color: Color(ExtraColors.DARK_BLUE),
+            color: Color(0xff253983),
           ));
     } else {
       return ClipPath(
@@ -356,7 +356,7 @@ class _LoginActivityState extends State<LoginActivity> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.75,
-            color: Color(ExtraColors.DARK_BLUE),
+            color: Color(0xff253983),
           ));
     }
   }
