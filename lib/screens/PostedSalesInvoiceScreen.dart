@@ -82,15 +82,15 @@ String customerNumber = "";
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold)),
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("Amount :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                // Container(
+                                //   child: Text("Amount :",
+                                //       style: TextStyle(
+                                //           fontSize: 16.0,
+                                //           fontWeight: FontWeight.bold)),
+                                // ),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -118,15 +118,15 @@ String customerNumber = "";
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.bold)),
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text("Service Order :",
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold)),
-                                ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                // Container(
+                                //   child: Text("Service Order :",
+                                //       style: TextStyle(
+                                //           fontSize: 16.0,
+                                //           fontWeight: FontWeight.bold)),
+                                // ),
                               ],
                             ),
                           ),
@@ -151,15 +151,15 @@ String customerNumber = "";
                                     style: textStyle,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    postedSaleInvoiceItem.amt.toString(),
-                                    style: textStyle,
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                // Container(
+                                //   child: Text(
+                                //     postedSaleInvoiceItem.amt.toString(),
+                                //     style: textStyle,
+                                //   ),
+                                // ),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -187,15 +187,15 @@ String customerNumber = "";
                                     style: textStyle,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  child: Text(
-                                    postedSaleInvoiceItem.serviceOrder,
-                                    style: textStyle,
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                // Container(
+                                //   child: Text(
+                                //     postedSaleInvoiceItem.serviceOrder,
+                                //     style: textStyle,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

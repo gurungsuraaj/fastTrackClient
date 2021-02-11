@@ -220,8 +220,11 @@ class NetworkOperationManager {
         "notitification": {
           "title": "Pleases response to the distress call!",
           "body": "Tap for more info!",
-          "sound": "default"
+          "sound": "default",
+          "click_action": "FLUTTER_NOTIFICATION_CLICK",
+          "content-available": true,
         },
+        "content-available": true,
         "data": {
           // 'status':'done',
           // 'id':'done',
@@ -452,7 +455,7 @@ class NetworkOperationManager {
 <tns:ReadMultiple>
 <tns:filter>
 <tns:Field>Sell_to_Customer_No</tns:Field>
-<tns:Criteria>$custNumber</tns:Criteria>
+<tns:Criteria>CS269306</tns:Criteria>
 </tns:filter>
 <tns:bookmarkKey></tns:bookmarkKey>
 <tns:setSize>50</tns:setSize>
@@ -512,7 +515,7 @@ class NetworkOperationManager {
             data["PostedSalesInvoiceList"]["SMS_Sent"] ?? "";
         postedSalesItem.serviceOrder =
             data["PostedSalesInvoiceList"]["Service_Order_No"] ?? "";
-            postedSalesItem.locationName =
+        postedSalesItem.locationName =
             data["PostedSalesInvoiceList"]["LocationName"] ?? "";
 
         postedSalesList.add(postedSalesItem);
@@ -1157,7 +1160,6 @@ class NetworkOperationManager {
     return customerModel;
   }
 
-
   static Future<NetworkResponse> sendExistingCustomerOTP(
       String mobile, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
@@ -1266,7 +1268,12 @@ class NetworkOperationManager {
   }
 
   static Future<NetworkResponse> verifyExistingCustomerOTP(
-      String mobile,String customerName,String email,String password, String otp, NTLMClient client) async {
+      String mobile,
+      String customerName,
+      String email,
+      String password,
+      String otp,
+      NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.WEB_SERVICE);
     print("This is the url $url");
