@@ -1328,4 +1328,57 @@ class NetworkOperationManager {
     });
     return rs;
   }
+
+  static Future<NetworkResponse> sendCheckHistoryEmail(
+      String invoiceNo, NTLMClient client) async {
+    NetworkResponse rs = new NetworkResponse();
+    var url = Uri.encodeFull(Api.WEB_SERVICE);
+    print("This is the url $url");
+    var envelope =
+        '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/CheckInventory">
+<soapenv:Body>
+<urn:SendSalesInvoiceReport>
+<urn:invoiceNo>$invoiceNo</urn:invoiceNo>
+<urn:status></urn:status>
+</urn:SendSalesInvoiceReport>
+</soapenv:Body>
+</soapenv:Envelope>''';
+    debugPrint(" this is the envelope $envelope");
+    await client
+        .post(
+      url,
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Charset": "utf-8",
+        "SOAPAction": "urn:microsoft-dynamics-schemas/codeunit/CheckInventory",
+      },
+      body: envelope,
+      encoding: Encoding.getByName("UTF-8"),
+    )
+        .then((res) {
+      var rawXmlResponse = res.body;
+      print("URL: $url");
+      var code = res.statusCode;
+      print("STATUS: $code");
+      print("RESPONSE: $rawXmlResponse");
+
+      xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
+      var resValue;
+      var formattedResVal;
+      var response_message;
+      if (code == Rcode.SUCCESS_CODE) {
+        resValue = parsedXml.findAllElements("status");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      } else {
+        resValue = parsedXml.findAllElements("faultstring");
+        formattedResVal = resValue.map((node) => node.text);
+        response_message = formattedResVal.first;
+      }
+      rs.status = res.statusCode;
+      rs.responseBody = response_message;
+    });
+    return rs;
+  }
+
 }

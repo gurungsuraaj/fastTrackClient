@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fasttrackgarage_app/utils/Rstring.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 
 class PostedSalesInvoiceScreen extends StatefulWidget {
   @override
@@ -18,7 +20,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   NTLMClient client;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
-String customerNumber = "";
+  String customerNumber = "";
   List<PostedSalesInvoiceModel> postedSalesList = List();
   @override
   void initState() {
@@ -26,10 +28,9 @@ String customerNumber = "";
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    getPrefs().whenComplete((){
+    getPrefs().whenComplete(() {
       loadPostedSalesInvoiceData();
     });
-
   }
 
   @override
@@ -40,13 +41,12 @@ String customerNumber = "";
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
-
         title: Text("Check History"),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         child: ListView.builder(
-          shrinkWrap: true,
+            shrinkWrap: true,
             itemCount: postedSalesList.length,
             itemBuilder: (BuildContext context, int index) {
               PostedSalesInvoiceModel postedSaleInvoiceItem =
@@ -56,6 +56,49 @@ String customerNumber = "";
                 color: Colors.white,
                 child: Column(
                   children: <Widget>[
+                    Container(
+                      color: Theme.of(context).accentColor,
+                      height: 30,
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "No : " + postedSaleInvoiceItem.no,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              sendMail(postedSaleInvoiceItem.no);
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Send Email',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.mail,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -65,17 +108,17 @@ String customerNumber = "";
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Container(
-                                  child: Text(
-                                    "No :",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
+                                // Container(
+                                //   child: Text(
+                                //     "No :",
+                                //     style: TextStyle(
+                                //         fontSize: 16.0,
+                                //         fontWeight: FontWeight.bold),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
                                 Container(
                                   child: Text("Customer Name :",
                                       style: TextStyle(
@@ -138,13 +181,13 @@ String customerNumber = "";
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
-                                Container(
-                                  child: Text(postedSaleInvoiceItem.no,
-                                      style: textStyle),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
+                                // Container(
+                                //   child: Text(postedSaleInvoiceItem.no,
+                                //       style: textStyle),
+                                // ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
                                 Container(
                                   child: Text(
                                     postedSaleInvoiceItem.sellToCustomerName,
@@ -216,7 +259,8 @@ String customerNumber = "";
 
   void loadPostedSalesInvoiceData() async {
     showProgressBar();
-    NetworkOperationManager.getPostedSalesInvoiceList(customerNumber, client).then((res) {
+    NetworkOperationManager.getPostedSalesInvoiceList(customerNumber, client)
+        .then((res) {
       hideProgressBar();
       if (res.length > 0) {
         setState(() {
@@ -229,6 +273,23 @@ String customerNumber = "";
       hideProgressBar();
       displaySnackbar(context, "Error : $e");
       print("this is error $e");
+    });
+  }
+
+  void sendMail(String invoiceNo) async {
+    showProgressBar();
+
+    NetworkOperationManager.sendCheckHistoryEmail(invoiceNo, client)
+        .then((res) {
+      hideProgressBar();
+      if (res.status == 200) {
+        ShowToast.showToast(context, "${res.responseBody}");
+      } else {
+        ShowToast.showToast(context, "Error :" + "${res.responseBody}");
+      }
+    }).catchError((e) {
+      hideProgressBar();
+      print(e);
     });
   }
 
@@ -252,7 +313,7 @@ String customerNumber = "";
     });
   }
 
-  Future<void> getPrefs() async{
+  Future<void> getPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
   }
