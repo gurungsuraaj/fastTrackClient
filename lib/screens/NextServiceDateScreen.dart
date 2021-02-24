@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NextServiceDateScreen extends StatefulWidget {
   NextServiceDateScreen({Key key}) : super(key: key);
@@ -37,6 +38,10 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var textStyle1 =
+        TextStyle(color: Color(ExtraColors.DARK_BLUE), fontSize: 14);
+    var textStyle2 = TextStyle(color: Color(0xffEF9C2B), fontSize: 14);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -50,10 +55,45 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: ListTile(
-                  title:
-                      Text("Vehicle Reg. No :  ${nextSerivceDateList[index].registerNo}"),
-                  subtitle: Text(
-                      "Next Service Date :     ${nextSerivceDateList[index].nextServiceDate}"),
+                  title: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Wrap(children: <Widget>[
+                      Text("Thank you for servicing your vehicle No.",
+                          style: textStyle1),
+                      Text("${nextSerivceDateList[index].registerNo}",
+                          style: textStyle2),
+                      Text(" at", style: textStyle1),
+                      Text(
+                          " Fasttrack-${nextSerivceDateList[index].locationName}",
+                          style: textStyle2),
+                      InkWell(
+                        onTap: () async {
+                          var url =
+                              "tel:${nextSerivceDateList[index].phoneNumber}";
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
+                        child: Text(
+                            " ${nextSerivceDateList[index].phoneNumber}.",
+                            style: textStyle2),
+                      ),
+                      // Text(' As per our records', style: textStyle1),
+                      Text(
+                          "As per our records next service is due on ${nextSerivceDateList[index].nextServiceDate}.",
+                          style: textStyle1)
+                    ]),
+                  ),
+
+                  //  Text(
+                  //     "Thank you for servicing your vehicle No.${nextSerivceDateList[index].registerNo} at Fasttrack-${nextSerivceDateList[index].locationName} ${nextSerivceDateList[index].phoneNumber}. As per our records next service is due on ${nextSerivceDateList[index].nextServiceDate}.",style: TextStyle(fontSize: 14),),
+
+                  //      title: Text(
+                  //     "Vehicle Reg. No :  ${nextSerivceDateList[index].registerNo}"),
+                  // subtitle: Text(
+                  //     "Next Service Date :     ${nextSerivceDateList[index].nextServiceDate}"),
                 ),
               );
             }),
@@ -135,18 +175,19 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   void getVehileDataFromNAV(String vehicleSerialNo, String regNo) async {
     showProgressBar();
     NetworkOperationManager.checkServiceDate(
-            customerNumber, vehicleSerialNo, client)
+            customerNumber, vehicleSerialNo, regNo, client)
         .then((res) {
-      print(res.responseBody);
+      print(res);
       if (res.status == Rcode.SUCCESS_CODE) {
-        NextServiceDateModel nextService = NextServiceDateModel();
-        nextService.vehicleSerialNo = vehicleSerialNo;
-        nextService.nextServiceDate = res.responseBody;
-        nextService.registerNo = regNo;
-        nextSerivceDateList.add(nextService);
+        // NextServiceDateModel nextService = NextServiceDateModel();
+        // nextService.vehicleSerialNo = vehicleSerialNo;
+        // nextService.nextServiceDate = res.responseBody;
+        // nextService.registerNo = regNo;
+        print(" Status ${res.status}");
+        nextSerivceDateList.add(res);
         setState(() {});
       } else {
-        // showSnackBar(res.responseBody);
+        showSnackBar(res.faultString);
       }
       hideProgressBar();
     }).catchError((err) {

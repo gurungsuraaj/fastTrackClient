@@ -39,7 +39,7 @@ Future<void> main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PostedSalesInvoiceScreen(),
+      home: SplashScreen(),
       routes: <String, WidgetBuilder>{
         RoutesName.LOGIN_ACTIVITY: (BuildContext context) =>
             new LoginActivity(),

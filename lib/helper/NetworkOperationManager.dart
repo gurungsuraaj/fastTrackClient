@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/models/CompanyInfoModel.dart';
 import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 import 'package:fasttrackgarage_app/models/LoginModel.dart';
 import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
+import 'package:fasttrackgarage_app/models/NextServiceDateModel.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
@@ -217,12 +218,11 @@ class NetworkOperationManager {
       final body = jsonEncode({
         "to": token,
         "priority": "high",
-        "notitification": {
+        "notification": {
           "title": "Pleases response to the distress call!",
           "body": "Tap for more info!",
           "sound": "default",
           "click_action": "FLUTTER_NOTIFICATION_CLICK",
-          "content-available": true,
         },
         "content-available": true,
         "data": {
@@ -233,6 +233,8 @@ class NetworkOperationManager {
           "click_action": "FLUTTER_NOTIFICATION_CLICK"
         },
       });
+
+      print(body);
 
       await http
           .post('https://fcm.googleapis.com/fcm/send',
@@ -455,7 +457,7 @@ class NetworkOperationManager {
 <tns:ReadMultiple>
 <tns:filter>
 <tns:Field>Sell_to_Customer_No</tns:Field>
-<tns:Criteria>CS269306</tns:Criteria>
+<tns:Criteria>$custNumber</tns:Criteria>
 </tns:filter>
 <tns:bookmarkKey></tns:bookmarkKey>
 <tns:setSize>50</tns:setSize>
@@ -826,21 +828,24 @@ class NetworkOperationManager {
     return companyInfoArrayList;
   }
 
-  static Future<NetworkResponse> checkServiceDate(
-      String customerNo, String vehicleSerialNo, NTLMClient client) async {
+  static Future<NextServiceDateModel> checkServiceDate(String customerNo,
+      String vehicleSerialNo, String regNo, NTLMClient client) async {
     NetworkResponse rs = new NetworkResponse();
     var url = Uri.encodeFull(Api.JOB_ORDER_PROCESS);
     String response = "";
     print("This is the url $url");
-
+    NextServiceDateModel nextServiceData = NextServiceDateModel();
+    Xml2Json xml2json = new Xml2Json();
     var envelope =
         '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:microsoft-dynamics-schemas/codeunit/JobOrderProcess">
 <soapenv:Body>
-<urn:CheckNextServiceDate>
+<urn:CheckNextServiceDateApp>
 <urn:customerNo>$customerNo</urn:customerNo>
 <urn:vehicalSerialNo>$vehicleSerialNo</urn:vehicalSerialNo>
 <urn:nextServiceDate>0001-01-01</urn:nextServiceDate>
-</urn:CheckNextServiceDate>
+<urn:locationName></urn:locationName>
+<urn:phoneNo></urn:phoneNo>
+</urn:CheckNextServiceDateApp>
 </soapenv:Body>
 </soapenv:Envelope>''';
     debugPrint(" this is the envelope $envelope");
@@ -867,20 +872,35 @@ class NetworkOperationManager {
       var formattedResVal;
       var response_message;
       if (code == Rcode.SUCCESS_CODE) {
-        resValue = parsedXml.findAllElements("CheckNextServiceDate_Result");
-        formattedResVal = resValue.map((node) => node.text);
-        response_message = formattedResVal.first;
+        parsedXml
+            .findAllElements("CheckNextServiceDateApp_Result")
+            .forEach((val) {
+          xml2json.parse(val.toString());
+          var json = xml2json.toParker();
+          var data = jsonDecode(json);
+          nextServiceData.status = res.statusCode;
+          nextServiceData.locationName =
+              data["CheckNextServiceDateApp_Result"]["locationName"] ?? "";
+          nextServiceData.phoneNumber =
+              data["CheckNextServiceDateApp_Result"]["phoneNo"] ?? "";
+          nextServiceData.vehicleSerialNo = vehicleSerialNo;
+          nextServiceData.nextServiceDate =
+              data["CheckNextServiceDateApp_Result"]["nextServiceDate"] ?? "";
+                      nextServiceData.registerNo = regNo;
+        });
+        // formattedResVal = resValue.map((node) => node.text);
+        // response_message = formattedResVal.first;
       } else {
         resValue = parsedXml.findAllElements("faultstring");
         formattedResVal = resValue.map((node) => node.text);
-        response_message = formattedResVal.first;
+        nextServiceData.faultString = formattedResVal.first;
+        nextServiceData.status = res.statusCode;
+
       }
 
-      rs.status = res.statusCode;
-      rs.responseBody = response_message;
     });
 
-    return rs;
+    return nextServiceData;
   }
 
   static Future<NetworkResponse> SubmitSignUpOTP(
@@ -1380,5 +1400,4 @@ class NetworkOperationManager {
     });
     return rs;
   }
-
 }
