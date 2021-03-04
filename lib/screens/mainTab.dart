@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/models/NotificationDbModel.dart';
 import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
 import 'package:fasttrackgarage_app/screens/NotificationScreen.dart';
 import 'package:fasttrackgarage_app/screens/UsersProfileActivity.dart';
+import 'package:fasttrackgarage_app/screens/WebViewScreen.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -146,15 +147,8 @@ class _MainTabState extends State<MainTab> {
       children: <Widget>[
         HomeActivity(),
         UsersProfileActivity(),
+        WebViewScreen(),
         NotificationScreen(),
-        // StoreLocationScreen(),
-        // OfferPromo(),
-
-//        HomeButtons(),
-//        RequestButtons(),
-//        PendingButtons(),
-//        MessageButtons(),
-//        ProfileButtons()
       ],
     );
   }
@@ -167,37 +161,59 @@ class _MainTabState extends State<MainTab> {
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
+
       BottomNavigationBarItem(
+        
           icon: new Icon(
             Icons.home,
             color: Color(ExtraColors.DARK_BLUE),
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: new Text(
-              'Home',
-              style: bottomTabBarText,
-            ),
-          )),
+          label:'Home',
+          
+          //  Padding(
+          //   padding: const EdgeInsets.only(top: 2.0),
+          //   child: new Text(
+          //     'Home',
+          //     style: bottomTabBarText,
+          //   ),
+          // )
+          
+          ),
       BottomNavigationBarItem(
           icon: Icon(Icons.person, color: Color(ExtraColors.DARK_BLUE)),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Text(
-              'Profile',
-              style: bottomTabBarText,
-            ),
-          )),
+          label: 'Profile'
+          
+          
+          // title: Padding(
+          //   padding: const EdgeInsets.only(top: 2.0),
+          //   child: Text(
+          //     'Profile',
+          //     style: bottomTabBarText,
+          //   ),
+          // )
+          ),
+      BottomNavigationBarItem(
+        icon: new Icon(Icons.public, color: Color(ExtraColors.DARK_BLUE)),
+        label: 'Web'
+        // title: Padding(
+        //   padding: const EdgeInsets.only(top: 2.0),
+        //   child: new Text(
+        //     'Web',
+        //     style: bottomTabBarText,
+        //   ),
+        // ),
+      ),
       BottomNavigationBarItem(
         icon:
             new Icon(Icons.notifications, color: Color(ExtraColors.DARK_BLUE)),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 2.0),
-          child: new Text(
-            'Notifications',
-            style: bottomTabBarText,
-          ),
-        ),
+            label: 'Notifications',
+        // title: Padding(
+        //   padding: const EdgeInsets.only(top: 2.0),
+        //   child: new Text(
+        //     'Notifications',
+        //     style: bottomTabBarText,
+        //   ),
+        // ),
       ),
     ];
   }

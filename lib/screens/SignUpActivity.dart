@@ -464,19 +464,19 @@ class _SignUpActivity extends State<SignUpActivity> {
     final form = formKey.currentState;
     if (form.validate()) {
       // if (checkBoxValue) {
-        debugPrint("password Saved succesfully");
-        var connectivityResult = await (Connectivity().checkConnectivity());
-        if (connectivityResult == ConnectivityResult.mobile ||
-            connectivityResult == ConnectivityResult.wifi) {
-          if (widget.customerDetails == null) {
-            _signUp();
-          } else {
-            sendExistingCustomerOTP();
-            print("Existed Customer");
-          }
+      debugPrint("password Saved succesfully");
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile ||
+          connectivityResult == ConnectivityResult.wifi) {
+        if (widget.customerDetails == null) {
+          _signUp();
         } else {
-          ShowToast.showToast(context, "No internet connection");
+          sendExistingCustomerOTP();
+          print("Existed Customer");
         }
+      } else {
+        ShowToast.showToast(context, "No internet connection");
+      }
       // } else {
       //   //show snackbar
       //   displaySnackbar(context,
@@ -627,6 +627,7 @@ class _SignUpActivity extends State<SignUpActivity> {
             // ),
             Expanded(
               child: TextField(
+                enabled: false,
                 controller: mobileController,
                 keyboardType: TextInputType.number,
                 style: TextStyle(color: Color(ExtraColors.DARK_BLUE_ACCENT)),
@@ -648,6 +649,13 @@ class _SignUpActivity extends State<SignUpActivity> {
                   //       )),
                   // ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.white,
+                    ),
+                  ),
+                  disabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide(
                       width: 1,

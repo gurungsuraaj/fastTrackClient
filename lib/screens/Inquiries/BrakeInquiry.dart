@@ -176,7 +176,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(8),
                             isDense: true,
-                            labelText: 'WIN No',
+                            labelText: 'VIN No',
                             hintStyle: TextStyle(color: Color(0xffb8b8b8)),
                             border: OutlineInputBorder(),
                           ),
