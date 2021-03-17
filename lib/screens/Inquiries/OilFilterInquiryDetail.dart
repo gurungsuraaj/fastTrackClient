@@ -187,7 +187,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                                       width: width * 0.45,
 
                     child: TextFormField(
-                      keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value.length == 0) {
                           return ("Please fill up this field.");

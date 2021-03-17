@@ -122,7 +122,9 @@ class _HomeActivityState extends State<HomeActivity>
     getPrefs().then((val) async {
       getLocationOfCLient().whenComplete(() {
         fetchBranchList();
-        checkVersionUpdate();
+
+        // Enable the code when the app is pushed to the appstore
+        // checkVersionUpdate();
       });
       showOffer();
     });

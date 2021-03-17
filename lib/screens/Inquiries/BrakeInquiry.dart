@@ -161,7 +161,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                                          width: width * 0.45,
 
                         child: TextFormField(
-                          keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value.length == 0) {
                               return ("Please fill up this field.");
