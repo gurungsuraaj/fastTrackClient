@@ -124,7 +124,7 @@ class _HomeActivityState extends State<HomeActivity>
         fetchBranchList();
 
         // Enable the code when the app is pushed to the appstore
-        // checkVersionUpdate();
+        checkVersionUpdate();
       });
       showOffer();
     });

@@ -388,7 +388,7 @@ class _OTP extends State<OTP> {
         .then((res) {
       print("Inside existed customer");
       hideProgressBar();
-      if (res.responseBody == Rstring.OTP_VERIFIED) {
+      if (res.responseBody == Rstring.OTP_VERIFIED || res.status == 200) {
         // Save the data locally and navigate to the Home screen.
 
         PrefsManager.saveLoginCredentialsToPrefs(widget.customerNo,

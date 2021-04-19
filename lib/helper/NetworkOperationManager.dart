@@ -886,7 +886,7 @@ class NetworkOperationManager {
           nextServiceData.vehicleSerialNo = vehicleSerialNo;
           nextServiceData.nextServiceDate =
               data["CheckNextServiceDateApp_Result"]["nextServiceDate"] ?? "";
-                      nextServiceData.registerNo = regNo;
+          nextServiceData.registerNo = regNo;
         });
         // formattedResVal = resValue.map((node) => node.text);
         // response_message = formattedResVal.first;
@@ -895,9 +895,7 @@ class NetworkOperationManager {
         formattedResVal = resValue.map((node) => node.text);
         nextServiceData.faultString = formattedResVal.first;
         nextServiceData.status = res.statusCode;
-
       }
-
     });
 
     return nextServiceData;
@@ -1218,9 +1216,14 @@ class NetworkOperationManager {
       var formattedResVal;
       var response_message;
       if (code == Rcode.SUCCESS_CODE) {
-        resValue = parsedXml.findAllElements("returnTxt");
+        print("Suraj");
+
+        resValue = parsedXml.findAllElements("SendCustomerOTP_Result");
         formattedResVal = resValue.map((node) => node.text);
+        print("Suraj 1");
+
         response_message = formattedResVal.first;
+        print("Suraj 2");
       } else {
         resValue = parsedXml.findAllElements("faultstring");
         formattedResVal = resValue.map((node) => node.text);

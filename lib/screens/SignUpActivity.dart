@@ -726,7 +726,7 @@ class _SignUpActivity extends State<SignUpActivity> {
     NetworkOperationManager.sendExistingCustomerOTP(
             mobileController.text, client)
         .then((res) {
-      if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
+      if (res.responseBody == Rstring.OTP_SEND_SUCCESS || res.status ==  200 ) {
         ShowToast.showToast(context, res.responseBody);
         print("Customer No ${widget.customerDetails.customerNo}");
         Navigator.push(
