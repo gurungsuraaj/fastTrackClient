@@ -19,6 +19,7 @@ import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -665,9 +666,7 @@ class _HomeActivityState extends State<HomeActivity>
                               GestureDetector(
                                 onTap: () async {
                                   Navigator.of(context).pop();
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-                                  String nearestPhoneNo = prefs
+                                  String nearestPhoneNo = SpUtil
                                       .getString(
                                           Constants.NEAREST_STORE_PHONENO)
                                       .replaceAll(
@@ -692,9 +691,7 @@ class _HomeActivityState extends State<HomeActivity>
                               GestureDetector(
                                 onTap: () async {
                                   Navigator.of(context).pop();
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-                                  String whatappNO = prefs
+                                  String whatappNO = SpUtil
                                       .getString(Constants.WHATS_APP_NUMBER);
                                   var whatsappUrl =
                                       "whatsapp://send?phone=$whatappNO";
@@ -982,9 +979,7 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   Future<String> getPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    customerNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
-
+    customerNumber = SpUtil.getString((Constants.CUSTOMER_MOBILE_NO));
     //  return serviceOrderNum;
   }
 
@@ -1051,10 +1046,10 @@ class _HomeActivityState extends State<HomeActivity>
       }
       shortDistanceIndex =
           branchDistanceList.indexOf(branchDistanceList.reduce(min));
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(Constants.NEAREST_STORE_PHONENO,
+
+       SpUtil.putString(Constants.NEAREST_STORE_PHONENO,
           "${branchList[shortDistanceIndex].telephone}");
-      await prefs.setString(Constants.WHATS_APP_NUMBER,
+       SpUtil.putString(Constants.WHATS_APP_NUMBER,
           "${branchList[shortDistanceIndex].whatsAppNum}");
       // print(
       //     "the shorted distance is ${branchList[shortDistanceIndex].telephone}");

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:encrypt/encrypt.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
 
@@ -80,13 +82,28 @@ class SpUtil {
   // get string
   static String getString(String key, {String defValue = ''}) {
     if (_prefs == null) return defValue;
-    return _prefs.getString(key) ?? defValue;
+    String finalValue = _prefs.getString(key) ?? defValue;
+    if (finalValue.isEmpty) return "";
+
+    final iv = IV.fromLength(16);
+// final encrypter = Encrypter(AES(Key.fromUtf8(Constants.aesKey)));
+    final encrypter =
+        Encrypter(AES(Key.fromUtf8(FlutterConfig.get("AES_KEY"))));
+    final decrypted =
+        encrypter.decrypt(Encrypted.fromBase64(finalValue), iv: iv);
+    return decrypted;
   }
 
   // put string
   static Future<bool> putString(String key, String value) {
     if (_prefs == null) return null;
-    return _prefs.setString(key, value);
+    if (value.isEmpty) return _prefs.setString(key, value);
+    final iv = IV.fromLength(16);
+// final encrypter = Encrypter(AES(Key.fromUtf8(Constants.aesKey)));
+    final encrypter =
+        Encrypter(AES(Key.fromUtf8(FlutterConfig.get("AES_KEY"))));
+    final encrypted = encrypter.encrypt(value, iv: iv);
+    return _prefs.setString(key, encrypted.base64);
   }
 
   // get bool

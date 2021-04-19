@@ -26,6 +26,7 @@ import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,6 +38,9 @@ import 'database/AppDatabase.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await FlutterConfig.loadEnvVariables();
+  print("Lof ${FlutterConfig.get("AES_KEY")}");
   await SpUtil.getInstance();
 
   runApp(
@@ -91,8 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // String location = prefs.getString(Constants.location);
     String basicToken;
 
-    final prefs = await SharedPreferences.getInstance();
-    basicToken = prefs.getString(Constants.CUSTOMER_NUMBER);
+    basicToken = SpUtil.getString(Constants.CUSTOMER_NUMBER);
 
     if (basicToken == null || basicToken == "") {
       print("Inside the null check condition");

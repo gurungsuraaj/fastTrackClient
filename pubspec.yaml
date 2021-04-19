@@ -59,6 +59,8 @@ dependencies:
   pin_code_fields: ^2.3.0+3
   flutter_webview_plugin:
   flutter_statusbarcolor:
+  encrypt: 
+  flutter_config: 
 
 dev_dependencies:
   flutter_test:
