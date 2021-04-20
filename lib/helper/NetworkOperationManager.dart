@@ -813,8 +813,10 @@ class NetworkOperationManager {
         var data = jsonDecode(json);
         companyInfoList.serviceDateComment =
             data["CompanyInformation"]["Service_Date_Comment"] ?? "";
-        companyInfoList.versionNo =
-            data["CompanyInformation"]["Version_No"] ?? "";
+        companyInfoList.androidVersion =
+            data["CompanyInformation"]["Android_Version_No"] ?? "";
+                 companyInfoList.androidVersion =
+            data["CompanyInformation"]["IOS_Version_No"] ?? "";
         companyInfoList.appStoreUrl =
             data["CompanyInformation"]["AppStore_Url"] ?? "";
         companyInfoList.playStoreUrl =

@@ -7,7 +7,9 @@ class CompanyInfoModel {
   String city;
   String phone;
   String serviceDateComment;
-  String versionNo;
+  String androidVersion;
+  String iOSversionNo;
+
   String appStoreUrl;
   String playStoreUrl;
 
@@ -20,7 +22,8 @@ class CompanyInfoModel {
       this.city,
       this.phone,
       this.serviceDateComment,
-      this.versionNo,
+      this.androidVersion,
+      this.iOSversionNo,
       this.appStoreUrl,
       this.playStoreUrl
       });

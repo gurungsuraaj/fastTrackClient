@@ -40,8 +40,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await FlutterConfig.loadEnvVariables();
-  print("Lof ${FlutterConfig.get("AES_KEY")}");
+  await FlutterConfig.loadValueForTesting({'AES_KEY' : '9z\$C&F)J@McQfTjW'});
+
   await SpUtil.getInstance();
+  print("Log ${FlutterConfig.get("AES_KEY").toString()}");
 
   runApp(
     MaterialApp(

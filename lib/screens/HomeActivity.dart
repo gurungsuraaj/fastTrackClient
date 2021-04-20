@@ -1074,12 +1074,13 @@ class _HomeActivityState extends State<HomeActivity>
 
   void checkVersionUpdate() async {
     NetworkOperationManager.getCompanyInfo(client).then((res) async {
+      print(res);
       if (res.length > 0) {
         final PackageInfo info = await PackageInfo.fromPlatform();
 
         print('${res[0].playStoreUrl} ${res[0].appStoreUrl}');
         double newVersionNo =
-            double.parse(res[0].versionNo.trim().replaceAll(".", ""));
+            double.parse(res[0].androidVersion.trim().replaceAll(".", ""));
         double currentVersion =
             double.parse(info.version.trim().replaceAll(".", ""));
 
