@@ -40,7 +40,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await FlutterConfig.loadEnvVariables();
-  await FlutterConfig.loadValueForTesting({'AES_KEY' : '9z\$C&F)J@McQfTjW'});
+  // await FlutterConfig.loadValueForTesting({'AES_KEY': '9z\$C&F)J@McQfTjW'});
 
   await SpUtil.getInstance();
   print("Log ${FlutterConfig.get("AES_KEY").toString()}");
@@ -98,8 +98,8 @@ class _SplashScreenState extends State<SplashScreen> {
     String basicToken;
 
     basicToken = SpUtil.getString(Constants.CUSTOMER_NUMBER);
-
-    if (basicToken == null || basicToken == "") {
+    debugPrint("this is basicToke $basicToken");
+    if (basicToken == null || basicToken.isEmpty) {
       print("Inside the null check condition");
       Navigator.of(context).pushReplacementNamed(RoutesName.LOGIN_ACTIVITY);
     } else {
