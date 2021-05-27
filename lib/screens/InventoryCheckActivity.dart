@@ -28,7 +28,6 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
           label: Text("Item Description"),
           numeric: false,
           onSort: (i, b) {
-            print("$i $b");
             setState(() {
               names.sort((a, b) => a.firstName.compareTo(b.firstName));
             });
@@ -39,7 +38,6 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
           label: Text("Quantity In Stock"),
           numeric: false,
           onSort: (i, b) {
-            print("$i $b");
             setState(() {
               names.sort((a, b) => a.lastName.compareTo(b.lastName));
             });

@@ -526,7 +526,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 ),
                 onPressed: () async {
                   if (index == 0) {
-                    print("hello 0");
                     var url = "tel:$nearestStorePhn";
                     if (await canLaunch(url)) {
                       await launch(url);
@@ -534,7 +533,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                       throw 'Could not launch $url';
                     }
                   } else if (index == 1) {
-                    print("hello 1");
                     var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                     await canLaunch(whatsappUrl)
                         ? launch(whatsappUrl)
@@ -671,7 +669,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
 
         setState(() {});
 
-        print(values);
       }
     });
   }
@@ -703,7 +700,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
       setState(() {
         timeController.text = formattedTime;
       });
-      print(formattedTime);
     }
   }
 
@@ -723,7 +719,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
         setState(() {
           locationList = List<String>.from(values['location']);
         });
-        print(values);
       }
     });
   }
@@ -775,9 +770,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
-      print(body);
       if (res.statusCode == Rcode.SUCCESS_CODE) {
-        print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           dateController.text = "";

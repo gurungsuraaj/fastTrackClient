@@ -116,7 +116,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   ),
                   onPressed: () async {
                     if (index == 0) {
-                      print("hello 0");
                       var url = "tel:$nearestStorePhn";
                       if (await canLaunch(url)) {
                         await launch(url);
@@ -124,7 +123,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                         throw 'Could not launch $url';
                       }
                     } else if (index == 1) {
-                      print("hello 1 $whatsAppNum");
                       var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                       await canLaunch(whatsappUrl)
                           ? launch(whatsappUrl)
@@ -224,7 +222,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           brandListSize = List<String>.from(values['brand']);
         });
 
-        print(values);
       }
     });
   }
@@ -1010,7 +1007,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
 
         setState(() {});
 
-        print(values);
       }
     });
   }
@@ -1077,9 +1073,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             body: body)
         .then((res) {
       hideProgressBar();
-      print("Json body $body");
       if (res.statusCode == Rcode.SUCCESS_CODE) {
-        print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           // nameControllerSize.text = "";
@@ -1095,7 +1089,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           selectedRearRimSize = null;
         });
       } else {
-        print('**** Error ${res.body}******');
         displaySnackbar(context, "Error: ${res.body}");
       }
     });
@@ -1125,7 +1118,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       "phone": phoneControllerModel.text,
       "message": commentControllerModel.text
     });
-    print(body);
 
     await http
         .post(
@@ -1135,8 +1127,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
         .then((res) {
       hideProgressBar();
       if (res.statusCode == Rcode.SUCCESS_CODE) {
-        print(body);
-        print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           

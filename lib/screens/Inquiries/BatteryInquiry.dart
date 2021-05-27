@@ -482,7 +482,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 ),
                 onPressed: () async {
                   if (index == 0) {
-                    print("hello 0");
                     var url = "tel:$nearestStorePhn";
                     if (await canLaunch(url)) {
                       await launch(url);
@@ -490,7 +489,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                       throw 'Could not launch $url';
                     }
                   } else if (index == 1) {
-                    print("hello 1");
                     var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                     await canLaunch(whatsappUrl)
                         ? launch(whatsappUrl)
@@ -558,7 +556,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
       setState(() {
         timeController.text = formattedTime;
       });
-      print(formattedTime);
     }
   }
 
@@ -634,7 +631,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
           // brandList = List<String>.from(values['brand']);
         });
 
-        print(values);
       }
     });
   }
@@ -665,9 +661,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
-      print(body);
       if (res.statusCode == Rcode.SUCCESS_CODE) {
-        print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
        
@@ -726,7 +720,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
 
         setState(() {});
 
-        print(values);
       }
     });
   }

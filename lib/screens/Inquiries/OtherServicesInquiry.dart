@@ -432,7 +432,6 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                 ),
                 onPressed: () async {
                   if (index == 0) {
-                    print("hello 0");
                     var url = "tel:$nearestStorePhn";
                     if (await canLaunch(url)) {
                       await launch(url);
@@ -440,7 +439,6 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                       throw 'Could not launch $url';
                     }
                   } else if (index == 1) {
-                    print("hello 1");
                     var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                     await canLaunch(whatsappUrl)
                         ? launch(whatsappUrl)

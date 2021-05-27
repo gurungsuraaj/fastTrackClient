@@ -815,7 +815,7 @@ class NetworkOperationManager {
             data["CompanyInformation"]["Service_Date_Comment"] ?? "";
         companyInfoList.androidVersion =
             data["CompanyInformation"]["Android_Version_No"] ?? "";
-                 companyInfoList.androidVersion =
+                 companyInfoList.iOSversionNo =
             data["CompanyInformation"]["IOS_Version_No"] ?? "";
         companyInfoList.appStoreUrl =
             data["CompanyInformation"]["AppStore_Url"] ?? "";
@@ -1382,10 +1382,7 @@ class NetworkOperationManager {
     )
         .then((res) {
       var rawXmlResponse = res.body;
-      print("URL: $url");
       var code = res.statusCode;
-      print("STATUS: $code");
-      print("RESPONSE: $rawXmlResponse");
 
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
       var resValue;

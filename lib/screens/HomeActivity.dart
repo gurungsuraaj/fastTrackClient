@@ -84,7 +84,7 @@ class _HomeActivityState extends State<HomeActivity>
   List<double> branchDistanceList = List();
   List<LocateModel> branchList = List();
   int shortDistanceIndex;
-
+  double androidVersion, iosVersion;
   var userCurrentLocation;
 
   @override
@@ -153,8 +153,6 @@ class _HomeActivityState extends State<HomeActivity>
     final coordinates = new Coordinates(position.latitude, position.longitude);
     userCurrentLocation =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    print(
-        "THis is the location latitude ${position.latitude}  location :${position.longitude}");
 
     userLong = position.longitude;
     userLatitude = position.latitude;
@@ -257,13 +255,15 @@ class _HomeActivityState extends State<HomeActivity>
                       color: Colors.grey[300],
                     )
                   : CarouselSlider(
-                      enlargeCenterPage: true,
-                      viewportFraction: 1.0,
+                      options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        viewportFraction: 1.0,
+                      ),
+
                       //                  autoPlay: true,
                       //                  autoPlayInterval: Duration(seconds: 1),
                       // height: 200.0,
                       items: promoList.map((i) {
-                        print("${i.banner}");
                         return Builder(
                           builder: (BuildContext context) {
                             return Container(
@@ -634,7 +634,6 @@ class _HomeActivityState extends State<HomeActivity>
                           width: 120,
                           child: RaisedButton(
                             onPressed: () {
-                              print("Hello");
                               // Navigator.pop(context);
 
                               getUserList();
@@ -666,12 +665,10 @@ class _HomeActivityState extends State<HomeActivity>
                               GestureDetector(
                                 onTap: () async {
                                   Navigator.of(context).pop();
-                                  String nearestPhoneNo = SpUtil
-                                      .getString(
+                                  String nearestPhoneNo = SpUtil.getString(
                                           Constants.NEAREST_STORE_PHONENO)
                                       .replaceAll(
                                           new RegExp(r"\s+\b|\b\s"), "");
-                                  print("this is $nearestPhoneNo");
                                   var url = "tel:$nearestPhoneNo";
                                   if (await canLaunch(url)) {
                                     await launch(url);
@@ -691,8 +688,9 @@ class _HomeActivityState extends State<HomeActivity>
                               GestureDetector(
                                 onTap: () async {
                                   Navigator.of(context).pop();
-                                  String whatappNO = SpUtil
-                                      .getString(Constants.WHATS_APP_NUMBER);
+                                  String whatappNO = SpUtil.getString(
+                                      Constants.WHATS_APP_NUMBER);
+                                  print("Whats app number $whatappNO");
                                   var whatsappUrl =
                                       "whatsapp://send?phone=$whatappNO";
                                   await canLaunch(whatsappUrl)
@@ -895,7 +893,6 @@ class _HomeActivityState extends State<HomeActivity>
       setState(() {
         userList = val;
       });
-      print("This is the first token $val ${val[0].token}");
 
       bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
       if (isLocationEnabled != false) {
@@ -906,7 +903,6 @@ class _HomeActivityState extends State<HomeActivity>
       }
     }).catchError((err) {
       hideProgressBar();
-      print("There is an error: $err");
     });
   }
 
@@ -937,10 +933,8 @@ class _HomeActivityState extends State<HomeActivity>
       // distList.reduce(min);
     }
     int shortDistanceIndex = distList.indexOf(distList.reduce(min));
-    print("This is the index $shortDistanceIndex");
 
     var shortDistanceToken = userList[shortDistanceIndex].token;
-    print("This is the token $shortDistanceToken");
     String cusName = userList[shortDistanceIndex].userId;
     // print("Shorest distnace ${calculatedDistanceList.reduce(min)}");
 
@@ -1047,9 +1041,9 @@ class _HomeActivityState extends State<HomeActivity>
       shortDistanceIndex =
           branchDistanceList.indexOf(branchDistanceList.reduce(min));
 
-       SpUtil.putString(Constants.NEAREST_STORE_PHONENO,
+      SpUtil.putString(Constants.NEAREST_STORE_PHONENO,
           "${branchList[shortDistanceIndex].telephone}");
-       SpUtil.putString(Constants.WHATS_APP_NUMBER,
+      SpUtil.putString(Constants.WHATS_APP_NUMBER,
           "${branchList[shortDistanceIndex].whatsAppNum}");
       // print(
       //     "the shorted distance is ${branchList[shortDistanceIndex].telephone}");
@@ -1074,17 +1068,25 @@ class _HomeActivityState extends State<HomeActivity>
 
   void checkVersionUpdate() async {
     NetworkOperationManager.getCompanyInfo(client).then((res) async {
-      print(res);
       if (res.length > 0) {
-        final PackageInfo info = await PackageInfo.fromPlatform();
+        double newVersionNo;
 
-        print('${res[0].playStoreUrl} ${res[0].appStoreUrl}');
-        double newVersionNo =
+        final PackageInfo info = await PackageInfo.fromPlatform();
+        androidVersion =
             double.parse(res[0].androidVersion.trim().replaceAll(".", ""));
+        iosVersion =
+            double.parse(res[0].iOSversionNo.trim().replaceAll(".", ""));
+        // double newVersionNo =
+        //     double.parse(res[0].androidVersion.trim().replaceAll(".", ""));
         double currentVersion =
             double.parse(info.version.trim().replaceAll(".", ""));
 
-        print(" $newVersionNo $currentVersion");
+        if (Platform.isIOS) {
+          print("iosversion $iosVersion");
+          newVersionNo = iosVersion;
+        } else {
+          newVersionNo = androidVersion;
+        }
         if (newVersionNo > currentVersion) {
           _showVersionDialog(context, res[0].appStoreUrl, res[0].playStoreUrl);
         }

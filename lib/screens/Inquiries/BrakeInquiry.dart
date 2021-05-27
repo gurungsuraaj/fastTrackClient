@@ -487,7 +487,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                 ),
                 onPressed: () async {
                   if (index == 0) {
-                    print("hello 0");
                     var url = "tel:$nearestStorePhn";
                     if (await canLaunch(url)) {
                       await launch(url);
@@ -495,7 +494,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                       throw 'Could not launch $url';
                     }
                   } else if (index == 1) {
-                    print("hello 1");
                     var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                     await canLaunch(whatsappUrl)
                         ? launch(whatsappUrl)
@@ -563,7 +561,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
       setState(() {
         timeController.text = formattedTime;
       });
-      print(formattedTime);
     }
   }
 
@@ -638,7 +635,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
           // brandList = List<String>.from(values['brand']);
         });
 
-        print(values);
       }
     });
   }
@@ -683,7 +679,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
 
         setState(() {});
 
-        print(values);
       }
     });
   }
@@ -723,9 +718,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
-      print(body);
       if (res.statusCode == Rcode.SUCCESS_CODE) {
-        print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           winNoController.text = "";

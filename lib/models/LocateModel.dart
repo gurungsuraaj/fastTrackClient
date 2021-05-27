@@ -24,7 +24,6 @@ class LocateModel {
     String dateFromAPI = json['openinghours'];
     bool status;
     if (dateFromAPI == "24hours") {
-      print("24 hour");
       status = true;
     } else {
       final time = dateFormat.parse(DateFormat.Hm().format(now));
@@ -38,14 +37,12 @@ class LocateModel {
         String finalTime =
             ((int.parse(closingTime.substring(0, 2)) + 12)).toString();
         updatedClosingTime = "$finalTime:${closingTime.substring(3, 5)}";
-        print("Time $updatedClosingTime");
       } else {}
 
       final prevDate = dateFormat.parse(openingTime);
       final afterDate = dateFormat.parse(updatedClosingTime);
 
       if (time.isAfter(prevDate) && time.isBefore(afterDate)) {
-        print("Inside");
         status = true;
       } else {
         status = false;

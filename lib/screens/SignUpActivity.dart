@@ -92,7 +92,6 @@ class _SignUpActivity extends State<SignUpActivity> {
   /// get signature code
   _getSignatureCode() async {
     signature = await SmsRetrieved.getAppSignature();
-    print("signature $signature");
   }
 
   @override
@@ -464,7 +463,6 @@ class _SignUpActivity extends State<SignUpActivity> {
     final form = formKey.currentState;
     if (form.validate()) {
       // if (checkBoxValue) {
-      debugPrint("password Saved succesfully");
       var connectivityResult = await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.mobile ||
           connectivityResult == ConnectivityResult.wifi) {
@@ -472,7 +470,6 @@ class _SignUpActivity extends State<SignUpActivity> {
           _signUp();
         } else {
           sendExistingCustomerOTP();
-          print("Existed Customer");
         }
       } else {
         ShowToast.showToast(context, "No internet connection");
@@ -501,14 +498,12 @@ class _SignUpActivity extends State<SignUpActivity> {
 
   void signUp() async {
     showProgressBar();
-    debugPrint("Came to check inventory");
     String url = Api.POST_CUSTOMER_SIGNUP;
 
     String name = nameController.text;
     String email = emailController.text;
     String mobileNum = phoneCode + mobileController.text;
     String password = passwordController.text;
-    debugPrint("This is  url : $mobileNum");
 
     Map<String, String> body = {
       "mobileNo": mobileNum,
@@ -524,9 +519,6 @@ class _SignUpActivity extends State<SignUpActivity> {
       "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
-      debugPrint("came to response after post url..");
-      debugPrint("This is status code: ${val.statusCode}");
-      debugPrint("This is body: ${val.body}");
       var statusCode = val.statusCode;
       var result = json.decode(val.body);
       String message = result["message"];
@@ -712,7 +704,6 @@ class _SignUpActivity extends State<SignUpActivity> {
                   )), // 1 is for sign up in otp screen
         );
       } else {
-        print("suraj ${res.responseBody}");
         displaySnackbar(context, "Error : ${res.responseBody}");
       }
     }).catchError((err) {
@@ -727,8 +718,7 @@ class _SignUpActivity extends State<SignUpActivity> {
             mobileController.text, client)
         .then((res) {
       if (res.responseBody == Rstring.OTP_SEND_SUCCESS || res.status ==  200 ) {
-        ShowToast.showToast(context, res.responseBody);
-        print("Customer No ${widget.customerDetails.customerNo}");
+        // ShowToast.showToast(context, res.responseBody);
         Navigator.push(
           context,
           MaterialPageRoute(

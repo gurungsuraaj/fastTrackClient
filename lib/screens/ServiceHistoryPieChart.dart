@@ -120,7 +120,6 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
           label: Text("Description"),
           numeric: false,
           onSort: (i, b) {
-            print("$i $b");
             setState(() {
               // _serviceDetailList.sort((a, b) => a.firstName.compareTo(b.firstName));
             });
@@ -131,7 +130,6 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
           label: Text("Quantity"),
           numeric: false,
           onSort: (i, b) {
-            print("$i $b");
             setState(() {
               // _serviceDetailList.sort((a, b) => a.lastName.compareTo(b.lastName));
             });

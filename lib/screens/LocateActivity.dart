@@ -336,7 +336,6 @@ class _LocateActivityState extends State<LocateActivity> {
     String closingTime = dateFromAPI.substring(11, 16);
     String updatedClosingTime;
 
-    // print("opening time ${ }");
 
     String extractPM =
         dateFromAPI.substring((dateFromAPI.length - 2), dateFromAPI.length);
@@ -344,14 +343,12 @@ class _LocateActivityState extends State<LocateActivity> {
       String finalTime =
           ((int.parse(closingTime.substring(0, 2)) + 12)).toString();
       updatedClosingTime = "$finalTime:${closingTime.substring(3, 5)}";
-      print("Time $updatedClosingTime");
     } else {}
 
     final prevDate = dateFormat.parse(openingTime);
     final afterDate = dateFormat.parse(updatedClosingTime);
 
     if (time.isAfter(prevDate) && time.isBefore(afterDate)) {
-      print("Inside  $time $prevDate $afterDate");
     }
   }
 }
