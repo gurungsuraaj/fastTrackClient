@@ -20,6 +20,8 @@ class LocateActivity extends StatefulWidget {
 }
 
 class _LocateActivityState extends State<LocateActivity> {
+  double longitude = 23.11;
+  double latitude = 25.22;
   List<LocateModel> locationlist = List<LocateModel>();
   bool isProgressBarShown = false;
 
@@ -255,7 +257,8 @@ class _LocateActivityState extends State<LocateActivity> {
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white),textAlign: TextAlign.center,
+                                                  color: Colors.white),
+                                              textAlign: TextAlign.center,
                                             ),
                                           ),
                                         ),
@@ -305,6 +308,8 @@ class _LocateActivityState extends State<LocateActivity> {
         locationlist = branches
             .map<LocateModel>((json) => LocateModel.fromJson(json))
             .toList();
+
+        locationlist.sort((a, b) => a.distance.compareTo(b.distance));
       } else {
         hideProgressBar();
       }
@@ -323,32 +328,31 @@ class _LocateActivityState extends State<LocateActivity> {
     });
   }
 
-  void calculateOpeningHour() async {
-    final startTime = DateTime(2020, 8, 23, 01, 30);
-    final endTime = DateTime(2020, 10, 23, 13, 00);
+  // void calculateOpeningHour() async {
+  //   final startTime = DateTime(2020, 8, 23, 01, 30);
+  //   final endTime = DateTime(2020, 10, 23, 13, 00);
 
-    DateFormat dateFormat = DateFormat("HH:mm");
-    DateTime now = DateTime.now();
-    final time = dateFormat.parse(DateFormat.Hm().format(now));
-    String dateFromAPI = "08:00 am - 11:00 pm";
+  //   DateFormat dateFormat = DateFormat("HH:mm");
+  //   DateTime now = DateTime.now();
+  //   final time = dateFormat.parse(DateFormat.Hm().format(now));
+  //   String dateFromAPI = "08:00 am - 11:00 pm";
 
-    String openingTime = dateFromAPI.substring(0, 6);
-    String closingTime = dateFromAPI.substring(11, 16);
-    String updatedClosingTime;
+  //   String openingTime = dateFromAPI.substring(0, 6);
+  //   String closingTime = dateFromAPI.substring(11, 16);
+  //   String updatedClosingTime;
 
+  //   String extractPM =
+  //       dateFromAPI.substring((dateFromAPI.length - 2), dateFromAPI.length);
+  //   if (extractPM == "pm") {
+  //     String finalTime =
+  //         ((int.parse(closingTime.substring(0, 2)) + 12)).toString();
+  //     updatedClosingTime = "$finalTime:${closingTime.substring(3, 5)}";
+  //   } else {}
 
-    String extractPM =
-        dateFromAPI.substring((dateFromAPI.length - 2), dateFromAPI.length);
-    if (extractPM == "pm") {
-      String finalTime =
-          ((int.parse(closingTime.substring(0, 2)) + 12)).toString();
-      updatedClosingTime = "$finalTime:${closingTime.substring(3, 5)}";
-    } else {}
+  //   final prevDate = dateFormat.parse(openingTime);
+  //   final afterDate = dateFormat.parse(updatedClosingTime);
 
-    final prevDate = dateFormat.parse(openingTime);
-    final afterDate = dateFormat.parse(updatedClosingTime);
-
-    if (time.isAfter(prevDate) && time.isBefore(afterDate)) {
-    }
-  }
+  //   if (time.isAfter(prevDate) && time.isBefore(afterDate)) {
+  //   }
+  // }
 }
