@@ -456,7 +456,10 @@ class _HomeActivityState extends State<HomeActivity>
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LocateActivity()),
+                                        builder: (context) => LocateActivity(
+                                          userLat: userLatitude,
+                                          userLong: userLong,
+                                        )),
                                   );
                                 },
                                 child: Column(
@@ -911,18 +914,20 @@ class _HomeActivityState extends State<HomeActivity>
     List<UserList> calculatedDistanceList = [];
     List<double> distList = [];
 
-    debugPrint("This is user location $userLong");
+    debugPrint("This is user location $userLatitude $userLong");
 
     for (UserList item in userList) {
       double longitude = double.parse(item.longitude);
       double latitude = double.parse(item.latitude);
-      debugPrint("long $longitude , lat : $latitude");
+      debugPrint("");
 
       double distanceInMeters = await Geolocator.distanceBetween(
           userLatitude, userLong, latitude, longitude);
       // item.distanceInMeter = distanceInMeters;
       // calculatedDistanceList.add(item);
       // print("THis is from geolocator $distanceInMeters");
+
+      print("Username ${item.userId} Distance in meters $distanceInMeters  long $longitude , lat : $latitude");
       distList.add(distanceInMeters);
 
       // var result = calculatedDistanceList

@@ -711,7 +711,7 @@ class NetworkOperationManager {
 <tns:ReadMultiple>
 <tns:filter>
 <tns:Field>Customer_No</tns:Field>
-<tns:Criteria>$customerNumber</tns:Criteria>
+<tns:Criteria>CS269577</tns:Criteria>
 </tns:filter>
 <tns:bookmarkKey></tns:bookmarkKey>
 <tns:setSize></tns:setSize>
@@ -822,6 +822,7 @@ class NetworkOperationManager {
         companyInfoList.playStoreUrl =
             data["CompanyInformation"]["PlayStore_Url"] ?? "";
         companyInfoList.statusCode = res.statusCode;
+        companyInfoList.lapseServiceMessage = data["CompanyInformation"]["Lapse_Service_Date_Message"];
         companyInfoArrayList.add(companyInfoList);
       });
       print("This is response body: $response");

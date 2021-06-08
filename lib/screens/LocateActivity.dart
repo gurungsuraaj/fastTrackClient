@@ -13,7 +13,9 @@ import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LocateActivity extends StatefulWidget {
-  LocateActivity({Key key}) : super(key: key);
+  final double userLong;
+  final double userLat;
+  LocateActivity({Key key, this.userLong, this.userLat}) : super(key: key);
 
   @override
   _LocateActivityState createState() => _LocateActivityState();
@@ -306,10 +308,14 @@ class _LocateActivityState extends State<LocateActivity> {
         debugPrint("$branches");
 
         locationlist = branches
-            .map<LocateModel>((json) => LocateModel.fromJson(json))
+            .map<LocateModel>((json) => LocateModel.fromJson(json,
+                latitude: widget.userLat, longitude: widget.userLong))
             .toList();
 
-        locationlist.sort((a, b) => a.distance.compareTo(b.distance));
+        if (widget.userLat != null && widget.userLong != null) {
+          print('--------------no location !!------------');
+          locationlist.sort((a, b) => a.distance.compareTo(b.distance));
+        }
       } else {
         hideProgressBar();
       }

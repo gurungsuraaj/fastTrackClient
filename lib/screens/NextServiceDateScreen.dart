@@ -24,16 +24,22 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   bool isProgressBarShown = false;
   NTLMClient client;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  List<VehicleListModel> vehicleList = List();
-  List<NextServiceDateModel> nextSerivceDateList = List();
+  List<VehicleListModel> vehicleList = [];
+  List<VehicleListModel> tempVehicleList = [];
+  List<NextServiceDateModel> nextSerivceDateList = [];
+  DateTime todayDate = DateTime.now();
+  String serviceDateComment, lapseDateMessage;
 
   @override
   void initState() {
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    getPrefs().whenComplete(() {
-      getVehicleList().whenComplete(() {});
+    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    getCompanyInfo().whenComplete(() {
+      // getPrefs().whenComplete(() {
+      getVehicleList();
+      // });
     });
   }
 
@@ -58,34 +64,44 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                 child: ListTile(
                   title: Container(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    child: Wrap(children: <Widget>[
-                      Text("Thank you for servicing your vehicle No.",
-                          style: textStyle1),
-                      Text("${nextSerivceDateList[index].registerNo}",
-                          style: textStyle2),
-                      Text(" at", style: textStyle1),
-                      Text(
-                          " Fasttrack-${nextSerivceDateList[index].locationName}",
-                          style: textStyle2),
-                      InkWell(
-                        onTap: () async {
-                          var url =
-                              "tel:${nextSerivceDateList[index].phoneNumber}";
-                          if (await canLaunch(url)) {
-                            await launch(url);
-                          } else {
-                            throw 'Could not launch $url';
-                          }
-                        },
-                        child: Text(
-                            " ${nextSerivceDateList[index].phoneNumber}.",
-                            style: textStyle2),
-                      ),
-                      // Text(' As per our records', style: textStyle1),
-                      Text(
-                          "As per our records next service is due on ${nextSerivceDateList[index].nextServiceDate}.",
-                          style: textStyle1)
-                    ]),
+                    child: todayDate.isAfter(DateTime.parse(
+                            nextSerivceDateList[index].nextServiceDate))
+                        ? Wrap(children: [
+                            Text(
+                              '$lapseDateMessage for vehicle serial number ',
+                            ),
+                            Text(
+                                '${nextSerivceDateList[index].vehicleSerialNo},',
+                                style: textStyle2)
+                          ])
+                        : Wrap(children: <Widget>[
+                            Text('Thank you for servicing your vehicle No.',
+                                style: textStyle1),
+                            Text("${nextSerivceDateList[index].registerNo}",
+                                style: textStyle2),
+                            Text(" at", style: textStyle1),
+                            Text(
+                                " Fasttrack-${nextSerivceDateList[index].locationName}",
+                                style: textStyle2),
+                            InkWell(
+                              onTap: () async {
+                                var url =
+                                    "tel:${nextSerivceDateList[index].phoneNumber}";
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Text(
+                                  " ${nextSerivceDateList[index].phoneNumber}.",
+                                  style: textStyle2),
+                            ),
+                            // Text(' As per our records', style: textStyle1),
+                            Text(
+                                "As per our records next service is due on ${nextSerivceDateList[index].nextServiceDate}.",
+                                style: textStyle1)
+                          ]),
                   ),
 
                   //  Text(
@@ -102,30 +118,17 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     );
   }
 
-  Future<void> getVehicleList() async {
-    showProgressBar();
-    NetworkOperationManager.getVehicleList(customerNumber, client).then((res) {
-      hideProgressBar();
-      if (res.length > 0) {
-        vehicleList = res;
-        setState(() {});
-        getNextServiceDate();
-      } else {
-        // showSnackBar('No Vehicle list available');
-        getCompanyInfo();
-      }
-    }).catchError((err) {
-      hideProgressBar();
-      showSnackBar(err);
-    });
-  }
+  // Future<void> getPrefs() async {
+  //   customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+  // }
 
   Future<void> getCompanyInfo() async {
     showProgressBar();
     NetworkOperationManager.getCompanyInfo(client).then((res) {
       hideProgressBar();
       if (res.length > 0) {
-        showAlert(res[0].serviceDateComment);
+        serviceDateComment = res[0].serviceDateComment;
+        lapseDateMessage = res[0].lapseServiceMessage;
       }
       print('the fetching of company information is successful');
     }).catchError((err) {
@@ -134,42 +137,32 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     });
   }
 
-  Future<void> getPrefs() async {
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
-  }
-
-  void showProgressBar() {
-    setState(() {
-      isProgressBarShown = true;
+  void getVehicleList() {
+    showProgressBar();
+    NetworkOperationManager.getVehicleList(customerNumber, client).then((res) {
+      hideProgressBar();
+      if (res.length > 0) {
+        vehicleList = res;
+        tempVehicleList = res;
+        setState(() {});
+        getNextServiceDate();
+      } else {
+        // showSnackBar('No Vehicle list available');
+        showAlert(serviceDateComment);
+        // getCompanyInfo();
+      }
+    }).catchError((err) {
+      hideProgressBar();
+      showSnackBar(err);
     });
   }
 
-  void hideProgressBar() {
-    setState(() {
-      isProgressBarShown = false;
-    });
+  void getNextServiceDate() {
+    getVehileDataFromNAV(
+        tempVehicleList[0].Serial_No, tempVehicleList[0].Registration_No);
   }
 
-  showSnackBar(String snackString) {
-    final snackBar = new SnackBar(
-        content: Text(snackString),
-        duration: Duration(minutes: 5),
-        action: SnackBarAction(
-          label: "OK",
-          onPressed: () {
-            _scaffoldKey.currentState.removeCurrentSnackBar();
-          },
-        ));
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-  }
-
-  void getNextServiceDate() async {
-    for (VehicleListModel vehicle in vehicleList) {
-      getVehileDataFromNAV(vehicle.Serial_No, vehicle.Registration_No);
-    }
-  }
-
-  void getVehileDataFromNAV(String vehicleSerialNo, String regNo) async {
+  void getVehileDataFromNAV(String vehicleSerialNo, String regNo) {
     showProgressBar();
     NetworkOperationManager.checkServiceDate(
             customerNumber, vehicleSerialNo, regNo, client)
@@ -180,9 +173,17 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
         // nextService.vehicleSerialNo = vehicleSerialNo;
         // nextService.nextServiceDate = res.responseBody;
         // nextService.registerNo = regNo;
-        print(" Status ${res.status}");
+        print(" Date Status ${res.status}");
         nextSerivceDateList.add(res);
         setState(() {});
+        tempVehicleList.removeAt(0);
+        if (tempVehicleList.length > 0) {
+          getNextServiceDate();
+        } else {
+          if (nextSerivceDateList.length == 0) {
+            showAlert(serviceDateComment);
+          }
+        }
       } else {
         showSnackBar(res.faultString);
       }
@@ -239,5 +240,30 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
         );
       },
     );
+  }
+
+  void showProgressBar() {
+    setState(() {
+      isProgressBarShown = true;
+    });
+  }
+
+  void hideProgressBar() {
+    setState(() {
+      isProgressBarShown = false;
+    });
+  }
+
+  showSnackBar(String snackString) {
+    final snackBar = new SnackBar(
+        content: Text(snackString),
+        duration: Duration(minutes: 5),
+        action: SnackBarAction(
+          label: "OK",
+          onPressed: () {
+            _scaffoldKey.currentState.removeCurrentSnackBar();
+          },
+        ));
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }
