@@ -21,7 +21,7 @@ class LocateModel {
       this.whatsAppNum,
       this.openingStatus,
       this.distance});
-  factory LocateModel.fromJson(Map<String, dynamic> json) {
+  factory LocateModel.fromJson(Map<String, dynamic> json, {double longitude , double latitude}) {
     // Calculation of branch location open and close time for the UI.
     DateFormat dateFormat = DateFormat("HH:mm");
     DateTime now = DateTime.now().toLocal();
@@ -60,7 +60,7 @@ class LocateModel {
 
     /* Disance between the current user and store */
     double calculatedDistance =
-        Geolocator.distanceBetween(double.parse(latLng[0]), double.parse(latLng[1]), 25.00, 23.00);
+        Geolocator.distanceBetween(double.parse(latLng[0]), double.parse(latLng[1]), latitude, longitude);
     print(
         "location ${latLng[0]} , ${latLng[0]} , distance $calculatedDistance");
     return LocateModel(

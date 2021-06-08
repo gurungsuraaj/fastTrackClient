@@ -306,7 +306,7 @@ class _LocateActivityState extends State<LocateActivity> {
         debugPrint("$branches");
 
         locationlist = branches
-            .map<LocateModel>((json) => LocateModel.fromJson(json))
+            .map<LocateModel>((json) => LocateModel.fromJson(json,))
             .toList();
 
         locationlist.sort((a, b) => a.distance.compareTo(b.distance));

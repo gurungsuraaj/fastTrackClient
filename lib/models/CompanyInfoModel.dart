@@ -12,6 +12,7 @@ class CompanyInfoModel {
 
   String appStoreUrl;
   String playStoreUrl;
+  String lapseServiceMessage;
 
   CompanyInfoModel(
       {this.statusCode,
@@ -25,6 +26,7 @@ class CompanyInfoModel {
       this.androidVersion,
       this.iOSversionNo,
       this.appStoreUrl,
-      this.playStoreUrl
+      this.playStoreUrl,
+      this.lapseServiceMessage
       });
 }
