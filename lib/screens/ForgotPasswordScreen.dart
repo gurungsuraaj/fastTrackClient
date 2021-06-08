@@ -35,7 +35,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   _getSignatureCode() async {
     signature = await SmsRetrieved.getAppSignature();
-    print("signature $signature");
   }
 
   var fontSizeTextField = 14.0;

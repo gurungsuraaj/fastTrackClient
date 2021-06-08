@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>124041872656-det98vb6khiouorm05rg0e4h43dpnled.apps.googleusercontent.com</string>
+	<string>124041872656-7m7pd434c1p1ks5d7i6afft12bmrbcaj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.124041872656-det98vb6khiouorm05rg0e4h43dpnled</string>
+	<string>com.googleusercontent.apps.124041872656-7m7pd434c1p1ks5d7i6afft12bmrbcaj</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDiLE5zc3ME4PY3jt9XZrtShsMJZ4xrbhU</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ebt.ftclient</string>
+	<string>com.fasttrack.clientapp</string>
 	<key>PROJECT_ID</key>
 	<string>fasttrack-b178f</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:124041872656:ios:3eb96c9ffd194448ad9195</string>
+	<string>1:124041872656:ios:482460d1830ea061ad9195</string>
 	<key>DATABASE_URL</key>
 	<string>https://fasttrack-b178f.firebaseio.com</string>
 </dict>

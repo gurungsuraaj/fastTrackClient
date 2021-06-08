@@ -24,7 +24,9 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,8 +38,13 @@ import 'database/AppDatabase.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  
+
+  await FlutterConfig.loadEnvVariables();
+  // await FlutterConfig.loadValueForTesting({'AES_KEY': '9z\$C&F)J@McQfTjW'});
+
+  await SpUtil.getInstance();
+  print("Log ${FlutterConfig.get("AES_KEY").toString()}");
+
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -68,9 +75,6 @@ Future<void> main() async {
   );
 }
 
-
-
-
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -93,10 +97,9 @@ class _SplashScreenState extends State<SplashScreen> {
     // String location = prefs.getString(Constants.location);
     String basicToken;
 
-    final prefs = await SharedPreferences.getInstance();
-    basicToken = prefs.getString(Constants.CUSTOMER_NUMBER);
-
-    if (basicToken == null || basicToken == "") {
+    basicToken = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    debugPrint("this is basicToke $basicToken");
+    if (basicToken == null || basicToken.isEmpty) {
       print("Inside the null check condition");
       Navigator.of(context).pushReplacementNamed(RoutesName.LOGIN_ACTIVITY);
     } else {
@@ -172,5 +175,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-

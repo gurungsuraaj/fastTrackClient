@@ -813,8 +813,10 @@ class NetworkOperationManager {
         var data = jsonDecode(json);
         companyInfoList.serviceDateComment =
             data["CompanyInformation"]["Service_Date_Comment"] ?? "";
-        companyInfoList.versionNo =
-            data["CompanyInformation"]["Version_No"] ?? "";
+        companyInfoList.androidVersion =
+            data["CompanyInformation"]["Android_Version_No"] ?? "";
+                 companyInfoList.iOSversionNo =
+            data["CompanyInformation"]["IOS_Version_No"] ?? "";
         companyInfoList.appStoreUrl =
             data["CompanyInformation"]["AppStore_Url"] ?? "";
         companyInfoList.playStoreUrl =
@@ -886,7 +888,7 @@ class NetworkOperationManager {
           nextServiceData.vehicleSerialNo = vehicleSerialNo;
           nextServiceData.nextServiceDate =
               data["CheckNextServiceDateApp_Result"]["nextServiceDate"] ?? "";
-                      nextServiceData.registerNo = regNo;
+          nextServiceData.registerNo = regNo;
         });
         // formattedResVal = resValue.map((node) => node.text);
         // response_message = formattedResVal.first;
@@ -895,9 +897,7 @@ class NetworkOperationManager {
         formattedResVal = resValue.map((node) => node.text);
         nextServiceData.faultString = formattedResVal.first;
         nextServiceData.status = res.statusCode;
-
       }
-
     });
 
     return nextServiceData;
@@ -1218,9 +1218,14 @@ class NetworkOperationManager {
       var formattedResVal;
       var response_message;
       if (code == Rcode.SUCCESS_CODE) {
-        resValue = parsedXml.findAllElements("returnTxt");
+        print("Suraj");
+
+        resValue = parsedXml.findAllElements("SendCustomerOTP_Result");
         formattedResVal = resValue.map((node) => node.text);
+        print("Suraj 1");
+
         response_message = formattedResVal.first;
+        print("Suraj 2");
       } else {
         resValue = parsedXml.findAllElements("faultstring");
         formattedResVal = resValue.map((node) => node.text);
@@ -1377,10 +1382,7 @@ class NetworkOperationManager {
     )
         .then((res) {
       var rawXmlResponse = res.body;
-      print("URL: $url");
       var code = res.statusCode;
-      print("STATUS: $code");
-      print("RESPONSE: $rawXmlResponse");
 
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
       var resValue;

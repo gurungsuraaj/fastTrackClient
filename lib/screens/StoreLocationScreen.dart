@@ -108,7 +108,6 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     shortDistanceIndex =
         branchDistanceList.indexOf(branchDistanceList.reduce(min));
 
-    print("the shorted distance is ${branchList[shortDistanceIndex].address}");
 
     var shortestDistancebranch =
     branchList[shortDistanceIndex].latlng.split(",");
@@ -148,7 +147,6 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
 
       }
     }).catchError((err) {
-      print("Error $err ");
       hideProgressBar();
     });
   }

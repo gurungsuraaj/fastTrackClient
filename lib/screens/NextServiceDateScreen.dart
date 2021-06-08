@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/models/VehicleListModel.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
@@ -106,7 +107,6 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     NetworkOperationManager.getVehicleList(customerNumber, client).then((res) {
       hideProgressBar();
       if (res.length > 0) {
-        print("Inside success ${res.length}");
         vehicleList = res;
         setState(() {});
         getNextServiceDate();
@@ -125,7 +125,6 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     NetworkOperationManager.getCompanyInfo(client).then((res) {
       hideProgressBar();
       if (res.length > 0) {
-        print('${res[0].serviceDateComment}');
         showAlert(res[0].serviceDateComment);
       }
       print('the fetching of company information is successful');
@@ -136,8 +135,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   }
 
   Future<void> getPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
+    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
   }
 
   void showProgressBar() {
@@ -153,7 +151,6 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   }
 
   showSnackBar(String snackString) {
-    print(snackString);
     final snackBar = new SnackBar(
         content: Text(snackString),
         duration: Duration(minutes: 5),

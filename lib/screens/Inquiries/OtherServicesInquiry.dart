@@ -4,6 +4,7 @@ import 'package:fasttrackgarage_app/models/MakeMode.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
@@ -431,7 +432,6 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                 ),
                 onPressed: () async {
                   if (index == 0) {
-                    print("hello 0");
                     var url = "tel:$nearestStorePhn";
                     if (await canLaunch(url)) {
                       await launch(url);
@@ -439,7 +439,6 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                       throw 'Could not launch $url';
                     }
                   } else if (index == 1) {
-                    print("hello 1");
                     var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                     await canLaunch(whatsappUrl)
                         ? launch(whatsappUrl)
@@ -692,13 +691,13 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
   Future<void> getPrefs() async {
     String customerName, customerNumber, customerEmail;
 
-    final prefs = await SharedPreferences.getInstance();
+    
     setState(() async {
-      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
-      customerName = await prefs.getString(Constants.CUSTOMER_NAME);
-      customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail = await prefs.getString(Constants.CUSTOMER_EMAIL);
+      nearestStorePhn =  SpUtil.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+      whatsAppNum =  SpUtil.getString(Constants.WHATS_APP_NUMBER);
+      customerName =  SpUtil.getString(Constants.CUSTOMER_NAME);
+      customerNumber =  SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
+      customerEmail =  SpUtil.getString(Constants.CUSTOMER_EMAIL);
 
       nameController.text = customerName;
       phoneController.text = customerNumber;

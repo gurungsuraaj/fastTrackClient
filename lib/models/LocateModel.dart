@@ -1,3 +1,4 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
 class LocateModel {
@@ -9,6 +10,7 @@ class LocateModel {
   String googlemap;
   String whatsAppNum;
   bool openingStatus;
+  double distance;
   LocateModel(
       {this.name,
       this.address,
@@ -17,14 +19,15 @@ class LocateModel {
       this.latlng,
       this.googlemap,
       this.whatsAppNum,
-      this.openingStatus});
+      this.openingStatus,
+      this.distance});
   factory LocateModel.fromJson(Map<String, dynamic> json) {
+    // Calculation of branch location open and close time for the UI.
     DateFormat dateFormat = DateFormat("HH:mm");
     DateTime now = DateTime.now().toLocal();
     String dateFromAPI = json['openinghours'];
     bool status;
     if (dateFromAPI == "24hours") {
-      print("24 hour");
       status = true;
     } else {
       final time = dateFormat.parse(DateFormat.Hm().format(now));
@@ -38,28 +41,38 @@ class LocateModel {
         String finalTime =
             ((int.parse(closingTime.substring(0, 2)) + 12)).toString();
         updatedClosingTime = "$finalTime:${closingTime.substring(3, 5)}";
-        print("Time $updatedClosingTime");
       } else {}
 
       final prevDate = dateFormat.parse(openingTime);
       final afterDate = dateFormat.parse(updatedClosingTime);
 
       if (time.isAfter(prevDate) && time.isBefore(afterDate)) {
-        print("Inside");
         status = true;
       } else {
         status = false;
       }
     }
 
+    /* Calculation of distance between the user and store and 
+          sort based on the nearest location. */
+
+    var latLng = json["latlng"].split(',');
+
+    /* Disance between the current user and store */
+    double calculatedDistance =
+        Geolocator.distanceBetween(double.parse(latLng[0]), double.parse(latLng[1]), 25.00, 23.00);
+    print(
+        "location ${latLng[0]} , ${latLng[0]} , distance $calculatedDistance");
     return LocateModel(
-        name: json['name'],
-        address: json['address'],
-        telephone: json['telephone'],
-        openinghours: json['openinghours'],
-        latlng: json['latlng'],
-        googlemap: json['googlemap'],
-        whatsAppNum: json['whatsapp'],
-        openingStatus: status);
+      name: json['name'],
+      address: json['address'],
+      telephone: json['telephone'],
+      openinghours: json['openinghours'],
+      latlng: json['latlng'],
+      googlemap: json['googlemap'],
+      whatsAppNum: json['whatsapp'],
+      openingStatus: status,
+      distance: calculatedDistance,
+    );
   }
 }

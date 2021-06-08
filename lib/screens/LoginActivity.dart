@@ -304,7 +304,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            "All right reserve © 2020",
+                                            "All right reserved © 2020",
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -376,19 +376,12 @@ class _LoginActivityState extends State<LoginActivity> {
   void performLogin() async {
     showProgressBar();
     String url = Api.POST_CUSTOMER_LOGIN;
-    debugPrint("This is  url : $url, IMEI $_platformImei");
 
     String mobileNumber = phoneCode + mobileController.text;
     String password = passwordController.text;
     String email = "";
     String custNum = "";
     String custName = "";
-
-    debugPrint("email : $email");
-    debugPrint("PW : $password");
-    debugPrint("Mobile num : $mobileNumber");
-    debugPrint("Number : $custNum");
-    debugPrint("CustName : $custName");
 
     Map<String, String> body = {
       "mobileNo": mobileNumber,
@@ -406,13 +399,9 @@ class _LoginActivityState extends State<LoginActivity> {
       "imei": "$_platformImei",
     };
     await http.post(url, body: body_json, headers: header).then((val) {
-      debugPrint("came to response after post url..");
-      debugPrint("This is status code: ${val.statusCode}");
-      debugPrint("This is body: ${val.body}");
       int statusCode = val.statusCode;
       var result = json.decode(val.body);
 
-      debugPrint("This is after result: $result");
 
       String message = result["message"];
 
@@ -423,10 +412,8 @@ class _LoginActivityState extends State<LoginActivity> {
       String custEmail = result["data"]["custEmail"];
 
       if (statusCode == Rcode.SUCCESS_CODE) {
-        debugPrint("THis is Customer number $custNumber");
-        debugPrint("THis is token number $token");
+    
         String basicToken = "Basic $token";
-        debugPrint("Basic token : $basicToken");
 
         hideProgressBar();
         PrefsManager.saveLoginCredentialsToPrefs(custNumber, customerName,
@@ -599,7 +586,6 @@ class _LoginActivityState extends State<LoginActivity> {
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
-        print("${res.customerEmail} ${res.customerName}");
         PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
             res.customerName, res.customerEmail, "", mobileController.text);
 
@@ -607,7 +593,6 @@ class _LoginActivityState extends State<LoginActivity> {
             context, MaterialPageRoute(builder: ((context) => MainTab())));
         ShowToast.showToast(context, "Login Success");
       } else {
-        print(res.errResponse);
         ShowToast.showToast(context, res.errResponse);
       }
     }).catchError((err) {
@@ -641,7 +626,6 @@ class _LoginActivityState extends State<LoginActivity> {
   Future<String> getVersionNumber() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
-    print(version);
 
     return version;
   }

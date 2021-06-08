@@ -10,6 +10,7 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
@@ -320,9 +321,6 @@ String customerNumber;
 
 
    Future<void> getPref() async {
-    final prefs = await SharedPreferences.getInstance();
-    customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
-    print("Customer Number  $customerNumber");
-
+    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
   }
 }

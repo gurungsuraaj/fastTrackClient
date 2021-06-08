@@ -95,17 +95,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<void> getDataFromDB() async {
     DateTime currentTime = DateTime.now();
-    print("test");
     final database =
         await $FloorAppDatabase.databaseBuilder('app_database.db').build();
 
     await database.notificationDao.findAllNotification().then((res) async {
       for (NotificationDbModel item in res) {
-        print("Item date ${item.dateTime}");
         DateTime notifcationDate = DateTime.parse(item.dateTime);
 
         final difference = currentTime.difference(notifcationDate).inDays;
-        print("difference $difference");
 
         if (difference > 2) {
           await database.notificationDao.deleteNotification(item.id);
@@ -121,7 +118,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       setState(() {});
       return _refreshCompleter.future;
     }).catchError((err) {
-      print(err);
     });
   }
 }

@@ -164,7 +164,6 @@ class _OTP extends State<OTP> {
                                           fieldWidth: 30,
                                           onChanged: (value) {
                                             _otpCode = value;
-                                            print(_otpCode);
 
                                             if (_otpCode.length == 6) {
                                               if (widget.mode == 1) {
@@ -282,7 +281,6 @@ class _OTP extends State<OTP> {
     await NetworkOperationManager.SubmitOTP(widget.query, otpPin, client)
         .then((res) {
       hideProgressBar();
-      print("response ${res.responseBody}");
       if (res.status == 200) {
         Navigator.push(
             context,
@@ -313,7 +311,6 @@ class _OTP extends State<OTP> {
         //Automatically login after register
         _performLogin();
       } else {
-        print("suraj ${res.responseBody}");
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");
       }
     });
@@ -325,7 +322,6 @@ class _OTP extends State<OTP> {
         .then((res) {
       hideProgressBar();
       if (res.status == Rcode.SUCCESS_CODE) {
-        print("${res.customerEmail} ${res.customerName}");
         PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
             res.customerName, res.customerEmail, "", widget.query);
         Navigator.pushReplacement(
@@ -334,7 +330,6 @@ class _OTP extends State<OTP> {
         );
         ShowToast.showToast(context, "Login Success");
       } else {
-        print(res.errResponse);
         ShowToast.showToast(context, res.errResponse);
       }
     }).catchError((err) {
@@ -386,9 +381,8 @@ class _OTP extends State<OTP> {
             otp,
             client)
         .then((res) {
-      print("Inside existed customer");
       hideProgressBar();
-      if (res.responseBody == Rstring.OTP_VERIFIED) {
+      if (res.responseBody == Rstring.OTP_VERIFIED || res.status == 200) {
         // Save the data locally and navigate to the Home screen.
 
         PrefsManager.saveLoginCredentialsToPrefs(widget.customerNo,

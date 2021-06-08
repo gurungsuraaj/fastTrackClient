@@ -3,6 +3,7 @@ import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
@@ -314,7 +315,6 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   }
 
   Future<void> getPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
+    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
   }
 }

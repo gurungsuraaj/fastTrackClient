@@ -1,6 +1,7 @@
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
@@ -163,11 +164,10 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
   }
 
   Future<String> getPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    customerName = await prefs.getString((Constants.CUSTOMER_NAME));
-    mobNumber = await prefs.getString((Constants.CUSTOMER_MOBILE_NO));
-    customerEmail = await prefs.getString((Constants.CUSTOMER_EMAIL));
-    customerNumber = await prefs.getString(Constants.CUSTOMER_NUMBER);
+    customerName = SpUtil.getString((Constants.CUSTOMER_NAME));
+    mobNumber = SpUtil.getString((Constants.CUSTOMER_MOBILE_NO));
+    customerEmail = SpUtil.getString((Constants.CUSTOMER_EMAIL));
+    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
     setState(() {});
     //  return serviceOrderNum;
   }

@@ -1,5 +1,6 @@
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,8 +68,7 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
   }
 
   onCallPressed() async {
-    final prefs = await SharedPreferences.getInstance();
-    String phnNum = await prefs.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+    String phnNum = SpUtil.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
 
     var url = "tel:$phnNum";
     if (await canLaunch(url)) {

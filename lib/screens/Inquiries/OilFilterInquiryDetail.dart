@@ -5,6 +5,7 @@ import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/InquiryInfo.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -93,7 +94,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 40,
-                                     width: width * 0.45,
+                    width: width * 0.45,
 
                     padding: EdgeInsets.only(left: 5),
                     // margin: EdgeInsets.only(top: 10),
@@ -123,8 +124,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 40,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -158,8 +158,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 60,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -184,10 +183,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 60,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
-                      keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value.length == 0) {
                           return ("Please fill up this field.");
@@ -239,8 +236,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 40,
-                                    width: width * 0.45,
-
+                    width: width * 0.45,
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -266,7 +262,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 40,
-                                      width: width * 0.45,
+                    width: width * 0.45,
 
                     padding: EdgeInsets.only(left: 5),
                     // margin: EdgeInsets.only(bottom: 20),
@@ -300,8 +296,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 60,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -325,8 +320,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 60,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
                       validator: (value) {
                         bool emailValid = RegExp(
@@ -359,8 +353,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 children: <Widget>[
                   Container(
                     height: 60,
-                                   width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -385,8 +378,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   ),
                   Container(
                     height: 60,
-                                   width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -534,7 +526,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 ),
                 onPressed: () async {
                   if (index == 0) {
-                    print("hello 0");
                     var url = "tel:$nearestStorePhn";
                     if (await canLaunch(url)) {
                       await launch(url);
@@ -542,7 +533,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                       throw 'Could not launch $url';
                     }
                   } else if (index == 1) {
-                    print("hello 1");
                     var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
                     await canLaunch(whatsappUrl)
                         ? launch(whatsappUrl)
@@ -679,7 +669,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
 
         setState(() {});
 
-        print(values);
       }
     });
   }
@@ -711,7 +700,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
       setState(() {
         timeController.text = formattedTime;
       });
-      print(formattedTime);
     }
   }
 
@@ -731,7 +719,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
         setState(() {
           locationList = List<String>.from(values['location']);
         });
-        print(values);
       }
     });
   }
@@ -783,9 +770,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
-      print(body);
       if (res.statusCode == Rcode.SUCCESS_CODE) {
-        print(res.body);
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           dateController.text = "";
@@ -822,14 +807,14 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   }
 
   Future<void> getPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
     String customerName, customerNumber, customerEmail;
     setState(() async {
-      nearestStorePhn = await prefs.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum = await prefs.getString(Constants.WHATS_APP_NUMBER);
-      customerName = await prefs.getString(Constants.CUSTOMER_NAME);
-      customerNumber = await prefs.get(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail = await prefs.getString(Constants.CUSTOMER_EMAIL);
+      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+          .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+      whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
+      customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
+      customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
+      customerEmail = SpUtil.getString(Constants.CUSTOMER_EMAIL);
 
       nameController.text = customerName;
       phoneController.text = customerNumber;

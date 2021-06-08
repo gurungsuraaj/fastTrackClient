@@ -47,7 +47,7 @@ class _MainTabState extends State<MainTab> {
     _messaging.requestNotificationPermissions();
     _messaging.configure(
       onMessage: (Map<String, dynamic> msg) {
-        print("Inside message ------------------- $msg");
+          print("Inside message ------------------- $msg");
 
         if (Platform.isAndroid) {
           showBackGroundNotification(msg['data']['title'], msg['data']['body']);
@@ -56,16 +56,13 @@ class _MainTabState extends State<MainTab> {
             googleID = null;
           } else {
             if (googleID == null) {
-              print("PRint $googleID");
               googleID = msg['google.c.sender.id'];
-              print("Inside gogole id $googleID");
             }
             showBackGroundNotification(msg['title'], msg['body']);
           }
         }
       },
       onLaunch: (Map<String, dynamic> msg) async {
-        print("Launch  $msg");
         if (Platform.isAndroid) {
           saveBackgorundNotificatonDataOnDB(
               msg['data']['title'], msg['data']['body']);
@@ -74,7 +71,6 @@ class _MainTabState extends State<MainTab> {
         }
       },
       onResume: (Map<String, dynamic> msg) async {
-        print("On resume $msg");
 
         if (Platform.isAndroid) {
           saveBackgorundNotificatonDataOnDB(
@@ -90,9 +86,7 @@ class _MainTabState extends State<MainTab> {
                 googleID = msg['google.c.sender.id'];
               });
             }
-            print("PRint $googleID");
 
-            print("Inside gogole id $googleID");
 
             saveBackgorundNotificatonDataOnDB(msg['title'], msg['body'])
                 .whenComplete(() {
@@ -282,8 +276,6 @@ class _MainTabState extends State<MainTab> {
   // }
 
   void saveNotificatonDataOnDB(Map<String, dynamic> msg) async {
-    print(DateTime.now().toString());
-    print("${msg['notification']['title']} ${msg['notification']['body']}");
     final database =
         await $FloorAppDatabase.databaseBuilder('app_database.db').build();
     NotificationDbModel notification = new NotificationDbModel(1, "", "", "");
@@ -296,7 +288,6 @@ class _MainTabState extends State<MainTab> {
 
   Future<void> saveBackgorundNotificatonDataOnDB(
       String title, String body) async {
-    print(DateTime.now().toString());
 
     final database =
         await $FloorAppDatabase.databaseBuilder('app_database.db').build();
