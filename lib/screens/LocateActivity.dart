@@ -288,7 +288,11 @@ class _LocateActivityState extends State<LocateActivity> {
           ),
         ));
   }
-
+  
+  //Fetches the locations of branch ,
+  //calculates the distance beetween user and branch and adds in distance field
+  //stores in the locationList variable
+  //If user geolocation is available then sorts according to distance
   getBranchList() async {
     String url = "";
     showProgressBar();

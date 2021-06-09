@@ -122,6 +122,8 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   //   customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
   // }
 
+  //to fetch the service date comment and lapse service message
+  //from company informatoin API
   Future<void> getCompanyInfo() async {
     showProgressBar();
     NetworkOperationManager.getCompanyInfo(client).then((res) {
@@ -137,6 +139,9 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     });
   }
 
+  //to fetch the list of vehicles
+  //if vehicles exists then call the service date API function
+  //else call the functio to show the serviceDateComment in a pop up
   void getVehicleList() {
     showProgressBar();
     NetworkOperationManager.getVehicleList(customerNumber, client).then((res) {
@@ -157,11 +162,17 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     });
   }
 
+  //calling for the next service date for the first vehicle of vehicle list
   void getNextServiceDate() {
     getVehileDataFromNAV(
         tempVehicleList[0].Serial_No, tempVehicleList[0].Registration_No);
   }
 
+  //fetching the next service date of the vehicle and adding it to nextSerivceDateList
+  //then removes the first vehicle list from the vehicle list and
+  //computes if the length of vehicle list is greate than zero
+  //than recursively calls the getNextServiceDate() function 
+  //else if next service date list is empty then shows dialogue box
   void getVehileDataFromNAV(String vehicleSerialNo, String regNo) {
     showProgressBar();
     NetworkOperationManager.checkServiceDate(
