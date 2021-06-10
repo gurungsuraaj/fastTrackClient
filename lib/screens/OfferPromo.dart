@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -55,8 +57,11 @@ class _OfferPromoState extends State<OfferPromo> {
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
                   imageUrl: promoList[index].banner,
-                  placeholder: (context, url) => Container(height:40,width:50,
-                  child: Center(child: CircularProgressIndicator()),),
+                  placeholder: (context, url) => Container(
+                    height: 40,
+                    width: 50,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
                   errorWidget: (context, url, error) => new Icon(Icons.error),
                 ));
           },
@@ -66,33 +71,39 @@ class _OfferPromoState extends State<OfferPromo> {
   }
 
   showOffer() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
 
     // This is the URL for getting promo images
-    await http
-        .get("https://www.fasttrackemarat.com/feed/promotions.json",
-            headers: header)
-        .then((res) {
-      int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
-        hideProgressBar();
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
+          .get("https://www.fasttrackemarat.com/feed/promotions.json",
+              headers: header)
+          .then((res) {
+        int status = res.statusCode;
+        if (status == Rcode.SUCCESS_CODE) {
+          hideProgressBar();
 
-        var result = json.decode(res.body);
-        var values = result["promotions"] as List;
-        setState(() {
-          // All the images from the API is save to the promo list.
-          promoList =
-              values.map<Promo>((json) => Promo.fromJson(json)).toList();
-        });
-      } else {
-        hideProgressBar();
+          var result = json.decode(res.body);
+          var values = result["promotions"] as List;
+          setState(() {
+            // All the images from the API is save to the promo list.
+            promoList =
+                values.map<Promo>((json) => Promo.fromJson(json)).toList();
+          });
+        } else {
+          hideProgressBar();
 
-        displaySnackbar(context, "An error has occured ");
-      }
-    });
+          displaySnackbar(context, "An error has occured ");
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   Future<void> displaySnackbar(BuildContext context, msg) {
