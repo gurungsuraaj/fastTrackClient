@@ -711,7 +711,7 @@ class NetworkOperationManager {
 <tns:ReadMultiple>
 <tns:filter>
 <tns:Field>Customer_No</tns:Field>
-<tns:Criteria>CS269577</tns:Criteria>
+<tns:Criteria>$customerNumber</tns:Criteria>
 </tns:filter>
 <tns:bookmarkKey></tns:bookmarkKey>
 <tns:setSize></tns:setSize>

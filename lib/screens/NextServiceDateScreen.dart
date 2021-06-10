@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/NextServiceDateModel.dart';
@@ -6,6 +7,7 @@ import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
@@ -33,14 +35,15 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   @override
   void initState() {
     super.initState();
+    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
-    getCompanyInfo().whenComplete(() {
-      // getPrefs().whenComplete(() {
-      getVehicleList();
-      // });
-    });
+    getCompanyInfo();
+    // .whenComplete(() {
+    // getPrefs().whenComplete(() {
+    // getVehicleList();
+    // });
+    // });
   }
 
   @override
@@ -126,17 +129,24 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   //from company informatoin API
   Future<void> getCompanyInfo() async {
     showProgressBar();
-    NetworkOperationManager.getCompanyInfo(client).then((res) {
-      hideProgressBar();
-      if (res.length > 0) {
-        serviceDateComment = res[0].serviceDateComment;
-        lapseDateMessage = res[0].lapseServiceMessage;
-      }
-      print('the fetching of company information is successful');
-    }).catchError((err) {
-      hideProgressBar();
-      showSnackBar(err);
-    });
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      NetworkOperationManager.getCompanyInfo(client).then((res) {
+        hideProgressBar();
+        if (res.length > 0) {
+          serviceDateComment = res[0].serviceDateComment;
+          lapseDateMessage = res[0].lapseServiceMessage;
+        }
+        getVehicleList();
+        print('the fetching of company information is successful');
+      }).catchError((err) {
+        hideProgressBar();
+        showSnackBar(err);
+      }); // _performLogin();
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   //to fetch the list of vehicles
@@ -149,6 +159,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
       if (res.length > 0) {
         vehicleList = res;
         tempVehicleList = res;
+        print('-------------------${vehicleList.length}------------');
         setState(() {});
         getNextServiceDate();
       } else {
@@ -171,7 +182,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   //fetching the next service date of the vehicle and adding it to nextSerivceDateList
   //then removes the first vehicle list from the vehicle list and
   //computes if the length of vehicle list is greate than zero
-  //than recursively calls the getNextServiceDate() function 
+  //than recursively calls the getNextServiceDate() function
   //else if next service date list is empty then shows dialogue box
   void getVehileDataFromNAV(String vehicleSerialNo, String regNo) {
     showProgressBar();
@@ -184,8 +195,11 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
         // nextService.vehicleSerialNo = vehicleSerialNo;
         // nextService.nextServiceDate = res.responseBody;
         // nextService.registerNo = regNo;
-        print(" Date Status ${res.status}");
-        nextSerivceDateList.add(res);
+        print(
+            " --------------Date Status ${res.nextServiceDate} ---------------");
+        if (res.nextServiceDate != '0001-01-01') {
+          nextSerivceDateList.add(res);
+        }
         setState(() {});
         tempVehicleList.removeAt(0);
         if (tempVehicleList.length > 0) {
