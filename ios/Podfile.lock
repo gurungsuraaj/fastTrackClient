@@ -66,7 +66,7 @@ PODS:
   - FMDB/standard (2.7.5)
   - geocoder (0.0.1):
     - Flutter
-  - geolocator (6.1.9):
+  - geolocator (6.2.0):
     - Flutter
   - google_maps_flutter (0.0.1):
     - Flutter
@@ -219,7 +219,7 @@ SPEC CHECKSUMS:
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geocoder: 3cfab70531a0b367e917bafe82df4c30f6d4c45a
-  geolocator: 057a0c63a43e9c5296d8ad845a3ac8e6df23d899
+  geolocator: f5e3de65e241caba7ce3e8a618803387bda73384
   google_maps_flutter: c7f9c73576de1fbe152a227bfd6e6c4ae8088619
   GoogleAppMeasurement: 966e88df9d19c15715137bb2ddaf52373f111436
   GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833

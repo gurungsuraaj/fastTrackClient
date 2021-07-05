@@ -304,7 +304,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            "All right reserved © 2020",
+                                            "All rights reserved © 2020",
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),

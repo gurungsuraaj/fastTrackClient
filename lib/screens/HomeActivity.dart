@@ -156,6 +156,7 @@ class _HomeActivityState extends State<HomeActivity>
 
     userLong = position.longitude;
     userLatitude = position.latitude;
+
     setState(() {});
   }
 
@@ -453,14 +454,17 @@ class _HomeActivityState extends State<HomeActivity>
                                   //   MaterialPageRoute(
                                   //       builder: (context) => GoogleMapActivity()),
                                   // );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LocateActivity(
-                                          userLat: userLatitude,
-                                          userLong: userLong,
-                                        )),
-                                  );
+
+                                  getLocationOfCLient().whenComplete(() {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LocateActivity(
+                                                userLat: userLatitude,
+                                                userLong: userLong,
+                                              )),
+                                    );
+                                  });
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -516,7 +520,9 @@ class _HomeActivityState extends State<HomeActivity>
                             height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
-                                  _showAlert();
+                                  getLocationOfCLient().whenComplete(() {
+                                    _showAlert();
+                                  });
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -927,7 +933,8 @@ class _HomeActivityState extends State<HomeActivity>
       // calculatedDistanceList.add(item);
       // print("THis is from geolocator $distanceInMeters");
 
-      print("Username ${item.userId} Distance in meters $distanceInMeters  long $longitude , lat : $latitude");
+      print(
+          "Username ${item.userId} Distance in meters $distanceInMeters  long $longitude , lat : $latitude");
       distList.add(distanceInMeters);
 
       // var result = calculatedDistanceList
@@ -1092,6 +1099,8 @@ class _HomeActivityState extends State<HomeActivity>
         } else {
           newVersionNo = androidVersion;
         }
+          print("New version $newVersionNo and $currentVersion ${res[0].appStoreUrl} ${res[0].playStoreUrl}");
+
         if (newVersionNo > currentVersion) {
           _showVersionDialog(context, res[0].appStoreUrl, res[0].playStoreUrl);
         }

@@ -114,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Color(0xff253882),
       floatingActionButton: Container(
           child: Text(
-        "All right reserved © 2020",
+        "All rights reserved © 2020",
         style: TextStyle(color: Colors.white),
       )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

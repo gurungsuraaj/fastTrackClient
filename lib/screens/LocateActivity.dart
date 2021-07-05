@@ -119,11 +119,22 @@ class _LocateActivityState extends State<LocateActivity> {
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    Container(
-                                      child: Text(
-                                        locationlist[index].telephone,
-                                        style: textStyle,
-                                        textAlign: TextAlign.justify,
+                                    InkWell(
+                                      onTap: () async {
+                                        var url =
+                                            "tel:${locationlist[index].telephone}";
+                                        if (await canLaunch(url)) {
+                                          await launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                                      },
+                                      child: Container(
+                                        child: Text(
+                                          locationlist[index].telephone,
+                                          style: textStyle,
+                                          textAlign: TextAlign.justify,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -288,7 +299,7 @@ class _LocateActivityState extends State<LocateActivity> {
           ),
         ));
   }
-  
+
   //Fetches the locations of branch ,
   //calculates the distance beetween user and branch and adds in distance field
   //stores in the locationList variable
