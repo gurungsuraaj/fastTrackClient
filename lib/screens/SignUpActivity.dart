@@ -1,17 +1,14 @@
 import 'dart:convert';
 
-import 'package:circular_check_box/circular_check_box.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/CustomerModel.dart';
-import 'package:fasttrackgarage_app/screens/ForgotPasswordScreen.dart';
 import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
-import 'package:fasttrackgarage_app/utils/ModeConstants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/Rstring.dart';
@@ -21,15 +18,9 @@ import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
-import 'package:toast/toast.dart';
-import '../utils/RoutesName.dart';
-import 'HomeActivity.dart';
-import 'GenerateOTPActivity.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import "./TermsAndConditionScreen.dart";
 import 'package:country_pickers/country_pickers.dart';
-import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 
 class SignUpActivity extends StatefulWidget {
   final CustomerModel customerDetails;
@@ -50,13 +41,12 @@ class _SignUpActivity extends State<SignUpActivity> {
   final formKey = new GlobalKey<FormState>();
   var passKey = GlobalKey<FormFieldState>();
   bool isProgressBarShown = false;
-  double MARGIN = 32;
-  double PADDING = 10.0;
+  double margin = 32;
+  double padding = 10.0;
 
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 14.0;
   var fontSizeText = 14.0;
-  bool _termsChecked = false;
   String phoneCode = "971", mobileNumber;
   NTLMClient client;
   String signature;
@@ -100,7 +90,7 @@ class _SignUpActivity extends State<SignUpActivity> {
     var height = MediaQuery.of(context).size.height;
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
+        statusBarColor: Color(ExtraColors.darkBlueAccent)));
 
     // TODO: implement build
     return Scaffold(
@@ -129,7 +119,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                     Form(
                       key: formKey,
                       child: Container(
-                        margin: EdgeInsets.all(MARGIN),
+                        margin: EdgeInsets.all(margin),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
 
@@ -161,7 +151,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 controller: nameController,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                    color: Color(ExtraColors.darkBlueAccent)),
                                 decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     filled: true,
@@ -209,7 +199,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                     !val.contains('@') ? 'Invalid Email' : null,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                    color: Color(ExtraColors.darkBlueAccent)),
                                 controller: emailController,
                                 decoration: InputDecoration(
                                     fillColor: Colors.white,
@@ -301,7 +291,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 obscureText: true,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                    color: Color(ExtraColors.darkBlueAccent)),
                                 controller: passwordController,
                                 decoration: InputDecoration(
                                     fillColor: Colors.white,
@@ -405,7 +395,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                   child: Text(
                                     'Continue',
                                     style: TextStyle(
-                                      color: Color(ExtraColors.DARK_BLUE),
+                                      color: Color(ExtraColors.darkBlue),
                                     ),
                                   ),
                                 ),
@@ -493,12 +483,12 @@ class _SignUpActivity extends State<SignUpActivity> {
         },
       ),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void signUp() async {
     showProgressBar();
-    String url = Api.POST_CUSTOMER_SIGNUP;
+    String url = Api.postCustomerSignUp;
 
     String name = nameController.text;
     String email = emailController.text;
@@ -523,7 +513,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       var result = json.decode(val.body);
       String message = result["message"];
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
+      if (statusCode == Rcode.successCode) {
         hideProgressBar();
 
         Navigator.of(context).pop();
@@ -622,7 +612,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                 enabled: false,
                 controller: mobileController,
                 keyboardType: TextInputType.number,
-                style: TextStyle(color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                style: TextStyle(color: Color(ExtraColors.darkBlueAccent)),
                 decoration: InputDecoration(
                   hintText: "Phone",
                   hintStyle: TextStyle(color: Colors.grey[500]),
@@ -692,7 +682,7 @@ class _SignUpActivity extends State<SignUpActivity> {
             emailController.text, passwordController.text, signature, client)
         .then((res) {
       hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -717,7 +707,7 @@ class _SignUpActivity extends State<SignUpActivity> {
     NetworkOperationManager.sendExistingCustomerOTP(
             mobileController.text, client)
         .then((res) {
-      if (res.responseBody == Rstring.OTP_SEND_SUCCESS || res.status ==  200 ) {
+      if (res.responseBody == Rstring.otpSendSuccess || res.status == 200) {
         // ShowToast.showToast(context, res.responseBody);
         Navigator.push(
           context,

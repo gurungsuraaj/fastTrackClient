@@ -2,11 +2,9 @@ import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:country_pickers/country.dart';
-import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
-import 'package:fasttrackgarage_app/screens/ForgotPasswordScreen.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -14,7 +12,6 @@ import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:fasttrackgarage_app/widgets/CustomClipper.dart';
-import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
@@ -35,8 +32,8 @@ class LoginActivity extends StatefulWidget {
 
 class _LoginActivityState extends State<LoginActivity> {
   String _platformImei = 'Unknown';
-  double MARGIN = 22.0;
-  double PADDING = 10.0;
+  double margin = 22.0;
+  double padding = 10.0;
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 14.0;
   var fontSizeText = 16.0;
@@ -62,7 +59,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
     PrefsManager.checkSession().then((isSessionExist) {
       if (isSessionExist) {
-        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
+        Navigator.pushReplacementNamed(context, RoutesName.mainTab);
       }
     });
   }
@@ -92,7 +89,7 @@ class _LoginActivityState extends State<LoginActivity> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
+        statusBarColor: Color(ExtraColors.darkBlueAccent)));
 
     return SafeArea(
       child: Scaffold(
@@ -193,7 +190,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                       //     style: TextStyle(
                                       //         fontSize: fontSizeTextField,
                                       //         color: Color(
-                                      //             ExtraColors.DARK_BLUE_ACCENT)),
+                                      //             ExtraColors.darkBlueAccent)),
                                       //     controller: passwordController,
                                       //     decoration: InputDecoration(
                                       //         hintText: 'Your password',
@@ -250,7 +247,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                             "Continue",
                                             style: TextStyle(
                                                 color: Color(
-                                                    ExtraColors.DARK_BLUE)),
+                                                    ExtraColors.darkBlue)),
                                           ),
                                         ),
                                       ),
@@ -375,7 +372,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
   void performLogin() async {
     showProgressBar();
-    String url = Api.POST_CUSTOMER_LOGIN;
+    String url = Api.postCustomerLogin;
 
     String mobileNumber = phoneCode + mobileController.text;
     String password = passwordController.text;
@@ -391,17 +388,16 @@ class _LoginActivityState extends State<LoginActivity> {
       "custemail": email
     };
 
-    var body_json = json.encode(body);
+    var dbodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
       "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
       "imei": "$_platformImei",
     };
-    await http.post(url, body: body_json, headers: header).then((val) {
+    await http.post(url, body: dbodyJson, headers: header).then((val) {
       int statusCode = val.statusCode;
       var result = json.decode(val.body);
-
 
       String message = result["message"];
 
@@ -411,8 +407,7 @@ class _LoginActivityState extends State<LoginActivity> {
       String customerName = result["data"]["customerName"];
       String custEmail = result["data"]["custEmail"];
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
-    
+      if (statusCode == Rcode.successCode) {
         String basicToken = "Basic $token";
 
         hideProgressBar();
@@ -450,12 +445,12 @@ class _LoginActivityState extends State<LoginActivity> {
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   _buildCountryPickerDropdown(
@@ -585,7 +580,7 @@ class _LoginActivityState extends State<LoginActivity> {
     NetworkOperationManager.logIn(mobileNumber, passwordController.text, client)
         .then((res) {
       hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
             res.customerName, res.customerEmail, "", mobileController.text);
 
@@ -605,7 +600,7 @@ class _LoginActivityState extends State<LoginActivity> {
     String mobileNumber = mobileController.text;
     NetworkOperationManager.getCustomerList(mobileNumber, client).then((res) {
       hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         customeretails = res;
         String message =
             'Dear ${customeretails.name}, We have recognized you as an existing customer of Fasttrack. Please click "Proceed" to update/confirm your details and choose a password';

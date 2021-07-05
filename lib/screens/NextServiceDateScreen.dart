@@ -49,13 +49,13 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   @override
   Widget build(BuildContext context) {
     var textStyle1 =
-        TextStyle(color: Color(ExtraColors.DARK_BLUE), fontSize: 14);
+        TextStyle(color: Color(ExtraColors.darkBlue), fontSize: 14);
     var textStyle2 = TextStyle(color: Color(0xffEF9C2B), fontSize: 14);
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Next Service Date"),
       ),
       body: ModalProgressHUD(
@@ -200,7 +200,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
               customerNumber, vehicleSerialNo, regNo, client)
           .then((res) {
         print(res);
-        if (res.status == Rcode.SUCCESS_CODE) {
+        if (res.status == Rcode.successCode) {
           // NextServiceDateModel nextService = NextServiceDateModel();
           // nextService.vehicleSerialNo = vehicleSerialNo;
           // nextService.nextServiceDate = res.responseBody;
@@ -302,6 +302,6 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
             _scaffoldKey.currentState.removeCurrentSnackBar();
           },
         ));
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

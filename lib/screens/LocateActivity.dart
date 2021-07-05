@@ -43,7 +43,7 @@ class _LocateActivityState extends State<LocateActivity> {
         fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(ExtraColors.DARK_BLUE),
+          backgroundColor: Color(ExtraColors.darkBlue),
           title: Text("Locate a Branch"),
         ),
         backgroundColor: Color(0xFFD9D9D9),
@@ -216,7 +216,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                     //         width: 100,
                                     //         decoration: new BoxDecoration(
                                     //           color:
-                                    //               Color(ExtraColors.DARK_BLUE),
+                                    //               Color(ExtraColors.darkBlue),
                                     //           borderRadius:
                                     //               new BorderRadius.circular(
                                     //                   10.0),
@@ -241,7 +241,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                         height: 32.0,
                                         width: 150,
                                         decoration: new BoxDecoration(
-                                          color: Color(ExtraColors.DARK_BLUE),
+                                          color: Color(ExtraColors.darkBlue),
                                           // border: new Border.all(
                                           //     color: Colors.white,
                                           //     width: 6.0),
@@ -321,7 +321,7 @@ class _LocateActivityState extends State<LocateActivity> {
           .then((res) {
         int status = res.statusCode;
 
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           hideProgressBar();
           var result = json.decode(res.body);
           var branches = result['branches'] as List;

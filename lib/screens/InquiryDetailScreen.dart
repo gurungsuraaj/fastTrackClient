@@ -138,7 +138,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           }).toList()
             ..add(
               new FloatingActionButton(
-                backgroundColor: Color(ExtraColors.DARK_BLUE),
+                backgroundColor: Color(ExtraColors.darkBlue),
                 heroTag: null,
                 child: new AnimatedBuilder(
                   animation: _controller,
@@ -166,7 +166,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Tyres Inquiry"),
-          backgroundColor: Color(ExtraColors.DARK_BLUE),
+          backgroundColor: Color(ExtraColors.darkBlue),
           bottom: TabBar(
             isScrollable: true,
             labelColor: Theme.of(context).primaryColor,
@@ -216,7 +216,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data'];
@@ -659,7 +659,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
               width: width * 0.75,
               child: RaisedButton(
-                color: Color(ExtraColors.DARK_BLUE),
+                color: Color(ExtraColors.darkBlue),
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(5.0),
                   // side: BorderSide(color: Colors.black),
@@ -956,7 +956,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
               width: width * 0.75,
               child: RaisedButton(
-                color: Color(ExtraColors.DARK_BLUE),
+                color: Color(ExtraColors.darkBlue),
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(5.0),
                   // side: BorderSide(color: Colors.black),
@@ -1007,7 +1007,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data']["make"];
@@ -1088,7 +1088,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
               body: body)
           .then((res) {
         hideProgressBar();
-        if (res.statusCode == Rcode.SUCCESS_CODE) {
+        if (res.statusCode == Rcode.successCode) {
           displaySnackbar(context, "Inquiry submitted successfully");
           setState(() {
             // nameControllerSize.text = "";
@@ -1117,7 +1117,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       content: Text('$msg'),
       duration: const Duration(seconds: 10),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void submitTyresModelData() async {
@@ -1136,30 +1136,30 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       "message": commentControllerModel.text
     });
 
-   var connectivityResult = await (Connectivity().checkConnectivity());
+    var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       showProgressBar();
       await http
-        .post(
-            'https://fasttrackemarat.com/contact-from-app/search-by-car-model.php',
-            headers: header,
-            body: body)
-        .then((res) {
-      hideProgressBar();
-      if (res.statusCode == Rcode.SUCCESS_CODE) {
-        displaySnackbar(context, "Inquiry submitted successfully");
-        setState(() {
-          commentControllerModel.text = "";
-          selectedMakeCode = null;
-          selectedModel = null;
-          selectedDate = null;
-        });
-      } else {
-        displaySnackbar(context, "Error: ${res.body}");
-      }
-    });
-  } else {
+          .post(
+              'https://fasttrackemarat.com/contact-from-app/search-by-car-model.php',
+              headers: header,
+              body: body)
+          .then((res) {
+        hideProgressBar();
+        if (res.statusCode == Rcode.successCode) {
+          displaySnackbar(context, "Inquiry submitted successfully");
+          setState(() {
+            commentControllerModel.text = "";
+            selectedMakeCode = null;
+            selectedModel = null;
+            selectedDate = null;
+          });
+        } else {
+          displaySnackbar(context, "Error: ${res.body}");
+        }
+      });
+    } else {
       ShowToast.showToast(context, "No internet connection");
     }
   }

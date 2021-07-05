@@ -81,7 +81,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
       // resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Battery Inquiry"),
       ),
       body: ModalProgressHUD(
@@ -424,7 +424,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                   width: width * 0.75,
                   child: RaisedButton(
-                    color: Color(ExtraColors.DARK_BLUE),
+                    color: Color(ExtraColors.darkBlue),
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(5.0),
                       // side: BorderSide(color: Colors.black),
@@ -497,7 +497,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
         }).toList()
           ..add(
             new FloatingActionButton(
-              backgroundColor: Color(ExtraColors.DARK_BLUE),
+              backgroundColor: Color(ExtraColors.darkBlue),
               heroTag: null,
               child: new AnimatedBuilder(
                 animation: _controller,
@@ -616,7 +616,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data'];
@@ -662,7 +662,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
-      if (res.statusCode == Rcode.SUCCESS_CODE) {
+      if (res.statusCode == Rcode.successCode) {
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           timeController.text = "";
@@ -696,7 +696,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   getMakeList() async {
@@ -713,7 +713,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data']["make"];

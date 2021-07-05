@@ -1,6 +1,5 @@
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsManager {
   static Future<void> saveUsernameToPrefs(String username) async {

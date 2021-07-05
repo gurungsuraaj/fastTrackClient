@@ -6,10 +6,8 @@ import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/Item.dart';
-import 'package:fasttrackgarage_app/models/NetworkResponse.dart';
 import 'package:fasttrackgarage_app/models/OutletList.dart';
 import 'package:fasttrackgarage_app/models/SearchItem.dart';
-import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
@@ -19,10 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:ntlm/ntlm.dart';
-import 'package:xml2json/xml2json.dart';
-import 'package:xml/xml.dart' as xml;
 // import 'package:barcode_scan/barcode_scan.dart';
-import 'package:flutter/services.dart';
 
 class CheckInventory extends StatefulWidget {
   @override
@@ -36,14 +31,14 @@ class _CheckInventoryState extends State<CheckInventory> {
   NTLMClient client;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<Item> itemList = new List<Item>();
-  List<OutletList> outletList = new List<OutletList>();
+  List<Item> itemList = <Item>[];
+  List<OutletList> outletList = <OutletList>[];
   OutletList selectedValue = new OutletList();
   List<DropdownMenuItem<OutletList>> _outletList =
-      new List<DropdownMenuItem<OutletList>>();
-  List<Item> item = new List<Item>();
+      <DropdownMenuItem<OutletList>>[];
+  List<Item> item = <Item>[];
   Item selectItemValue = new Item();
-  List<DropdownMenuItem<Item>> _itemList = new List();
+  // List<DropdownMenuItem<Item>> _itemList = [];
 
   TextEditingController detailsController = new TextEditingController();
   String basicToken = "";
@@ -51,9 +46,8 @@ class _CheckInventoryState extends State<CheckInventory> {
   bool isProgressBarShown = false;
   ProgressDialog _progressDialog = ProgressDialog();
   TextEditingController searchController = new TextEditingController();
-  List<TextEditingController> textEditContollerlist = new List();
-  List<SearchItemModel> searchList = new List();
-
+  List<TextEditingController> textEditContollerlist = [];
+  List<SearchItemModel> searchList = [];
 
   //List<String> value = new List<String>();
 
@@ -77,11 +71,10 @@ class _CheckInventoryState extends State<CheckInventory> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         actions: <Widget>[
           IconButton(
               icon: Icon(FontAwesomeIcons.barcode),
@@ -237,11 +230,11 @@ class _CheckInventoryState extends State<CheckInventory> {
   }
 
   Future<List<OutletList>> getOutletList() async {
-    String url = Api.LOCCATION_LIST;
+    String url = Api.locationList;
     debugPrint("---url---$url");
 
     Map<String, String> body = {"Key": "", "Code": "", "Name": ""};
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
@@ -249,12 +242,12 @@ class _CheckInventoryState extends State<CheckInventory> {
       "Authorization": "$basicToken"
     };
 
-    await http.post(url, body: body_json, headers: header).then((res) {
+    await http.post(url, body: bodyJson, headers: header).then((res) {
       debugPrint("this is status code ${res.statusCode}");
       var result = json.decode(res.body);
       var values = result['data'] as List;
 
-      if (res.statusCode == Rcode.SUCCESS_CODE) {
+      if (res.statusCode == Rcode.successCode) {
         outletList = values
             .map<OutletList>((json) => OutletList.fromJson(json))
             .toList();
@@ -267,11 +260,11 @@ class _CheckInventoryState extends State<CheckInventory> {
   }
 
   List<DropdownMenuItem<OutletList>> buildOutletDropdownMenu(List outlet) {
-    List<DropdownMenuItem<OutletList>> outletData = List();
+    List<DropdownMenuItem<OutletList>> outletData = [];
     for (OutletList outletList in outlet) {
       outletData.add(DropdownMenuItem(
         value: outletList,
-        child: Text(outletList.Name),
+        child: Text(outletList.name),
       ));
     }
 
@@ -279,11 +272,11 @@ class _CheckInventoryState extends State<CheckInventory> {
   }
 
   List<DropdownMenuItem<Item>> buildItemDropdownMenu(List item) {
-    List<DropdownMenuItem<Item>> itemData = List();
+    List<DropdownMenuItem<Item>> itemData = [];
     for (Item itemList in item) {
       itemData.add(DropdownMenuItem(
         value: itemList,
-        child: Text(itemList.Description),
+        child: Text(itemList.description),
       ));
     }
 
@@ -294,14 +287,14 @@ class _CheckInventoryState extends State<CheckInventory> {
     //FocusScope.of(context).requestFocus(FocusNode());
 
     showProgressDialog(context);
-    String url = Api.ITEMLIST;
+    String url = Api.itemList;
     debugPrint("This is  url : $url");
 
     //String itemNumber = searchController.text;
 
     Map<String, String> body = {"Key": "", "Code": "", "Name": "Condensor"};
 
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
@@ -311,7 +304,7 @@ class _CheckInventoryState extends State<CheckInventory> {
 
     debugPrint("Token $basicToken");
 
-    await http.post(url, body: body_json, headers: header).then((res) {
+    await http.post(url, body: bodyJson, headers: header).then((res) {
       debugPrint("This is body: ${res.body}");
       int statusCode = res.statusCode;
 
@@ -320,7 +313,7 @@ class _CheckInventoryState extends State<CheckInventory> {
       String message = data['message'];
       debugPrint(">>message $message");
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
+      if (statusCode == Rcode.successCode) {
         hideProgressDialog(context);
 
         var values = data["data"] as List;
@@ -401,12 +394,12 @@ class _CheckInventoryState extends State<CheckInventory> {
   //   }
   // }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void getItemFromBarcode() async {

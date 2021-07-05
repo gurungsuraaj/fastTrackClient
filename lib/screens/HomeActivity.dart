@@ -193,7 +193,7 @@ class _HomeActivityState extends State<HomeActivity>
                 ],
               )),
           automaticallyImplyLeading: false,
-          backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
+          backgroundColor: Color(ExtraColors.darkBlueAccent),
           actions: <Widget>[
             //            PopupMenuButton<String>(
             //              onSelected: choiceAction,
@@ -214,7 +214,7 @@ class _HomeActivityState extends State<HomeActivity>
             children: <Widget>[
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15),
-                color: Color(ExtraColors.DARK_BLUE),
+                color: Color(ExtraColors.darkBlue),
                 height: 35,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -623,7 +623,7 @@ class _HomeActivityState extends State<HomeActivity>
                   Container(
                     height: 120,
                     //                  width: queryData.size.width,
-                    color: Color(ExtraColors.DARK_BLUE),
+                    color: Color(ExtraColors.darkBlue),
                     child: Center(
                         child: Image.asset(
                       "images/message.png",
@@ -738,7 +738,7 @@ class _HomeActivityState extends State<HomeActivity>
     //            Container(
     //              height: 120,
     //              width: queryData.size.width,
-    //              color: Color(ExtraColors.DARK_BLUE),
+    //              color: Color(ExtraColors.darkBlue),
     //              child: Center(
     //                  child: Image.asset(
     //                "images/message.png",
@@ -846,7 +846,7 @@ class _HomeActivityState extends State<HomeActivity>
         .then((res) {
       int status = res.statusCode;
 
-      if (status == Rcode.SUCCESS_CODE) {
+      if (status == Rcode.successCode) {
         var result = json.decode(res.body);
         var values = result["sliders"] as List;
 
@@ -865,7 +865,7 @@ class _HomeActivityState extends State<HomeActivity>
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showInSnackBar(String value) {
@@ -965,7 +965,7 @@ class _HomeActivityState extends State<HomeActivity>
         NetworkOperationManager.distressCall(customerNumber, cusName, client)
             .then((res) {
           hideProgressBar();
-          if (res.status == Rcode.SUCCESS_CODE) {
+          if (res.status == Rcode.successCode) {
             showInSnackBar(
                 "Send alert successfully ! You will get call from the nearest branch ");
           } else {
@@ -1013,7 +1013,7 @@ class _HomeActivityState extends State<HomeActivity>
         .then((res) {
       hideProgressBar();
       int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
+      if (status == Rcode.successCode) {
         var result = json.decode(res.body);
         var value = result["branches"] as List;
 
@@ -1099,7 +1099,8 @@ class _HomeActivityState extends State<HomeActivity>
         } else {
           newVersionNo = androidVersion;
         }
-          print("New version $newVersionNo and $currentVersion ${res[0].appStoreUrl} ${res[0].playStoreUrl}");
+        print(
+            "New version $newVersionNo and $currentVersion ${res[0].appStoreUrl} ${res[0].playStoreUrl}");
 
         if (newVersionNo > currentVersion) {
           _showVersionDialog(context, res[0].appStoreUrl, res[0].playStoreUrl);

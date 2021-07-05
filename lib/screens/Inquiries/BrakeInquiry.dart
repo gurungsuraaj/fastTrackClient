@@ -75,7 +75,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Brake Inquiry"),
         actions: <Widget>[],
       ),
@@ -427,7 +427,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                     padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                     width: width * 0.75,
                     child: RaisedButton(
-                      color: Color(ExtraColors.DARK_BLUE),
+                      color: Color(ExtraColors.darkBlue),
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(5.0),
                         // side: BorderSide(color: Colors.black),
@@ -500,7 +500,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
         }).toList()
           ..add(
             new FloatingActionButton(
-              backgroundColor: Color(ExtraColors.DARK_BLUE),
+              backgroundColor: Color(ExtraColors.darkBlue),
               heroTag: null,
               child: new AnimatedBuilder(
                 animation: _controller,
@@ -618,7 +618,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data'];
@@ -662,7 +662,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
     };
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi){
+        connectivityResult == ConnectivityResult.wifi) {
       showProgressBar();
       await http
           .get("https://fasttrackemarat.com/feed/make-model.json",
@@ -670,7 +670,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data']["make"];
@@ -724,7 +724,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
               headers: header, body: body)
           .then((res) {
         hideProgressBar();
-        if (res.statusCode == Rcode.SUCCESS_CODE) {
+        if (res.statusCode == Rcode.successCode) {
           displaySnackbar(context, "Inquiry submitted successfully");
           setState(() {
             winNoController.text = "";
@@ -751,7 +751,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> getPrefs() async {

@@ -45,9 +45,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color(ExtraColors.DARK_BLUE),
+      backgroundColor: Color(ExtraColors.darkBlue),
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Forgot Password"),
       ),
       body: ModalProgressHUD(
@@ -97,7 +97,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     },
                     child: Text(
                       "Submit",
-                      style: TextStyle(color: Color(ExtraColors.DARK_BLUE)),
+                      style: TextStyle(color: Color(ExtraColors.darkBlue)),
                     ),
                   ),
                 ),
@@ -155,7 +155,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showProgressBar() {
@@ -170,9 +170,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     });
   }
 
-  _buildCountryPickerDropdown(
-        ) =>
-      Row(
+  _buildCountryPickerDropdown() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           // CountryPickerDropdown(

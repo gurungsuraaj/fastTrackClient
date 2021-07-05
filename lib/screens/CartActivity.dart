@@ -79,11 +79,14 @@ class _CartActivity extends State<CartActivity> {
                           ),
                         ),
                       ),
-                  SizedBox(width: 100.0,),
-                  Text(
-                  "Total: AED 120",
-                  style: TextStyle(fontSize: 16.0, color: Colors.redAccent),
-                ),
+                      SizedBox(
+                        width: 100.0,
+                      ),
+                      Text(
+                        "Total: AED 120",
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.redAccent),
+                      ),
                     ],
                   ),
                 )
@@ -137,25 +140,25 @@ class _CartActivity extends State<CartActivity> {
                       Text(
                         "  2  ",
                       ),
-
-                        SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: RaisedButton(
-                            onPressed: () {},
-                            textColor: Colors.black,
-                            color: Colors.white,
-                            child: new Text(
-                              " + ",
-                            ),
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: RaisedButton(
+                          onPressed: () {},
+                          textColor: Colors.black,
+                          color: Colors.white,
+                          child: new Text(
+                            " + ",
                           ),
                         ),
-
-
-                      SizedBox(width: 100.0,),
+                      ),
+                      SizedBox(
+                        width: 100.0,
+                      ),
                       Text(
                         "Total: AED 20",
-                        style: TextStyle(fontSize: 16.0, color: Colors.redAccent),
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.redAccent),
                       ),
                     ],
                   ),
@@ -163,22 +166,21 @@ class _CartActivity extends State<CartActivity> {
               ],
             ),
           ),
-
-          SizedBox(height: 290,),
+          SizedBox(
+            height: 290,
+          ),
           Container(
             margin: EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width,
             child: RaisedButton(
-              color: Color(ExtraColors.DARK_BLUE),
-              onPressed: () {
-              },
+              color: Color(ExtraColors.darkBlue),
+              onPressed: () {},
               child: Text(
                 "Make payment",
                 style: TextStyle(color: Colors.white),
               ),
             ),
           ),
-
         ],
       ),
     );

@@ -21,7 +21,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
         title: Text(
           "Service History Detail",
         ),
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
       ),
       backgroundColor: Color(0xFFD9D9D9),
       body: Container(

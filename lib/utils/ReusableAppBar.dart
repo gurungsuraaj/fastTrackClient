@@ -1,4 +1,3 @@
-import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
 
 class ReusableAppBar {

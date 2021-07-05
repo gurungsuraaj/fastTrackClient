@@ -96,10 +96,9 @@ class _GenerateOTP extends State<GenerateOTP> {
                                     MaterialPageRoute(
                                         builder: (context) => OTP()),
                                   );*/
-                                  Navigator.pushNamed(
-                                      context, RoutesName.OTP_ACTIVITY);
+                                  Navigator.pushNamed(context, RoutesName.otp);
                                 },
-                                color: Color(ExtraColors.DARK_BLUE),
+                                color: Color(ExtraColors.darkBlue),
                                 child: Text(
                                   'Generate OTP',
                                   style: TextStyle(

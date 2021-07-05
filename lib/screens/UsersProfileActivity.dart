@@ -26,12 +26,12 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
 
   @override
   Widget build(BuildContext context) {
-       var width = MediaQuery.of(context).size.width;
+    var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text("User Profile"),
-        backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
+        backgroundColor: Color(ExtraColors.darkBlueAccent),
         actions: <Widget>[],
         leading: Container(
           padding: EdgeInsets.only(left: 10),
@@ -123,7 +123,7 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
                     fontSize: 20,
                   ),
                 ),
-                backgroundColor: Color(ExtraColors.DARK_BLUE),
+                backgroundColor: Color(ExtraColors.darkBlue),
                 onPressed: () {
                   PrefsManager.clearSession().then((val) {
                     Navigator.pushAndRemoveUntil(
@@ -149,7 +149,7 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
       //       "Log Out",
       //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       //     ),
-      //     backgroundColor: Color(ExtraColors.DARK_BLUE),
+      //     backgroundColor: Color(ExtraColors.darkBlue),
       //     onPressed: () {
       //       PrefsManager.clearSession().then((val) {
       //         Navigator.pushAndRemoveUntil(

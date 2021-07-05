@@ -79,7 +79,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
       key: _scaffoldKey,
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Oil Filter Inquiry"),
       ),
       body: ModalProgressHUD(
@@ -476,7 +476,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                   width: width * 0.75,
                   child: RaisedButton(
-                    color: Color(ExtraColors.DARK_BLUE),
+                    color: Color(ExtraColors.darkBlue),
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(5.0),
                       // side: BorderSide(color: Colors.black),
@@ -548,7 +548,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
         }).toList()
           ..add(
             new FloatingActionButton(
-              backgroundColor: Color(ExtraColors.DARK_BLUE),
+              backgroundColor: Color(ExtraColors.darkBlue),
               heroTag: null,
               child: new AnimatedBuilder(
                 animation: _controller,
@@ -634,7 +634,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   //       .then((res) {
   //     hideProgressBar();
   //     int status = res.statusCode;
-  //     if (status == Rcode.SUCCESS_CODE) {
+  //     if (status == Rcode.successCode) {
   //       var result = json.decode(res.body);
 
   //       var values = result['data'];
@@ -664,7 +664,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data']["make"];
@@ -724,7 +724,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
           var values = result['data'];
           setState(() {
@@ -742,7 +742,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showProgressBar() {
@@ -784,7 +784,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
-      if (res.statusCode == Rcode.SUCCESS_CODE) {
+      if (res.statusCode == Rcode.successCode) {
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           dateController.text = "";

@@ -3,23 +3,18 @@ import 'dart:io';
 
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
-import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
-import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
-import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Rstring.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:pin_code_fields/pin_code_fields.dart' as iosText;
-import 'package:pin_code_text_field/pin_code_text_field.dart';
-import 'package:pinput/pin_put/pin_put.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 import 'ResetPasswordScreen.dart';
@@ -196,7 +191,7 @@ class _OTP extends State<OTP> {
                                       }
                                     },
                                     child: _setUpButtonChild(),
-                                    color: Color(ExtraColors.DARK_BLUE),
+                                    color: Color(ExtraColors.darkBlue),
                                     disabledColor: Colors.blue[100],
                                   ),
                                 ),
@@ -278,7 +273,7 @@ class _OTP extends State<OTP> {
 
   submitOTP(String otpPin) async {
     showProgressBar();
-    await NetworkOperationManager.SubmitOTP(widget.query, otpPin, client)
+    await NetworkOperationManager.submitOTP(widget.query, otpPin, client)
         .then((res) {
       hideProgressBar();
       if (res.status == 200) {
@@ -297,11 +292,11 @@ class _OTP extends State<OTP> {
   submitOtpForRegistration(String otpPin) async {
     showProgressBar();
 
-    NetworkOperationManager.SubmitSignUpOTP(widget.query, otpPin, client)
+    NetworkOperationManager.submitSignUpOTP(widget.query, otpPin, client)
         .then((res) {
       hideProgressBar();
 
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         // ShowToast.showToast(context, res.responseBody);
         // Navigator.pushReplacement(
         //   context,
@@ -321,7 +316,7 @@ class _OTP extends State<OTP> {
     NetworkOperationManager.logIn(widget.query, widget.loginPassword, client)
         .then((res) {
       hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
             res.customerName, res.customerEmail, "", widget.query);
         Navigator.pushReplacement(
@@ -382,7 +377,7 @@ class _OTP extends State<OTP> {
             client)
         .then((res) {
       hideProgressBar();
-      if (res.responseBody == Rstring.OTP_VERIFIED || res.status == 200) {
+      if (res.responseBody == Rstring.otpVerified || res.status == 200) {
         // Save the data locally and navigate to the Home screen.
 
         PrefsManager.saveLoginCredentialsToPrefs(widget.customerNo,
@@ -406,7 +401,7 @@ class _OTP extends State<OTP> {
     NetworkOperationManager.resendExistingCustomerOTP(widget.mobileNum, client)
         .then((res) {
       hideProgressBar();
-      if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
+      if (res.responseBody == Rstring.otpSendSuccess) {
         ShowToast.showToast(context, "${res.responseBody}");
       } else {
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");

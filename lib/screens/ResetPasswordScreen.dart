@@ -9,10 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 
-import 'OutletActivity.dart';
-
 class ResetPasswordScreen extends StatefulWidget {
-  String mobile;
+  final String mobile;
   ResetPasswordScreen(this.mobile);
   @override
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
@@ -25,7 +23,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     client =
         NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
@@ -42,7 +39,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(ExtraColors.DARK_BLUE),
+      backgroundColor: Color(ExtraColors.darkBlue),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         child: Column(
@@ -115,7 +112,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   },
                   child: Text(
                     "Reset",
-                    style: TextStyle(color: Color(ExtraColors.DARK_BLUE)),
+                    style: TextStyle(color: Color(ExtraColors.darkBlue)),
                   ),
                 ),
               ),
@@ -135,13 +132,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         hideProgressBar();
         print("Response password ${res.responseBody}");
         if (res.status == 200) {
-   
-            ShowToast.showToast(context, res.responseBody);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginActivity()),
-            );
-         
+          ShowToast.showToast(context, res.responseBody);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginActivity()),
+          );
         } else {
           ShowToast.showToast(context, res.responseBody);
         }
@@ -157,12 +152,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showProgressBar() {

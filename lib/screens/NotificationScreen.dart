@@ -28,7 +28,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
+        backgroundColor: Color(ExtraColors.darkBlueAccent),
         title: Text("Notifications"),
         actions: <Widget>[
           IconButton(
@@ -55,14 +55,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Expanded(
                               flex: 2,
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
                                       "Title : ${notificationList[index].notificationTitle} "),
@@ -77,8 +75,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             Expanded(
                               flex: 1,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(timeAgoSinceDate(
                                       notificationList[index].dateTime))
@@ -117,7 +114,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       }
       setState(() {});
       return _refreshCompleter.future;
-    }).catchError((err) {
-    });
+    }).catchError((err) {});
   }
 }

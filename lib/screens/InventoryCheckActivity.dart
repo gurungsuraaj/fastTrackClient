@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
@@ -15,7 +14,6 @@ class InventoryCheckActivity extends StatefulWidget {
 }
 
 class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
-
   TextEditingController detailsController = new TextEditingController();
   String basicToken = "";
 
@@ -66,8 +64,7 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData;
-    queryData = MediaQuery.of(context);
+    // MediaQueryData queryData=MediaQuery.of(context);
     return Scaffold(
         appBar: AppBarWithTitle.getAppBar('Inventory Check'),
         body: Column(
@@ -96,9 +93,9 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
                         width: 44,
                         color: Colors.blue,
                         child: IconButton(
-                          onPressed: () {
-                            prepareToCheckInventory();
-                          },
+                            onPressed: () {
+                              prepareToCheckInventory();
+                            },
                             icon: Icon(Icons.search))),
                   ],
                 ),
@@ -112,17 +109,15 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
         ));
   }
 
-
-  prepareToCheckInventory() async{
-
-    PrefsManager.getBasicToken().then((token){
+  prepareToCheckInventory() async {
+    PrefsManager.getBasicToken().then((token) {
       basicToken = token;
       checkInventory();
     });
   }
 
   void checkInventory() async {
-    String url = Api.POST_CHECKINVENTORY;
+    String url = Api.postCheckInventory;
 
     String query = detailsController.text;
     prefix0.debugPrint("query : $query");
@@ -136,17 +131,15 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
       "Criteria": customerNo,
     };
 
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-
-      "url":
-      "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
+      "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
       "Authorization": "$basicToken"
     };
 
-    await http.post(url, body: body_json, headers: header).then((res) {
+    await http.post(url, body: bodyJson, headers: header).then((res) {
       debugPrint("This is body: ${res.body}");
       int statusCode = res.statusCode;
 
@@ -155,11 +148,11 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
       String message = data['message'];
       debugPrint(">>message $message");
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
+      if (statusCode == Rcode.successCode) {
         var values = data["data"] as List;
         debugPrint(">>>values $values");
 
-       /* serviceHistoriesList = values
+        /* serviceHistoriesList = values
             .map<ServiceHistoryItem>(
                 (json) => ServiceHistoryItem.fromJson(json))
             .toList();*/
@@ -170,10 +163,8 @@ class _InventoryCheckActivityState extends State<InventoryCheckActivity> {
     }).catchError((val) {
       debugPrint("error $val");
       ShowToast.showToast(context, "Something went wrong!");
-
     });
   }
-
 }
 
 class Name {
