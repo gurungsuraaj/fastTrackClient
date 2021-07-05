@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:math' as math;
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,8 +98,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 40,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -125,8 +126,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 40,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     padding: EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.3),
@@ -157,7 +157,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 40,
-                                      width: width * 0.45,
+                    width: width * 0.45,
 
                     // margin: EdgeInsets.only(top: 15),
                     padding: EdgeInsets.only(left: 5),
@@ -185,8 +185,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 60,
-                                    width: width * 0.45,
-
+                    width: width * 0.45,
                     margin: EdgeInsets.only(top: 20),
                     child: TextFormField(
                       validator: (value) {
@@ -219,8 +218,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 60,
-                                    width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -245,7 +243,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 60,
-                                    width: width * 0.45,
+                    width: width * 0.45,
 
                     // padding: EdgeInsets.only(top: 10)                       ,
                     child: TextFormField(
@@ -280,8 +278,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 40,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     padding: EdgeInsets.only(left: 5),
                     margin: EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
@@ -308,8 +305,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 60,
-                                      width: width * 0.45,
-
+                    width: width * 0.45,
                     child: TextFormField(
                       validator: (value) {
                         if (value.length == 0) {
@@ -342,7 +338,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 children: <Widget>[
                   Container(
                     height: 60,
-                                      width: width * 0.45,
+                    width: width * 0.45,
 
                     // margin: EdgeInsets.only(top: 10),
                     child: TextFormField(
@@ -372,8 +368,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                   Container(
                     height: 40,
-                                     width: width * 0.45,
-
+                    width: width * 0.45,
                     padding: EdgeInsets.only(left: 5),
                     margin: EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
@@ -608,31 +603,37 @@ class _BatteryInquiryState extends State<BatteryInquiry>
   }
 
   Future<void> getInquiryDataForBatttery() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-    await http
-        .get("https://fasttrackemarat.com/feed/battery.json", headers: header)
-        .then((res) {
-      hideProgressBar();
-      int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
-        var result = json.decode(res.body);
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
 
-        var values = result['data'];
-        setState(() {
-          // makeList = List<String>.from(values['width']);
-          locationList = List<String>.from(values['location']);
-          currentBatteryList = List<String>.from(values['battery']);
+      await http
+          .get("https://fasttrackemarat.com/feed/battery.json", headers: header)
+          .then((res) {
+        hideProgressBar();
+        int status = res.statusCode;
+        if (status == Rcode.SUCCESS_CODE) {
+          var result = json.decode(res.body);
 
-          // heightList = List<String>.from(values['height']);
-          // rimSizeList = List<String>.from(values['rim-size']);
-          // brandList = List<String>.from(values['brand']);
-        });
+          var values = result['data'];
+          setState(() {
+            // makeList = List<String>.from(values['width']);
+            locationList = List<String>.from(values['location']);
+            currentBatteryList = List<String>.from(values['battery']);
 
-      }
-    });
+            // heightList = List<String>.from(values['height']);
+            // rimSizeList = List<String>.from(values['rim-size']);
+            // brandList = List<String>.from(values['brand']);
+          });
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   void submitBatteryInquiryData() async {
@@ -664,7 +665,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
       if (res.statusCode == Rcode.SUCCESS_CODE) {
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
-       
           timeController.text = "";
           dateController.text = "";
           commentController.text = "";
@@ -700,28 +700,34 @@ class _BatteryInquiryState extends State<BatteryInquiry>
   }
 
   getMakeList() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-    await http
-        .get("https://fasttrackemarat.com/feed/make-model.json",
-            headers: header)
-        .then((res) {
-      hideProgressBar();
-      int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
-        var result = json.decode(res.body);
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
+          .get("https://fasttrackemarat.com/feed/make-model.json",
+              headers: header)
+          .then((res) {
+        hideProgressBar();
+        int status = res.statusCode;
+        if (status == Rcode.SUCCESS_CODE) {
+          var result = json.decode(res.body);
 
-        var values = result['data']["make"];
+          var values = result['data']["make"];
 
-        makeModelList =
-            values.map<MakeModel>((json) => MakeModel.fromJson(json)).toList();
+          makeModelList = values
+              .map<MakeModel>((json) => MakeModel.fromJson(json))
+              .toList();
 
-        setState(() {});
-
-      }
-    });
+          setState(() {});
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   void getModelCode(String selectedMake) async {
@@ -744,8 +750,9 @@ class _BatteryInquiryState extends State<BatteryInquiry>
   Future<void> getPrefs() async {
     String customerName, customerNumber, customerEmail;
 
-    setState(() async {
-      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+    setState(() {
+      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+          .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
       whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
       customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
       customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);

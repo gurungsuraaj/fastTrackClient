@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/models/LocateModel.dart' as prefix0;
 import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -306,35 +308,41 @@ class _LocateActivityState extends State<LocateActivity> {
   //If user geolocation is available then sorts according to distance
   getBranchList() async {
     String url = "";
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-    final response = await http
-        .get('http://www.fasttrackemarat.com/feed/updates.json',
-            headers: header)
-        .then((res) {
-      int status = res.statusCode;
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      final response = await http
+          .get('http://www.fasttrackemarat.com/feed/updates.json',
+              headers: header)
+          .then((res) {
+        int status = res.statusCode;
 
-      if (status == Rcode.SUCCESS_CODE) {
-        hideProgressBar();
-        var result = json.decode(res.body);
-        var branches = result['branches'] as List;
-        debugPrint("$branches");
+        if (status == Rcode.SUCCESS_CODE) {
+          hideProgressBar();
+          var result = json.decode(res.body);
+          var branches = result['branches'] as List;
+          debugPrint("$branches");
 
-        locationlist = branches
-            .map<LocateModel>((json) => LocateModel.fromJson(json,
-                latitude: widget.userLat, longitude: widget.userLong))
-            .toList();
+          locationlist = branches
+              .map<LocateModel>((json) => LocateModel.fromJson(json,
+                  latitude: widget.userLat, longitude: widget.userLong))
+              .toList();
 
-        if (widget.userLat != null && widget.userLong != null) {
-          print('--------------no location !!------------');
-          locationlist.sort((a, b) => a.distance.compareTo(b.distance));
+          if (widget.userLat != null && widget.userLong != null) {
+            print('--------------no location !!------------');
+            locationlist.sort((a, b) => a.distance.compareTo(b.distance));
+          }
+        } else {
+          hideProgressBar();
         }
-      } else {
-        hideProgressBar();
-      }
-    });
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   void showProgressBar() {

@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:math' as math;
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/InquiryInfo.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -649,28 +651,34 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   // }
 
   Future<void> getMakeList() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-    await http
-        .get("https://fasttrackemarat.com/feed/make-model.json",
-            headers: header)
-        .then((res) {
-      hideProgressBar();
-      int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
-        var result = json.decode(res.body);
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
+          .get("https://fasttrackemarat.com/feed/make-model.json",
+              headers: header)
+          .then((res) {
+        hideProgressBar();
+        int status = res.statusCode;
+        if (status == Rcode.SUCCESS_CODE) {
+          var result = json.decode(res.body);
 
-        var values = result['data']["make"];
+          var values = result['data']["make"];
 
-        makeModelList =
-            values.map<MakeModel>((json) => MakeModel.fromJson(json)).toList();
+          makeModelList = values
+              .map<MakeModel>((json) => MakeModel.fromJson(json))
+              .toList();
 
-        setState(() {});
-
-      }
-    });
+          setState(() {});
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -704,23 +712,29 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   }
 
   Future<void> getLocation() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-    await http
-        .get("https://fasttrackemarat.com/feed/brakes.json", headers: header)
-        .then((res) {
-      hideProgressBar();
-      int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
-        var result = json.decode(res.body);
-        var values = result['data'];
-        setState(() {
-          locationList = List<String>.from(values['location']);
-        });
-      }
-    });
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
+          .get("https://fasttrackemarat.com/feed/brakes.json", headers: header)
+          .then((res) {
+        hideProgressBar();
+        int status = res.statusCode;
+        if (status == Rcode.SUCCESS_CODE) {
+          var result = json.decode(res.body);
+          var values = result['data'];
+          setState(() {
+            locationList = List<String>.from(values['location']);
+          });
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   Future<void> displaySnackbar(BuildContext context, msg) {
@@ -808,7 +822,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
 
   Future<void> getPrefs() async {
     String customerName, customerNumber, customerEmail;
-    setState(() async {
+    setState(() {
       nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
       whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);

@@ -152,25 +152,32 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   //to fetch the list of vehicles
   //if vehicles exists then call the service date API function
   //else call the functio to show the serviceDateComment in a pop up
-  void getVehicleList() {
-    showProgressBar();
-    NetworkOperationManager.getVehicleList(customerNumber, client).then((res) {
-      hideProgressBar();
-      if (res.length > 0) {
-        vehicleList = res;
-        tempVehicleList = res;
-        print('-------------------${vehicleList.length}------------');
-        setState(() {});
-        getNextServiceDate();
-      } else {
-        // showSnackBar('No Vehicle list available');
-        showAlert(serviceDateComment);
-        // getCompanyInfo();
-      }
-    }).catchError((err) {
-      hideProgressBar();
-      showSnackBar(err);
-    });
+  void getVehicleList() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      NetworkOperationManager.getVehicleList(customerNumber, client)
+          .then((res) {
+        hideProgressBar();
+        if (res.length > 0) {
+          vehicleList = res;
+          tempVehicleList = res;
+          print('-------------------${vehicleList.length}------------');
+          setState(() {});
+          getNextServiceDate();
+        } else {
+          // showSnackBar('No Vehicle list available');
+          showAlert(serviceDateComment);
+          // getCompanyInfo();
+        }
+      }).catchError((err) {
+        hideProgressBar();
+        showSnackBar(err);
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   //calling for the next service date for the first vehicle of vehicle list
@@ -184,39 +191,45 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   //computes if the length of vehicle list is greate than zero
   //than recursively calls the getNextServiceDate() function
   //else if next service date list is empty then shows dialogue box
-  void getVehileDataFromNAV(String vehicleSerialNo, String regNo) {
-    showProgressBar();
-    NetworkOperationManager.checkServiceDate(
-            customerNumber, vehicleSerialNo, regNo, client)
-        .then((res) {
-      print(res);
-      if (res.status == Rcode.SUCCESS_CODE) {
-        // NextServiceDateModel nextService = NextServiceDateModel();
-        // nextService.vehicleSerialNo = vehicleSerialNo;
-        // nextService.nextServiceDate = res.responseBody;
-        // nextService.registerNo = regNo;
-        print(
-            " --------------Date Status ${res.nextServiceDate} ---------------");
-        if (res.nextServiceDate != '0001-01-01') {
-          nextSerivceDateList.add(res);
-        }
-        setState(() {});
-        tempVehicleList.removeAt(0);
-        if (tempVehicleList.length > 0) {
-          getNextServiceDate();
-        } else {
-          if (nextSerivceDateList.length == 0) {
-            showAlert(serviceDateComment);
+  void getVehileDataFromNAV(String vehicleSerialNo, String regNo) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      NetworkOperationManager.checkServiceDate(
+              customerNumber, vehicleSerialNo, regNo, client)
+          .then((res) {
+        print(res);
+        if (res.status == Rcode.SUCCESS_CODE) {
+          // NextServiceDateModel nextService = NextServiceDateModel();
+          // nextService.vehicleSerialNo = vehicleSerialNo;
+          // nextService.nextServiceDate = res.responseBody;
+          // nextService.registerNo = regNo;
+          print(
+              " --------------Date Status ${res.nextServiceDate} ---------------");
+          if (res.nextServiceDate != '0001-01-01') {
+            nextSerivceDateList.add(res);
           }
+          setState(() {});
+          tempVehicleList.removeAt(0);
+          if (tempVehicleList.length > 0) {
+            getNextServiceDate();
+          } else {
+            if (nextSerivceDateList.length == 0) {
+              showAlert(serviceDateComment);
+            }
+          }
+        } else {
+          showSnackBar(res.faultString);
         }
-      } else {
-        showSnackBar(res.faultString);
-      }
-      hideProgressBar();
-    }).catchError((err) {
-      hideProgressBar();
-      print(err);
-    });
+        hideProgressBar();
+      }).catchError((err) {
+        hideProgressBar();
+        print(err);
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   showAlert(String message) {

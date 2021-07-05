@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/PostedSalesInvoiceModel.dart';
@@ -259,22 +260,28 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   }
 
   void loadPostedSalesInvoiceData() async {
-    showProgressBar();
-    NetworkOperationManager.getPostedSalesInvoiceList(customerNumber, client)
-        .then((res) {
-      hideProgressBar();
-      if (res.length > 0) {
-        setState(() {
-          postedSalesList = res;
-        });
-      } else {
-        displaySnackbar(context, "Posted Invoice Sales List is empty");
-      }
-    }).catchError((e) {
-      hideProgressBar();
-      displaySnackbar(context, "Error : $e");
-      print("this is error $e");
-    });
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      NetworkOperationManager.getPostedSalesInvoiceList(customerNumber, client)
+          .then((res) {
+        hideProgressBar();
+        if (res.length > 0) {
+          setState(() {
+            postedSalesList = res;
+          });
+        } else {
+          displaySnackbar(context, "Posted Invoice Sales List is empty");
+        }
+      }).catchError((e) {
+        hideProgressBar();
+        displaySnackbar(context, "Error : $e");
+        print("this is error $e");
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   void sendMail(String invoiceNo) async {

@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:math' as math;
+import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
+import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -201,29 +203,34 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   }
 
   Future<void> getInquiryDataForTyres() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-    await http
-        .get("https://fasttrackemarat.com/feed/tyre_by_tyre_size.json",
-            headers: header)
-        .then((res) {
-      hideProgressBar();
-      int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
-        var result = json.decode(res.body);
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
+          .get("https://fasttrackemarat.com/feed/tyre_by_tyre_size.json",
+              headers: header)
+          .then((res) {
+        hideProgressBar();
+        int status = res.statusCode;
+        if (status == Rcode.SUCCESS_CODE) {
+          var result = json.decode(res.body);
 
-        var values = result['data'];
-        setState(() {
-          widthListSize = List<String>.from(values['width']);
-          heightListSize = List<String>.from(values['height']);
-          rimSizeListSize = List<String>.from(values['rim-size']);
-          brandListSize = List<String>.from(values['brand']);
-        });
-
-      }
-    });
+          var values = result['data'];
+          setState(() {
+            widthListSize = List<String>.from(values['width']);
+            heightListSize = List<String>.from(values['height']);
+            rimSizeListSize = List<String>.from(values['rim-size']);
+            brandListSize = List<String>.from(values['brand']);
+          });
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   showAlert() {
@@ -987,28 +994,34 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   }
 
   getMakeList() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
-    await http
-        .get("https://fasttrackemarat.com/feed/make-model.json",
-            headers: header)
-        .then((res) {
-      hideProgressBar();
-      int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
-        var result = json.decode(res.body);
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
+          .get("https://fasttrackemarat.com/feed/make-model.json",
+              headers: header)
+          .then((res) {
+        hideProgressBar();
+        int status = res.statusCode;
+        if (status == Rcode.SUCCESS_CODE) {
+          var result = json.decode(res.body);
 
-        var values = result['data']["make"];
+          var values = result['data']["make"];
 
-        makeModelList =
-            values.map<MakeModel>((json) => MakeModel.fromJson(json)).toList();
+          makeModelList = values
+              .map<MakeModel>((json) => MakeModel.fromJson(json))
+              .toList();
 
-        setState(() {});
-
-      }
-    });
+          setState(() {});
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   void getModelCode(String selectedMake) async {
@@ -1029,8 +1042,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   }
 
   void submitTyreSizeData() async {
-    showProgressBar();
-
     Map<String, String> header = {
       "Content-Type": "application/json",
       "Accept": "application/json"
@@ -1066,32 +1077,39 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       });
     }
 
-    await http
-        .post(
-            "https://fasttrackemarat.com/contact-from-app/search-by-tyre-size.php",
-            headers: header,
-            body: body)
-        .then((res) {
-      hideProgressBar();
-      if (res.statusCode == Rcode.SUCCESS_CODE) {
-        displaySnackbar(context, "Inquiry submitted successfully");
-        setState(() {
-          // nameControllerSize.text = "";
-          // phoneControllerSize.text = "";
-          // emailControllerSize.text = "";
-          commentControllerSize.text = "";
-          selectedWidthSize = null;
-          selectedHeightSize = null;
-          selectedRimSize = null;
-          selectedBrandSize = null;
-          selectedRearWidthSize = null;
-          selectedRearHeightSize = null;
-          selectedRearRimSize = null;
-        });
-      } else {
-        displaySnackbar(context, "Error: ${res.body}");
-      }
-    });
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
+          .post(
+              "https://fasttrackemarat.com/contact-from-app/search-by-tyre-size.php",
+              headers: header,
+              body: body)
+          .then((res) {
+        hideProgressBar();
+        if (res.statusCode == Rcode.SUCCESS_CODE) {
+          displaySnackbar(context, "Inquiry submitted successfully");
+          setState(() {
+            // nameControllerSize.text = "";
+            // phoneControllerSize.text = "";
+            // emailControllerSize.text = "";
+            commentControllerSize.text = "";
+            selectedWidthSize = null;
+            selectedHeightSize = null;
+            selectedRimSize = null;
+            selectedBrandSize = null;
+            selectedRearWidthSize = null;
+            selectedRearHeightSize = null;
+            selectedRearRimSize = null;
+          });
+        } else {
+          displaySnackbar(context, "Error: ${res.body}");
+        }
+      });
+    } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   Future<void> displaySnackbar(BuildContext context, msg) {
@@ -1103,7 +1121,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   }
 
   void submitTyresModelData() async {
-    showProgressBar();
     Map<String, String> header = {
       "Content-Type": "application/json",
       "Accept": "application/json"
@@ -1119,7 +1136,11 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       "message": commentControllerModel.text
     });
 
-    await http
+   var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      showProgressBar();
+      await http
         .post(
             'https://fasttrackemarat.com/contact-from-app/search-by-car-model.php',
             headers: header,
@@ -1129,7 +1150,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       if (res.statusCode == Rcode.SUCCESS_CODE) {
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
-          
           commentControllerModel.text = "";
           selectedMakeCode = null;
           selectedModel = null;
@@ -1139,18 +1159,19 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
         displaySnackbar(context, "Error: ${res.body}");
       }
     });
+  } else {
+      ShowToast.showToast(context, "No internet connection");
+    }
   }
 
   Future<void> getPrefs() async {
-
-    setState(() async {
-      nearestStorePhn =  SpUtil
-          .getString(Constants.NEAREST_STORE_PHONENO)
+    setState(() {
+      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum =  SpUtil.getString(Constants.WHATS_APP_NUMBER);
-      customerName =  SpUtil.getString(Constants.CUSTOMER_NAME);
-      customerNumber =  SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail =  SpUtil.getString(Constants.CUSTOMER_EMAIL);
+      whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
+      customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
+      customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
+      customerEmail = SpUtil.getString(Constants.CUSTOMER_EMAIL);
 
       // There are two tabs with different controller
 
