@@ -13,11 +13,10 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  List<NotificationModel> notificationList = List();
+  List<NotificationModel> notificationList = [];
   Completer<void> _refreshCompleter;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _refreshCompleter = Completer<void>();
     getDataFromDB();

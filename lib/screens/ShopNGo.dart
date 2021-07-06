@@ -54,14 +54,16 @@ class _ShopAndGo extends State<ShopAndGo> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 7),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () {
                     if (searchController.text.isNotEmpty) {
                       searchItem();
                     }
                   },
-                  textColor: Colors.blue,
-                  color: Colors.white,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    textStyle: TextStyle(color: Colors.blue),
+                  ),
                   child: new Text(
                     "SEARCH",
                   ),

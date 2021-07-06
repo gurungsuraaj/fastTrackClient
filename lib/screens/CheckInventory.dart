@@ -55,7 +55,7 @@ class _CheckInventoryState extends State<CheckInventory> {
   void initState() {
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
     PrefsManager.getBasicToken().then((token) {
       basicToken = token;
       prepareToCheckInventory("", client).then((onValue) {

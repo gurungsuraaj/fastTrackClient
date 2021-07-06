@@ -397,7 +397,7 @@ class _ServiceActivityState extends State<ServiceActivity> {
     });
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),

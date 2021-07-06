@@ -18,14 +18,14 @@ class ResetPasswordScreen extends StatefulWidget {
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   NTLMClient client;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
 
   @override
   void initState() {
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
   }
 
   var fontSizeTextField = 14.0;
@@ -101,11 +101,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               child: Container(
                 padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                 width: width * 0.45,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(18.0),
+                    ),
+                    primary: Colors.white,
                   ),
-                  color: Colors.white,
                   onPressed: () {
                     FocusScope.of(context).requestFocus(FocusNode());
                     submitPassword();

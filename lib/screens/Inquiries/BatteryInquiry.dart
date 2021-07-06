@@ -9,7 +9,6 @@ import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,9 +21,9 @@ class BatteryInquiry extends StatefulWidget {
 
 class _BatteryInquiryState extends State<BatteryInquiry>
     with TickerProviderStateMixin {
-  List<String> makeList = List();
-  List<String> locationList = List();
-  List<String> currentBatteryList = List();
+  List<String> makeList = [];
+  List<String> locationList = [];
+  List<String> currentBatteryList = [];
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -46,9 +45,9 @@ class _BatteryInquiryState extends State<BatteryInquiry>
   var _formKey = GlobalKey<FormState>();
   bool isProgressBarShown = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<MakeModel> makeModelList = List();
-  List<String> modelList = List();
-  List<int> yearList = List();
+  List<MakeModel> makeModelList = [];
+  List<String> modelList = [];
+  List<int> yearList = [];
   AnimationController _controller;
   String nearestStorePhn, whatsAppNum;
 
@@ -58,7 +57,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getInquiryDataForBatttery().whenComplete(() async {
       getPrefs().whenComplete(() {
@@ -423,11 +421,12 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                 child: Container(
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                   width: width * 0.75,
-                  child: RaisedButton(
-                    color: Color(ExtraColors.darkBlue),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
-                      // side: BorderSide(color: Colors.black),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(18.0),
+                      ),
+                      primary: Color(ExtraColors.darkBlue),
                     ),
                     onPressed: () {
                       // performLogin();
@@ -563,7 +562,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
           actions: <Widget>[
             Container(
               width: 100,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -691,7 +690,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
     });
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
@@ -751,12 +750,12 @@ class _BatteryInquiryState extends State<BatteryInquiry>
     String customerName, customerNumber, customerEmail;
 
     setState(() {
-      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+      nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
-      customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
-      customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail = SpUtil.getString(Constants.CUSTOMER_EMAIL);
+      whatsAppNum = SpUtil.getString(Constants.whatsAppNumber);
+      customerName = SpUtil.getString(Constants.customerName);
+      customerNumber = SpUtil.getString(Constants.customerMobileNo);
+      customerEmail = SpUtil.getString(Constants.customerEmail);
 
       nameController.text = customerName;
       phoneController.text = customerNumber;

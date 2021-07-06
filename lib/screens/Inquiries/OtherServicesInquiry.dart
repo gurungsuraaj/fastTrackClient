@@ -10,7 +10,6 @@ import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as math;
 
 import 'package:url_launcher/url_launcher.dart';
@@ -27,11 +26,11 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
   var _formKey = GlobalKey<FormState>();
   bool isProgressBarShown = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<MakeModel> makeModelList = List();
-  List<String> modelList = List();
+  List<MakeModel> makeModelList = [];
+  List<String> modelList = [];
   String selectedMake, selectedModel, selectedLocation, makeDate;
   DateTime selectedDate = DateTime.now();
-  List<String> locationList = List();
+  List<String> locationList = [];
 
   TextEditingController dateController = TextEditingController();
   TextEditingController commentController = TextEditingController();
@@ -49,7 +48,6 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     getMakeList().whenComplete(() async {
@@ -377,11 +375,12 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                 child: Container(
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                   width: width * 0.75,
-                  child: RaisedButton(
-                    color: Color(ExtraColors.darkBlue),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
-                      // side: BorderSide(color: Colors.black),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(5.0),
+                      ),
+                      primary: Color(ExtraColors.darkBlue),
                     ),
                     onPressed: () {
                       // performLogin();
@@ -483,7 +482,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
           actions: <Widget>[
             Container(
               width: 100,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -688,7 +687,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
     });
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
@@ -700,12 +699,12 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
     String customerName, customerNumber, customerEmail;
 
     setState(() {
-      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+      nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
-      customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
-      customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail = SpUtil.getString(Constants.CUSTOMER_EMAIL);
+      whatsAppNum = SpUtil.getString(Constants.whatsAppNumber);
+      customerName = SpUtil.getString(Constants.customerName);
+      customerNumber = SpUtil.getString(Constants.customerMobileNo);
+      customerEmail = SpUtil.getString(Constants.customerEmail);
 
       nameController.text = customerName;
       phoneController.text = customerNumber;

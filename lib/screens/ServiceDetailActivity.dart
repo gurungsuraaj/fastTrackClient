@@ -67,7 +67,7 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
   }
 
   onCallPressed() async {
-    String phnNum = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+    String phnNum = SpUtil.getString(Constants.nearestStorePhoneNo)
         .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
 
     var url = "tel:$phnNum";

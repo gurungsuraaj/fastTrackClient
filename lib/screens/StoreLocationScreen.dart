@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:fasttrackgarage_app/models/LocateModel.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
-import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
@@ -20,9 +19,9 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
   int shortDistanceIndex;
   double shortDistBranchlat = 0;
   double shortDistBranchLong = 0;
-  List<LocateModel> branchList = List();
-  List<double> branchDistanceList = List();
-  Completer<GoogleMapController> _controller = Completer();
+  List<LocateModel> branchList = [];
+  List<double> branchDistanceList = [];
+  // Completer<GoogleMapController> _controller = Completer();
   String storeLatLong;
   LatLng _center;
   GoogleMapController mapController;
@@ -93,7 +92,7 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
       double branchLatitude = double.parse(location[0]);
       double branchLongitude = double.parse(location[1]);
 
-      double distanceInMeters = await Geolocator.distanceBetween(
+      double distanceInMeters = Geolocator.distanceBetween(
           position.latitude,
           position.longitude,
           branchLatitude,

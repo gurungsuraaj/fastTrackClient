@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class CartActivity extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _CartActivity();
   }
 }
@@ -13,7 +12,6 @@ class CartActivity extends StatefulWidget {
 class _CartActivity extends State<CartActivity> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBarWithTitle.getAppBar('Cart Manager'),
       body: Column(
@@ -53,10 +51,12 @@ class _CartActivity extends State<CartActivity> {
                       SizedBox(
                         height: 50,
                         width: 50,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          textColor: Colors.black,
-                          color: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(color: Colors.black),
+                            primary: Colors.white,
+                          ),
                           child: new Text(
                             " - ",
                             textAlign: TextAlign.start,
@@ -70,10 +70,12 @@ class _CartActivity extends State<CartActivity> {
                       SizedBox(
                         height: 50,
                         width: 50,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          textColor: Colors.black,
-                          color: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(color: Colors.black),
+                            primary: Colors.white,
+                          ),
                           child: new Text(
                             " + ",
                           ),
@@ -128,10 +130,12 @@ class _CartActivity extends State<CartActivity> {
                       SizedBox(
                         height: 50,
                         width: 50,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          textColor: Colors.black,
-                          color: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            textStyle: TextStyle(color: Colors.black),
+                          ),
                           child: new Text(
                             " - ",
                           ),
@@ -143,10 +147,12 @@ class _CartActivity extends State<CartActivity> {
                       SizedBox(
                         height: 50,
                         width: 50,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          textColor: Colors.black,
-                          color: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            textStyle: TextStyle(color: Colors.black),
+                          ),
                           child: new Text(
                             " + ",
                           ),
@@ -172,8 +178,10 @@ class _CartActivity extends State<CartActivity> {
           Container(
             margin: EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width,
-            child: RaisedButton(
-              color: Color(ExtraColors.darkBlue),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(ExtraColors.darkBlue),
+              ),
               onPressed: () {},
               child: Text(
                 "Make payment",

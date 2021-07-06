@@ -23,7 +23,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
   String customerNumber;
   String basicToken = "";
   List<ServiceHistoryItem> serviceHistoriesList =
-      new List<ServiceHistoryItem>();
+      <ServiceHistoryItem>[];
 
   @override
   void initState() {
@@ -160,7 +160,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                                   Container(
                                     child: Text(
                                         serviceHistoriesList[index]
-                                            .Posting_Date,
+                                            .postingDate,
                                         style: textStyle),
                                   ),
                                   SizedBox(
@@ -168,7 +168,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                                   ),
                                   Container(
                                     child: Text(
-                                      serviceHistoriesList[index].Document_No,
+                                      serviceHistoriesList[index].documentNo,
                                       style: textStyle,
                                     ),
                                   ),
@@ -177,7 +177,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                                   ),
                                   Container(
                                     child: Text(
-                                      serviceHistoriesList[index].Make_Code,
+                                      serviceHistoriesList[index].makeCode,
                                       style: textStyle,
                                     ),
                                   ),
@@ -186,7 +186,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
                                   ),
                                   Container(
                                     child: Text(
-                                      serviceHistoriesList[index].Model_Code,
+                                      serviceHistoriesList[index].modelCode,
                                       style: textStyle,
                                     ),
                                   ),
@@ -263,7 +263,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
       "Criteria": customerNo,
     };
 
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
@@ -271,7 +271,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
       "Authorization": "$basicToken"
     };
 
-    await http.post(url, body: body_json, headers: header).then((res) {
+    await http.post(url, body: bodyJson, headers: header).then((res) {
       debugPrint("This is body: ${res.body}");
       int statusCode = res.statusCode;
 
@@ -313,6 +313,6 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
   }
 
   Future<void> getPref() async {
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    customerNumber = SpUtil.getString(Constants.customerNo);
   }
 }

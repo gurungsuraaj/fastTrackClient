@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
@@ -19,8 +18,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'package:country_pickers/country_pickers.dart';
 
 class SignUpActivity extends StatefulWidget {
   final CustomerModel customerDetails;
@@ -30,7 +27,6 @@ class SignUpActivity extends StatefulWidget {
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _SignUpActivity();
   }
 }
@@ -58,7 +54,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
   /*Variables and declarations end region*/
 
-  String _email;
+  // String _email;
   String _password;
 
   bool checkBoxValue = false;
@@ -75,7 +71,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       mobileController.text = widget.mobileNumber;
     }
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
     _getSignatureCode();
   }
 
@@ -92,7 +88,6 @@ class _SignUpActivity extends State<SignUpActivity> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Color(ExtraColors.darkBlueAccent)));
 
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Color(0xff253983),
       key: _scaffoldKey,
@@ -380,18 +375,19 @@ class _SignUpActivity extends State<SignUpActivity> {
                               child: Container(
                                 margin: EdgeInsets.only(top: 45.0),
                                 width: width * 0.5,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(18.0),
-                                    // side: BorderSide(color: Colors.black),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(18.0),
+                                    ),
+                                    primary: Colors.white,
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
                                     _submit();
                                   },
-                                  color: Colors.white,
                                   child: Text(
                                     'Continue',
                                     style: TextStyle(
@@ -472,14 +468,14 @@ class _SignUpActivity extends State<SignUpActivity> {
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(minutes: 5),
       action: SnackBarAction(
         label: "OK",
         onPressed: () {
-          _scaffoldKey.currentState.removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
         },
       ),
     );
@@ -502,13 +498,13 @@ class _SignUpActivity extends State<SignUpActivity> {
       "passwordTxt": password,
     };
 
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
       "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
-    await http.post(url, body: body_json, headers: header).then((val) {
+    await http.post(url, body: bodyJson, headers: header).then((val) {
       var statusCode = val.statusCode;
       var result = json.decode(val.body);
       String message = result["message"];
@@ -542,9 +538,10 @@ class _SignUpActivity extends State<SignUpActivity> {
   }
 
   _buildCountryPickerDropdown(
-          {bool filtered = false,
-          bool sortedByIsoCode = false,
-          bool hasPriorityList = false}) =>
+          // {bool filtered = false,
+          // bool sortedByIsoCode = false,
+          // bool hasPriorityList = false}
+          ) =>
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -658,20 +655,20 @@ class _SignUpActivity extends State<SignUpActivity> {
         ),
       );
 
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            SizedBox(
-              width: 8.0,
-            ),
-            Text(
-              "+${country.phoneCode}(${country.isoCode})",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
-      );
+  // Widget _buildDropdownItem(Country country) => Container(
+  //       child: Row(
+  //         children: <Widget>[
+  //           CountryPickerUtils.getDefaultFlagImage(country),
+  //           SizedBox(
+  //             width: 8.0,
+  //           ),
+  //           Text(
+  //             "+${country.phoneCode}(${country.isoCode})",
+  //             style: TextStyle(color: Colors.grey),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 
   void _signUp() async {
     // String mobileNum = phoneCode + mobileController.text;

@@ -20,7 +20,7 @@ class InquiryInfo {
                           actions: <Widget>[
                             Container(
                               width: 100,
-                              child: FlatButton(
+                              child: TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

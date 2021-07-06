@@ -12,9 +12,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'OfferPromo.dart';
-import 'StoreLocationScreen.dart';
-
 class MainTab extends StatefulWidget {
   @override
   _MainTabState createState() => _MainTabState();
@@ -32,7 +29,6 @@ class _MainTabState extends State<MainTab> {
   var googleID;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     pageController = PageController(
       initialPage: 0,

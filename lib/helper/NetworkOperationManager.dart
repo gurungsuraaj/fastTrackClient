@@ -272,6 +272,7 @@ class NetworkOperationManager {
       debugPrint("error $e");
       //throw Exception("$e");
     }
+      return rs;
   }
 
   static Future<List<SearchItemModel>> searchItemFromNav(
@@ -733,24 +734,24 @@ class NetworkOperationManager {
         xml2json.parse(val.toString());
         var json = xml2json.toParker();
         var data = jsonDecode(json);
-        vehicleList.Customer_No = data["VehicleList"]["Customer_No"] ?? "";
-        vehicleList.Make_Code = data["VehicleList"]["Make_Code"] ?? "";
-        vehicleList.VIN = data["VehicleList"]["VIN"] ?? "";
-        vehicleList.Model_Code = data["VehicleList"]["Model_Code"] ?? "";
+        vehicleList.customerNo = data["VehicleList"]["Customer_No"] ?? "";
+        vehicleList.makeCode = data["VehicleList"]["Make_Code"] ?? "";
+        vehicleList.vin = data["VehicleList"]["VIN"] ?? "";
+        vehicleList.modelCode = data["VehicleList"]["Model_Code"] ?? "";
         vehicleList.vehicleCode =
             data["VehicleList"]["Variable_Field_25006800"] ?? "";
         vehicleList.vehicleEmirates =
             data["VehicleList"]["Variable_Field_25006802"] ?? "";
         vehicleList.vehicleCategory =
             data["VehicleList"]["Variable_Field_25006801"] ?? "";
-        vehicleList.Serial_No = data["VehicleList"]["Serial_No"] ?? "";
-        vehicleList.Type_Code = data["VehicleList"]["Type_Code"] ?? "";
-        vehicleList.Registration_No =
+        vehicleList.serialNo = data["VehicleList"]["Serial_No"] ?? "";
+        vehicleList.typeCode = data["VehicleList"]["Type_Code"] ?? "";
+        vehicleList.registrationNo =
             data["VehicleList"]["Registration_No"] ?? "";
-        vehicleList.Production_Year =
+        vehicleList.productionYear =
             data["VehicleList"]["Production_Year"] ?? "";
         vehicleList.odometer = data["VehicleList"]["Kilometrage"] ?? "";
-        vehicleList.StatusCode = res.statusCode;
+        vehicleList.statusCode = res.statusCode;
 
         //  print("This is Model Code inside loop ======> ${vehicleList.Model_Code}");
         vehicleArrayList.add(vehicleList);

@@ -10,7 +10,6 @@ import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InquiryDetailScreen extends StatefulWidget {
@@ -30,10 +29,10 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       selectedRearHeightSize,
       selectedRearRimSize;
   bool isRearTyreVisible = false;
-  List<String> widthListSize = List();
-  List<String> heightListSize = List();
-  List<String> rimSizeListSize = List();
-  List<String> brandListSize = List();
+  List<String> widthListSize = [];
+  List<String> heightListSize = [];
+  List<String> rimSizeListSize = [];
+  List<String> brandListSize = [];
 
   TextEditingController nameControllerSize = TextEditingController();
   TextEditingController phoneControllerSize = TextEditingController();
@@ -42,10 +41,10 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   bool isProgressBarShown = false;
 
   String selectedMakeCode, selectedModel, selectedRimModel, selectedBrandModel;
-  List<String> widthListModel = List();
-  List<String> heightListModel = List();
-  List<String> rimSizeListModel = List();
-  List<String> brandListModel = List();
+  List<String> widthListModel = [];
+  List<String> heightListModel = [];
+  List<String> rimSizeListModel = [];
+  List<String> brandListModel = [];
 
   TextEditingController nameControllerModel = TextEditingController();
   TextEditingController phoneControllerModel = TextEditingController();
@@ -53,9 +52,9 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   TextEditingController commentControllerModel = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
-  List<MakeModel> makeModelList = List();
-  List<String> modelList = List();
-  List<int> yearList = List();
+  List<MakeModel> makeModelList = [];
+  List<String> modelList = [];
+  List<int> yearList = [];
 
   String selectedMake, makeDate, selectedDate;
   var _formKey = GlobalKey<FormState>();
@@ -67,7 +66,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
       customerName,
       customerNumber,
       customerEmail;
-  static const List<IconData> icons = const [Icons.whatshot, Icons.phone];
+  // static const List<IconData> icons = const [Icons.whatshot, Icons.phone];
 
   static const List<String> imageList = const [
     "images/call.png",
@@ -75,7 +74,6 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getInquiryDataForTyres().whenComplete(() async {
       getPrefs().whenComplete(() {
@@ -242,7 +240,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           actions: <Widget>[
             Container(
               width: 100,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -658,11 +656,12 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
               width: width * 0.75,
-              child: RaisedButton(
-                color: Color(ExtraColors.darkBlue),
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(5.0),
-                  // side: BorderSide(color: Colors.black),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(18.0),
+                  ),
+                  primary: Color(ExtraColors.darkBlue),
                 ),
                 onPressed: () {
                   // performLogin();
@@ -680,7 +679,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
               ),
             ),
-            // FlatButton(
+            // TextButton(
             //     onPressed: () async {
             //       var whatsappUrl = "whatsapp://send?phone=9806522695";
             //       await canLaunch(whatsappUrl)
@@ -955,11 +954,12 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
               width: width * 0.75,
-              child: RaisedButton(
-                color: Color(ExtraColors.darkBlue),
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(5.0),
-                  // side: BorderSide(color: Colors.black),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(18.0),
+                  ),
+                  primary: Color(ExtraColors.darkBlue),
                 ),
                 onPressed: () {
                   // performLogin();
@@ -977,7 +977,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 ),
               ),
             ),
-            // FlatButton(
+            // TextButton(
             //     onPressed: () async {
             //       var whatsappUrl = "whatsapp://send?phone=9806522695";
             //       await canLaunch(whatsappUrl)
@@ -1112,7 +1112,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 10),
@@ -1166,12 +1166,12 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
 
   Future<void> getPrefs() async {
     setState(() {
-      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+      nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
-      customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
-      customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail = SpUtil.getString(Constants.CUSTOMER_EMAIL);
+      whatsAppNum = SpUtil.getString(Constants.whatsAppNumber);
+      customerName = SpUtil.getString(Constants.customerName);
+      customerNumber = SpUtil.getString(Constants.customerMobileNo);
+      customerEmail = SpUtil.getString(Constants.customerEmail);
 
       // There are two tabs with different controller
 

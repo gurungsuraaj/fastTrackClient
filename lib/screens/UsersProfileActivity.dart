@@ -3,7 +3,6 @@ import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 
 import 'LoginActivity.dart';
@@ -19,7 +18,6 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getPrefs();
   }
@@ -163,11 +161,11 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
     );
   }
 
-  Future<String> getPrefs() async {
-    customerName = SpUtil.getString((Constants.CUSTOMER_NAME));
-    mobNumber = SpUtil.getString((Constants.CUSTOMER_MOBILE_NO));
-    customerEmail = SpUtil.getString((Constants.CUSTOMER_EMAIL));
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+  Future<void> getPrefs() async {
+    customerName = SpUtil.getString((Constants.customerName));
+    mobNumber = SpUtil.getString((Constants.customerMobileNo));
+    customerEmail = SpUtil.getString((Constants.customerEmail));
+    customerNumber = SpUtil.getString(Constants.customerNo);
     setState(() {});
     //  return serviceOrderNum;
   }

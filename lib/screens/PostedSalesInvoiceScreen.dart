@@ -26,7 +26,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   void initState() {
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
     getPrefs().whenComplete(() {
       loadPostedSalesInvoiceData();
     });
@@ -319,6 +319,6 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   }
 
   Future<void> getPrefs() async {
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    customerNumber = SpUtil.getString(Constants.customerNo);
   }
 }

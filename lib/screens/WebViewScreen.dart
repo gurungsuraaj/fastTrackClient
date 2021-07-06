@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -16,7 +13,6 @@ class WebViewScreen extends StatefulWidget {
 class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     print("${WebViewState.finishLoad}");

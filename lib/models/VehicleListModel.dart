@@ -1,23 +1,23 @@
 
 class VehicleListModel {
-  int StatusCode;
-  String Customer_No;
-  String VIN;
-  String Serial_No;
-  String Make_Code;
-  String Model_Code;
+  int statusCode;
+  String customerNo;
+  String vin;
+  String serialNo;
+  String makeCode;
+  String modelCode;
   String vehicleCode;
   String vehicleEmirates;
   String odometer;
   String vehicleCategory;
-  String Registration_No;
-  String Type_Code;
-  String Production_Year;
+  String registrationNo;
+  String typeCode;
+  String productionYear;
 
-  VehicleListModel({this.StatusCode, this.Customer_No, this.VIN, this.Serial_No,
-      this.Make_Code, this.Model_Code, this.vehicleCode, this.vehicleEmirates, this.odometer,
-      this.vehicleCategory, this.Registration_No, this.Type_Code,
-      this.Production_Year});
+  VehicleListModel({this.statusCode, this.customerNo, this.vin, this.serialNo,
+      this.makeCode, this.modelCode, this.vehicleCode, this.vehicleEmirates, this.odometer,
+      this.vehicleCategory, this.registrationNo, this.typeCode,
+      this.productionYear});
 
 
 }

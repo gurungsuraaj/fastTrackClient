@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
@@ -39,35 +38,33 @@ class OTP extends StatefulWidget {
 class _OTP extends State<OTP> {
   NTLMClient client;
   bool isProgressBarShown = false;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _otpCodeLength = 6;
-  bool _isLoadingButton = false;
-  bool _enableButton = false;
+  // bool _isLoadingButton = false;
+  // bool _enableButton = false;
   String _otpCode = "";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
 
     // FocusScope.of(context).requestFocus(FocusNode());
   }
 
   @override
   Widget build(BuildContext context) {
-    var _scaffoldKey = new GlobalKey<ScaffoldState>();
+    // var _scaffoldKey = new GlobalKey<ScaffoldState>();
     bool isProgressBarShown = false;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    double MARGIN = 24.0;
-    double PADDING = 10.0;
+    double margin = 24.0;
+    // double padding = 10.0;
 
-    TextEditingController controller = TextEditingController();
+    // TextEditingController controller = TextEditingController();
 
-    // TODO: implement build
     return Scaffold(
       // key: _scaffoldKey,
       backgroundColor: Colors.grey[100],
@@ -86,7 +83,7 @@ class _OTP extends State<OTP> {
                       Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: Container(
-                            margin: EdgeInsets.only(top: MARGIN),
+                            margin: EdgeInsets.only(top: margin),
                             child: Column(
                               children: <Widget>[
                                 Text(
@@ -238,8 +235,8 @@ class _OTP extends State<OTP> {
     setState(() {
       this._otpCode = otpCode;
       if (otpCode.length == _otpCodeLength && isAutofill) {
-        _enableButton = false;
-        _isLoadingButton = true;
+        // _enableButton = false;
+        // _isLoadingButton = true;
         if (widget.mode == 1) {
           submitOtpForRegistration(_otpCode);
         } else if (widget.mode == 2) {
@@ -253,23 +250,23 @@ class _OTP extends State<OTP> {
       //   _isLoadingButton = false;
       // }
       else {
-        _enableButton = false;
+        // _enableButton = false;
       }
     });
   }
 
-  _verifyOtpCode() {
-    FocusScope.of(context).requestFocus(new FocusNode());
-    Timer(Duration(milliseconds: 4000), () {
-      setState(() {
-        _isLoadingButton = false;
-        _enableButton = false;
-      });
+  // _verifyOtpCode() {
+  //   FocusScope.of(context).requestFocus(new FocusNode());
+  //   Timer(Duration(milliseconds: 4000), () {
+  //     setState(() {
+  //       // _isLoadingButton = false;
+  //       // _enableButton = false;
+  //     });
 
-      _scaffoldKey.currentState.showSnackBar(
-          SnackBar(content: Text("Verification OTP Code $_otpCode Success")));
-    });
-  }
+  //     _scaffoldKey.currentState.showSnackBar(
+  //         SnackBar(content: Text("Verification OTP Code $_otpCode Success")));
+  //   });
+  // }
 
   submitOTP(String otpPin) async {
     showProgressBar();

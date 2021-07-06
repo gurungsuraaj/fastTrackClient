@@ -21,19 +21,18 @@ class _OfferPromoState extends State<OfferPromo> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
 
-  List<Promo> promoList = new List<Promo>();
+  List<Promo> promoList = <Promo>[];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     showOffer();
   }
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData;
-    queryData = MediaQuery.of(context);
+    // MediaQueryData queryData;
+    // queryData = MediaQuery.of(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -106,7 +105,7 @@ class _OfferPromoState extends State<OfferPromo> {
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),

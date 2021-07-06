@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // String location = prefs.getString(Constants.location);
     String basicToken;
 
-    basicToken = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    basicToken = SpUtil.getString(Constants.customerNo);
     debugPrint("this is basicToke $basicToken");
     if (basicToken == null || basicToken.isEmpty) {
       print("Inside the null check condition");
