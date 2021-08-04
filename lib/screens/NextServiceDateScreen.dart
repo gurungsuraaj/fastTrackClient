@@ -11,7 +11,6 @@ import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NextServiceDateScreen extends StatefulWidget {
@@ -35,9 +34,9 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   @override
   void initState() {
     super.initState();
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    customerNumber = SpUtil.getString(Constants.customerNo);
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
     getCompanyInfo();
     // .whenComplete(() {
     // getPrefs().whenComplete(() {
@@ -49,13 +48,13 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   @override
   Widget build(BuildContext context) {
     var textStyle1 =
-        TextStyle(color: Color(ExtraColors.DARK_BLUE), fontSize: 14);
+        TextStyle(color: Color(ExtraColors.darkBlue), fontSize: 14);
     var textStyle2 = TextStyle(color: Color(0xffEF9C2B), fontSize: 14);
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Next Service Date"),
       ),
       body: ModalProgressHUD(
@@ -122,7 +121,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   }
 
   // Future<void> getPrefs() async {
-  //   customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+  //   customerNumber = SpUtil.getString(Constants.customerName);
   // }
 
   //to fetch the service date comment and lapse service message
@@ -183,7 +182,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   //calling for the next service date for the first vehicle of vehicle list
   void getNextServiceDate() {
     getVehileDataFromNAV(
-        tempVehicleList[0].Serial_No, tempVehicleList[0].Registration_No);
+        tempVehicleList[0].serialNo, tempVehicleList[0].registrationNo);
   }
 
   //fetching the next service date of the vehicle and adding it to nextSerivceDateList
@@ -200,7 +199,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
               customerNumber, vehicleSerialNo, regNo, client)
           .then((res) {
         print(res);
-        if (res.status == Rcode.SUCCESS_CODE) {
+        if (res.status == Rcode.successCode) {
           // NextServiceDateModel nextService = NextServiceDateModel();
           // nextService.vehicleSerialNo = vehicleSerialNo;
           // nextService.nextServiceDate = res.responseBody;
@@ -241,7 +240,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
           actions: <Widget>[
             Container(
               width: 100,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
@@ -299,9 +298,9 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
         action: SnackBarAction(
           label: "OK",
           onPressed: () {
-            _scaffoldKey.currentState.removeCurrentSnackBar();
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
           },
         ));
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

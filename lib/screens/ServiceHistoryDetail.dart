@@ -3,7 +3,7 @@ import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
 
 class ServiceHistoryDetail extends StatefulWidget {
-  ServiceHistoryItem serviceHistoryItem;
+  final ServiceHistoryItem serviceHistoryItem;
   ServiceHistoryDetail(this.serviceHistoryItem);
   @override
   _ServiceHistoryDetailState createState() => _ServiceHistoryDetailState();
@@ -21,7 +21,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
         title: Text(
           "Service History Detail",
         ),
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
       ),
       backgroundColor: Color(0xFFD9D9D9),
       body: Container(
@@ -186,7 +186,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Container(
-                            child: Text(widget.serviceHistoryItem.Posting_Date,
+                            child: Text(widget.serviceHistoryItem.postingDate,
                                 style: textStyle),
                           ),
                           SizedBox(
@@ -194,7 +194,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
                           ),
                           Container(
                             child: Text(
-                              widget.serviceHistoryItem.Document_No,
+                              widget.serviceHistoryItem.documentNo,
                               style: textStyle,
                             ),
                           ),
@@ -203,7 +203,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
                           ),
                           Container(
                             child: Text(
-                              widget.serviceHistoryItem.Make_Code,
+                              widget.serviceHistoryItem.makeCode,
                               style: textStyle,
                             ),
                           ),
@@ -212,7 +212,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
                           ),
                           Container(
                             child: Text(
-                              widget.serviceHistoryItem.Model_Code,
+                              widget.serviceHistoryItem.modelCode,
                               style: textStyle,
                             ),
                           ),
@@ -221,7 +221,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
                           ),
                           Container(
                             child: Text(
-                              widget.serviceHistoryItem.Vehicle_Serial_No,
+                              widget.serviceHistoryItem.vehicleSerialNo,
                               style: textStyle,
                             ),
                           ),
@@ -230,7 +230,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
                           ),
                           Container(
                             child: Text(
-                              widget.serviceHistoryItem.Location_Code,
+                              widget.serviceHistoryItem.locationCode,
                               style: textStyle,
                             ),
                           ),
@@ -239,7 +239,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
                           ),
                           Container(
                             child: Text(
-                              widget.serviceHistoryItem.No,
+                              widget.serviceHistoryItem.no,
                               style: textStyle,
                             ),
                           ),

@@ -12,9 +12,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'OfferPromo.dart';
-import 'StoreLocationScreen.dart';
-
 class MainTab extends StatefulWidget {
   @override
   _MainTabState createState() => _MainTabState();
@@ -32,7 +29,6 @@ class _MainTabState extends State<MainTab> {
   var googleID;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     pageController = PageController(
       initialPage: 0,
@@ -47,7 +43,7 @@ class _MainTabState extends State<MainTab> {
     _messaging.requestNotificationPermissions();
     _messaging.configure(
       onMessage: (Map<String, dynamic> msg) {
-          print("Inside message ------------------- $msg");
+        print("Inside message ------------------- $msg");
 
         if (Platform.isAndroid) {
           showBackGroundNotification(msg['data']['title'], msg['data']['body']);
@@ -71,7 +67,6 @@ class _MainTabState extends State<MainTab> {
         }
       },
       onResume: (Map<String, dynamic> msg) async {
-
         if (Platform.isAndroid) {
           saveBackgorundNotificatonDataOnDB(
               msg['data']['title'], msg['data']['body']);
@@ -86,7 +81,6 @@ class _MainTabState extends State<MainTab> {
                 googleID = msg['google.c.sender.id'];
               });
             }
-
 
             saveBackgorundNotificatonDataOnDB(msg['title'], msg['body'])
                 .whenComplete(() {
@@ -155,29 +149,25 @@ class _MainTabState extends State<MainTab> {
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
+      BottomNavigationBarItem(
+        icon: new Icon(
+          Icons.home,
+          color: Color(ExtraColors.darkBlue),
+        ),
+        label: 'Home',
 
+        //  Padding(
+        //   padding: const EdgeInsets.only(top: 2.0),
+        //   child: new Text(
+        //     'Home',
+        //     style: bottomTabBarText,
+        //   ),
+        // )
+      ),
       BottomNavigationBarItem(
-        
-          icon: new Icon(
-            Icons.home,
-            color: Color(ExtraColors.DARK_BLUE),
-          ),
-          label:'Home',
-          
-          //  Padding(
-          //   padding: const EdgeInsets.only(top: 2.0),
-          //   child: new Text(
-          //     'Home',
-          //     style: bottomTabBarText,
-          //   ),
-          // )
-          
-          ),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.person, color: Color(ExtraColors.DARK_BLUE)),
+          icon: Icon(Icons.person, color: Color(ExtraColors.darkBlue)),
           label: 'Profile'
-          
-          
+
           // title: Padding(
           //   padding: const EdgeInsets.only(top: 2.0),
           //   child: Text(
@@ -187,20 +177,19 @@ class _MainTabState extends State<MainTab> {
           // )
           ),
       BottomNavigationBarItem(
-        icon: new Icon(Icons.public, color: Color(ExtraColors.DARK_BLUE)),
-        label: 'Web'
-        // title: Padding(
-        //   padding: const EdgeInsets.only(top: 2.0),
-        //   child: new Text(
-        //     'Web',
-        //     style: bottomTabBarText,
-        //   ),
-        // ),
-      ),
+          icon: new Icon(Icons.public, color: Color(ExtraColors.darkBlue)),
+          label: 'Web'
+          // title: Padding(
+          //   padding: const EdgeInsets.only(top: 2.0),
+          //   child: new Text(
+          //     'Web',
+          //     style: bottomTabBarText,
+          //   ),
+          // ),
+          ),
       BottomNavigationBarItem(
-        icon:
-            new Icon(Icons.notifications, color: Color(ExtraColors.DARK_BLUE)),
-            label: 'Notifications',
+        icon: new Icon(Icons.notifications, color: Color(ExtraColors.darkBlue)),
+        label: 'Notifications',
         // title: Padding(
         //   padding: const EdgeInsets.only(top: 2.0),
         //   child: new Text(
@@ -288,7 +277,6 @@ class _MainTabState extends State<MainTab> {
 
   Future<void> saveBackgorundNotificatonDataOnDB(
       String title, String body) async {
-
     final database =
         await $FloorAppDatabase.databaseBuilder('app_database.db').build();
     NotificationDbModel notification = new NotificationDbModel(1, "", "", "");

@@ -1,11 +1,11 @@
 class InventoryCheckItem{
 
-  String Description;
+  String description;
 
-  InventoryCheckItem({this.Description});
+  InventoryCheckItem({this.description});
   factory InventoryCheckItem.fromJson(Map<String, dynamic> json) {
     return InventoryCheckItem(
-      Description: json['Description'],
+      description: json['Description'],
     );
   }
 }

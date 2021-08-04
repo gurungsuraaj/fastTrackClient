@@ -1,10 +1,9 @@
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsManager {
   static Future<void> saveUsernameToPrefs(String username) async {
-    await SpUtil.putString(Constants.USERNAME, username);
+    await SpUtil.putString(Constants.userName, username);
   }
 
   static Future<void> saveLoginCredentialsToPrefs(
@@ -15,15 +14,15 @@ class PrefsManager {
       String mobileNumber) async {
         print("saved login credentials $custNumber $username $email $basicToken $mobileNumber");
   
-   SpUtil.putString(Constants.CUSTOMER_NUMBER, custNumber);
-   SpUtil.putString(Constants.CUSTOMER_NAME, username);
-   SpUtil.putString(Constants.CUSTOMER_EMAIL, email);
-   SpUtil.putString(Constants.BASIC_TOKEN, basicToken);
-   SpUtil.putString(Constants.CUSTOMER_MOBILE_NO, mobileNumber);
+   SpUtil.putString(Constants.customerNo, custNumber);
+   SpUtil.putString(Constants.customerName, username);
+   SpUtil.putString(Constants.customerEmail, email);
+   SpUtil.putString(Constants.basicToken, basicToken);
+   SpUtil.putString(Constants.customerMobileNo, mobileNumber);
   }
 
   static Future<bool> checkSession() async {
-    String customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    String customerNumber = SpUtil.getString(Constants.customerNo);
     if (customerNumber != null) {
       if (!customerNumber.isEmpty) {
         return true;
@@ -35,17 +34,17 @@ class PrefsManager {
 
   static Future<String> getBasicToken() async {
    
-    return SpUtil.getString(Constants.BASIC_TOKEN);
+    return SpUtil.getString(Constants.basicToken);
   }
 
   static Future<void> clearSession() async {
-    await SpUtil.putString(Constants.CUSTOMER_NUMBER, "");
-    await SpUtil.putString(Constants.CUSTOMER_NAME, "");
-    await SpUtil.putString(Constants.CUSTOMER_EMAIL, "");
-    await SpUtil.putString(Constants.BASIC_TOKEN, "");
+    await SpUtil.putString(Constants.customerNo, "");
+    await SpUtil.putString(Constants.customerName, "");
+    await SpUtil.putString(Constants.customerEmail, "");
+    await SpUtil.putString(Constants.basicToken, "");
   }
 
   static Future<void> saveAndroidVersion(String value) async {
-    await SpUtil.putString(Constants.VERSION_NO, value);
+    await SpUtil.putString(Constants.versionNo, value);
   }
 }

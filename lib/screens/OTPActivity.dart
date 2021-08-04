@@ -1,25 +1,19 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
-import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
-import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
-import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Rstring.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:pin_code_fields/pin_code_fields.dart' as iosText;
-import 'package:pin_code_text_field/pin_code_text_field.dart';
-import 'package:pinput/pin_put/pin_put.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 import 'ResetPasswordScreen.dart';
@@ -44,35 +38,33 @@ class OTP extends StatefulWidget {
 class _OTP extends State<OTP> {
   NTLMClient client;
   bool isProgressBarShown = false;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _otpCodeLength = 6;
-  bool _isLoadingButton = false;
-  bool _enableButton = false;
+  // bool _isLoadingButton = false;
+  // bool _enableButton = false;
   String _otpCode = "";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
 
     // FocusScope.of(context).requestFocus(FocusNode());
   }
 
   @override
   Widget build(BuildContext context) {
-    var _scaffoldKey = new GlobalKey<ScaffoldState>();
+    // var _scaffoldKey = new GlobalKey<ScaffoldState>();
     bool isProgressBarShown = false;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    double MARGIN = 24.0;
-    double PADDING = 10.0;
+    double margin = 24.0;
+    // double padding = 10.0;
 
-    TextEditingController controller = TextEditingController();
+    // TextEditingController controller = TextEditingController();
 
-    // TODO: implement build
     return Scaffold(
       // key: _scaffoldKey,
       backgroundColor: Colors.grey[100],
@@ -91,7 +83,7 @@ class _OTP extends State<OTP> {
                       Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: Container(
-                            margin: EdgeInsets.only(top: MARGIN),
+                            margin: EdgeInsets.only(top: margin),
                             child: Column(
                               children: <Widget>[
                                 Text(
@@ -196,7 +188,7 @@ class _OTP extends State<OTP> {
                                       }
                                     },
                                     child: _setUpButtonChild(),
-                                    color: Color(ExtraColors.DARK_BLUE),
+                                    color: Color(ExtraColors.darkBlue),
                                     disabledColor: Colors.blue[100],
                                   ),
                                 ),
@@ -243,8 +235,8 @@ class _OTP extends State<OTP> {
     setState(() {
       this._otpCode = otpCode;
       if (otpCode.length == _otpCodeLength && isAutofill) {
-        _enableButton = false;
-        _isLoadingButton = true;
+        // _enableButton = false;
+        // _isLoadingButton = true;
         if (widget.mode == 1) {
           submitOtpForRegistration(_otpCode);
         } else if (widget.mode == 2) {
@@ -258,27 +250,27 @@ class _OTP extends State<OTP> {
       //   _isLoadingButton = false;
       // }
       else {
-        _enableButton = false;
+        // _enableButton = false;
       }
     });
   }
 
-  _verifyOtpCode() {
-    FocusScope.of(context).requestFocus(new FocusNode());
-    Timer(Duration(milliseconds: 4000), () {
-      setState(() {
-        _isLoadingButton = false;
-        _enableButton = false;
-      });
+  // _verifyOtpCode() {
+  //   FocusScope.of(context).requestFocus(new FocusNode());
+  //   Timer(Duration(milliseconds: 4000), () {
+  //     setState(() {
+  //       // _isLoadingButton = false;
+  //       // _enableButton = false;
+  //     });
 
-      _scaffoldKey.currentState.showSnackBar(
-          SnackBar(content: Text("Verification OTP Code $_otpCode Success")));
-    });
-  }
+  //     _scaffoldKey.currentState.showSnackBar(
+  //         SnackBar(content: Text("Verification OTP Code $_otpCode Success")));
+  //   });
+  // }
 
   submitOTP(String otpPin) async {
     showProgressBar();
-    await NetworkOperationManager.SubmitOTP(widget.query, otpPin, client)
+    await NetworkOperationManager.submitOTP(widget.query, otpPin, client)
         .then((res) {
       hideProgressBar();
       if (res.status == 200) {
@@ -297,11 +289,11 @@ class _OTP extends State<OTP> {
   submitOtpForRegistration(String otpPin) async {
     showProgressBar();
 
-    NetworkOperationManager.SubmitSignUpOTP(widget.query, otpPin, client)
+    NetworkOperationManager.submitSignUpOTP(widget.query, otpPin, client)
         .then((res) {
       hideProgressBar();
 
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         // ShowToast.showToast(context, res.responseBody);
         // Navigator.pushReplacement(
         //   context,
@@ -321,7 +313,7 @@ class _OTP extends State<OTP> {
     NetworkOperationManager.logIn(widget.query, widget.loginPassword, client)
         .then((res) {
       hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
             res.customerName, res.customerEmail, "", widget.query);
         Navigator.pushReplacement(
@@ -382,7 +374,7 @@ class _OTP extends State<OTP> {
             client)
         .then((res) {
       hideProgressBar();
-      if (res.responseBody == Rstring.OTP_VERIFIED || res.status == 200) {
+      if (res.responseBody == Rstring.otpVerified || res.status == 200) {
         // Save the data locally and navigate to the Home screen.
 
         PrefsManager.saveLoginCredentialsToPrefs(widget.customerNo,
@@ -406,7 +398,7 @@ class _OTP extends State<OTP> {
     NetworkOperationManager.resendExistingCustomerOTP(widget.mobileNum, client)
         .then((res) {
       hideProgressBar();
-      if (res.responseBody == Rstring.OTP_SEND_SUCCESS) {
+      if (res.responseBody == Rstring.otpSendSuccess) {
         ShowToast.showToast(context, "${res.responseBody}");
       } else {
         ShowToast.showToast(context, "Error :" + "${res.responseBody}");

@@ -1,12 +1,8 @@
 import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:country_pickers/country.dart';
-import 'package:country_pickers/country_picker_dropdown.dart';
-import 'package:country_pickers/utils/utils.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
-import 'package:fasttrackgarage_app/screens/ForgotPasswordScreen.dart';
 import 'package:fasttrackgarage_app/screens/mainTab.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
@@ -14,7 +10,6 @@ import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:fasttrackgarage_app/widgets/CustomClipper.dart';
-import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
@@ -35,8 +30,8 @@ class LoginActivity extends StatefulWidget {
 
 class _LoginActivityState extends State<LoginActivity> {
   String _platformImei = 'Unknown';
-  double MARGIN = 22.0;
-  double PADDING = 10.0;
+  double margin = 22.0;
+  double padding = 10.0;
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 14.0;
   var fontSizeText = 16.0;
@@ -58,11 +53,11 @@ class _LoginActivityState extends State<LoginActivity> {
     super.initState();
     initPlatformState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
 
     PrefsManager.checkSession().then((isSessionExist) {
       if (isSessionExist) {
-        Navigator.pushReplacementNamed(context, RoutesName.MAIN_TAB);
+        Navigator.pushReplacementNamed(context, RoutesName.mainTab);
       }
     });
   }
@@ -92,7 +87,7 @@ class _LoginActivityState extends State<LoginActivity> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
+        statusBarColor: Color(ExtraColors.darkBlueAccent)));
 
     return SafeArea(
       child: Scaffold(
@@ -193,7 +188,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                       //     style: TextStyle(
                                       //         fontSize: fontSizeTextField,
                                       //         color: Color(
-                                      //             ExtraColors.DARK_BLUE_ACCENT)),
+                                      //             ExtraColors.darkBlueAccent)),
                                       //     controller: passwordController,
                                       //     decoration: InputDecoration(
                                       //         hintText: 'Your password',
@@ -233,13 +228,16 @@ class _LoginActivityState extends State<LoginActivity> {
                                       // ),
                                       Container(
                                         width: width * 0.45,
-                                        child: RaisedButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(18.0),
-                                            // side: BorderSide(color: Colors.black),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      18.0),
+                                            ),
+                                            primary:
+                                                Colors.white,
                                           ),
-                                          color: Colors.white,
                                           onPressed: () {
                                             // performLogin();
                                             FocusScope.of(context)
@@ -250,7 +248,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                             "Continue",
                                             style: TextStyle(
                                                 color: Color(
-                                                    ExtraColors.DARK_BLUE)),
+                                                    ExtraColors.darkBlue)),
                                           ),
                                         ),
                                       ),
@@ -375,7 +373,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
   void performLogin() async {
     showProgressBar();
-    String url = Api.POST_CUSTOMER_LOGIN;
+    String url = Api.postCustomerLogin;
 
     String mobileNumber = phoneCode + mobileController.text;
     String password = passwordController.text;
@@ -391,17 +389,16 @@ class _LoginActivityState extends State<LoginActivity> {
       "custemail": email
     };
 
-    var body_json = json.encode(body);
+    var dbodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
       "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
       "imei": "$_platformImei",
     };
-    await http.post(url, body: body_json, headers: header).then((val) {
+    await http.post(url, body: dbodyJson, headers: header).then((val) {
       int statusCode = val.statusCode;
       var result = json.decode(val.body);
-
 
       String message = result["message"];
 
@@ -411,8 +408,7 @@ class _LoginActivityState extends State<LoginActivity> {
       String customerName = result["data"]["customerName"];
       String custEmail = result["data"]["custEmail"];
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
-    
+      if (statusCode == Rcode.successCode) {
         String basicToken = "Basic $token";
 
         hideProgressBar();
@@ -450,18 +446,19 @@ class _LoginActivityState extends State<LoginActivity> {
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   _buildCountryPickerDropdown(
-          {bool filtered = false,
-          bool sortedByIsoCode = false,
-          bool hasPriorityList = false}) =>
+          // {bool filtered = false,
+          // bool sortedByIsoCode = false,
+          // bool hasPriorityList = false}
+          ) =>
       Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30), color: Colors.white),
@@ -564,48 +561,48 @@ class _LoginActivityState extends State<LoginActivity> {
         ),
       );
 
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            SizedBox(
-              width: 8.0,
-            ),
-            Text(
-              "+${country.phoneCode}(${country.isoCode})",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
-      );
+  // Widget _buildDropdownItem(Country country) => Container(
+  //       child: Row(
+  //         children: <Widget>[
+  //           CountryPickerUtils.getDefaultFlagImage(country),
+  //           SizedBox(
+  //             width: 8.0,
+  //           ),
+  //           Text(
+  //             "+${country.phoneCode}(${country.isoCode})",
+  //             style: TextStyle(color: Colors.grey),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 
-  void _performLogin() async {
-    showProgressBar();
-    String mobileNumber = mobileController.text;
-    NetworkOperationManager.logIn(mobileNumber, passwordController.text, client)
-        .then((res) {
-      hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
-        PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
-            res.customerName, res.customerEmail, "", mobileController.text);
+  // void _performLogin() async {
+  //   showProgressBar();
+  //   String mobileNumber = mobileController.text;
+  //   NetworkOperationManager.logIn(mobileNumber, passwordController.text, client)
+  //       .then((res) {
+  //     hideProgressBar();
+  //     if (res.status == Rcode.successCode) {
+  //       PrefsManager.saveLoginCredentialsToPrefs(res.customerNo,
+  //           res.customerName, res.customerEmail, "", mobileController.text);
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: ((context) => MainTab())));
-        ShowToast.showToast(context, "Login Success");
-      } else {
-        ShowToast.showToast(context, res.errResponse);
-      }
-    }).catchError((err) {
-      ShowToast.showToast(context, err);
-    });
-  }
+  //       Navigator.push(
+  //           context, MaterialPageRoute(builder: ((context) => MainTab())));
+  //       ShowToast.showToast(context, "Login Success");
+  //     } else {
+  //       ShowToast.showToast(context, res.errResponse);
+  //     }
+  //   }).catchError((err) {
+  //     ShowToast.showToast(context, err);
+  //   });
+  // }
 
   void _navAuthentication() async {
     showProgressBar();
     String mobileNumber = mobileController.text;
     NetworkOperationManager.getCustomerList(mobileNumber, client).then((res) {
       hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         customeretails = res;
         String message =
             'Dear ${customeretails.name}, We have recognized you as an existing customer of Fasttrack. Please click "Proceed" to update/confirm your details and choose a password';
@@ -639,7 +636,7 @@ class _LoginActivityState extends State<LoginActivity> {
           actions: <Widget>[
             Container(
               width: 100,
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.push(
@@ -649,13 +646,16 @@ class _LoginActivityState extends State<LoginActivity> {
                                 customerDetails: customerDetails,
                               )));
                 },
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  side: BorderSide(
-                    color: Colors.blue[700],
-                    width: 2,
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(15.0),
+                    side: BorderSide(
+                      color: Colors.blue[700],
+                      width: 2,
+                    ),
                   ),
+                  primary: Colors.white,
+                  textStyle: TextStyle(color: Colors.black),
                 ),
                 child: Text(
                   'Proceed',

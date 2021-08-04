@@ -4,14 +4,12 @@ import 'package:connectivity/connectivity.dart';
 import 'package:fasttrackgarage_app/models/MakeMode.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
-import 'package:fasttrackgarage_app/utils/InquiryInfo.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OilFilterInquiryDetail extends StatefulWidget {
@@ -33,20 +31,20 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   TextEditingController emailController = TextEditingController();
   TextEditingController commentController = TextEditingController();
 
-  List<String> locationList = List();
+  List<String> locationList = [];
 
-  List<String> makeList = List();
+  List<String> makeList = [];
 
   String selectedMake, makeDate, selectedLocation, selectedModel, selectedYear;
   DateTime selectedDate = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   bool isProgressBarShown = false;
-  List<int> yearList = List();
+  List<int> yearList = [];
   String nearestStorePhn, whatsAppNum;
   var _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String> modelList = List();
-  List<MakeModel> makeModelList = List();
+  List<String> modelList = [];
+  List<MakeModel> makeModelList = [];
 
   static const List<String> imageList = const [
     "images/call.png",
@@ -56,7 +54,6 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getMakeList().whenComplete(() async {
       getLocation().then((value) async {
@@ -74,12 +71,12 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     Color backgroundColor = Theme.of(context).cardColor;
-    Color foregroundColor = Theme.of(context).accentColor;
+    // Color foregroundColor = Theme.of(context).accentColor;
     return Scaffold(
       key: _scaffoldKey,
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Oil Filter Inquiry"),
       ),
       body: ModalProgressHUD(
@@ -475,11 +472,12 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                 child: Container(
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                   width: width * 0.75,
-                  child: RaisedButton(
-                    color: Color(ExtraColors.DARK_BLUE),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
-                      // side: BorderSide(color: Colors.black),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(5.0),
+                      ),
+                      primary: Color(ExtraColors.darkBlue),
                     ),
                     onPressed: () {
                       // performLogin();
@@ -548,7 +546,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
         }).toList()
           ..add(
             new FloatingActionButton(
-              backgroundColor: Color(ExtraColors.DARK_BLUE),
+              backgroundColor: Color(ExtraColors.darkBlue),
               heroTag: null,
               child: new AnimatedBuilder(
                 animation: _controller,
@@ -584,7 +582,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
           actions: <Widget>[
             Container(
               width: 100,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -634,7 +632,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   //       .then((res) {
   //     hideProgressBar();
   //     int status = res.statusCode;
-  //     if (status == Rcode.SUCCESS_CODE) {
+  //     if (status == Rcode.successCode) {
   //       var result = json.decode(res.body);
 
   //       var values = result['data'];
@@ -664,7 +662,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data']["make"];
@@ -724,7 +722,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
           var values = result['data'];
           setState(() {
@@ -737,12 +735,12 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showProgressBar() {
@@ -784,7 +782,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
             headers: header, body: body)
         .then((res) {
       hideProgressBar();
-      if (res.statusCode == Rcode.SUCCESS_CODE) {
+      if (res.statusCode == Rcode.successCode) {
         displaySnackbar(context, "Inquiry submitted successfully");
         setState(() {
           dateController.text = "";
@@ -823,12 +821,12 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
   Future<void> getPrefs() async {
     String customerName, customerNumber, customerEmail;
     setState(() {
-      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+      nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
-      customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
-      customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail = SpUtil.getString(Constants.CUSTOMER_EMAIL);
+      whatsAppNum = SpUtil.getString(Constants.whatsAppNumber);
+      customerName = SpUtil.getString(Constants.customerName);
+      customerNumber = SpUtil.getString(Constants.customerMobileNo);
+      customerEmail = SpUtil.getString(Constants.customerEmail);
 
       nameController.text = customerName;
       phoneController.text = customerNumber;

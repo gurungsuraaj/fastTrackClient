@@ -1,11 +1,8 @@
-
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:fasttrackgarage_app/models/LocateModel.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
-import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
@@ -13,21 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-
-
 class StoreLocationScreen extends StatefulWidget {
-
   @override
   _StoreLocationScreenState createState() => _StoreLocationScreenState();
 }
 
 class _StoreLocationScreenState extends State<StoreLocationScreen> {
-  int shortDistanceIndex ;
+  int shortDistanceIndex;
   double shortDistBranchlat = 0;
   double shortDistBranchLong = 0;
-  List<LocateModel> branchList = List();
-  List<double> branchDistanceList = List();
-  Completer<GoogleMapController> _controller = Completer();
+  List<LocateModel> branchList = [];
+  List<double> branchDistanceList = [];
+  // Completer<GoogleMapController> _controller = Completer();
   String storeLatLong;
   LatLng _center;
   GoogleMapController mapController;
@@ -45,7 +39,10 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     Marker outletLocation = Marker(
       markerId: MarkerId('Pokhara'),
       position: _center,
-      infoWindow: InfoWindow(title: shortDistanceIndex == null ? "":  "${branchList[shortDistanceIndex].address}"),
+      infoWindow: InfoWindow(
+          title: shortDistanceIndex == null
+              ? ""
+              : "${branchList[shortDistanceIndex].address}"),
       icon: BitmapDescriptor.defaultMarkerWithHue(
         BitmapDescriptor.hueRed,
       ),
@@ -54,11 +51,10 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text("Store Location"),
-        backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
+        backgroundColor: Color(ExtraColors.darkBlueAccent),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
-
         child: Stack(
           children: [
             Container(
@@ -70,7 +66,6 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
                   bearing: 270.0,
                   target: _center,
                   zoom: 17.0,
-
                 ),
                 onMapCreated: _onMapCreated,
                 markers: {outletLocation},
@@ -89,15 +84,15 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
   }
 
   void calculateDistance() async {
-    Position position = await Geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
 
     for (LocateModel branch in branchList) {
       var location = branch.latlng.split(",");
       double branchLatitude = double.parse(location[0]);
       double branchLongitude = double.parse(location[1]);
 
-      double distanceInMeters = await Geolocator.distanceBetween(
+      double distanceInMeters = Geolocator.distanceBetween(
           position.latitude,
           position.longitude,
           branchLatitude,
@@ -108,9 +103,8 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     shortDistanceIndex =
         branchDistanceList.indexOf(branchDistanceList.reduce(min));
 
-
     var shortestDistancebranch =
-    branchList[shortDistanceIndex].latlng.split(",");
+        branchList[shortDistanceIndex].latlng.split(",");
     shortDistBranchlat = double.parse(shortestDistancebranch[0]);
     shortDistBranchLong = double.parse(shortestDistancebranch[1]);
 
@@ -122,7 +116,6 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     zoomInMarker();
   }
 
-
   Future<void> fetchBranchList() async {
     showProgressBar();
     Map<String, String> header = {
@@ -130,10 +123,10 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     };
     await http
         .get('http://www.fasttrackemarat.com/feed/updates.json',
-        headers: header)
+            headers: header)
         .then((res) {
       int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
+      if (status == Rcode.successCode) {
         var result = json.decode(res.body);
         var value = result["branches"] as List;
 
@@ -142,27 +135,23 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
             .toList();
 
         calculateDistance();
-      }else{
+      } else {
         hideProgressBar();
-
       }
     }).catchError((err) {
       hideProgressBar();
     });
   }
 
-   void zoomInMarker()async {
+  void zoomInMarker() async {
     print("inside zoom camera $shortDistBranchlat $shortDistBranchLong");
     mapController
         .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(
-            shortDistBranchlat, shortDistBranchLong),
-        zoom: 17.0,
-        bearing: 90.0,
-        tilt: 45.0)))
-        .then((val) {
-
-    });
+            target: LatLng(shortDistBranchlat, shortDistBranchLong),
+            zoom: 17.0,
+            bearing: 90.0,
+            tilt: 45.0)))
+        .then((val) {});
   }
 
   void showProgressBar() {
@@ -176,6 +165,4 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
       isProgressBarShown = false;
     });
   }
-
 }
-

@@ -3,11 +3,11 @@ class PostedSalesInvoiceModel {
   String sellToCustomerNo;
   String sellToCustomerName;
   String amt;
-  String amt_inc_VAT;
-  String bill_to_customerNo;
-  String bill_to_name;
-  String ship_to_name;
-  String post_date;
+  String amtIncVat;
+  String billToCustomerNo;
+  String billToName;
+  String shipToName;
+  String postDate;
   String locationCode;
   String documentDate;
   String dueDate;
@@ -23,11 +23,11 @@ class PostedSalesInvoiceModel {
       this.sellToCustomerNo,
       this.sellToCustomerName,
       this.amt,
-      this.amt_inc_VAT,
-      this.bill_to_customerNo,
-      this.bill_to_name,
-      this.ship_to_name,
-      this.post_date,
+      this.amtIncVat,
+      this.billToCustomerNo,
+      this.billToName,
+      this.shipToName,
+      this.postDate,
       this.locationCode,
       this.documentDate,
       this.dueDate,

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class CartActivity extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _CartActivity();
   }
 }
@@ -13,7 +12,6 @@ class CartActivity extends StatefulWidget {
 class _CartActivity extends State<CartActivity> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBarWithTitle.getAppBar('Cart Manager'),
       body: Column(
@@ -53,10 +51,12 @@ class _CartActivity extends State<CartActivity> {
                       SizedBox(
                         height: 50,
                         width: 50,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          textColor: Colors.black,
-                          color: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(color: Colors.black),
+                            primary: Colors.white,
+                          ),
                           child: new Text(
                             " - ",
                             textAlign: TextAlign.start,
@@ -70,20 +70,25 @@ class _CartActivity extends State<CartActivity> {
                       SizedBox(
                         height: 50,
                         width: 50,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          textColor: Colors.black,
-                          color: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(color: Colors.black),
+                            primary: Colors.white,
+                          ),
                           child: new Text(
                             " + ",
                           ),
                         ),
                       ),
-                  SizedBox(width: 100.0,),
-                  Text(
-                  "Total: AED 120",
-                  style: TextStyle(fontSize: 16.0, color: Colors.redAccent),
-                ),
+                      SizedBox(
+                        width: 100.0,
+                      ),
+                      Text(
+                        "Total: AED 120",
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.redAccent),
+                      ),
                     ],
                   ),
                 )
@@ -125,10 +130,12 @@ class _CartActivity extends State<CartActivity> {
                       SizedBox(
                         height: 50,
                         width: 50,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          textColor: Colors.black,
-                          color: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            textStyle: TextStyle(color: Colors.black),
+                          ),
                           child: new Text(
                             " - ",
                           ),
@@ -137,25 +144,27 @@ class _CartActivity extends State<CartActivity> {
                       Text(
                         "  2  ",
                       ),
-
-                        SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: RaisedButton(
-                            onPressed: () {},
-                            textColor: Colors.black,
-                            color: Colors.white,
-                            child: new Text(
-                              " + ",
-                            ),
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            textStyle: TextStyle(color: Colors.black),
+                          ),
+                          child: new Text(
+                            " + ",
                           ),
                         ),
-
-
-                      SizedBox(width: 100.0,),
+                      ),
+                      SizedBox(
+                        width: 100.0,
+                      ),
                       Text(
                         "Total: AED 20",
-                        style: TextStyle(fontSize: 16.0, color: Colors.redAccent),
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.redAccent),
                       ),
                     ],
                   ),
@@ -163,22 +172,23 @@ class _CartActivity extends State<CartActivity> {
               ],
             ),
           ),
-
-          SizedBox(height: 290,),
+          SizedBox(
+            height: 290,
+          ),
           Container(
             margin: EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width,
-            child: RaisedButton(
-              color: Color(ExtraColors.DARK_BLUE),
-              onPressed: () {
-              },
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(ExtraColors.darkBlue),
+              ),
+              onPressed: () {},
               child: Text(
                 "Make payment",
                 style: TextStyle(color: Colors.white),
               ),
             ),
           ),
-
         ],
       ),
     );

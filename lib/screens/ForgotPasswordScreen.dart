@@ -1,12 +1,9 @@
-import 'package:country_pickers/country.dart';
-import 'package:country_pickers/country_pickers.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
-import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
@@ -26,10 +23,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
     _getSignatureCode();
   }
 
@@ -45,9 +41,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color(ExtraColors.DARK_BLUE),
+      backgroundColor: Color(ExtraColors.darkBlue),
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Forgot Password"),
       ),
       body: ModalProgressHUD(
@@ -85,11 +81,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 child: Container(
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                   width: width * 0.45,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(18.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(18.0),
+                      ),
+                      primary: Colors.white,
                     ),
-                    color: Colors.white,
                     onPressed: () {
                       // performLogin();
                       FocusScope.of(context).requestFocus(FocusNode());
@@ -97,7 +95,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     },
                     child: Text(
                       "Submit",
-                      style: TextStyle(color: Color(ExtraColors.DARK_BLUE)),
+                      style: TextStyle(color: Color(ExtraColors.darkBlue)),
                     ),
                   ),
                 ),
@@ -150,12 +148,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     });
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showProgressBar() {
@@ -170,9 +168,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     });
   }
 
-  _buildCountryPickerDropdown(
-        ) =>
-      Row(
+  _buildCountryPickerDropdown() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           // CountryPickerDropdown(
@@ -235,18 +231,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           )
         ],
       );
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            SizedBox(
-              width: 8.0,
-            ),
-            Text(
-              "+${country.phoneCode}(${country.isoCode})",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
-      );
+  // Widget _buildDropdownItem(Country country) => Container(
+  //       child: Row(
+  //         children: <Widget>[
+  //           CountryPickerUtils.getDefaultFlagImage(country),
+  //           SizedBox(
+  //             width: 8.0,
+  //           ),
+  //           Text(
+  //             "+${country.phoneCode}(${country.isoCode})",
+  //             style: TextStyle(color: Colors.grey),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 }

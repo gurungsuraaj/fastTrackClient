@@ -10,8 +10,8 @@ class TermsAndConditionScreen extends StatefulWidget {
 }
 
 class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
-  double MARGIN = 32;
-  double PADDING = 10.0;
+  double margin = 32;
+  double padding = 10.0;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          ReusableAppBar.getAppBar(0, PADDING, height, width),
+          ReusableAppBar.getAppBar(0, padding, height, width),
           Container(
             padding: EdgeInsets.only(top: 30),
             child: Text(
@@ -41,8 +41,10 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
           Container(
             alignment: Alignment.bottomCenter,
             padding: EdgeInsets.only(top: 30),
-            child: RaisedButton(
-              color: Color(0xFF264A92),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF264A92),
+              ),
               onPressed: () {
                 Navigator.of(context).pop("Agree");
               },

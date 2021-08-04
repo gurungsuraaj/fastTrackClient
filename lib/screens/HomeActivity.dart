@@ -1,57 +1,42 @@
 import 'dart:io';
 
 import 'package:fasttrackgarage_app/database/AppDatabase.dart';
-import 'package:fasttrackgarage_app/database/dao/NotificationDao.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/LocateModel.dart';
 import 'package:fasttrackgarage_app/models/NotificationDbModel.dart';
 import 'package:fasttrackgarage_app/models/Promo.dart';
 import 'package:fasttrackgarage_app/models/UserList.dart';
-import 'package:fasttrackgarage_app/models/person.dart';
-import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/screens/LocateActivity.dart';
 import 'package:fasttrackgarage_app/screens/NextServiceDateScreen.dart';
 import 'package:fasttrackgarage_app/screens/OfferPromo.dart';
 import 'package:fasttrackgarage_app/screens/PostedSalesInvoiceScreen.dart';
-import 'package:fasttrackgarage_app/screens/ShopNGo.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
-import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:package_info/package_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/PrefsManager.dart';
-import 'CheckInventory.dart';
 import 'InquiryListScreen.dart';
 import 'LoginActivity.dart';
-import 'ServiceHistoryActivity.dart';
-import 'OutletActivity.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
-import 'InventoryCheckActivity.dart';
 import 'ServiceActivity.dart';
-import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return HomeActivity();
   }
 }
@@ -70,29 +55,28 @@ class _HomeActivityState extends State<HomeActivity>
     with AutomaticKeepAliveClientMixin<HomeActivity> {
   @override
   bool get wantKeepAlive => true;
-  List<UserList> userList = List();
+  List<UserList> userList = [];
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
-  List<Promo> promoList = new List<Promo>();
+  List<Promo> promoList = <Promo>[];
   String customerNumber;
-  final FirebaseMessaging _messaging = FirebaseMessaging();
+  // final FirebaseMessaging _messaging = FirebaseMessaging();
   NTLMClient client;
   double userLong, userLatitude; //  For location of client user
   bool isProgressBarShown = false;
   // List<Placemark> placemark = List<Placemark>();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
-  List<double> branchDistanceList = List();
-  List<LocateModel> branchList = List();
+  List<double> branchDistanceList = [];
+  List<LocateModel> branchList = [];
   int shortDistanceIndex;
   double androidVersion, iosVersion;
   var userCurrentLocation;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
 
     // _messaging.getToken().then((token) {
     //   print("Your FCM Token is : $token");
@@ -193,7 +177,7 @@ class _HomeActivityState extends State<HomeActivity>
                 ],
               )),
           automaticallyImplyLeading: false,
-          backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
+          backgroundColor: Color(ExtraColors.darkBlueAccent),
           actions: <Widget>[
             //            PopupMenuButton<String>(
             //              onSelected: choiceAction,
@@ -214,7 +198,7 @@ class _HomeActivityState extends State<HomeActivity>
             children: <Widget>[
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15),
-                color: Color(ExtraColors.DARK_BLUE),
+                color: Color(ExtraColors.darkBlue),
                 height: 35,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -597,7 +581,7 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   void choiceAction(String choice) {
-    if (choice == Constants.LOGOUT) {
+    if (choice == Constants.logout) {
       PrefsManager.clearSession().then((val) {
         Navigator.pushAndRemoveUntil(
             context,
@@ -608,8 +592,8 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   void _showAlert() {
-    MediaQueryData queryData;
-    queryData = MediaQuery.of(context);
+    // MediaQueryData queryData;
+    // queryData = MediaQuery.of(context);
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -623,7 +607,7 @@ class _HomeActivityState extends State<HomeActivity>
                   Container(
                     height: 120,
                     //                  width: queryData.size.width,
-                    color: Color(ExtraColors.DARK_BLUE),
+                    color: Color(ExtraColors.darkBlue),
                     child: Center(
                         child: Image.asset(
                       "images/message.png",
@@ -641,13 +625,15 @@ class _HomeActivityState extends State<HomeActivity>
                         ),
                         Container(
                           width: 120,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               // Navigator.pop(context);
 
                               getUserList();
                             },
-                            color: Colors.blue[700],
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue[700],
+                            ),
                             child: Text(
                               'SEND ALERT',
                               style: TextStyle(
@@ -675,7 +661,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 onTap: () async {
                                   Navigator.of(context).pop();
                                   String nearestPhoneNo = SpUtil.getString(
-                                          Constants.NEAREST_STORE_PHONENO)
+                                          Constants.nearestStorePhoneNo)
                                       .replaceAll(
                                           new RegExp(r"\s+\b|\b\s"), "");
                                   var url = "tel:$nearestPhoneNo";
@@ -698,7 +684,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 onTap: () async {
                                   Navigator.of(context).pop();
                                   String whatappNO = SpUtil.getString(
-                                      Constants.WHATS_APP_NUMBER);
+                                      Constants.whatsAppNumber);
                                   print("Whats app number $whatappNO");
                                   var whatsappUrl =
                                       "whatsapp://send?phone=$whatappNO";
@@ -738,7 +724,7 @@ class _HomeActivityState extends State<HomeActivity>
     //            Container(
     //              height: 120,
     //              width: queryData.size.width,
-    //              color: Color(ExtraColors.DARK_BLUE),
+    //              color: Color(ExtraColors.darkBlue),
     //              child: Center(
     //                  child: Image.asset(
     //                "images/message.png",
@@ -756,7 +742,7 @@ class _HomeActivityState extends State<HomeActivity>
     //                  ),
     //                  Container(
     //                    width: queryData.size.width * 0.4,
-    //                    child: RaisedButton(
+    //                    child: ElevatedButton(
     //                      onPressed: () {
     //                        Navigator.pop(context);
     //
@@ -790,7 +776,7 @@ class _HomeActivityState extends State<HomeActivity>
           actions: <Widget>[
             Container(
               width: 100,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -830,8 +816,8 @@ class _HomeActivityState extends State<HomeActivity>
   }
 
   showOffer() async {
-    MediaQueryData queryData;
-    queryData = MediaQuery.of(context);
+    // MediaQueryData queryData;
+    // queryData = MediaQuery.of(context);
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
@@ -846,7 +832,7 @@ class _HomeActivityState extends State<HomeActivity>
         .then((res) {
       int status = res.statusCode;
 
-      if (status == Rcode.SUCCESS_CODE) {
+      if (status == Rcode.successCode) {
         var result = json.decode(res.body);
         var values = result["sliders"] as List;
 
@@ -860,23 +846,23 @@ class _HomeActivityState extends State<HomeActivity>
     });
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showInSnackBar(String value) {
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
       duration: Duration(minutes: 1),
       content: new Text(value),
       action: SnackBarAction(
         label: 'Dismiss',
         textColor: Colors.blue,
         onPressed: () {
-          _scaffoldKey.currentState.hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
         },
       ),
     ));
@@ -917,7 +903,7 @@ class _HomeActivityState extends State<HomeActivity>
 
   void calculateDistance() async {
     //    showProgressBar();
-    List<UserList> calculatedDistanceList = [];
+    // List<UserList> calculatedDistanceList = [];
     List<double> distList = [];
 
     debugPrint("This is user location $userLatitude $userLong");
@@ -927,7 +913,7 @@ class _HomeActivityState extends State<HomeActivity>
       double latitude = double.parse(item.latitude);
       debugPrint("");
 
-      double distanceInMeters = await Geolocator.distanceBetween(
+      double distanceInMeters = Geolocator.distanceBetween(
           userLatitude, userLong, latitude, longitude);
       // item.distanceInMeter = distanceInMeters;
       // calculatedDistanceList.add(item);
@@ -965,7 +951,7 @@ class _HomeActivityState extends State<HomeActivity>
         NetworkOperationManager.distressCall(customerNumber, cusName, client)
             .then((res) {
           hideProgressBar();
-          if (res.status == Rcode.SUCCESS_CODE) {
+          if (res.status == Rcode.successCode) {
             showInSnackBar(
                 "Send alert successfully ! You will get call from the nearest branch ");
           } else {
@@ -984,8 +970,8 @@ class _HomeActivityState extends State<HomeActivity>
     });
   }
 
-  Future<String> getPrefs() async {
-    customerNumber = SpUtil.getString((Constants.CUSTOMER_MOBILE_NO));
+  Future<void> getPrefs() async {
+    customerNumber = SpUtil.getString((Constants.customerMobileNo));
     //  return serviceOrderNum;
   }
 
@@ -1013,7 +999,7 @@ class _HomeActivityState extends State<HomeActivity>
         .then((res) {
       hideProgressBar();
       int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
+      if (status == Rcode.successCode) {
         var result = json.decode(res.body);
         var value = result["branches"] as List;
 
@@ -1042,20 +1028,17 @@ class _HomeActivityState extends State<HomeActivity>
         double branchLatitude = double.parse(location[0]);
         double branchLongitude = double.parse(location[1]);
 
-        double distanceInMeters = await Geolocator.distanceBetween(
-            position.latitude,
-            position.longitude,
-            branchLatitude,
-            branchLongitude);
+        double distanceInMeters = Geolocator.distanceBetween(position.latitude,
+            position.longitude, branchLatitude, branchLongitude);
 
         branchDistanceList.add(distanceInMeters);
       }
       shortDistanceIndex =
           branchDistanceList.indexOf(branchDistanceList.reduce(min));
 
-      SpUtil.putString(Constants.NEAREST_STORE_PHONENO,
+      SpUtil.putString(Constants.nearestStorePhoneNo,
           "${branchList[shortDistanceIndex].telephone}");
-      SpUtil.putString(Constants.WHATS_APP_NUMBER,
+      SpUtil.putString(Constants.whatsAppNumber,
           "${branchList[shortDistanceIndex].whatsAppNum}");
       // print(
       //     "the shorted distance is ${branchList[shortDistanceIndex].telephone}");
@@ -1099,7 +1082,8 @@ class _HomeActivityState extends State<HomeActivity>
         } else {
           newVersionNo = androidVersion;
         }
-          print("New version $newVersionNo and $currentVersion ${res[0].appStoreUrl} ${res[0].playStoreUrl}");
+        print(
+            "New version $newVersionNo and $currentVersion ${res[0].appStoreUrl} ${res[0].playStoreUrl}");
 
         if (newVersionNo > currentVersion) {
           _showVersionDialog(context, res[0].appStoreUrl, res[0].playStoreUrl);
@@ -1125,7 +1109,7 @@ class _HomeActivityState extends State<HomeActivity>
                 title: Text(title),
                 content: Text(message),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       btnLabel,
                       style: TextStyle(color: Color(0xFF007AFF)),
@@ -1135,7 +1119,7 @@ class _HomeActivityState extends State<HomeActivity>
                     // iOSAppId: "1487359029")
                     ,
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text(btnLabelCancel,
                         style: TextStyle(color: Color(0xFF007AFF))),
                     onPressed: () => Navigator.pop(context),
@@ -1146,11 +1130,11 @@ class _HomeActivityState extends State<HomeActivity>
                 title: Text(title),
                 content: Text(message),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(btnLabel),
                     onPressed: () => _launchURL(playStoreUrl),
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text(btnLabelCancel),
                     onPressed: () => Navigator.pop(context),
                   ),

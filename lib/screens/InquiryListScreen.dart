@@ -21,7 +21,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Make An Inquiry"),
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
       ),
       body: GridView.count(
           padding: const EdgeInsets.all(15.0),
@@ -139,7 +139,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                                 child: Text("Brakes"))
                           ],
                         )))),
-                        Card(
+            Card(
                 child: Container(
                     child: InkWell(
                         onTap: () {

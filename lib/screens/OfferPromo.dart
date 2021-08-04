@@ -21,24 +21,23 @@ class _OfferPromoState extends State<OfferPromo> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
 
-  List<Promo> promoList = new List<Promo>();
+  List<Promo> promoList = <Promo>[];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     showOffer();
   }
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData;
-    queryData = MediaQuery.of(context);
+    // MediaQueryData queryData;
+    // queryData = MediaQuery.of(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         // automaticallyImplyLeading: false,
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Offers and Promotions"),
       ),
       backgroundColor: Color(0xFFD9D9D9),
@@ -85,7 +84,7 @@ class _OfferPromoState extends State<OfferPromo> {
               headers: header)
           .then((res) {
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           hideProgressBar();
 
           var result = json.decode(res.body);
@@ -106,12 +105,12 @@ class _OfferPromoState extends State<OfferPromo> {
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showProgressBar() {

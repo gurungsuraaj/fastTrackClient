@@ -4,12 +4,9 @@ import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import 'OTPActivity.dart';
-
 class GenerateOTP extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _GenerateOTP();
   }
 }
@@ -19,15 +16,14 @@ class _GenerateOTP extends State<GenerateOTP> {
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 18.0;
   var fontSizeText = 16.0;
-  double PADDING = 10.0;
+  double padding = 10.0;
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var MARGIN = 24.0;
+    var margin = 24.0;
     bool isProgressBarShown = false;
-    // TODO: implement build
     return Scaffold(
       key: _scaffoldKey,
       body: SafeArea(
@@ -36,7 +32,7 @@ class _GenerateOTP extends State<GenerateOTP> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ReusableAppBar.getAppBar(0, PADDING, height, width), //Container
+              ReusableAppBar.getAppBar(0, padding, height, width), //Container
 //Container
               Expanded(
                 child: ListView(
@@ -48,7 +44,7 @@ class _GenerateOTP extends State<GenerateOTP> {
                         children: <Widget>[
                           Center(
                             child: Container(
-                              margin: EdgeInsets.only(top: MARGIN),
+                              margin: EdgeInsets.only(top: margin),
                               child: Text(
                                 'GENERATE OTP',
                                 style: TextStyle(
@@ -58,7 +54,7 @@ class _GenerateOTP extends State<GenerateOTP> {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.only(top: MARGIN),
+                              margin: EdgeInsets.only(top: margin),
                               child: Text(
                                 'Please enter you mobile number to proceed!',
                                 style: TextStyle(
@@ -88,18 +84,19 @@ class _GenerateOTP extends State<GenerateOTP> {
                             alignment: Alignment.bottomRight,
                             child: Container(
                               width: width / 2,
-                              margin: EdgeInsets.only(top: MARGIN + 6),
-                              child: RaisedButton(
+                              margin: EdgeInsets.only(top: margin + 6),
+                              child: ElevatedButton(
                                 onPressed: () {
                                   /* Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => OTP()),
                                   );*/
-                                  Navigator.pushNamed(
-                                      context, RoutesName.OTP_ACTIVITY);
+                                  Navigator.pushNamed(context, RoutesName.otp);
                                 },
-                                color: Color(ExtraColors.DARK_BLUE),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(ExtraColors.darkBlue),
+                                ),
                                 child: Text(
                                   'Generate OTP',
                                   style: TextStyle(
@@ -122,19 +119,19 @@ class _GenerateOTP extends State<GenerateOTP> {
     );
   }
 
-  void _showSnackBar(String pin, BuildContext context) {
-    final snackBar = SnackBar(
-      duration: Duration(seconds: 5),
-      content: Container(
-          height: 80.0,
-          child: Center(
-            child: Text(
-              'Pin Submitted. Value: $pin',
-              style: TextStyle(fontSize: 25.0),
-            ),
-          )),
-      backgroundColor: Colors.greenAccent,
-    );
-    Scaffold.of(context).showSnackBar(snackBar);
-  }
+  // void _showSnackBar(String pin, BuildContext context) {
+  //   final snackBar = SnackBar(
+  //     duration: Duration(seconds: 5),
+  //     content: Container(
+  //         height: 80.0,
+  //         child: Center(
+  //           child: Text(
+  //             'Pin Submitted. Value: $pin',
+  //             style: TextStyle(fontSize: 25.0),
+  //           ),
+  //         )),
+  //     backgroundColor: Colors.greenAccent,
+  //   );
+  //   Scaffold.of(context).showSnackBar(snackBar);
+  // }
 }

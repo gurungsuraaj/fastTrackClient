@@ -1,3 +1,3 @@
 class Rcode {
-  static final int SUCCESS_CODE = 200;
+  static final int successCode = 200;
 }

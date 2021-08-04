@@ -2,11 +2,10 @@ import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetailActivity extends StatefulWidget {
-  String serviceTitle, body, image;
+  final String serviceTitle, body, image;
   ServiceDetailActivity(this.serviceTitle, this.body, this.image);
   @override
   _ServiceDetailActivityState createState() => _ServiceDetailActivityState();
@@ -18,7 +17,7 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.serviceTitle),
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
       ),
       backgroundColor: Color(0xff094F9A),
       floatingActionButton: Container(
@@ -68,7 +67,8 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> {
   }
 
   onCallPressed() async {
-    String phnNum = SpUtil.getString(Constants.NEAREST_STORE_PHONENO).replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+    String phnNum = SpUtil.getString(Constants.nearestStorePhoneNo)
+        .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
 
     var url = "tel:$phnNum";
     if (await canLaunch(url)) {

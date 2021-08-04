@@ -1,14 +1,10 @@
 import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:fasttrackgarage_app/models/LocateModel.dart' as prefix0;
-import 'package:fasttrackgarage_app/screens/GoogleMap.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models//LocateModel.dart';
 import 'package:http/http.dart' as http;
@@ -26,12 +22,11 @@ class LocateActivity extends StatefulWidget {
 class _LocateActivityState extends State<LocateActivity> {
   double longitude = 23.11;
   double latitude = 25.22;
-  List<LocateModel> locationlist = List<LocateModel>();
+  List<LocateModel> locationlist = <LocateModel>[];
   bool isProgressBarShown = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getBranchList();
     // calculateOpeningHour();
@@ -43,7 +38,7 @@ class _LocateActivityState extends State<LocateActivity> {
         fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(ExtraColors.DARK_BLUE),
+          backgroundColor: Color(ExtraColors.darkBlue),
           title: Text("Locate a Branch"),
         ),
         backgroundColor: Color(0xFFD9D9D9),
@@ -216,7 +211,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                     //         width: 100,
                                     //         decoration: new BoxDecoration(
                                     //           color:
-                                    //               Color(ExtraColors.DARK_BLUE),
+                                    //               Color(ExtraColors.darkBlue),
                                     //           borderRadius:
                                     //               new BorderRadius.circular(
                                     //                   10.0),
@@ -241,7 +236,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                         height: 32.0,
                                         width: 150,
                                         decoration: new BoxDecoration(
-                                          color: Color(ExtraColors.DARK_BLUE),
+                                          color: Color(ExtraColors.darkBlue),
                                           // border: new Border.all(
                                           //     color: Colors.white,
                                           //     width: 6.0),
@@ -307,7 +302,7 @@ class _LocateActivityState extends State<LocateActivity> {
   //stores in the locationList variable
   //If user geolocation is available then sorts according to distance
   getBranchList() async {
-    String url = "";
+    // String url = "";
     Map<String, String> header = {
       "Content-Type": "application/json",
     };
@@ -315,13 +310,13 @@ class _LocateActivityState extends State<LocateActivity> {
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       showProgressBar();
-      final response = await http
+      await http
           .get('http://www.fasttrackemarat.com/feed/updates.json',
               headers: header)
           .then((res) {
         int status = res.statusCode;
 
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           hideProgressBar();
           var result = json.decode(res.body);
           var branches = result['branches'] as List;

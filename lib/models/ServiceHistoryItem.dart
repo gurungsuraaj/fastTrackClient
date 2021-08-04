@@ -1,11 +1,11 @@
 class ServiceHistoryItem {
-  String Posting_Date;
-  String Document_No;
-  String Make_Code;
-  String Model_Code;
-  String Vehicle_Serial_No;
-  String Location_Code;
-  String No;
+  String postingDate;
+  String documentNo;
+  String makeCode;
+  String modelCode;
+  String vehicleSerialNo;
+  String locationCode;
+  String no;
   String entryType;
   String vin;
   String userId;
@@ -16,13 +16,13 @@ class ServiceHistoryItem {
   double totalAmount;
 
   ServiceHistoryItem(
-      {this.Posting_Date,
-      this.Document_No,
-      this.Make_Code,
-      this.Model_Code,
-      this.Vehicle_Serial_No,
-      this.Location_Code,
-      this.No,
+      {this.postingDate,
+      this.documentNo,
+      this.makeCode,
+      this.modelCode,
+      this.vehicleSerialNo,
+      this.locationCode,
+      this.no,
       this.customerId,
       this.description,
       this.entryType,
@@ -34,13 +34,13 @@ class ServiceHistoryItem {
 
   factory ServiceHistoryItem.fromJson(Map<String, dynamic> json) {
     return ServiceHistoryItem(
-      Posting_Date: json['Posting_Date'],
-      Document_No: json['Document_No'],
-      Make_Code: json['Make_Code'],
-      Model_Code: json['Model_Code'],
-      Vehicle_Serial_No: json['Vehicle_Serial_No'],
-      Location_Code: json['Location_Code'],
-      No: json['No'],
+      postingDate: json['Posting_Date'],
+      documentNo: json['Document_No'],
+      makeCode: json['Make_Code'],
+      modelCode: json['Model_Code'],
+      vehicleSerialNo: json['Vehicle_Serial_No'],
+      locationCode: json['Location_Code'],
+      no: json['No'],
       description: json['Description'],
       totalAmount: json['Amount_Including_VAT'],
       customerId: json['Customer_No'],

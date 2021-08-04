@@ -8,8 +8,6 @@ import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fasttrackgarage_app/utils/Rstring.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 
 class PostedSalesInvoiceScreen extends StatefulWidget {
@@ -23,13 +21,12 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
   String customerNumber = "";
-  List<PostedSalesInvoiceModel> postedSalesList = List();
+  List<PostedSalesInvoiceModel> postedSalesList = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
     getPrefs().whenComplete(() {
       loadPostedSalesInvoiceData();
     });
@@ -42,7 +39,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE_ACCENT),
+        backgroundColor: Color(ExtraColors.darkBlueAccent),
         title: Text("Check History"),
       ),
       body: ModalProgressHUD(
@@ -210,7 +207,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                                 ),
                                 Container(
                                   child: Text(
-                                    postedSaleInvoiceItem.amt_inc_VAT,
+                                    postedSaleInvoiceItem.amtIncVat,
                                     style: textStyle,
                                   ),
                                 ),
@@ -301,12 +298,12 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
     });
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showProgressBar() {
@@ -322,6 +319,6 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   }
 
   Future<void> getPrefs() async {
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+    customerNumber = SpUtil.getString(Constants.customerNo);
   }
 }

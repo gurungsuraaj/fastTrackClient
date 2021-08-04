@@ -1,17 +1,13 @@
 import 'dart:convert';
 
-import 'package:circular_check_box/circular_check_box.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:country_pickers/country.dart';
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/helper/NetworkOperationManager.dart';
 import 'package:fasttrackgarage_app/helper/ntlmclient.dart';
 import 'package:fasttrackgarage_app/models/CustomerModel.dart';
-import 'package:fasttrackgarage_app/screens/ForgotPasswordScreen.dart';
 import 'package:fasttrackgarage_app/screens/OTPActivity.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
-import 'package:fasttrackgarage_app/utils/ModeConstants.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:fasttrackgarage_app/utils/ReusableAppBar.dart';
 import 'package:fasttrackgarage_app/utils/Rstring.dart';
@@ -21,15 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ntlm/ntlm.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
-import 'package:toast/toast.dart';
-import '../utils/RoutesName.dart';
-import 'HomeActivity.dart';
-import 'GenerateOTPActivity.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
-import "./TermsAndConditionScreen.dart";
-import 'package:country_pickers/country_pickers.dart';
-import 'package:fasttrackgarage_app/models/CustomerModel.dart';
 
 class SignUpActivity extends StatefulWidget {
   final CustomerModel customerDetails;
@@ -39,7 +27,6 @@ class SignUpActivity extends StatefulWidget {
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _SignUpActivity();
   }
 }
@@ -50,13 +37,12 @@ class _SignUpActivity extends State<SignUpActivity> {
   final formKey = new GlobalKey<FormState>();
   var passKey = GlobalKey<FormFieldState>();
   bool isProgressBarShown = false;
-  double MARGIN = 32;
-  double PADDING = 10.0;
+  double margin = 32;
+  double padding = 10.0;
 
   var fontWeightText = FontWeight.w500;
   var fontSizeTextField = 14.0;
   var fontSizeText = 14.0;
-  bool _termsChecked = false;
   String phoneCode = "971", mobileNumber;
   NTLMClient client;
   String signature;
@@ -68,7 +54,7 @@ class _SignUpActivity extends State<SignUpActivity> {
 
   /*Variables and declarations end region*/
 
-  String _email;
+  // String _email;
   String _password;
 
   bool checkBoxValue = false;
@@ -85,7 +71,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       mobileController.text = widget.mobileNumber;
     }
     client =
-        NTLM.initializeNTLM(Constants.NTLM_USERNAME, Constants.NTLM_PASSWORD);
+        NTLM.initializeNTLM(Constants.ntlmUsername, Constants.ntlmPassword);
     _getSignatureCode();
   }
 
@@ -100,9 +86,8 @@ class _SignUpActivity extends State<SignUpActivity> {
     var height = MediaQuery.of(context).size.height;
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Color(ExtraColors.DARK_BLUE_ACCENT)));
+        statusBarColor: Color(ExtraColors.darkBlueAccent)));
 
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Color(0xff253983),
       key: _scaffoldKey,
@@ -129,7 +114,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                     Form(
                       key: formKey,
                       child: Container(
-                        margin: EdgeInsets.all(MARGIN),
+                        margin: EdgeInsets.all(margin),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
 
@@ -161,7 +146,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 controller: nameController,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                    color: Color(ExtraColors.darkBlueAccent)),
                                 decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     filled: true,
@@ -209,7 +194,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                     !val.contains('@') ? 'Invalid Email' : null,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                    color: Color(ExtraColors.darkBlueAccent)),
                                 controller: emailController,
                                 decoration: InputDecoration(
                                     fillColor: Colors.white,
@@ -301,7 +286,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 obscureText: true,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                                    color: Color(ExtraColors.darkBlueAccent)),
                                 controller: passwordController,
                                 decoration: InputDecoration(
                                     fillColor: Colors.white,
@@ -390,22 +375,23 @@ class _SignUpActivity extends State<SignUpActivity> {
                               child: Container(
                                 margin: EdgeInsets.only(top: 45.0),
                                 width: width * 0.5,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(18.0),
-                                    // side: BorderSide(color: Colors.black),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(18.0),
+                                    ),
+                                    primary: Colors.white,
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
                                     _submit();
                                   },
-                                  color: Colors.white,
                                   child: Text(
                                     'Continue',
                                     style: TextStyle(
-                                      color: Color(ExtraColors.DARK_BLUE),
+                                      color: Color(ExtraColors.darkBlue),
                                     ),
                                   ),
                                 ),
@@ -482,23 +468,23 @@ class _SignUpActivity extends State<SignUpActivity> {
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(minutes: 5),
       action: SnackBarAction(
         label: "OK",
         onPressed: () {
-          _scaffoldKey.currentState.removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
         },
       ),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void signUp() async {
     showProgressBar();
-    String url = Api.POST_CUSTOMER_SIGNUP;
+    String url = Api.postCustomerSignUp;
 
     String name = nameController.text;
     String email = emailController.text;
@@ -512,18 +498,18 @@ class _SignUpActivity extends State<SignUpActivity> {
       "passwordTxt": password,
     };
 
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
       "url": "DynamicsNAV/ws/FT%20Support/Codeunit/CheckInventory",
     };
-    await http.post(url, body: body_json, headers: header).then((val) {
+    await http.post(url, body: bodyJson, headers: header).then((val) {
       var statusCode = val.statusCode;
       var result = json.decode(val.body);
       String message = result["message"];
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
+      if (statusCode == Rcode.successCode) {
         hideProgressBar();
 
         Navigator.of(context).pop();
@@ -552,9 +538,10 @@ class _SignUpActivity extends State<SignUpActivity> {
   }
 
   _buildCountryPickerDropdown(
-          {bool filtered = false,
-          bool sortedByIsoCode = false,
-          bool hasPriorityList = false}) =>
+          // {bool filtered = false,
+          // bool sortedByIsoCode = false,
+          // bool hasPriorityList = false}
+          ) =>
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -622,7 +609,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                 enabled: false,
                 controller: mobileController,
                 keyboardType: TextInputType.number,
-                style: TextStyle(color: Color(ExtraColors.DARK_BLUE_ACCENT)),
+                style: TextStyle(color: Color(ExtraColors.darkBlueAccent)),
                 decoration: InputDecoration(
                   hintText: "Phone",
                   hintStyle: TextStyle(color: Colors.grey[500]),
@@ -668,20 +655,20 @@ class _SignUpActivity extends State<SignUpActivity> {
         ),
       );
 
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            SizedBox(
-              width: 8.0,
-            ),
-            Text(
-              "+${country.phoneCode}(${country.isoCode})",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
-      );
+  // Widget _buildDropdownItem(Country country) => Container(
+  //       child: Row(
+  //         children: <Widget>[
+  //           CountryPickerUtils.getDefaultFlagImage(country),
+  //           SizedBox(
+  //             width: 8.0,
+  //           ),
+  //           Text(
+  //             "+${country.phoneCode}(${country.isoCode})",
+  //             style: TextStyle(color: Colors.grey),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 
   void _signUp() async {
     // String mobileNum = phoneCode + mobileController.text;
@@ -692,7 +679,7 @@ class _SignUpActivity extends State<SignUpActivity> {
             emailController.text, passwordController.text, signature, client)
         .then((res) {
       hideProgressBar();
-      if (res.status == Rcode.SUCCESS_CODE) {
+      if (res.status == Rcode.successCode) {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -717,7 +704,7 @@ class _SignUpActivity extends State<SignUpActivity> {
     NetworkOperationManager.sendExistingCustomerOTP(
             mobileController.text, client)
         .then((res) {
-      if (res.responseBody == Rstring.OTP_SEND_SUCCESS || res.status ==  200 ) {
+      if (res.responseBody == Rstring.otpSendSuccess || res.status == 200) {
         // ShowToast.showToast(context, res.responseBody);
         Navigator.push(
           context,

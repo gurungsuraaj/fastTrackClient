@@ -1,23 +1,17 @@
 import 'dart:convert';
 
-import 'package:charts_flutter/flutter.dart' as prefix1;
 import 'package:fasttrackgarage_app/api/Api.dart';
 import 'package:fasttrackgarage_app/models/ServiceHistoryItem.dart';
 import 'package:fasttrackgarage_app/screens/ServiceHistoryDetail.dart';
-import 'package:fasttrackgarage_app/screens/ServiceHistoryPieChart.dart';
 import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
-import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
 import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ServiceHistoryActivity extends StatefulWidget {
   @override
@@ -26,10 +20,10 @@ class ServiceHistoryActivity extends StatefulWidget {
 
 class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
   bool isProgressBarShown = false;
-String customerNumber;
+  String customerNumber;
   String basicToken = "";
   List<ServiceHistoryItem> serviceHistoriesList =
-      new List<ServiceHistoryItem>();
+      <ServiceHistoryItem>[];
 
   @override
   void initState() {
@@ -50,7 +44,7 @@ String customerNumber;
     return Scaffold(
         appBar: AppBar(
           title: Text("Service history"),
-          backgroundColor: Color(ExtraColors.DARK_BLUE),
+          backgroundColor: Color(ExtraColors.darkBlue),
         ),
         backgroundColor: Color(0xFFD9D9D9),
         body: ModalProgressHUD(
@@ -166,7 +160,7 @@ String customerNumber;
                                   Container(
                                     child: Text(
                                         serviceHistoriesList[index]
-                                            .Posting_Date,
+                                            .postingDate,
                                         style: textStyle),
                                   ),
                                   SizedBox(
@@ -174,7 +168,7 @@ String customerNumber;
                                   ),
                                   Container(
                                     child: Text(
-                                      serviceHistoriesList[index].Document_No,
+                                      serviceHistoriesList[index].documentNo,
                                       style: textStyle,
                                     ),
                                   ),
@@ -183,7 +177,7 @@ String customerNumber;
                                   ),
                                   Container(
                                     child: Text(
-                                      serviceHistoriesList[index].Make_Code,
+                                      serviceHistoriesList[index].makeCode,
                                       style: textStyle,
                                     ),
                                   ),
@@ -192,7 +186,7 @@ String customerNumber;
                                   ),
                                   Container(
                                     child: Text(
-                                      serviceHistoriesList[index].Model_Code,
+                                      serviceHistoriesList[index].modelCode,
                                       style: textStyle,
                                     ),
                                   ),
@@ -259,7 +253,7 @@ String customerNumber;
 
   void getServiceHistoryList() async {
     showProgressBar();
-    String url = Api.SERVICE_HISTORY_LIST;
+    String url = Api.serviceHistoryList;
     debugPrint("This is  url : $url, basic token $basicToken");
 
     String customerNo = "CS000001";
@@ -267,10 +261,9 @@ String customerNumber;
     Map<String, String> body = {
       "Field": "Customer_No",
       "Criteria": customerNo,
-
     };
 
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
@@ -278,7 +271,7 @@ String customerNumber;
       "Authorization": "$basicToken"
     };
 
-    await http.post(url, body: body_json, headers: header).then((res) {
+    await http.post(url, body: bodyJson, headers: header).then((res) {
       debugPrint("This is body: ${res.body}");
       int statusCode = res.statusCode;
 
@@ -287,7 +280,7 @@ String customerNumber;
       String message = data['message'];
       debugPrint(">>message $message");
 
-      if (statusCode == Rcode.SUCCESS_CODE) {
+      if (statusCode == Rcode.successCode) {
         var values = data["data"] as List;
         debugPrint(">>>values $values");
 
@@ -319,8 +312,7 @@ String customerNumber;
     });
   }
 
-
-   Future<void> getPref() async {
-    customerNumber = SpUtil.getString(Constants.CUSTOMER_NUMBER);
+  Future<void> getPref() async {
+    customerNumber = SpUtil.getString(Constants.customerNo);
   }
 }

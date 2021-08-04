@@ -1,7 +1,6 @@
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ServiceHistoryPieChart extends StatefulWidget {
   final Widget child;
@@ -41,10 +40,9 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // _seriesData = List<charts.Series<Pollution, String>>();
-    _seriesPieData = List<charts.Series<Task, String>>();
+    _seriesPieData = <charts.Series<Task, String>>[];
     // _seriesLineData = List<charts.Series<Sales, int>>();
     _generateData();
   }
@@ -53,7 +51,7 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text('Service Details'),
       ),
       body: Padding(

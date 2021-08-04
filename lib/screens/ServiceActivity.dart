@@ -1,7 +1,6 @@
 import 'package:fasttrackgarage_app/models/ServiceModel.dart';
 import 'package:fasttrackgarage_app/screens/ServiceDetailActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
-import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +22,7 @@ class _ServiceActivityState extends State<ServiceActivity> {
   var checkboxVal2 = false;
   var checkboxVal3 = false;
   var listHeight = 170.0;
-  List serviceList = new List();
+  List serviceList = [];
   bool isProgressBarShown = false;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -35,8 +34,6 @@ class _ServiceActivityState extends State<ServiceActivity> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData;
-    queryData = MediaQuery.of(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBarWithTitle.getAppBar('Services'),
@@ -335,7 +332,11 @@ class _ServiceActivityState extends State<ServiceActivity> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ServiceDetailActivity(staticServiceList[index].title, staticServiceList[index].body,staticServiceList[index].image)),
+                                            ServiceDetailActivity(
+                                                staticServiceList[index].title,
+                                                staticServiceList[index].body,
+                                                staticServiceList[index]
+                                                    .image)),
                                   );
                                 },
                                 child: Column(
@@ -349,7 +350,8 @@ class _ServiceActivityState extends State<ServiceActivity> {
                                     ),
                                     Container(
                                         padding: EdgeInsets.only(top: 5),
-                                        child: Text(staticServiceList[index].title))
+                                        child: Text(
+                                            staticServiceList[index].title))
                                   ],
                                 ))));
                   }),
@@ -380,7 +382,7 @@ class _ServiceActivityState extends State<ServiceActivity> {
             headers: header)
         .then((res) {
       int status = res.statusCode;
-      if (status == Rcode.SUCCESS_CODE) {
+      if (status == Rcode.successCode) {
         var result = json.decode(res.body);
         var values = result["facilities"] as List;
         String services = values[0]["services"];
@@ -395,12 +397,12 @@ class _ServiceActivityState extends State<ServiceActivity> {
     });
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   List<ServiceModel> staticServiceList = [

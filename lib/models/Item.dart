@@ -1,14 +1,14 @@
 class Item {
-  String Description;
-  String No;
-  String Unit_Price;
+  String description;
+  String no;
+  String unitPrice;
 
-  Item({this.Description, this.No, this.Unit_Price});
+  Item({this.description, this.no, this.unitPrice});
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
-      Description: json['Description'],
-      No: json['No'],
-      Unit_Price: json['Unit_Price'],
+      description: json['Description'],
+      no: json['No'],
+      unitPrice: json['Unit_Price'],
     );
   }
 }

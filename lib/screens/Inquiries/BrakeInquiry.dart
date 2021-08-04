@@ -8,7 +8,6 @@ import 'package:fasttrackgarage_app/utils/Toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math' as math;
 
@@ -23,8 +22,8 @@ class BrakeInquiry extends StatefulWidget {
 
 class _BrakeInquiryState extends State<BrakeInquiry>
     with TickerProviderStateMixin {
-  List<String> makeList = List();
-  List<String> locationList = List();
+  List<String> makeList = [];
+  List<String> locationList = [];
   String nearestStorePhn, whatsAppNum;
 
   TextEditingController phoneController = TextEditingController();
@@ -40,10 +39,10 @@ class _BrakeInquiryState extends State<BrakeInquiry>
   String selectedMake, makeDate, selectedLocation, selectedModel, selectedYear;
   DateTime selectedDate = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
-  List<int> yearList = List();
-  List<MakeModel> makeModelList = List();
+  List<int> yearList = [];
+  List<MakeModel> makeModelList = [];
   bool isProgressBarShown = false;
-  List<String> modelList = List();
+  List<String> modelList = [];
   var _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   AnimationController _controller;
@@ -53,7 +52,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getInquiryDataForBrake().whenComplete(() async {
       getPrefs().whenComplete(() {
@@ -75,7 +73,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
         title: Text("Brake Inquiry"),
         actions: <Widget>[],
       ),
@@ -426,11 +424,12 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
                     width: width * 0.75,
-                    child: RaisedButton(
-                      color: Color(ExtraColors.DARK_BLUE),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(5.0),
-                        // side: BorderSide(color: Colors.black),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(5.0),
+                        ),
+                        primary: Color(ExtraColors.darkBlue),
                       ),
                       onPressed: () {
                         // performLogin();
@@ -500,7 +499,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
         }).toList()
           ..add(
             new FloatingActionButton(
-              backgroundColor: Color(ExtraColors.DARK_BLUE),
+              backgroundColor: Color(ExtraColors.darkBlue),
               heroTag: null,
               child: new AnimatedBuilder(
                 animation: _controller,
@@ -566,7 +565,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
           actions: <Widget>[
             Container(
               width: 100,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -618,7 +617,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data'];
@@ -662,7 +661,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
     };
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi){
+        connectivityResult == ConnectivityResult.wifi) {
       showProgressBar();
       await http
           .get("https://fasttrackemarat.com/feed/make-model.json",
@@ -670,7 +669,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
           .then((res) {
         hideProgressBar();
         int status = res.statusCode;
-        if (status == Rcode.SUCCESS_CODE) {
+        if (status == Rcode.successCode) {
           var result = json.decode(res.body);
 
           var values = result['data']["make"];
@@ -724,7 +723,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
               headers: header, body: body)
           .then((res) {
         hideProgressBar();
-        if (res.statusCode == Rcode.SUCCESS_CODE) {
+        if (res.statusCode == Rcode.successCode) {
           displaySnackbar(context, "Inquiry submitted successfully");
           setState(() {
             winNoController.text = "";
@@ -746,24 +745,24 @@ class _BrakeInquiryState extends State<BrakeInquiry>
     }
   }
 
-  Future<void> displaySnackbar(BuildContext context, msg) {
+  displaySnackbar(BuildContext context, msg) {
     final snackBar = SnackBar(
       content: Text('$msg'),
       duration: const Duration(seconds: 2),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> getPrefs() async {
     String customerName, customerNumber, customerEmail;
 
     setState(() {
-      nearestStorePhn = SpUtil.getString(Constants.NEAREST_STORE_PHONENO)
+      nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
-      whatsAppNum = SpUtil.getString(Constants.WHATS_APP_NUMBER);
-      customerName = SpUtil.getString(Constants.CUSTOMER_NAME);
-      customerNumber = SpUtil.getString(Constants.CUSTOMER_MOBILE_NO);
-      customerEmail = SpUtil.getString(Constants.CUSTOMER_EMAIL);
+      whatsAppNum = SpUtil.getString(Constants.whatsAppNumber);
+      customerName = SpUtil.getString(Constants.customerName);
+      customerNumber = SpUtil.getString(Constants.customerMobileNo);
+      customerEmail = SpUtil.getString(Constants.customerEmail);
 
       nameController.text = customerName;
       phoneController.text = customerNumber;

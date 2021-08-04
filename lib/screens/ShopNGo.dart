@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:fasttrackgarage_app/models/Item.dart';
 import 'package:fasttrackgarage_app/screens/CartActivity.dart';
@@ -12,40 +11,34 @@ import '../api/Api.dart';
 import '../utils/Rcode.dart';
 import '../utils/Toast.dart';
 
-
-class ShopAndGo extends StatefulWidget{
+class ShopAndGo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ShopAndGo();
   }
-
 }
 
 class _ShopAndGo extends State<ShopAndGo> {
   bool isProgressBarShown = false;
   TextEditingController searchController = new TextEditingController();
 
-  List<Item> itemList = new List<Item>();
+  List<Item> itemList = <Item>[];
 
   String basicToken = "";
-
 
   @override
   void initState() {
     super.initState();
 
-    PrefsManager.getBasicToken().then((token){
+    PrefsManager.getBasicToken().then((token) {
       basicToken = token;
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-     appBar: AppBarWithTitle.getAppBar('Shop N Go'),
+      appBar: AppBarWithTitle.getAppBar('Shop N Go'),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         dismissible: false,
@@ -54,24 +47,23 @@ class _ShopAndGo extends State<ShopAndGo> {
           margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
           child: Column(
             children: <Widget>[
-
               TextField(
                 controller: searchController,
                 decoration: InputDecoration(labelText: 'Search'),
                 onChanged: (text) {},
               ),
-
               Container(
-                margin : EdgeInsets.only(top:7),
-
-                child: RaisedButton(
+                margin: EdgeInsets.only(top: 7),
+                child: ElevatedButton(
                   onPressed: () {
-                    if(searchController.text.isNotEmpty){
+                    if (searchController.text.isNotEmpty) {
                       searchItem();
                     }
                   },
-                  textColor: Colors.blue,
-                  color: Colors.white,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    textStyle: TextStyle(color: Colors.blue),
+                  ),
                   child: new Text(
                     "SEARCH",
                   ),
@@ -88,8 +80,7 @@ class _ShopAndGo extends State<ShopAndGo> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    CartActivity()),
+                                builder: (context) => CartActivity()),
                           );
                         },
                         child: Card(
@@ -99,14 +90,14 @@ class _ShopAndGo extends State<ShopAndGo> {
                               Container(
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                       child: Container(
                                         padding: EdgeInsets.fromLTRB(
                                             8.0, 16.0, 0, 16.0),
                                         child: Text(
-                                          itemList[index].Description,
+                                          itemList[index].description,
                                           style: TextStyle(fontSize: 16.0),
                                         ),
                                       ),
@@ -115,7 +106,7 @@ class _ShopAndGo extends State<ShopAndGo> {
                                       padding: EdgeInsets.fromLTRB(
                                           0, 16.0, 8.0, 16.0),
                                       child: Text(
-                                        itemList[index].Unit_Price,
+                                        itemList[index].unitPrice,
                                         style: TextStyle(fontSize: 16.0),
                                       ),
                                     ),
@@ -134,7 +125,6 @@ class _ShopAndGo extends State<ShopAndGo> {
           ),
         ),
       ),
-
     );
   }
 
@@ -142,26 +132,24 @@ class _ShopAndGo extends State<ShopAndGo> {
     FocusScope.of(context).requestFocus(FocusNode());
 
     showProgressBar();
-    String url = Api.SEARCH_ITEM;
+    String url = Api.searchItem;
     debugPrint("This is  url : $url");
 
     String itemNumber = searchController.text;
-
 
     Map<String, String> body = {
       "No": itemNumber,
     };
 
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "url":
-      "DynamicsNAV/ws/FT%20Support/Page/ItemList",
+      "url": "DynamicsNAV/ws/FT%20Support/Page/ItemList",
       "Authorization": "$basicToken"
     };
 
-    await http.post(url, body: body_json, headers: header).then((res) {
+    await http.post(url, body: bodyJson, headers: header).then((res) {
       debugPrint("This is body: ${res.body}");
       int statusCode = res.statusCode;
 
@@ -170,15 +158,14 @@ class _ShopAndGo extends State<ShopAndGo> {
       String message = data['message'];
       debugPrint(">>message $message");
 
-      if(statusCode == Rcode.SUCCESS_CODE){
+      if (statusCode == Rcode.successCode) {
         hideProgressBar();
 
         var values = data["data"] as List;
         debugPrint(">>>values $values");
 
         itemList = values.map<Item>((json) => Item.fromJson(json)).toList();
-      }
-      else {
+      } else {
         hideProgressBar();
         ShowToast.showToast(context, message);
       }
@@ -200,5 +187,4 @@ class _ShopAndGo extends State<ShopAndGo> {
       isProgressBarShown = false;
     });
   }
-
 }
