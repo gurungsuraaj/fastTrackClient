@@ -601,7 +601,7 @@ class _HomeActivityState extends State<HomeActivity>
           return AlertDialog(
             contentPadding: EdgeInsets.all(0.0),
             content: Container(
-              height: 350,
+              height: 400,
               child: Column(
                 children: <Widget>[
                   Container(
@@ -623,6 +623,7 @@ class _HomeActivityState extends State<HomeActivity>
                           padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
                           child: Text("Need Help?"),
                         ),
+                        
                         Container(
                           width: 120,
                           child: ElevatedButton(
@@ -641,6 +642,10 @@ class _HomeActivityState extends State<HomeActivity>
                               ),
                             ),
                           ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                          child: Text('By clicking this button,nearest location will call you within half an hour'),
                         ),
                         SizedBox(
                           height: 10,

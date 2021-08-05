@@ -13,7 +13,7 @@ class ServiceActivity extends StatefulWidget {
   _ServiceActivityState createState() => _ServiceActivityState();
 }
 
-class _ServiceActivityState extends State<ServiceActivity> {
+class _ServiceActivityState extends State<ServiceActivity> with TickerProviderStateMixin {
   var textDecoration = TextDecoration.underline;
   var fontSize = 18.0;
   var imageWidth = 35.0;
