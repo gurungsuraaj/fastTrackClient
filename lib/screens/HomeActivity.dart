@@ -601,7 +601,7 @@ class _HomeActivityState extends State<HomeActivity>
           return AlertDialog(
             contentPadding: EdgeInsets.all(0.0),
             content: Container(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: MediaQuery.of(context).size.height * 0.52,
               child: Column(
                 children: <Widget>[
                   Container(
