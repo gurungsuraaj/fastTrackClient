@@ -26,10 +26,18 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
     "images/whatsapp.png"
   ];
 
-  @override
+  
   @override
   void initState() { 
     super.initState();
+    setState(() {
+       nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
+          .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+      whatsAppNum = SpUtil.getString(Constants.whatsAppNumber);
+      customerName = SpUtil.getString(Constants.customerName);
+      customerNumber = SpUtil.getString(Constants.customerMobileNo);
+      customerEmail = SpUtil.getString(Constants.customerEmail);
+    });
      _controller = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),

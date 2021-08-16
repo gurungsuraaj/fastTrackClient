@@ -601,7 +601,7 @@ class _HomeActivityState extends State<HomeActivity>
           return AlertDialog(
             contentPadding: EdgeInsets.all(0.0),
             content: Container(
-              height: 400,
+              height: MediaQuery.of(context).size.height * 0.45,
               child: Column(
                 children: <Widget>[
                   Container(
@@ -617,36 +617,42 @@ class _HomeActivityState extends State<HomeActivity>
                   Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
-                          child: Text("Need Help?"),
+                          padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
+                          child: Text("By clicking this button,nearest location will call you within half an hour",
+                          style:TextStyle(color:Colors.grey,fontSize:14.0)),
                         ),
                         
                         Container(
                           width: 120,
                           child: ElevatedButton(
+                            style:ElevatedButton.styleFrom(elevation:4.0, 
+                            // primary: Colors.blue[700],
+                            primary:Colors.green[300],
+                            shadowColor: Colors.black87,
+                            minimumSize: Size(60, 50),
+                            ),
                             onPressed: () {
                               // Navigator.pop(context);
 
                               getUserList();
                             },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blue[700],
-                            ),
+                           
                             child: Text(
                               'SEND ALERT',
                               style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 15.0
                               ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          child: Text('By clicking this button,nearest location will call you within half an hour'),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                        //   child: Text('By clicking this button,nearest location will call you within half an hour'),
+                        // ),
                         SizedBox(
                           height: 10,
                         ),
