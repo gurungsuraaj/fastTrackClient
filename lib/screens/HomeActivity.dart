@@ -621,8 +621,8 @@ class _HomeActivityState extends State<HomeActivity>
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
-                          child: Text("By clicking this button,nearest location will call you within half an hour",
-                          style:TextStyle(color:Colors.grey,fontSize:14.0)),
+                          child: Text("By clicking this button, nearest location will call you within half an hour",textAlign: TextAlign.center,
+                          style:TextStyle(color:Colors.grey,fontSize:12.0)),
                         ),
                         
                         Container(
