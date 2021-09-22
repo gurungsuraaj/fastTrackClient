@@ -60,7 +60,7 @@ class _OTP extends State<OTP> {
     bool isProgressBarShown = false;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    double margin = 24.0;
+    double margin = 10.0;
     // double padding = 10.0;
 
     // TextEditingController controller = TextEditingController();
@@ -72,151 +72,441 @@ class _OTP extends State<OTP> {
         child: ModalProgressHUD(
           inAsyncCall: isProgressBarShown,
           child: Builder(
-            builder: (context) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ReusableAppBar.getAppBar(0, 0, height, width),
-                //Container
-                Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: Container(
-                            margin: EdgeInsets.only(top: margin),
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  'ENTER OTP',
-                                  style: TextStyle(
-                                      color: Colors.blue[800], fontSize: 25),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 35, top: 10),
-                                  child: Text(
-                                    'Please enter the OTP to proceed',
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                                // Center(
-                                //   child: PinPut(
-                                //     autoFocus: false,
-                                //     actionButtonsEnabled: true,
-                                //     clearInput: true,
-                                //     fieldsCount: 6,
-                                //     onClear: (String pin) {
-                                //       debugPrint('$pin');
-                                //       setState(() {
-                                //         pin = '';
-                                //       });
-                                //     },
-                                //     onSubmit: (String pin) {
-                                //       //_showSnackBar(pin, context);
-                                //       if (widget.mode == 1) {
-                                //         submitOtpForRegistration(pin);
-                                //       } else if (widget.mode == 2) {
-                                //         submitOTP(pin);
-                                //       }
-                                //     },
-                                //   ),
-                                // ),
-                                Platform.isAndroid
-                                    ? Container(
-                                        width: width,
-                                        child: TextFieldPin(
-                                          filled: true,
-                                          filledColor: Colors.white,
-                                          codeLength: _otpCodeLength,
-                                          boxSize: 35,
-                                          filledAfterTextChange: false,
-                                          textStyle: TextStyle(fontSize: 16),
-                                          borderStyle: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius:
-                                                  BorderRadius.circular(0)),
-                                          onOtpCallback: (code, isAutofill) =>
-                                              _onOtpCallBack(code, isAutofill),
+            builder: (context) => Container(
+              color: Color(0xff253983),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ReusableAppBar.getAppBar(0, 0, height, width),
+                  //Container
+                  Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        Container(
+                          color: Color(0xff253983),
+                          child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: Container(
+                                // margin: EdgeInsets.only(top: margin),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'ENTER',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 25),
                                         ),
-                                      )
-                                    : Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 50),
-                                        child: iosText.PinCodeTextField(
-                                          autoFocus: true,
-                                          textInputType: TextInputType.number,
-                                          length: 6,
-                                          obsecureText: false,
-                                          animationType:
-                                              iosText.AnimationType.fade,
-                                          shape: iosText
-                                              .PinCodeFieldShape.underline,
-                                          animationDuration:
-                                              Duration(milliseconds: 300),
-                                          fieldHeight: 50,
-                                          fieldWidth: 30,
-                                          onChanged: (value) {
-                                            _otpCode = value;
-
-                                            if (_otpCode.length == 6) {
-                                              if (widget.mode == 1) {
-                                                submitOtpForRegistration(
-                                                    _otpCode);
-                                              } else if (widget.mode == 2) {
-                                                submitOTP(_otpCode);
-                                              } else if (widget.mode == 3) {
-                                                updateExistedCustomerInfo(
-                                                    _otpCode);
-                                              }
-                                            }
-                                          },
+                                        Text(
+                                          ' OTP',
+                                          style: TextStyle(
+                                              color: Colors.orange,
+                                              fontSize: 25),
                                         ),
+                                      ],
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(bottom: 20, top: 10),
+                                      child: Text(
+                                        'Please enter the OTP to proceed',
+                                        style: TextStyle(color: Colors.white),
                                       ),
+                                    ),
+                                    // Center(
+                                    //   child: PinPut(
+                                    //     autoFocus: false,
+                                    //     actionButtonsEnabled: true,
+                                    //     clearInput: true,
+                                    //     fieldsCount: 6,
+                                    //     onClear: (String pin) {
+                                    //       debugPrint('$pin');
+                                    //       setState(() {
+                                    //         pin = '';
+                                    //       });
+                                    //     },
+                                    //     onSubmit: (String pin) {
+                                    //       //_showSnackBar(pin, context);
+                                    //       if (widget.mode == 1) {
+                                    //         submitOtpForRegistration(pin);
+                                    //       } else if (widget.mode == 2) {
+                                    //         submitOTP(pin);
+                                    //       }
+                                    //     },
+                                    //   ),
+                                    // ),
+                                    Platform.isAndroid
+                                        ? Container(
+                                            width: width,
+                                            child: TextFieldPin(
+                                              filled: true,
+                                              filledColor: Colors.white,
+                                              codeLength: _otpCodeLength,
+                                              boxSize: 35,
+                                              filledAfterTextChange: true,
+                                              textStyle:
+                                                  TextStyle(fontSize: 16),
+                                              borderStyle: OutlineInputBorder(
+                                                  borderSide: BorderSide.none,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              onOtpCallback:
+                                                  (code, isAutofill) =>
+                                                      _onOtpCallBack(
+                                                          code, isAutofill),
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 50),
+                                            child: iosText.PinCodeTextField(
+                                              autoFocus: true,
+                                              textInputType:
+                                                  TextInputType.number,
+                                              length: 6,
+                                              obsecureText: false,
+                                              animationType:
+                                                  iosText.AnimationType.fade,
+                                              shape: iosText
+                                                  .PinCodeFieldShape.underline,
+                                              animationDuration:
+                                                  Duration(milliseconds: 300),
+                                              fieldHeight: 50,
+                                              fieldWidth: 30,
+                                              onChanged: (value) {
+                                                _otpCode = value;
 
-                                SizedBox(
-                                  height: 32,
+                                                if (_otpCode.length == 6) {
+                                                  if (widget.mode == 1) {
+                                                    submitOtpForRegistration(
+                                                        _otpCode);
+                                                  } else if (widget.mode == 2) {
+                                                    submitOTP(_otpCode);
+                                                  } else if (widget.mode == 3) {
+                                                    updateExistedCustomerInfo(
+                                                        _otpCode);
+                                                  }
+                                                }
+                                              },
+                                            ),
+                                          ),
+
+                                    SizedBox(
+                                      height: 32,
+                                    ),
+                                    Container(
+                                      child: MaterialButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            side: BorderSide(
+                                                color: Colors.transparent)),
+                                        onPressed: () {
+                                          if (widget.mode == 1) {
+                                            submitOtpForRegistration(_otpCode);
+                                          } else if (widget.mode == 2) {
+                                            submitOTP(_otpCode);
+                                          } else if (widget.mode == 3) {
+                                            updateExistedCustomerInfo(_otpCode);
+                                          }
+                                        },
+                                        child: _setUpButtonChild(),
+                                        color: Colors.orange,
+                                        disabledColor: Colors.blue[100],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.mode == 1) {
+                                          resendOtpForSignUp();
+                                        } else if (widget.mode == 2) {
+                                          resendOtpForForgotPw();
+                                        } else if (widget.mode == 3) {
+                                          resendOtpForExistingCustomer();
+                                        }
+                                      },
+                                      child: Text(
+                                        "Resend OTP",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '1',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '2',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '3',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '4',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '5',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '6',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '7',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '8',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '9',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all(20),
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Text(
+                                                '',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 25),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.all(20),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.orange,
+                                                      // width: 5,
+                                                    ),
+                                                    color: Colors.transparent),
+                                                child: Text(
+                                                  '0',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.all(20),
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              // decoration: BoxDecoration(
+                                              //     shape: BoxShape.circle,
+                                              //     border: Border.all(
+                                              //       color: Colors.orange,
+                                              //       // width: 5,
+                                              //     ),
+                                              //     color: Colors.transparent),
+                                              // child: IconButton(
+                                              //   icon: Icon(
+                                              //     Icons.arrow_back_rounded,
+                                              //     size: 20,
+                                              //     color: Colors.white,
+                                              // ),
+                                              // ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
-                                Container(
-                                  width: double.maxFinite,
-                                  child: MaterialButton(
-                                    onPressed: () {
-                                      if (widget.mode == 1) {
-                                        submitOtpForRegistration(_otpCode);
-                                      } else if (widget.mode == 2) {
-                                        submitOTP(_otpCode);
-                                      } else if (widget.mode == 3) {
-                                        updateExistedCustomerInfo(_otpCode);
-                                      }
-                                    },
-                                    child: _setUpButtonChild(),
-                                    color: Color(ExtraColors.darkBlue),
-                                    disabledColor: Colors.blue[100],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    if (widget.mode == 1) {
-                                      resendOtpForSignUp();
-                                    } else if (widget.mode == 2) {
-                                      resendOtpForForgotPw();
-                                    } else if (widget.mode == 3) {
-                                      resendOtpForExistingCustomer();
-                                    }
-                                  },
-                                  child: Text(
-                                    "Resend OTP",
-                                    style: TextStyle(color: Colors.grey[700]),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )),
-                    ],
+                              )),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

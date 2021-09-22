@@ -35,12 +35,17 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
   @override
   Widget build(BuildContext context) {
     var textStyle = TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: Colors.white,
+    );
     return Scaffold(
+      backgroundColor: Color(ExtraColors.scaffoldColor),
+
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.darkBlueAccent),
-        title: Text("Check History"),
+        backgroundColor: Color(ExtraColors.appBarColor),
+        title: Text("CHECK HISTORY"),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -122,6 +127,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                                   child: Text("Customer Name :",
                                       style: TextStyle(
                                           fontSize: 16.0,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 // SizedBox(
@@ -140,6 +146,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                                   child: Text("Amt Inc. VAT :",
                                       style: TextStyle(
                                           fontSize: 16.0,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 SizedBox(
@@ -149,6 +156,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                                   child: Text("Location Name :",
                                       style: TextStyle(
                                           fontSize: 16.0,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 SizedBox(
@@ -158,6 +166,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                                   child: Text("Document Date :",
                                       style: TextStyle(
                                           fontSize: 16.0,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 // SizedBox(

@@ -91,7 +91,8 @@ class _LoginActivityState extends State<LoginActivity> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xffF39C1B),
+        // backgroundColor: Color(0xffF39C1B),
+        backgroundColor: Color(0xff253983),
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         body: ModalProgressHUD(
@@ -117,19 +118,49 @@ class _LoginActivityState extends State<LoginActivity> {
                         child: Column(
                           children: <Widget>[
                             SizedBox(
-                              height: 40,
+                              height: 100,
                             ),
-                            ReusableAppBar.getAppBar(20, 0, height, width),
+
+                            Container(
+                              height: height / 4,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 30),
+                                    child: Text(
+                                      "Welcome to",
+                                      style: TextStyle(
+                                          fontSize: 35,
+                                          fontWeight: FontWeight.w500,
+                                          // fontStyle: FontStyle.italic,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                  Container(
+                                    // margin: EdgeInsets.only(bottom: 20),
+                                    child: Text(
+                                      "MY FASTTRACK",
+                                      style: TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.w800,
+                                          // fontStyle: FontStyle.values(80),
+                                          color: Colors.orange),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // ReusableAppBar.getAppBar(20, 0, height, width),
                             // SizedBox(
                             //   height: height * 0.1,
                             // ),
                             Container(
                               margin:
-                                  EdgeInsets.fromLTRB(0, height * 0.042, 0, 0),
+                                  EdgeInsets.fromLTRB(0, height * 0.04, 0, 0),
                               child: Text(
                                 "Login to your account",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 16),
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ), //Container
                             SizedBox(
@@ -235,8 +266,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                                   new BorderRadius.circular(
                                                       18.0),
                                             ),
-                                            primary:
-                                                Colors.white,
+                                            primary: Colors.orange,
                                           ),
                                           onPressed: () {
                                             // performLogin();
@@ -246,14 +276,13 @@ class _LoginActivityState extends State<LoginActivity> {
                                           },
                                           child: Text(
                                             "Continue",
-                                            style: TextStyle(
-                                                color: Color(
-                                                    ExtraColors.darkBlue)),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
                                         ),
                                       ),
                                       SizedBox(
-                                        height: height * 0.02,
+                                        height: height * 0.1,
                                       ),
                                       // Row(
                                       //   mainAxisAlignment:
@@ -297,31 +326,43 @@ class _LoginActivityState extends State<LoginActivity> {
                                         height: 60,
                                       ),
 
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            "All rights reserved © 2020",
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                          SizedBox(width: 10),
-                                          FutureBuilder(
-                                            future: getVersionNumber(),
-                                            builder: (BuildContext context,
-                                                    AsyncSnapshot<String>
-                                                        snapshot) =>
-                                                Text(
-                                              snapshot.hasData
-                                                  ? "v${snapshot.data}"
-                                                  : "Loading ...",
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ],
+                                      Image.asset(
+                                        'images/fast_track_logo.png',
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                       ),
+                                      // Row(
+                                      //   // mainAxisAlignment: MainAxisAlignment.end,
+                                      //   children: [
+                                      //     Row(
+                                      //       children: <Widget>[
+                                      //         Text(
+                                      //           "All rights reserved © 2020",
+                                      //           // textAlign: TextAlign.start,
+                                      //           style: TextStyle(
+                                      //               color: Colors.white,
+                                      //               fontSize: 10),
+                                      //         ),
+                                      //         // SizedBox(width: 10),
+                                      //         FutureBuilder(
+                                      //           future: getVersionNumber(),
+                                      //           builder: (BuildContext context,
+                                      //                   AsyncSnapshot<String>
+                                      //                       snapshot) =>
+                                      //               Text(
+                                      //             snapshot.hasData
+                                      //                 ? "Version ${snapshot.data}"
+                                      //                 : "Loading ...",
+                                      //             style: TextStyle(
+                                      //                 color: Colors.white,
+                                      //                 fontSize: 10),
+                                      //           ),
+                                      //         ),
+                                      //       ],
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ]),
                               ),
                             )
@@ -335,28 +376,69 @@ class _LoginActivityState extends State<LoginActivity> {
             ),
           ),
         ),
+        bottomNavigationBar: Row(
+          // mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      "All rights reserved © 2020",
+                      // textAlign: TextAlign.start,
+                      style: TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  ),
+                  // SizedBox(width: 10),
+                  Expanded(
+                    child: FutureBuilder(
+                      future: getVersionNumber(),
+                      builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) =>
+                          Text(
+                        snapshot.hasData
+                            ? "Version ${snapshot.data}"
+                            : "Loading ...",
+                        style: TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget customContainer(orientation) {
-    if (orientation == Orientation.portrait) {
-      return ClipPath(
-          clipper: CustomShapeClipper(),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.7,
-            color: Color(0xff253983),
-          ));
-    } else {
-      return ClipPath(
-          clipper: CustomShapeClipperLandscape(),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.75,
-            color: Color(0xff253983),
-          ));
-    }
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("images/handle.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+    // if (orientation == Orientation.portrait) {
+    //   return ClipPath(
+    //       clipper: CustomShapeClipper(),
+    //       child: Container(
+    //         width: MediaQuery.of(context).size.width,
+    //         height: MediaQuery.of(context).size.height * 0.7,
+    //         color: Color(0xff253983),
+    //       ));
+    // } else {
+    //   return ClipPath(
+    //       clipper: CustomShapeClipperLandscape(),
+    //       child: Container(
+    //         width: MediaQuery.of(context).size.width,
+    //         height: MediaQuery.of(context).size.height * 0.75,
+    //         color: Color(0xff253983),
+    //       ));
+    // }
   }
 
   void showProgressBar() {
@@ -460,15 +542,22 @@ class _LoginActivityState extends State<LoginActivity> {
           // bool hasPriorityList = false}
           ) =>
       Container(
+        width: MediaQuery.of(context).size.width * 0.7,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.white),
+            border: Border.all(
+              color: Colors.orange,
+              // width: 5,
+            ),
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.transparent),
         child: Row(
           children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
               child: CircleAvatar(
                   radius: 18,
-                  backgroundColor: Color(0xffe6a764),
+                  // backgroundColor: Color(0xffe6a764),
+                  backgroundColor: Colors.orange,
                   child: Icon(
                     Icons.phone,
                     color: Colors.white,
@@ -489,8 +578,8 @@ class _LoginActivityState extends State<LoginActivity> {
                 Text(
                   '+971',
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
+                    fontSize: 18,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -525,29 +614,35 @@ class _LoginActivityState extends State<LoginActivity> {
             ),
             Expanded(
               child: TextFormField(
+                style: TextStyle(color: Colors.white, fontSize: 18),
                 keyboardType: TextInputType.number,
                 controller: mobileController,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
-                  hintText: "Phone...",
-                  hintStyle: TextStyle(color: Colors.grey[500]),
-                  labelStyle: TextStyle(color: Colors.grey[500]),
-                  fillColor: Colors.white,
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.white,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.white,
-                    ),
-                  ),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  hintText: "Phone",
+                  hintStyle: TextStyle(color: Colors.white),
+                  labelStyle: TextStyle(color: Colors.white),
+                  // fillColor: Colors.white,
+                  // filled: true,
+                  // enabledBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   borderSide: BorderSide(
+                  //     width: 1,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   borderSide: BorderSide(
+                  //     width: 1,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
                 ),
                 validator: (val) {
                   if (val.isEmpty) {

@@ -48,7 +48,7 @@ dependencies:
   url_launcher: ^5.7.10
   intl:
   country_pickers:
-  carousel_slider: 
+  carousel_slider:
   cached_network_image: 2.0.0-rc
   custom_navigator: ^0.2.0
   flutter_local_notifications:
@@ -59,8 +59,8 @@ dependencies:
   pin_code_fields: ^2.3.0+3
   flutter_webview_plugin:
   flutter_statusbarcolor:
-  encrypt: 
-  flutter_config: 
+  encrypt:
+  flutter_config:
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +91,10 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - images/fast_track_logo.png
+    - images/fastTrack_launcher.png
+    - images/car.png
+    - images/handle.jpg
+    - images/dashboard.jpg
     - images/shopAndGo.png
     - images/message.png
     - images/maintenance_icon.png
@@ -143,11 +147,6 @@ flutter:
     - images/ac.png
 
     
-
-
-
-
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

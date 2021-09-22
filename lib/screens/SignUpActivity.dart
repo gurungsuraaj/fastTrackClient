@@ -98,14 +98,30 @@ class _SignUpActivity extends State<SignUpActivity> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              ReusableAppBar.getAppBar(20, 0, height, width),
-              Center(
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Text(
-                    "Create new account",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                child: ReusableAppBar.getAppBar(10, 0, height, width),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "CREATE AN ",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "ACCOUNT ",
+                      style: TextStyle(
+                          color: Colors.orange,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
               ), ////Container
               Expanded(
@@ -114,6 +130,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                     Form(
                       key: formKey,
                       child: Container(
+                        // width: MediaQuery.of(context).size.width * 0.8,
                         margin: EdgeInsets.all(margin),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -131,8 +148,18 @@ class _SignUpActivity extends State<SignUpActivity> {
 //                              ),
 //                            ),
                             Container(
-                              width: width * 0.9,
+                              // width: MediaQuery.of(context).size.width * 0.7,
+                              padding: EdgeInsets.symmetric(vertical: 3),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.orange,
+                                    // width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.transparent),
+                              width: width * 0.8,
                               child: TextFormField(
+                                textInputAction: TextInputAction.next,
                                 // validator: (val) => val.length && val.isEmpty > 20
                                 //     ?
                                 //     : null,
@@ -146,10 +173,13 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 controller: nameController,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.darkBlueAccent)),
+                                    color: Colors.white),
                                 decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    filled: true,
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
                                     prefixIcon: Container(
                                       padding:
                                           EdgeInsets.fromLTRB(10, 0, 20, 0),
@@ -162,43 +192,46 @@ class _SignUpActivity extends State<SignUpActivity> {
                                             size: 30,
                                           )),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey[300])),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey[300])),
-                                    hintText: 'Full name...',
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(30),
+                                    //     borderSide: BorderSide(
+                                    //         width: 1, color: Colors.grey[300])),
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(30),
+                                    //     borderSide: BorderSide(
+                                    //         width: 1, color: Colors.grey[300])),
+                                    hintText: 'Name',
                                     hintStyle: TextStyle(
-                                      // color: Color(0xffb8b8b8),
-                                      color: Colors.grey[500],
+                                      color: Colors.white,
                                     )),
                               ),
                             ),
-//                            Container(
-//                              margin: EdgeInsets.only(top: MARGIN),
-//                              child: Text(
-//                                'E-mail',
-//                                style: TextStyle(
-//                                    fontWeight: fontWeightText,
-//                                    fontSize: fontSizeText),
-//                              ),
-//                            ),
+
                             Container(
-                              padding: EdgeInsets.only(top: 15),
-                              width: width * 0.9,
+                              margin: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.symmetric(vertical: 3),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.orange,
+                                    // width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.transparent),
+                              width: width * 0.8,
                               child: TextFormField(
+                                textInputAction: TextInputAction.next,
                                 validator: (val) =>
                                     !val.contains('@') ? 'Invalid Email' : null,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.darkBlueAccent)),
+                                    color: Colors.white),
                                 controller: emailController,
                                 decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    filled: true,
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
                                     prefixIcon: Container(
                                       padding:
                                           EdgeInsets.fromLTRB(10, 0, 20, 0),
@@ -211,18 +244,17 @@ class _SignUpActivity extends State<SignUpActivity> {
                                             size: 30,
                                           )),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey[300])),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey[300])),
-                                    hintText: 'Your e-mail',
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(30),
+                                    //     borderSide: BorderSide(
+                                    //         width: 1, color: Colors.grey[300])),
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(30),
+                                    //     borderSide: BorderSide(
+                                    //         width: 1, color: Colors.grey[300])),
+                                    hintText: 'E-mail',
                                     hintStyle: TextStyle(
-                                      // color: Color(0xffb8b8b8),
-                                      color: Colors.grey[500],
+                                      color: Colors.white,
                                     )),
                               ),
                             ),
@@ -261,23 +293,30 @@ class _SignUpActivity extends State<SignUpActivity> {
 //                              ),
 //                            ),
                             Container(
-                              padding: EdgeInsets.only(top: 15),
-                              width: width * 0.9,
+                              margin: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.symmetric(vertical: 3),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.orange,
+                                    // width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.transparent),
+                              width: width * 0.8,
                               child: _buildCountryPickerDropdown(),
                             ),
 
-//                            Container(
-//                              margin: EdgeInsets.only(top: MARGIN),
-//                              child: Text(
-//                                'Password',
-//                                style: TextStyle(
-//                                    fontWeight: fontWeightText,
-//                                    fontSize: fontSizeText),
-//                              ),
-//                            ),
                             Container(
-                              padding: EdgeInsets.only(top: 15),
-                              width: width * 0.9,
+                              margin: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.symmetric(vertical: 3),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.orange,
+                                    // width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.transparent),
+                              width: width * 0.8,
                               child: TextFormField(
                                 validator: (val) => val.length < 6
                                     ? 'Please enter atleast 6 character '
@@ -286,11 +325,14 @@ class _SignUpActivity extends State<SignUpActivity> {
                                 obscureText: true,
                                 style: TextStyle(
                                     fontSize: fontSizeTextField,
-                                    color: Color(ExtraColors.darkBlueAccent)),
+                                    color: Colors.white),
                                 controller: passwordController,
                                 decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    filled: true,
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
                                     prefixIcon: Container(
                                       padding:
                                           EdgeInsets.fromLTRB(10, 0, 20, 0),
@@ -303,17 +345,16 @@ class _SignUpActivity extends State<SignUpActivity> {
                                             size: 30,
                                           )),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey[300])),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey[300])),
-                                    hintText: 'Your password',
-                                    hintStyle:
-                                        TextStyle(color: Color(0xffb8b8b8))),
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(30),
+                                    //     borderSide: BorderSide(
+                                    //         width: 1, color: Colors.grey[300])),
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(30),
+                                    //     borderSide: BorderSide(
+                                    //         width: 1, color: Colors.grey[300])),
+                                    hintText: 'Password',
+                                    hintStyle: TextStyle(color: Colors.white)),
                                 onSaved: (val) => _password,
                               ),
                             ),
@@ -373,7 +414,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                             //     )),
                             Center(
                               child: Container(
-                                margin: EdgeInsets.only(top: 45.0),
+                                margin: EdgeInsets.only(top: 40.0),
                                 width: width * 0.5,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -381,7 +422,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                       borderRadius:
                                           new BorderRadius.circular(18.0),
                                     ),
-                                    primary: Colors.white,
+                                    primary: Colors.orange,
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context)
@@ -391,7 +432,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                   child: Text(
                                     'Continue',
                                     style: TextStyle(
-                                      color: Color(ExtraColors.darkBlue),
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -545,7 +586,7 @@ class _SignUpActivity extends State<SignUpActivity> {
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Colors.white,
+          // color: Colors.white,
         ),
         child: Row(
           children: <Widget>[
@@ -575,7 +616,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                   '+971',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -606,16 +647,22 @@ class _SignUpActivity extends State<SignUpActivity> {
             // ),
             Expanded(
               child: TextField(
+                textInputAction: TextInputAction.next,
                 enabled: false,
                 controller: mobileController,
                 keyboardType: TextInputType.number,
-                style: TextStyle(color: Color(ExtraColors.darkBlueAccent)),
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
                   hintText: "Phone",
-                  hintStyle: TextStyle(color: Colors.grey[500]),
-                  labelStyle: TextStyle(color: Colors.grey[500]),
-                  fillColor: Colors.white,
-                  filled: true,
+                  hintStyle: TextStyle(color: Colors.white),
+                  labelStyle: TextStyle(color: Colors.white),
+                  // fillColor: Colors.white,
+                  // filled: true,
                   // prefixIcon: Container(
                   //   padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
                   //   child: CircleAvatar(
@@ -627,27 +674,27 @@ class _SignUpActivity extends State<SignUpActivity> {
                   //         size: 25,
                   //       )),
                   // ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.white,
-                    ),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.white,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.white,
-                    ),
-                  ),
+                  // enabledBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   borderSide: BorderSide(
+                  //     width: 1,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
+                  // disabledBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   borderSide: BorderSide(
+                  //     width: 1,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   borderSide: BorderSide(
+                  //     width: 1,
+                  //     color: Colors.white,
+                  // ),
+                  // ),
                 ),
               ),
             )

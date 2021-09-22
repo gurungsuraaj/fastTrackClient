@@ -23,12 +23,12 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
         title: Text("Make An Inquiry"),
         backgroundColor: Color(ExtraColors.darkBlue),
       ),
-      body: GridView.count(
-          padding: const EdgeInsets.all(15.0),
-          crossAxisCount: 2,
-          childAspectRatio: 1.0,
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
+      body: Column(
+          // padding: const EdgeInsets.all(15.0),
+          // crossAxisCount: 1,
+          // childAspectRatio: 3,
+          // mainAxisSpacing: 2.0,
+          // crossAxisSpacing: 2.0,
 
           // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           //   crossAxisCount: 2,
@@ -39,131 +39,196 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
           // itemCount: staticServiceList.length,
           // itemBuilder: (BuildContext context, int index) {
           children: <Widget>[
-            Card(
-                child: Container(
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InquiryDetailScreen(),
-                              ));
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              "images/tyre-s.png",
-                              // staticServiceList[index].image,
-                              height: 70,
-                              width: 50,
-                            ),
-                            Container(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Text("Tyres"))
-                          ],
-                        )))),
-            Card(
-                child: Container(
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OilFilterInquiryDetail(),
-                              ));
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              "images/oil-filter.png",
-                              // staticServiceList[index].image,
-                              height: 70,
-                              width: 50,
-                            ),
-                            Container(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Text("Oil & Filters"))
-                          ],
-                        )))),
-            Card(
-                child: Container(
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BatteryInquiry(),
-                              ));
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              "images/electrics.png",
-                              // staticServiceList[index].image,
-                              height: 70,
-                              width: 50,
-                            ),
-                            Container(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Text("Batteries"))
-                          ],
-                        )))),
-            Card(
-                child: Container(
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BrakeInquiry(),
-                              ));
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              "images/brakes.png",
-                              // staticServiceList[index].image,
-                              height: 70,
-                              width: 50,
-                            ),
-                            Container(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Text("Brakes"))
-                          ],
-                        )))),
-            Card(
-                child: Container(
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OtherServicesInquiry(),
-                              ));
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              "images/other.gif",
-                              // staticServiceList[index].image,
-                              height: 70,
-                              width: 50,
-                            ),
-                            Container(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Text("Other Services"))
-                          ],
-                        ))))
+            Container(
+              padding: EdgeInsets.only(top: 30),
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InquiryDetailScreen(),
+                        ));
+                  },
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        "images/tyre-s.png",
+                        // staticServiceList[index].image,
+                        height: 80,
+                        // width: 50,
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            "Tyres",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w800),
+                          ))
+                    ],
+                  )),
+            ),
+            Divider(
+              indent: MediaQuery.of(context).size.width * 0.1,
+              endIndent: MediaQuery.of(context).size.width * 0.1,
+              color: Colors.red,
+              thickness: 0.8,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OilFilterInquiryDetail(),
+                        ));
+                  },
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        "images/oil-filter.png",
+                        // staticServiceList[index].image,
+                        height: 80,
+                        // width: 50,
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            "Oil & Filters",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w800),
+                          ))
+                    ],
+                  )),
+            ),
+            Divider(
+              indent: MediaQuery.of(context).size.width * 0.1,
+              endIndent: MediaQuery.of(context).size.width * 0.1,
+              color: Colors.red,
+              thickness: 0.8,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BatteryInquiry(),
+                        ));
+                  },
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        "images/electrics.png",
+                        // staticServiceList[index].image,
+                        height: 80,
+                        // width: 50,
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            "Batteries",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w800),
+                          ))
+                    ],
+                  )),
+            ),
+            Divider(
+              indent: MediaQuery.of(context).size.width * 0.1,
+              endIndent: MediaQuery.of(context).size.width * 0.1,
+              color: Colors.red,
+              thickness: 0.8,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BrakeInquiry(),
+                        ));
+                  },
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        "images/brakes.png",
+                        // staticServiceList[index].image,
+                        height: 80,
+                        // width: 50,
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            "Brakes",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w800),
+                          ))
+                    ],
+                  )),
+            ),
+            Divider(
+              indent: MediaQuery.of(context).size.width * 0.1,
+              endIndent: MediaQuery.of(context).size.width * 0.1,
+              color: Colors.red,
+              thickness: 0.8,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.1),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OtherServicesInquiry(),
+                        ));
+                  },
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        "images/other.gif",
+                        // staticServiceList[index].image,
+                        height: 80,
+                        // width: 50,
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            "Other Services",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w800),
+                          ))
+                    ],
+                  )),
+            )
           ]
 
           // }

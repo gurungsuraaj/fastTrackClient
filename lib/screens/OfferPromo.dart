@@ -34,16 +34,22 @@ class _OfferPromoState extends State<OfferPromo> {
     // MediaQueryData queryData;
     // queryData = MediaQuery.of(context);
     return Scaffold(
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       key: _scaffoldKey,
       appBar: AppBar(
         // automaticallyImplyLeading: false,
-        backgroundColor: Color(ExtraColors.darkBlue),
-        title: Text("Offers and Promotions"),
+        backgroundColor: Color(ExtraColors.appBarColor),
+        title: Text("OFFERS & PROMOTIONS"),
       ),
-      backgroundColor: Color(0xFFD9D9D9),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
-        child: ListView.builder(
+        child: ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+            indent: MediaQuery.of(context).size.width * 0.04,
+            endIndent: MediaQuery.of(context).size.width * 0.04,
+            color: Colors.orange,
+            thickness: 1,
+          ),
           itemCount: promoList.length,
           itemBuilder: (context, index) {
             return Container(
