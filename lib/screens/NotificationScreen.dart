@@ -25,67 +25,135 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Color(ExtraColors.darkBlueAccent),
-        title: Text("Notifications"),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              notificationList = [];
-              getDataFromDB();
-            },
-            icon: Icon(Icons.refresh),
-          )
-        ],
+        backgroundColor: Color(ExtraColors.appBarColor),
+        title: Center(child: Text("NOTIFICATIONS")),
+        // actions: <Widget>[
+        //   IconButton(
+        //     onPressed: () {
+        //       notificationList = [];
+        //       getDataFromDB();
+        //     },
+        //     icon: Icon(Icons.refresh),
+        //   )
+        // ],
       ),
-      body: notificationList.length == 0
-          ? Center(
-              child: Text("Notification List is empty"),
-            )
-          : ListView.builder(
-              reverse: true,
-              shrinkWrap: true,
-              itemCount: notificationList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                  child: Card(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                      "Title : ${notificationList[index].notificationTitle} "),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                      "Message Body : ${notificationList[index].notificationBody} ")
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(timeAgoSinceDate(
-                                      notificationList[index].dateTime))
-                                ],
-                              ),
-                            )
-                          ],
-                        )),
+      body:
+          // Container(
+          //   margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+          //   child: Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: <Widget>[
+          //           Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //             children: <Widget>[
+          //               Expanded(
+          //                 child: Text(
+          //                   "HAPPY NEW YEAR ",
+          //                   style: TextStyle(
+          //                     color: Color(ExtraColors.orange),
+          //                   ),
+          //                 ),
+          //               ),
+          //               Expanded(
+          //                 child: Text(
+          //                   "Just now",
+          //                   style: TextStyle(
+          //                     color: Color(ExtraColors.orange),
+          //                   ),
+          //                 ),
+          //               ),
+          //               // Text(
+          //               //     "${notificationList[index].notificationTitle} "),
+          //               // Text(timeAgoSinceDate(
+          //               //     notificationList[index].dateTime))
+          //             ],
+          //           ),
+          //           SizedBox(
+          //             height: 10,
+          //           ),
+          //           Text(
+          //             "FASTTRACK WISHES A HAPPY NEW YEAR ",
+          //             style: TextStyle(
+          //               color: Colors.white,
+          //             ),
+          //           ),
+
+          //           // Text(
+          //           //
+          //           //   "${notificationList[index].notificationBody} "),
+          //           SizedBox(
+          //             height: 10,
+          //           ),
+          //           Divider(
+          //             color: Color(ExtraColors.orange),
+          //             thickness: 0.9,
+          //           ),
+          //         ],
+          //       )),
+          // )
+          notificationList.length == 0
+              ? Center(
+                  child: Text(
+                    "Notification List is empty",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                );
-              }),
+                )
+              : ListView.builder(
+                  reverse: true,
+                  shrinkWrap: true,
+                  itemCount: notificationList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                      child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text(
+                                      "${notificationList[index].notificationTitle} ",
+                                      style: TextStyle(
+                                          color: Color(ExtraColors.orange)),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      timeAgoSinceDate(
+                                          notificationList[index].dateTime),
+                                      style: TextStyle(
+                                          color: Color(ExtraColors.orange)),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "${notificationList[index].notificationBody} ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Divider(
+                                color: Color(ExtraColors.orange),
+                                height: 10,
+                              ),
+                            ],
+                          )),
+                    );
+                  }),
     );
   }
 

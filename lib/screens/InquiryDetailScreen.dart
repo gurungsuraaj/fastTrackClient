@@ -161,10 +161,10 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             ),
         ),
         key: _scaffoldKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(ExtraColors.scaffoldColor),
         appBar: AppBar(
-          title: Text("Tyres Inquiry"),
-          backgroundColor: Color(ExtraColors.darkBlue),
+          title: Text("TYRES INQUIRY"),
+          backgroundColor: Color(ExtraColors.appBarColor),
           bottom: TabBar(
             isScrollable: true,
             labelColor: Theme.of(context).primaryColor,
