@@ -17,7 +17,6 @@ import 'package:flutter_config/flutter_config.dart';
 
 import 'package:flutter/material.dart';
 
-
 //GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
@@ -34,23 +33,18 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
-        RoutesName.login: (BuildContext context) =>
-            new LoginActivity(),
-        RoutesName.signUp : (BuildContext context) =>
-            new SignUpActivity(),
+        RoutesName.login: (BuildContext context) => new LoginActivity(),
+        RoutesName.signUp: (BuildContext context) => new SignUpActivity(),
         RoutesName.otp: (BuildContext context) =>
             new OTP(query: '', mode: 0, signature: ''),
-        RoutesName.generateOtp: (BuildContext context) =>
-            new GenerateOTP(),
+        RoutesName.generateOtp: (BuildContext context) => new GenerateOTP(),
         RoutesName.home: (BuildContext context) => new Home(),
         RoutesName.checkInventory: (BuildContext context) =>
             new InventoryCheckActivity(),
-        RoutesName.outlet: (BuildContext context) =>
-            new OutletActivity(),
+        RoutesName.outlet: (BuildContext context) => new OutletActivity(),
         RoutesName.serviceHistory: (BuildContext context) =>
             new ServiceHistoryActivity(),
-        RoutesName.service: (BuildContext context) =>
-            new ServiceActivity(),
+        RoutesName.service: (BuildContext context) => new ServiceActivity(),
         RoutesName.mainTab: (BuildContext context) => new MainTab(),
         RoutesName.storeLocation: (BuildContext context) =>
             new StoreLocationScreen(),
@@ -94,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff253882),
+      // backgroundColor: Color(0xff253882),
       floatingActionButton: Container(
           child: Text(
         "All rights reserved © 2020",
@@ -103,26 +97,76 @@ class _SplashScreenState extends State<SplashScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: null,
       body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/car.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
           height: double.maxFinite,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(bottom: 30),
+                margin: EdgeInsets.only(bottom: 5),
                 child: Text(
                   "My Fasttrack",
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.italic,
+                      // fontStyle: FontStyle.italic,
                       color: Colors.white),
                 ),
               ),
+              Divider(
+                indent: 100,
+                endIndent: 100,
+                color: Colors.orange,
+                thickness: 2,
+              ),
               Container(
-                width: 240,
+                margin: EdgeInsets.only(top: 5),
+                child: Column(
+                  children: [
+                    Text(
+                      "YOUR CAR GARAGE",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                          // fontStyle: FontStyle.italic,
+                          color: Colors.white),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "IN YOUR ",
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              // fontStyle: FontStyle.italic,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          "MOBILE",
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              // fontStyle: FontStyle.italic,
+                              color: Colors.orange),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 90),
+                width: 170,
                 child: new Image.asset(
-                  'images/fastTrackSplashLogo.png',
+                  'images/fastTrack_launcher.png',
                 ),
               ),
 

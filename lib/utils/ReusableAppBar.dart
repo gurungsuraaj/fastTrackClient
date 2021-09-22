@@ -4,33 +4,44 @@ class ReusableAppBar {
   static getAppBar(double margin, double padding, double height, double width) {
     return Container(
       margin: EdgeInsets.fromLTRB(0, margin, 0, margin),
-      padding:EdgeInsets.fromLTRB(0, padding, 0, padding),
+      padding: EdgeInsets.fromLTRB(0, padding, 0, padding),
 
-      color: Color(0xff253983),
+      // color: Color(0xff253983),
 //    color: Colors.white,
-      height: height / 4,
+      height: height / 4.5,
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          // color: Colors.red,
+            // color: Colors.red,
             width: 310,
             child: Column(
               children: [
+                // Container(
+                //   margin: EdgeInsets.only(top: 30),
+                //   child: Text(
+                //     "Welcome to",
+                //     style: TextStyle(
+                //         fontSize: 30,
+                //         fontWeight: FontWeight.w500,
+                //         // fontStyle: FontStyle.italic,
+                //         color: Colors.white),
+                //   ),
+                // ),
+                // Container(
+                //   // margin: EdgeInsets.only(bottom: 20),
+                //   child: Text(
+                //     "MY FASTTRACK",
+                //     style: TextStyle(
+                //         fontSize: 23,
+                //         fontWeight: FontWeight.w800,
+                //         // fontStyle: FontStyle.values(80),
+                //         color: Colors.orange),
+                //   ),
+                // ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    "My Fasttrack",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.white),
-                  ),
-                ),
-                Container(
-                  height: 100,
+                  height: 130,
                   child: new Image.asset(
-                    'images/fastTrackSplashLogo.png',
+                    'images/fastTrack_launcher.png',
                   ),
                 ),
               ],
