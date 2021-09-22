@@ -91,6 +91,10 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - images/fast_track_logo.png
+    - images/fastTrack_launcher.png
+    - images/car.png
+    - images/handle.jpg
+    - images/dashboard.jpg
     - images/shopAndGo.png
     - images/message.png
     - images/maintenance_icon.png

@@ -46,8 +46,8 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
             Container(
               // padding: EdgeInsets.only(left: 10),
               child: Image.asset(
-                'images/fastTrackSplashLogo.png',
-                height: 150,
+                'images/fastTrack_launcher.png',
+                height: 125,
               ),
             ),
             SizedBox(

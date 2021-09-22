@@ -1,7 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
+<<<<<<< HEAD
+export "FLUTTER_ROOT=S:\flutter"
+export "FLUTTER_APPLICATION_PATH=A:\Documents\Projects\ebt-fasttrack"
+=======
 export "FLUTTER_ROOT=C:\flutter"
 export "FLUTTER_APPLICATION_PATH=C:\Users\HP\Desktop\ebt-fasttrack"
+>>>>>>> 99bb7b69c00637cd30f9ffe43a10ce9a8472ca21
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"

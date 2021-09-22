@@ -167,14 +167,14 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           backgroundColor: Color(ExtraColors.appBarColor),
           bottom: TabBar(
             isScrollable: true,
-            labelColor: Theme.of(context).primaryColor,
+            labelColor: Colors.orange,
             unselectedLabelColor: Colors.white,
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
-                color: Colors.white),
+                color: Color(ExtraColors.scaffoldColor)),
             tabs: <Widget>[
               Tab(
                 child: Text(
@@ -307,18 +307,24 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
-                      border: Border.all(width: 0.3),
-                      borderRadius: BorderRadius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("width"),
+                      hint: Text(
+                        "width",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       isExpanded: true,
                       items: widthListSize.map((String value) {
                         return new DropdownMenuItem<String>(
                           value: value,
                           child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
-                              child: new Text(value)),
+                              child: new Text(
+                                value,
+                                style: TextStyle(color: Colors.white),
+                              )),
                         );
                       }).toList(),
                       value: selectedWidthSize,
@@ -335,16 +341,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
-                      border: Border.all(width: 0.3),
-                      borderRadius: BorderRadius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("height"),
+                      hint: Text(
+                        "height",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       isExpanded: true,
                       items: heightListSize.map((String value) {
                         return new DropdownMenuItem<String>(
                           value: value,
-                          child: new Text(value),
+                          child: new Text(
+                            value,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                       value: selectedHeightSize,
@@ -369,16 +381,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
-                      border: Border.all(width: 0.3),
-                      borderRadius: BorderRadius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("rim-size"),
+                      hint: Text(
+                        "rim-size",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       isExpanded: true,
                       items: rimSizeListSize.map((String value) {
                         return new DropdownMenuItem<String>(
                           value: value,
-                          child: new Text(value),
+                          child: new Text(
+                            value,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                       value: selectedRimSize,
@@ -395,16 +413,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
-                      border: Border.all(width: 0.3),
-                      borderRadius: BorderRadius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("brand"),
+                      hint: Text(
+                        "brand",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       isExpanded: true,
                       items: brandListSize.map((String value) {
                         return new DropdownMenuItem<String>(
                           value: value,
-                          child: new Text(value),
+                          child: new Text(
+                            value,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                       value: selectedBrandSize,
@@ -422,17 +446,26 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Checkbox(
-                  value: isRearTyreVisible,
-                  onChanged: (value) {
-                    setState(() {
-                      isRearTyreVisible = value;
-                      // selectedRearHeightSize = '';
-                      // selectedRearRimSize = '';
-                      // selectedRearWidthSize = '';
-                    });
-                  }),
-              Text('Add different rear size tyre'),
+              Theme(
+                child: Checkbox(
+                    activeColor: Colors.orange,
+                    value: isRearTyreVisible,
+                    onChanged: (value) {
+                      setState(() {
+                        isRearTyreVisible = value;
+                        // selectedRearHeightSize = '';
+                        // selectedRearRimSize = '';
+                        // selectedRearWidthSize = '';
+                      });
+                    }),
+                data: ThemeData(
+                    // border color
+                    unselectedWidgetColor: Colors.orange),
+              ),
+              Text(
+                'Add different rear size tyre',
+                style: TextStyle(color: Colors.white),
+              ),
             ],
           ),
           Visibility(
@@ -447,18 +480,24 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       width: width * 0.45,
                       padding: EdgeInsets.only(left: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(5)),
+                          border: Border.all(width: 1, color: Colors.orange),
+                          borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text("width"),
+                          hint: Text(
+                            "width",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           isExpanded: true,
                           items: widthListSize.map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
                               child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
-                                  child: new Text(value)),
+                                  child: new Text(
+                                    value,
+                                    style: TextStyle(color: Colors.white),
+                                  )),
                             );
                           }).toList(),
                           value: selectedRearWidthSize,
@@ -475,16 +514,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       width: width * 0.45,
                       padding: EdgeInsets.only(left: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(5)),
+                          border: Border.all(width: 1, color: Colors.orange),
+                          borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text("height"),
+                          hint: Text(
+                            "height",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           isExpanded: true,
                           items: heightListSize.map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value),
+                              child: new Text(
+                                value,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             );
                           }).toList(),
                           value: selectedRearHeightSize,
@@ -509,16 +554,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       width: width * 0.45,
                       padding: EdgeInsets.only(left: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(5)),
+                          border: Border.all(width: 1, color: Colors.orange),
+                          borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text("rim-size"),
+                          hint: Text(
+                            "rim-size",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           isExpanded: true,
                           items: rimSizeListSize.map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value),
+                              child: new Text(
+                                value,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             );
                           }).toList(),
                           value: selectedRearRimSize,
@@ -560,6 +611,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       }
                     },
                     style: TextStyle(
+                      color: Colors.white,
                       fontSize: 16,
                     ),
                     controller: nameControllerSize,
@@ -567,8 +619,21 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       contentPadding: EdgeInsets.all(8),
                       isDense: true,
                       labelText: 'Name',
-                      hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -584,16 +649,27 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                         return null;
                       }
                     },
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                     controller: phoneControllerSize,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(8),
                       isDense: true,
                       labelText: 'Phone Number',
-                      hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                      border: OutlineInputBorder(),
+                      hintStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -616,6 +692,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 return null;
               },
               style: TextStyle(
+                color: Colors.white,
                 fontSize: 16,
               ),
               controller: emailControllerSize,
@@ -623,8 +700,21 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 contentPadding: EdgeInsets.all(8),
                 isDense: true,
                 labelText: 'Email',
+                labelStyle: TextStyle(color: Colors.white),
                 hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.orange,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.orange,
+                    width: 1,
+                  ),
+                ),
               ),
             ),
           ),
@@ -639,29 +729,40 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   return null;
                 }
               },
-              style: TextStyle(
-                fontSize: 16,
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.white),
               controller: commentControllerSize,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(8),
                 isDense: true,
                 labelText: 'Enter the Comment',
-                hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: Colors.white),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.orange,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.orange,
+                    width: 1,
+                  ),
+                ),
               ),
             ),
           ),
           Center(
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
-              width: width * 0.75,
+              width: width * 0.5,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
                   ),
-                  primary: Color(ExtraColors.darkBlue),
+                  primary: Colors.orange,
                 ),
                 onPressed: () {
                   // performLogin();
@@ -749,16 +850,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   padding: EdgeInsets.only(left: 5),
                   width: width * 0.45,
                   decoration: BoxDecoration(
-                      border: Border.all(width: 0.3),
-                      borderRadius: BorderRadius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("Select Make"),
+                      hint: Text(
+                        "Select Make",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       isExpanded: true,
                       items: makeModelList.map((MakeModel value) {
                         return new DropdownMenuItem<String>(
                           value: value.name,
-                          child: new Text(value.name),
+                          child: new Text(
+                            value.name,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                       value: selectedMakeCode,
@@ -777,16 +884,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
-                      border: Border.all(width: 0.3),
-                      borderRadius: BorderRadius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("Select Model"),
+                      hint: Text(
+                        "Select Model",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       isExpanded: true,
                       items: modelList.map((String value) {
                         return new DropdownMenuItem<String>(
                           value: value,
-                          child: new Text(value),
+                          child: new Text(
+                            value,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                       value: selectedModel,
@@ -821,16 +934,27 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                         return null;
                       }
                     },
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                     controller: nameControllerModel,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(8),
                       isDense: true,
                       labelText: 'Name',
-                      hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -839,16 +963,22 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                   width: width * 0.45,
                   padding: EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
-                      border: Border.all(width: 0.3),
-                      borderRadius: BorderRadius.circular(5)),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("Select Year"),
+                      hint: Text(
+                        "Select Year",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       isExpanded: true,
                       items: yearList.map((int value) {
                         return new DropdownMenuItem<String>(
                           value: value.toString(),
-                          child: new Text(value.toString()),
+                          child: new Text(
+                            value.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                       value: selectedDate,
@@ -882,16 +1012,27 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                         return null;
                       }
                     },
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                     controller: phoneControllerModel,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(8),
                       isDense: true,
                       labelText: 'Phone Number',
-                      hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -910,16 +1051,27 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       }
                       return null;
                     },
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                     controller: emailControllerModel,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(8),
                       isDense: true,
                       labelText: 'Email',
-                      hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.orange,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -937,29 +1089,40 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                 }
               },
               maxLines: 5,
-              style: TextStyle(
-                fontSize: 16,
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.white),
               controller: commentControllerModel,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(8),
                 isDense: true,
                 labelText: 'Enter the comment',
-                hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: Colors.white),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.orange,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.orange,
+                    width: 1,
+                  ),
+                ),
               ),
             ),
           ),
           Center(
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
-              width: width * 0.75,
+              width: width * 0.5,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
                   ),
-                  primary: Color(ExtraColors.darkBlue),
+                  primary: Colors.orange,
                 ),
                 onPressed: () {
                   // performLogin();
