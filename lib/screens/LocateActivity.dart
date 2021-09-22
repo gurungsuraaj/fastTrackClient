@@ -35,20 +35,27 @@ class _LocateActivityState extends State<LocateActivity> {
   @override
   Widget build(BuildContext context) {
     var textStyle = TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
+        fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(ExtraColors.darkBlue),
-          title: Text("Locate a Branch"),
+          backgroundColor: Color(0xff05135b),
+          
+          title: Text("LOCATE A BRANCH", style: TextStyle(fontStyle: FontStyle.italic)),
         ),
-        backgroundColor: Color(0xFFD9D9D9),
+        
+        backgroundColor: Color(0xff0c2d8a),
+        
+        
         body: ModalProgressHUD(
+          
           inAsyncCall: isProgressBarShown,
           child: ListView.builder(
             itemCount: locationlist.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                elevation: 1,
+                
+                color: Color(0xff0c2d8a),
+                elevation: 0,
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -56,24 +63,31 @@ class _LocateActivityState extends State<LocateActivity> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                            padding: EdgeInsets.fromLTRB(15, 10, 15, 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Row(
+                                  
                                   children: <Widget>[
-                                    Container(
-                                      child: Text("Branch Name :",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold)),
+                                    Expanded(
+                                      child: Container(
+                                        child: Text("Branch Name :",
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                color:Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    Container(
-                                      child: Text(locationlist[index].name,
-                                          style: textStyle),
+                                    
+                                    Expanded(
+                                      child: Container(
+                                        child: Text(locationlist[index].name,
+                                            style: textStyle),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -85,52 +99,24 @@ class _LocateActivityState extends State<LocateActivity> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Container(
-                                        child: Text("Address :",
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold))),
+                                    Expanded(
+                                      child: Container(
+                                          child: Text("Address :",
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  color:Colors.white,
+                                                  fontWeight: FontWeight.bold))),
+                                    ),
                                     SizedBox(
                                       width: 8,
                                     ),
                                     Expanded(
-                                      flex: 4,
-                                      child: Text(
-                                        locationlist[index].address,
-                                        style: textStyle,
-                                        softWrap: true,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                        child: Text("Telephone No. :",
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold))),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        var url =
-                                            "tel:${locationlist[index].telephone}";
-                                        if (await canLaunch(url)) {
-                                          await launch(url);
-                                        } else {
-                                          throw 'Could not launch $url';
-                                        }
-                                      },
+                                      // flex: 4,
                                       child: Container(
                                         child: Text(
-                                          locationlist[index].telephone,
+                                          locationlist[index].address,
                                           style: textStyle,
-                                          textAlign: TextAlign.justify,
+                                          softWrap: true,
                                         ),
                                       ),
                                     ),
@@ -141,19 +127,62 @@ class _LocateActivityState extends State<LocateActivity> {
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    Container(
-                                      child: Text("Opening Hours :",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold)),
+                                    Expanded(
+                                      child: Container(
+                                          child: Text("Telephone No. :",
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  color:Colors.white,
+                                                  fontWeight: FontWeight.bold))),
                                     ),
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    Container(
-                                      child: Text(
-                                          locationlist[index].openinghours,
-                                          style: textStyle),
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () async {
+                                          var url =
+                                              "tel:${locationlist[index].telephone}";
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child: Container(
+                                          child: Text(
+                                            locationlist[index].telephone,
+                                            style: textStyle,
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Container(
+                                        child: Text("Opening Hours :",
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                color:Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        child: Text(
+                                            locationlist[index].openinghours,
+                                            style: textStyle),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -168,10 +197,10 @@ class _LocateActivityState extends State<LocateActivity> {
                                         decoration: new BoxDecoration(
                                           color:
                                               locationlist[index].openingStatus
-                                                  ? Colors.green
+                                                  ? Color(0xff7fc24c)
                                                   : Colors.red,
                                           borderRadius:
-                                              new BorderRadius.circular(10.0),
+                                              new BorderRadius.circular(15.0),
                                         ),
                                         child: new Center(
                                           child: Text(
@@ -179,7 +208,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                                 ? "Open"
                                                 : "Closed",
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white),
                                           ),
@@ -236,12 +265,12 @@ class _LocateActivityState extends State<LocateActivity> {
                                         height: 32.0,
                                         width: 150,
                                         decoration: new BoxDecoration(
-                                          color: Color(ExtraColors.darkBlue),
+                                          color: Color(0xffef773c),
                                           // border: new Border.all(
                                           //     color: Colors.white,
                                           //     width: 6.0),
                                           borderRadius:
-                                              new BorderRadius.circular(10.0),
+                                              new BorderRadius.circular(15.0),
                                         ),
                                         child: InkWell(
                                           onTap: () async {
@@ -286,9 +315,13 @@ class _LocateActivityState extends State<LocateActivity> {
                       height: 5,
                     ),
 
-                    // new Divider(
-                    //   color: Colors.black,
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.only(left:15.0,right:15.0),
+                      child: new Divider(
+                        thickness: 2.0,
+                        color: Color(0xffef773c),
+                      ),
+                    ),
                   ],
                 ),
               );
