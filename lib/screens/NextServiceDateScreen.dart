@@ -236,20 +236,29 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Color(ExtraColors.appBarColor),
           contentPadding: EdgeInsets.all(10.0),
           actions: <Widget>[
-            Container(
-              width: 100,
+            Align(
+              alignment: Alignment.center,
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
+                style: TextButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    )),
+
                 // color: Colors.blue[700],
                 child: Text(
-                  'Ok',
+                  'Back to Previous screen',
+                  // textAlign: TextAlign.justify,
                   style: TextStyle(
-                    color: Colors.blue[700],
+                    fontSize: 18,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -266,7 +275,11 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
-                        child: Text(message),
+                        child: Text(
+                          message,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
                       ),
                     ],
                   ),

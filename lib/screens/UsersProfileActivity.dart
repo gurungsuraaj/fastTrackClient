@@ -27,101 +27,155 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
-        title: Text("User Profile"),
-        backgroundColor: Color(ExtraColors.darkBlueAccent),
-        actions: <Widget>[],
-        leading: Container(
-          padding: EdgeInsets.only(left: 10),
-          child: Image.asset(
-            'images/fastTrackSingleLogo.png',
-            height: 25,
-          ),
-        ),
+        title: Center(child: Text("USER PROFILE")),
+        backgroundColor: Color(ExtraColors.appBarColor),
+        // actions: <Widget>[],
+        // leading: Container(
+        //   padding: EdgeInsets.only(left: 10),
+        //   child: Image.asset(
+        //     'images/fastTrackSingleLogo.png',
+        //     height: 25,
+        //   ),
+        // ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
+              // padding: EdgeInsets.only(left: 10),
+              child: Image.asset(
+                'images/fastTrack_launcher.png',
+                height: 125,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
+            Container(
               // height: 530,
               width: MediaQuery.of(context).size.width,
-              child: Card(
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  // Image.asset(
-                  //   "images/FTProfileLogo.png",
-                  //   height: 150,
-                  //   width: 150,
-                  // ),
-                  ReusableAppBar.getAppBar(0, 0, height, width),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                // Image.asset(
+                //   "images/FTProfileLogo.png",
+                //   height: 150,
+                //   width: 150,
+                // ),
+                // ReusableAppBar.getAppBar(0, 0, height, width),
 
-                  SizedBox(
-                    height: 20,
+                ListTile(
+                  dense: true,
+                  leading: Text(
+                    "User Name",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                  ListTile(
-                    dense: true,
-                    leading: Text("User Name"),
-                    trailing: customerName == null
-                        ? Container(
-                            child: Text(""),
-                          )
-                        : Text(customerName),
+                  trailing: customerName == null
+                      ? Container(
+                          child: Text(""),
+                        )
+                      : Text(
+                          customerName,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
+                Divider(
+                  color: Color(ExtraColors.orange),
+                  thickness: 0.9,
+                ),
+                ListTile(
+                  leading: Text(
+                    "Email",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                  Divider(
-                    color: Colors.grey,
-                    height: 10,
+                  trailing: customerEmail == null
+                      ? Container(
+                          child: Text(
+                            "",
+                          ),
+                        )
+                      : Text(
+                          customerEmail,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
+                Divider(
+                  color: Color(ExtraColors.orange),
+                  thickness: 0.9,
+                ),
+                ListTile(
+                  leading: Text(
+                    "Customer No.",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                  ListTile(
-                    leading: Text("Email"),
-                    trailing: customerEmail == null
-                        ? Container(
-                            child: Text(""),
-                          )
-                        : Text(customerEmail),
+                  trailing: customerNumber == null
+                      ? Container(
+                          child: Text(""),
+                        )
+                      : Text(
+                          customerNumber,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
+                Divider(
+                  color: Color(ExtraColors.orange),
+                  thickness: 0.9,
+                ),
+                ListTile(
+                  leading: Text(
+                    "Phone No.",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                  Divider(
-                    color: Colors.grey,
-                    height: 10,
-                  ),
-                  ListTile(
-                    leading: Text("Customer No."),
-                    trailing: customerNumber == null
-                        ? Container(
-                            child: Text(""),
-                          )
-                        : Text(customerNumber),
-                  ),
-                  Divider(
-                    color: Colors.grey,
-                    height: 10,
-                  ),
-                  ListTile(
-                    leading: Text("Phone No."),
-                    trailing: mobNumber == null
-                        ? Container(
-                            child: Text(""),
-                          )
-                        : Text(mobNumber),
-                  ),
-                ]),
-              ),
+                  trailing: mobNumber == null
+                      ? Container(
+                          child: Text(""),
+                        )
+                      : Text(
+                          mobNumber,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
+                Divider(
+                  color: Color(ExtraColors.orange),
+                  // height: 5,
+                  thickness: 0.9,
+                ),
+              ]),
             ),
             // Spacer(),
             SizedBox(
-              height: 45,
+              height: 20,
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 0.5,
               height: 35,
               child: FloatingActionButton(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
                 child: Text(
                   "Log Out",
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
-                backgroundColor: Color(ExtraColors.darkBlue),
+                backgroundColor: Color(ExtraColors.orange),
                 onPressed: () {
                   PrefsManager.clearSession().then((val) {
                     Navigator.pushAndRemoveUntil(
