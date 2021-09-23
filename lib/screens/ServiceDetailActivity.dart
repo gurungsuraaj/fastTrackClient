@@ -180,11 +180,11 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
                               GestureDetector(
                                 onTap: () async {
                                   Navigator.of(context).pop();
-                                  String nearestPhoneNo = SpUtil.getString(
-                                          Constants.nearestStorePhoneNo)
-                                      .replaceAll(
-                                          new RegExp(r"\s+\b|\b\s"), "");
-                                  var url = "tel:$nearestPhoneNo";
+                                  // String nearestPhoneNo = SpUtil.getString(
+                                  //         Constants.nearestStorePhoneNo)
+                                  //     .replaceAll(
+                                  //         new RegExp(r"\s+\b|\b\s"), "");
+                                  var url = "tel:$nearestStorePhn";
                                   if (await canLaunch(url)) {
                                     await launch(url);
                                   } else {
@@ -217,11 +217,11 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
                               GestureDetector(
                                 onTap: () async {
                                   Navigator.of(context).pop();
-                                  String whatappNO = SpUtil.getString(
-                                      Constants.whatsAppNumber);
-                                  print("Whats app number $whatappNO");
+                                  // String whatappNO = SpUtil.getString(
+                                  //     Constants.whatsAppNumber);
+                                  print("Whats app number $whatsAppNum");
                                   var whatsappUrl =
-                                      "whatsapp://send?phone=$whatappNO";
+                                      "whatsapp://send?phone=$whatsAppNum";
                                   await canLaunch(whatsappUrl)
                                       ? launch(whatsappUrl)
                                       : showAlert();

@@ -128,9 +128,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                   Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: Text(
-                                      "Welcome to",
+                                      "WELCOME TO",
                                       style: TextStyle(
-                                          fontSize: 35,
+                                          fontSize: 28,
                                           fontWeight: FontWeight.w500,
                                           // fontStyle: FontStyle.italic,
                                           color: Colors.white),
@@ -160,7 +160,7 @@ class _LoginActivityState extends State<LoginActivity> {
                               child: Text(
                                 "Login to your account",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 18),
+                                    color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
                               ),
                             ), //Container
                             SizedBox(
@@ -381,18 +381,18 @@ class _LoginActivityState extends State<LoginActivity> {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      "All rights reserved © 2020",
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "All Rights Reserved © 2020",
                       // textAlign: TextAlign.start,
                       style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
-                  ),
-                  // SizedBox(width: 10),
-                  Expanded(
-                    child: FutureBuilder(
+                    // SizedBox(width: 10),
+                    FutureBuilder(
                       future: getVersionNumber(),
                       builder: (BuildContext context,
                               AsyncSnapshot<String> snapshot) =>
@@ -403,8 +403,8 @@ class _LoginActivityState extends State<LoginActivity> {
                         style: TextStyle(color: Colors.white, fontSize: 10),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -578,8 +578,9 @@ class _LoginActivityState extends State<LoginActivity> {
                 Text(
                   '+971',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white,
+                    fontWeight: FontWeight.w300
                   ),
                 ),
               ],
@@ -614,7 +615,7 @@ class _LoginActivityState extends State<LoginActivity> {
             ),
             Expanded(
               child: TextFormField(
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
                 keyboardType: TextInputType.number,
                 controller: mobileController,
                 textInputAction: TextInputAction.done,

@@ -111,14 +111,14 @@ class _SignUpActivity extends State<SignUpActivity> {
                       "CREATE AN ",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: 28,
                           fontWeight: FontWeight.w600),
                     ),
                     Text(
                       "ACCOUNT ",
                       style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 30,
+                          color: Color(0xffef773c),
+                          fontSize: 28,
                           fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -152,7 +152,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                               padding: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.orange,
+                                    color: Color(0xffef773c),
                                     // width: 5,
                                   ),
                                   borderRadius: BorderRadius.circular(30),
@@ -185,7 +185,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                           EdgeInsets.fromLTRB(10, 0, 20, 0),
                                       child: CircleAvatar(
                                           // radius: 5,
-                                          backgroundColor: Color(0xffe6a764),
+                                          backgroundColor: Color(0xffef773c),
                                           child: Icon(
                                             Icons.person_outline,
                                             color: Colors.white,
@@ -212,7 +212,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                               padding: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.orange,
+                                    color: Color(0xffef773c),
                                     // width: 5,
                                   ),
                                   borderRadius: BorderRadius.circular(30),
@@ -237,7 +237,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                           EdgeInsets.fromLTRB(10, 0, 20, 0),
                                       child: CircleAvatar(
                                           // radius: 5,
-                                          backgroundColor: Color(0xffe6a764),
+                                          backgroundColor: Color(0xffef773c),
                                           child: Icon(
                                             Icons.mail_outline,
                                             color: Colors.white,
@@ -297,7 +297,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                               padding: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.orange,
+                                    color: Color(0xffef773c),
                                     // width: 5,
                                   ),
                                   borderRadius: BorderRadius.circular(30),
@@ -311,7 +311,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                               padding: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.orange,
+                                    color: Color(0xffef773c),
                                     // width: 5,
                                   ),
                                   borderRadius: BorderRadius.circular(30),
@@ -338,7 +338,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                           EdgeInsets.fromLTRB(10, 0, 20, 0),
                                       child: CircleAvatar(
                                           // radius: 5,
-                                          backgroundColor: Color(0xffe6a764),
+                                          backgroundColor: Color(0xffef773c),
                                           child: Icon(
                                             Icons.lock_outline,
                                             color: Colors.white,
@@ -422,7 +422,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                       borderRadius:
                                           new BorderRadius.circular(18.0),
                                     ),
-                                    primary: Colors.orange,
+                                    primary: Color(0xffef773c),
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context)
@@ -594,7 +594,7 @@ class _SignUpActivity extends State<SignUpActivity> {
               padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
               child: CircleAvatar(
                   radius: 18,
-                  backgroundColor: Color(0xffe6a764),
+                  backgroundColor: Color(0xffef773c),
                   child: Icon(
                     Icons.phone,
                     color: Colors.white,

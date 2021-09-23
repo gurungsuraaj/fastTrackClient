@@ -258,7 +258,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                   Navigator.of(context).pop();
                 },
                 style: TextButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: Color(0xffef773c),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     )),
@@ -268,15 +268,16 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                   'Back to Previous screen',
                   // textAlign: TextAlign.justify,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white,
                   ),
                 ),
               ),
             ),
+            
           ],
           content: Container(
-            height: 150,
+            height: MediaQuery.of(context).size.height * 0.20,
             child: Column(
               children: <Widget>[
                 Container(
@@ -289,7 +290,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                         child: Text(
                           message,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                     ],

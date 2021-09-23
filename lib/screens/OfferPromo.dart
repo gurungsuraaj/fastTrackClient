@@ -39,7 +39,7 @@ class _OfferPromoState extends State<OfferPromo> {
       appBar: AppBar(
         // automaticallyImplyLeading: false,
         backgroundColor: Color(ExtraColors.appBarColor),
-        title: Text("OFFERS & PROMOTIONS"),
+        title: Text("OFFERS & PROMOTIONS",style: TextStyle(fontStyle: FontStyle.italic)),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
