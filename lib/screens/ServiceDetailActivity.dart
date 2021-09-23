@@ -49,82 +49,82 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.serviceTitle),
-        backgroundColor: Color(ExtraColors.darkBlue),
+        title: Text(widget.serviceTitle.toUpperCase(), style: TextStyle(fontStyle: FontStyle.italic)),
+        backgroundColor: Color(0xff05135b),
       ),
-      backgroundColor: Color(0xff094F9A),
-      floatingActionButton: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: new List.generate(imageList.length, (int index) {
-            Widget child = new Container(
-              height: 70.0,
-              width: 56.0,
-              alignment: FractionalOffset.topCenter,
-              child: new ScaleTransition(
-                scale: new CurvedAnimation(
+      backgroundColor: Color(0xff0c2d8a),
+      // floatingActionButton: new Column(
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: new List.generate(imageList.length, (int index) {
+      //       Widget child = new Container(
+      //         height: 70.0,
+      //         width: 56.0,
+      //         alignment: FractionalOffset.topCenter,
+      //         child: new ScaleTransition(
+      //           scale: new CurvedAnimation(
                   
-                  parent: _controller,
-                  curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
-                      curve: Curves.easeOut),
-                ),
-                child: new FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.white,
-                  mini: true,
-                  // child: new Icon(icons[index], color: foregroundColor),
-                  child: new Image.asset(
-                    imageList[index],
-                    height:30.0,
-                    width:30.0
-                  ),
-                  onPressed: () async {
-                    if (index == 0) {
-                      var url = "tel:$nearestStorePhn";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    } else if (index == 1) {
-                      var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
-                      await canLaunch(whatsappUrl)
-                          ? launch(whatsappUrl)
-                          : showAlert();
-                    }
-                  },
-                ),
-              ),
-            );
-            return child;
-          }).toList()
-            ..add(
-              new FloatingActionButton(
-                backgroundColor: Colors.white,
-                heroTag: null,
-                child: new AnimatedBuilder(
-                  animation: _controller,
-                  builder: (BuildContext context, Widget child) {
-                    return new Transform(
-                      transform: new Matrix4.rotationZ(
-                          _controller.value * 0.5 * math.pi),
-                      alignment: FractionalOffset.center,
-                      child: new Icon(
+      //             parent: _controller,
+      //             curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
+      //                 curve: Curves.easeOut),
+      //           ),
+      //           child: new FloatingActionButton(
+      //             heroTag: null,
+      //             backgroundColor: Colors.white,
+      //             mini: true,
+      //             // child: new Icon(icons[index], color: foregroundColor),
+      //             child: new Image.asset(
+      //               imageList[index],
+      //               height:30.0,
+      //               width:30.0
+      //             ),
+      //             onPressed: () async {
+      //               if (index == 0) {
+      //                 var url = "tel:$nearestStorePhn";
+      //                 if (await canLaunch(url)) {
+      //                   await launch(url);
+      //                 } else {
+      //                   throw 'Could not launch $url';
+      //                 }
+      //               } else if (index == 1) {
+      //                 var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
+      //                 await canLaunch(whatsappUrl)
+      //                     ? launch(whatsappUrl)
+      //                     : showAlert();
+      //               }
+      //             },
+      //           ),
+      //         ),
+      //       );
+      //       return child;
+      //     }).toList()
+      //       ..add(
+      //         new FloatingActionButton(
+      //           backgroundColor: Colors.white,
+      //           heroTag: null,
+      //           child: new AnimatedBuilder(
+      //             animation: _controller,
+      //             builder: (BuildContext context, Widget child) {
+      //               return new Transform(
+      //                 transform: new Matrix4.rotationZ(
+      //                     _controller.value * 0.5 * math.pi),
+      //                 alignment: FractionalOffset.center,
+      //                 child: new Icon(
                         
-                          _controller.isDismissed ? Icons.call : Icons.close, 
-                          color:Color(ExtraColors.darkBlue)),
-                    );
-                  },
-                ),
-                onPressed: () {
-                  if (_controller.isDismissed) {
-                    _controller.forward();
-                  } else {
-                    _controller.reverse();
-                  }
-                },
-              ),
-            ),
-        ),
+      //                     _controller.isDismissed ? Icons.call : Icons.close, 
+      //                     color:Color(ExtraColors.darkBlue)),
+      //               );
+      //             },
+      //           ),
+      //           onPressed: () {
+      //             if (_controller.isDismissed) {
+      //               _controller.forward();
+      //             } else {
+      //               _controller.reverse();
+      //             }
+      //           },
+      //         ),
+      //       ),
+      //   ),
       // floatingActionButton: Container(
       //   width: MediaQuery.of(context).size.width * 0.5,
       //   height: 55,
@@ -142,30 +142,101 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
       //   ),
       // ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(15, 30, 0, 20),
-            child: Row(
+            padding: EdgeInsets.fromLTRB(15, 50, 0, 20),
+            child: Column(
               children: <Widget>[
                 Image.asset(widget.image),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
-                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.fromLTRB(10, 40, 0, 10),
+                    alignment: Alignment.center,
                     child: Text(
-                      widget.serviceTitle,
-                      style: TextStyle(color: Colors.white, fontSize: 25),
+                      widget.serviceTitle.toUpperCase(),
+                      
+                     
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Color(0xffef773c), fontSize: 32,fontWeight: FontWeight.w500),
                     )),
               ],
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Text(
                 widget.body,
                 textAlign: TextAlign.justify,
                 style: TextStyle(color: Colors.white),
-              ))
+              )),
+              SizedBox(height:20),
+              // Spacer(),
+                 Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.18),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.of(context).pop();
+                                  String nearestPhoneNo = SpUtil.getString(
+                                          Constants.nearestStorePhoneNo)
+                                      .replaceAll(
+                                          new RegExp(r"\s+\b|\b\s"), "");
+                                  var url = "tel:$nearestPhoneNo";
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xffef773c),
+                                  ),
+                                  child: Icon(
+                                    Icons.call,
+                                    color: Colors.white,
+                                    size: 40.0,
+                                  ),
+                                  alignment: Alignment.center,
+                                ),
+                                // child: Image.asset(
+                                //   "images/call.png",
+                                //   height: 40,
+                                //   width: 40,
+                                // ),
+                              ),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.of(context).pop();
+                                  String whatappNO = SpUtil.getString(
+                                      Constants.whatsAppNumber);
+                                  print("Whats app number $whatappNO");
+                                  var whatsappUrl =
+                                      "whatsapp://send?phone=$whatappNO";
+                                  await canLaunch(whatsappUrl)
+                                      ? launch(whatsappUrl)
+                                      : showAlert();
+                                },
+                                child: Image.asset(
+                                  "images/logowa.png",
+                                  height: 60,
+                                  width: 60,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height:MediaQuery.of(context).size.height * 0.10
+                        ),
         ],
       ),
     );
