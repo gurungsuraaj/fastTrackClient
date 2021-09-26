@@ -160,7 +160,9 @@ class _LoginActivityState extends State<LoginActivity> {
                               child: Text(
                                 "Login to your account",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w300),
                               ),
                             ), //Container
                             SizedBox(
@@ -320,10 +322,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                       //   ),
                                       // ),
                                       SizedBox(
-                                        height: height * 0.01,
-                                      ),
-                                      SizedBox(
-                                        height: 60,
+                                        height: height * 0.1,
                                       ),
 
                                       Image.asset(
@@ -372,42 +371,48 @@ class _LoginActivityState extends State<LoginActivity> {
                     ),
                   ),
                 ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.end,
+
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "All Rights Reserved © 2020",
+                                // textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 10),
+                              ),
+                              // SizedBox(width: 10),
+                              FutureBuilder(
+                                future: getVersionNumber(),
+                                builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) =>
+                                    Text(
+                                  snapshot.hasData
+                                      ? "Version ${snapshot.data}"
+                                      : "Loading...",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-        ),
-        bottomNavigationBar: Row(
-          // mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "All Rights Reserved © 2020",
-                      // textAlign: TextAlign.start,
-                      style: TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                    // SizedBox(width: 10),
-                    FutureBuilder(
-                      future: getVersionNumber(),
-                      builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) =>
-                          Text(
-                        snapshot.hasData
-                            ? "Version ${snapshot.data}"
-                            : "Loading ...",
-                        style: TextStyle(color: Colors.white, fontSize: 10),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -578,10 +583,9 @@ class _LoginActivityState extends State<LoginActivity> {
                 Text(
                   '+971',
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300
-                  ),
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300),
                 ),
               ],
             ),
@@ -615,7 +619,10 @@ class _LoginActivityState extends State<LoginActivity> {
             ),
             Expanded(
               child: TextFormField(
-                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300),
                 keyboardType: TextInputType.number,
                 controller: mobileController,
                 textInputAction: TextInputAction.done,
@@ -702,7 +709,8 @@ class _LoginActivityState extends State<LoginActivity> {
         customeretails = res;
         String message =
             'Dear ${customeretails.name}, We have recognized you as an existing customer of Fasttrack.';
-        String message1 = 'Please click "Proceed" to update/confirm your details and choose a password.';
+        String message1 =
+            'Please click "Proceed" to update/confirm your details and choose a password.';
         showAlert(message, customeretails, message1);
       } else {
         Navigator.push(
@@ -734,10 +742,9 @@ class _LoginActivityState extends State<LoginActivity> {
           actions: <Widget>[
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(bottom:15.0),
+                padding: const EdgeInsets.only(bottom: 15.0),
                 child: Container(
                   width: 140,
-                  
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -752,11 +759,11 @@ class _LoginActivityState extends State<LoginActivity> {
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(20.0),
                         side: BorderSide(
-                          color:  Color(0xffef773c),
+                          color: Color(0xffef773c),
                           width: 2,
                         ),
                       ),
-                      primary:  Color(0xffef773c),
+                      primary: Color(0xffef773c),
                       textStyle: TextStyle(color: Colors.white),
                     ),
                     child: Text(
@@ -774,7 +781,7 @@ class _LoginActivityState extends State<LoginActivity> {
             'NOTICE',
             style: TextStyle(
               fontSize: 20,
-              color:  Color(0xffef773c),
+              color: Color(0xffef773c),
             ),
             textAlign: TextAlign.center,
           ),
@@ -790,14 +797,16 @@ class _LoginActivityState extends State<LoginActivity> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
-                        child: Text(message,textAlign: TextAlign.center,style: TextStyle(color:Colors.white)),
-
+                        child: Text(message,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white)),
                       ),
                       // SizedBox(height:5.0),
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
-                        child: Text(message1,textAlign: TextAlign.center,style: TextStyle(color:Colors.white)),
-                        
+                        child: Text(message1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white)),
                       ),
                     ],
                   ),
