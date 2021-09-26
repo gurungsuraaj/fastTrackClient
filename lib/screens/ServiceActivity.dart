@@ -1,6 +1,7 @@
 import 'package:fasttrackgarage_app/models/ServiceModel.dart';
 import 'package:fasttrackgarage_app/screens/ServiceDetailActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
+import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -38,7 +39,7 @@ class _ServiceActivityState extends State<ServiceActivity>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xff05135b),
+        backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("SERVICES", style: TextStyle(fontStyle: FontStyle.italic)),
       ),
       body: ModalProgressHUD(

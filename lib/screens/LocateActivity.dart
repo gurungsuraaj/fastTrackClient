@@ -38,12 +38,12 @@ class _LocateActivityState extends State<LocateActivity> {
         fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xff05135b),
+          backgroundColor: Color(ExtraColors.appBarColor),
           
           title: Text("LOCATE A BRANCH", style: TextStyle(fontStyle: FontStyle.italic)),
         ),
         
-        backgroundColor: Color(0xff0c2d8a),
+        backgroundColor: Color(ExtraColors.scaffoldColor),
         
         
         body: ModalProgressHUD(

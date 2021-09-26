@@ -50,9 +50,9 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.serviceTitle.toUpperCase(), style: TextStyle(fontStyle: FontStyle.italic)),
-        backgroundColor: Color(0xff05135b),
+        backgroundColor: Color(ExtraColors.appBarColor),
       ),
-      backgroundColor: Color(0xff0c2d8a),
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       // floatingActionButton: new Column(
       //     mainAxisSize: MainAxisSize.min,
       //     children: new List.generate(imageList.length, (int index) {

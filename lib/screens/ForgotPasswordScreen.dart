@@ -41,9 +41,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color(ExtraColors.darkBlue),
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.darkBlue),
+        backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("Forgot Password"),
       ),
       body: ModalProgressHUD(

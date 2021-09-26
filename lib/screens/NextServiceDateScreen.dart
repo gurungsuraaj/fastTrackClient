@@ -54,10 +54,10 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xff05135b),
+        backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("NEXT SERVICE DATE",style:TextStyle(fontStyle: FontStyle.italic)),
       ),
-      backgroundColor: Color(0xff0c2d8a),
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         child: ListView.builder(
