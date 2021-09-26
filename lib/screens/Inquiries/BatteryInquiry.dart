@@ -546,9 +546,6 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
 
               Container(
                 margin: EdgeInsets.only(bottom: 10),
