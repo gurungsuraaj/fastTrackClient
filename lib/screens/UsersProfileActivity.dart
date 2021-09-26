@@ -91,9 +91,12 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
                           ),
                         ),
                 ),
-                Divider(
-                  color: Color(ExtraColors.orange),
-                  thickness: 0.9,
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: new Divider(
+                    thickness: 1.5,
+                    color: Color(0xffef773c),
+                  ),
                 ),
                 ListTile(
                   leading: Text(
@@ -115,9 +118,12 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
                           ),
                         ),
                 ),
-                Divider(
-                  color: Color(ExtraColors.orange),
-                  thickness: 0.9,
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: new Divider(
+                    thickness: 1.5,
+                    color: Color(0xffef773c),
+                  ),
                 ),
                 ListTile(
                   leading: Text(
@@ -137,9 +143,12 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
                           ),
                         ),
                 ),
-                Divider(
-                  color: Color(ExtraColors.orange),
-                  thickness: 0.9,
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: new Divider(
+                    thickness: 1.5,
+                    color: Color(0xffef773c),
+                  ),
                 ),
                 ListTile(
                   leading: Text(
@@ -159,10 +168,12 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
                           ),
                         ),
                 ),
-                Divider(
-                  color: Color(ExtraColors.orange),
-                  // height: 5,
-                  thickness: 0.9,
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: new Divider(
+                    thickness: 1.5,
+                    color: Color(0xffef773c),
+                  ),
                 ),
               ]),
             ),

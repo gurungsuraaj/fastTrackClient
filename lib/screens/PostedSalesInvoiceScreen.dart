@@ -254,12 +254,12 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: new Divider(
+                        thickness: 1.5,
                         color: Color(0xffef773c),
-                        thickness: 1.0,
                       ),
-                    ),
+                    )
                   ],
                 ),
               );

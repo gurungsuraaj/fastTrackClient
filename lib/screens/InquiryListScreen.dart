@@ -20,7 +20,8 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Make An Inquiry".toUpperCase(),style:TextStyle(fontStyle: FontStyle.italic)),
+        title: Text("Make An Inquiry".toUpperCase(),
+            style: TextStyle(fontStyle: FontStyle.italic)),
         backgroundColor: Color(ExtraColors.appBarColor),
       ),
       body: Column(
@@ -73,11 +74,12 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     ],
                   )),
             ),
-            Divider(
-              indent: MediaQuery.of(context).size.width * 0.1,
-              endIndent: MediaQuery.of(context).size.width * 0.1,
-              color: Colors.red,
-              thickness: 0.8,
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              child: new Divider(
+                thickness: 1.5,
+                color: Color(0xffef773c),
+              ),
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -112,11 +114,12 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     ],
                   )),
             ),
-            Divider(
-              indent: MediaQuery.of(context).size.width * 0.1,
-              endIndent: MediaQuery.of(context).size.width * 0.1,
-              color: Colors.red,
-              thickness: 0.8,
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              child: new Divider(
+                thickness: 1.5,
+                color: Color(0xffef773c),
+              ),
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -151,11 +154,12 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     ],
                   )),
             ),
-            Divider(
-              indent: MediaQuery.of(context).size.width * 0.1,
-              endIndent: MediaQuery.of(context).size.width * 0.1,
-              color: Colors.red,
-              thickness: 0.8,
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              child: new Divider(
+                thickness: 1.5,
+                color: Color(0xffef773c),
+              ),
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -190,11 +194,12 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     ],
                   )),
             ),
-            Divider(
-              indent: MediaQuery.of(context).size.width * 0.1,
-              endIndent: MediaQuery.of(context).size.width * 0.1,
-              color: Colors.red,
-              thickness: 0.8,
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              child: new Divider(
+                thickness: 1.5,
+                color: Color(0xffef773c),
+              ),
             ),
             Container(
               margin: EdgeInsets.symmetric(
