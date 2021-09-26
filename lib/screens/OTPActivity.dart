@@ -244,264 +244,266 @@ class _OTP extends State<OTP> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '1',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '2',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '3',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '4',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '5',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '6',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '7',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '8',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '9',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.all(20),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                              child: Text(
-                                                '',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 25),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              child: Container(
-                                                padding: EdgeInsets.all(20),
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.orange,
-                                                      // width: 5,
-                                                    ),
-                                                    color: Colors.transparent),
-                                                child: Text(
-                                                  '0',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.all(20),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                              // decoration: BoxDecoration(
-                                              //     shape: BoxShape.circle,
-                                              //     border: Border.all(
-                                              //       color: Colors.orange,
-                                              //       // width: 5,
-                                              //     ),
-                                              //     color: Colors.transparent),
-                                              // child: IconButton(
-                                              //   icon: Icon(
-                                              //     Icons.arrow_back_rounded,
-                                              //     size: 20,
-                                              //     color: Colors.white,
-                                              // ),
-                                              // ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
+
+                                    // NUMPAD
+                                    // Column(
+                                    //   children: [
+                                    //     Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.center,
+                                    //       children: [
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '1',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '2',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '3',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //     Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.center,
+                                    //       children: [
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '4',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '5',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '6',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //     Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.center,
+                                    //       children: [
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '7',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '8',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '9',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //     Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.center,
+                                    //       children: [
+                                    //         Container(
+                                    //           padding: EdgeInsets.all(20),
+                                    //           margin: EdgeInsets.symmetric(
+                                    //               horizontal: 10),
+                                    //           child: Text(
+                                    //             '',
+                                    //             style: TextStyle(
+                                    //                 color: Colors.white,
+                                    //                 fontSize: 25),
+                                    //           ),
+                                    //         ),
+                                    //         InkWell(
+                                    //           child: Container(
+                                    //             padding: EdgeInsets.all(20),
+                                    //             margin: EdgeInsets.symmetric(
+                                    //                 horizontal: 10),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 border: Border.all(
+                                    //                   color: Colors.orange,
+                                    //                   // width: 5,
+                                    //                 ),
+                                    //                 color: Colors.transparent),
+                                    //             child: Text(
+                                    //               '0',
+                                    //               style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 25),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         Container(
+                                    //           padding: EdgeInsets.all(20),
+                                    //           margin: EdgeInsets.symmetric(
+                                    //               horizontal: 10),
+                                    //           // decoration: BoxDecoration(
+                                    //           //     shape: BoxShape.circle,
+                                    //           //     border: Border.all(
+                                    //           //       color: Colors.orange,
+                                    //           //       // width: 5,
+                                    //           //     ),
+                                    //           //     color: Colors.transparent),
+                                    //           // child: IconButton(
+                                    //           //   icon: Icon(
+                                    //           //     Icons.arrow_back_rounded,
+                                    //           //     size: 20,
+                                    //           //     color: Colors.white,
+                                    //           // ),
+                                    //           // ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //   ],
+                                    // )
                                   ],
                                 ),
                               )),
