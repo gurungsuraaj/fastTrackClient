@@ -75,7 +75,8 @@ class _BrakeInquiryState extends State<BrakeInquiry>
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.scaffoldColor),
-        title: Text("Brake Inquiry"),
+        title: Text("Brake Inquiry",
+            style: TextStyle(fontStyle: FontStyle.italic)),
         actions: <Widget>[],
       ),
       body: ModalProgressHUD(
@@ -102,6 +103,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            dropdownColor: Color(ExtraColors.scaffoldColor),
                             hint: Text("Select Make",
                                 style: TextStyle(color: Colors.white)),
                             isExpanded: true,
@@ -131,6 +133,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            dropdownColor: Color(ExtraColors.scaffoldColor),
                             hint: Text("Select Model",
                                 style: TextStyle(color: Colors.white)),
                             isExpanded: true,
@@ -373,6 +376,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            dropdownColor: Color(ExtraColors.scaffoldColor),
                             hint: Text("Location",
                                 style: TextStyle(color: Colors.white)),
                             isExpanded: true,
@@ -409,6 +413,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
+                          dropdownColor: Color(ExtraColors.scaffoldColor),
                           hint: Text("Select Year",
                               style: TextStyle(color: Colors.white)),
                           isExpanded: true,
