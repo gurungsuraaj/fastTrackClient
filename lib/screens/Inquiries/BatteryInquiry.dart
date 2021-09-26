@@ -526,7 +526,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(18.0),
                       ),
-                      primary: Colors.orange,
+                      primary: Color(0xffef773c),
                     ),
                     onPressed: () {
                       // performLogin();

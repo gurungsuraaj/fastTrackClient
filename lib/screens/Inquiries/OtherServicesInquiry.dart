@@ -67,10 +67,12 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
     Color backgroundColor = Theme.of(context).cardColor;
 
     return Scaffold(
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.darkBlue),
-        title: Text("OtherServices Inquiry"),
+        backgroundColor: Color(ExtraColors.appBarColor),
+        title: Text("OTHER SERVICES INQUIRY",
+            style: TextStyle(fontStyle: FontStyle.italic)),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -90,16 +92,23 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                       width: width * 0.45,
                       padding: EdgeInsets.only(left: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(5)),
+                          border: Border.all(width: 1, color: Colors.orange),
+                          borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text("Select Make"),
+                          dropdownColor: Color(ExtraColors.scaffoldColor),
+                          hint: Text(
+                            "Select Make",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           isExpanded: true,
                           items: makeModelList.map((MakeModel value) {
                             return new DropdownMenuItem<String>(
                               value: value.name,
-                              child: new Text(value.name),
+                              child: new Text(
+                                value.name,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             );
                           }).toList(),
                           value: selectedMake,
@@ -118,16 +127,23 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                       width: width * 0.45,
                       padding: EdgeInsets.only(left: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(5)),
+                          border: Border.all(width: 1, color: Colors.orange),
+                          borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text("Select Model"),
+                          dropdownColor: Color(ExtraColors.scaffoldColor),
+                          hint: Text(
+                            "Select Model",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           isExpanded: true,
                           items: modelList.map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value),
+                              child: new Text(
+                                value,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             );
                           }).toList(),
                           value: selectedModel,
@@ -158,16 +174,27 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                             return null;
                           }
                         },
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                         controller: serviceController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
                           isDense: true,
                           labelText: 'Service',
-                          hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                              width: 1,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -176,16 +203,23 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                       width: width * 0.45,
                       padding: EdgeInsets.only(left: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(5)),
+                          border: Border.all(width: 1, color: Colors.orange),
+                          borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text("Location"),
+                          dropdownColor: Color(ExtraColors.scaffoldColor),
+                          hint: Text(
+                            "Location",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           isExpanded: true,
                           items: locationList.map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value),
+                              child: new Text(
+                                value,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             );
                           }).toList(),
                           value: selectedLocation,
@@ -220,16 +254,27 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                           FocusScope.of(context).unfocus();
                           _selectDate(context);
                         },
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                         controller: dateController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
                           isDense: true,
                           labelText: 'Date',
-                          hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                              width: 1,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -248,16 +293,27 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                             return null;
                           }
                         },
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                         controller: timeController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
                           isDense: true,
                           labelText: 'Time',
-                          hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                              width: 1,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -281,44 +337,67 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                         },
                         style: TextStyle(
                           fontSize: 16,
+                          color: Colors.white,
                         ),
                         controller: nameController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
                           isDense: true,
                           labelText: 'Name',
-                          hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                              width: 1,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Container(
                       height: 60,
                       width: width * 0.45,
-
-                      // padding: EdgeInsets.only(top: 10),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         validator: (value) {
-                          bool emailValid = RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value);
-                          if (value.isEmpty) {
-                            return 'Please fill up this field';
-                          } else if (!emailValid) {
-                            return 'Please enter a valid address';
+                          if (value.length == 0) {
+                            return ("Please fill up this field.");
+                          } else {
+                            return null;
                           }
-                          return null;
                         },
                         style: TextStyle(
                           fontSize: 16,
+                          color: Colors.white,
                         ),
-                        controller: emailController,
+                        controller: phoneController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
                           isDense: true,
-                          labelText: 'Email',
-                          hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                          border: OutlineInputBorder(),
+                          labelText: 'Phone Number',
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.orange,
+                              width: 1,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -328,25 +407,44 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
               Container(
                 height: 60,
                 width: width * 0.94,
+
+                // padding: EdgeInsets.only(top: 10),
                 child: TextFormField(
-                  keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value.length == 0) {
-                      return ("Please fill up this field.");
-                    } else {
-                      return null;
+                    bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value);
+                    if (value.isEmpty) {
+                      return 'Please fill up this field';
+                    } else if (!emailValid) {
+                      return 'Please enter a valid address';
                     }
+                    return null;
                   },
                   style: TextStyle(
                     fontSize: 16,
+                    color: Colors.white,
                   ),
-                  controller: phoneController,
+                  controller: emailController,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(8),
                     isDense: true,
-                    labelText: 'Phone Number',
-                    hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.white),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                        width: 1,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -362,25 +460,39 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                   },
                   controller: commentController,
                   maxLines: 5,
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(8),
                     isDense: true,
                     labelText: 'Enter the comment',
-                    hintStyle: TextStyle(color: Color(0xffb8b8b8)),
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.white),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                        width: 1,
+                      ),
+                    ),
                   ),
                 ),
               ),
               Center(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
-                  width: width * 0.75,
+                  width: width * 0.5,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(5.0),
+                        borderRadius: new BorderRadius.circular(18.0),
                       ),
-                      primary: Color(ExtraColors.darkBlue),
+                      primary: Color(0xffef773c),
                     ),
                     onPressed: () {
                       // performLogin();
@@ -399,77 +511,141 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
                   ),
                 ),
               ),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        Navigator.of(context).pop();
+                        // String nearestPhoneNo = SpUtil.getString(
+                        //         Constants.nearestStorePhoneNo)
+                        //     .replaceAll(
+                        //         new RegExp(r"\s+\b|\b\s"), "");
+                        var url = "tel:$nearestStorePhn";
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffef773c),
+                        ),
+                        child: Icon(
+                          Icons.call,
+                          color: Colors.white,
+                          size: 30.0,
+                        ),
+                        alignment: Alignment.center,
+                      ),
+                      // child: Image.asset(
+                      //   "images/call.png",
+                      //   height: 40,
+                      //   width: 40,
+                      // ),
+                    ),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        Navigator.of(context).pop();
+                        // String whatappNO = SpUtil.getString(
+                        //     Constants.whatsAppNumber);
+                        print("Whats app number $whatsAppNum");
+                        var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
+                        await canLaunch(whatsappUrl)
+                            ? launch(whatsappUrl)
+                            : showAlert();
+                      },
+                      child: Image.asset(
+                        "images/logowa.png",
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ]),
           ),
         ),
       ),
-      floatingActionButton: new Column(
-        mainAxisSize: MainAxisSize.min,
-        children: new List.generate(imageList.length, (int index) {
-          Widget child = new Container(
-            height: 70.0,
-            width: 56.0,
-            alignment: FractionalOffset.topCenter,
-            child: new ScaleTransition(
-              scale: new CurvedAnimation(
-                parent: _controller,
-                curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
-                    curve: Curves.easeOut),
-              ),
-              child: new FloatingActionButton(
-                heroTag: null,
-                backgroundColor: backgroundColor,
-                mini: true,
-                // child: new Icon(icons[index], color: foregroundColor),
-                child: new Image.asset(
-                  imageList[index],
-                ),
-                onPressed: () async {
-                  if (index == 0) {
-                    var url = "tel:$nearestStorePhn";
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  } else if (index == 1) {
-                    var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
-                    await canLaunch(whatsappUrl)
-                        ? launch(whatsappUrl)
-                        : showAlert();
-                  }
-                },
-              ),
-            ),
-          );
-          return child;
-        }).toList()
-          ..add(
-            new FloatingActionButton(
-              backgroundColor: Color(ExtraColors.darkBlue),
-              heroTag: null,
-              child: new AnimatedBuilder(
-                animation: _controller,
-                builder: (BuildContext context, Widget child) {
-                  return new Transform(
-                    transform: new Matrix4.rotationZ(
-                        _controller.value * 0.5 * math.pi),
-                    alignment: FractionalOffset.center,
-                    child: new Icon(
-                        _controller.isDismissed ? Icons.call : Icons.close),
-                  );
-                },
-              ),
-              onPressed: () {
-                if (_controller.isDismissed) {
-                  _controller.forward();
-                } else {
-                  _controller.reverse();
-                }
-              },
-            ),
-          ),
-      ),
+      // floatingActionButton: new Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: new List.generate(imageList.length, (int index) {
+      //     Widget child = new Container(
+      //       height: 70.0,
+      //       width: 56.0,
+      //       alignment: FractionalOffset.topCenter,
+      //       child: new ScaleTransition(
+      //         scale: new CurvedAnimation(
+      //           parent: _controller,
+      //           curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
+      //               curve: Curves.easeOut),
+      //         ),
+      //         child: new FloatingActionButton(
+      //           heroTag: null,
+      //           backgroundColor: backgroundColor,
+      //           mini: true,
+      //           // child: new Icon(icons[index], color: foregroundColor),
+      //           child: new Image.asset(
+      //             imageList[index],
+      //           ),
+      //           onPressed: () async {
+      //             if (index == 0) {
+      //               var url = "tel:$nearestStorePhn";
+      //               if (await canLaunch(url)) {
+      //                 await launch(url);
+      //               } else {
+      //                 throw 'Could not launch $url';
+      //               }
+      //             } else if (index == 1) {
+      //               var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
+      //               await canLaunch(whatsappUrl)
+      //                   ? launch(whatsappUrl)
+      //                   : showAlert();
+      //             }
+      //           },
+      //         ),
+      //       ),
+      //     );
+      //     return child;
+      //   }).toList()
+      //     ..add(
+      //       new FloatingActionButton(
+      //         backgroundColor: Color(ExtraColors.darkBlue),
+      //         heroTag: null,
+      //         child: new AnimatedBuilder(
+      //           animation: _controller,
+      //           builder: (BuildContext context, Widget child) {
+      //             return new Transform(
+      //               transform: new Matrix4.rotationZ(
+      //                   _controller.value * 0.5 * math.pi),
+      //               alignment: FractionalOffset.center,
+      //               child: new Icon(
+      //                   _controller.isDismissed ? Icons.call : Icons.close),
+      //             );
+      //           },
+      //         ),
+      //         onPressed: () {
+      //           if (_controller.isDismissed) {
+      //             _controller.forward();
+      //           } else {
+      //             _controller.reverse();
+      //           }
+      //         },
+      //       ),
+      //     ),
+      // ),
     );
   }
 
