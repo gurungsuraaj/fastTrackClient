@@ -146,15 +146,18 @@ class _OTP extends State<OTP> {
                                               filledColor: Colors.transparent,
                                               codeLength: _otpCodeLength,
                                               boxSize: 35,
-                                              filledAfterTextChange: true,
-                                              textStyle:
-                                                  TextStyle(fontSize: 16,color:Colors.white),
-                                                  
+                                              // filledAfterTextChange: true,
+                                              textStyle: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white),
                                               borderStyle: OutlineInputBorder(
-                                                  borderSide: BorderSide(color:Color(0xffef773c),style: BorderStyle.solid, width: 1.0),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.orange,
+                                                      style: BorderStyle.solid,
+                                                      width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          20)),
+                                                          25)),
                                               onOtpCallback:
                                                   (code, isAutofill) =>
                                                       _onOtpCallBack(
@@ -173,7 +176,7 @@ class _OTP extends State<OTP> {
                                               animationType:
                                                   iosText.AnimationType.fade,
                                               shape: iosText
-                                                  .PinCodeFieldShape.underline,
+                                                  .PinCodeFieldShape.circle,
                                               animationDuration:
                                                   Duration(milliseconds: 300),
                                               fieldHeight: 50,
