@@ -39,21 +39,16 @@ class _LocateActivityState extends State<LocateActivity> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(ExtraColors.appBarColor),
-          
-          title: Text("LOCATE A BRANCH", style: TextStyle(fontStyle: FontStyle.italic)),
+          title: Text("LOCATE A BRANCH",
+              style: TextStyle(fontStyle: FontStyle.italic)),
         ),
-        
         backgroundColor: Color(ExtraColors.scaffoldColor),
-        
-        
         body: ModalProgressHUD(
-          
           inAsyncCall: isProgressBarShown,
           child: ListView.builder(
             itemCount: locationlist.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                
                 color: Color(0xff0c2d8a),
                 elevation: 0,
                 child: Column(
@@ -68,21 +63,19 @@ class _LocateActivityState extends State<LocateActivity> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Row(
-                                  
                                   children: <Widget>[
                                     Expanded(
                                       child: Container(
                                         child: Text("Branch Name :",
                                             style: TextStyle(
                                                 fontSize: 16.0,
-                                                color:Colors.white,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                       ),
                                     ),
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    
                                     Expanded(
                                       child: Container(
                                         child: Text(locationlist[index].name,
@@ -104,8 +97,9 @@ class _LocateActivityState extends State<LocateActivity> {
                                           child: Text("Address :",
                                               style: TextStyle(
                                                   fontSize: 16.0,
-                                                  color:Colors.white,
-                                                  fontWeight: FontWeight.bold))),
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -132,8 +126,9 @@ class _LocateActivityState extends State<LocateActivity> {
                                           child: Text("Telephone No. :",
                                               style: TextStyle(
                                                   fontSize: 16.0,
-                                                  color:Colors.white,
-                                                  fontWeight: FontWeight.bold))),
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -170,7 +165,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                         child: Text("Opening Hours :",
                                             style: TextStyle(
                                                 fontSize: 16.0,
-                                                color:Colors.white,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                       ),
                                     ),
@@ -314,11 +309,10 @@ class _LocateActivityState extends State<LocateActivity> {
                     SizedBox(
                       height: 5,
                     ),
-
                     Padding(
-                      padding: const EdgeInsets.only(left:15.0,right:15.0),
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: new Divider(
-                        thickness: 2.0,
+                        thickness: 1.5,
                         color: Color(0xffef773c),
                       ),
                     ),

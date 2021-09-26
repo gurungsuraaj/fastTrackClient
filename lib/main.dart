@@ -123,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 indent: 100,
                 endIndent: 100,
                 color: Colors.orange,
-                thickness: 2,
+                thickness: 1.5,
               ),
               Container(
                 margin: EdgeInsets.only(top: 5),

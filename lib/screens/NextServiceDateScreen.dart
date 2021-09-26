@@ -47,15 +47,15 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var textStyle1 =
-        TextStyle(color: Colors.white, fontSize: 14);
+    var textStyle1 = TextStyle(color: Colors.white, fontSize: 14);
     var textStyle2 = TextStyle(color: Color(0xffef773c), fontSize: 14);
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.appBarColor),
-        title: Text("NEXT SERVICE DATE",style:TextStyle(fontStyle: FontStyle.italic)),
+        title: Text("NEXT SERVICE DATE",
+            style: TextStyle(fontStyle: FontStyle.italic)),
       ),
       backgroundColor: Color(ExtraColors.scaffoldColor),
       body: ModalProgressHUD(
@@ -80,7 +80,8 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                         : Wrap(children: <Widget>[
                             Text('Thank you for servicing your',
                                 style: textStyle1),
-                            Text("vehicle No. ${nextSerivceDateList[index].registerNo}",
+                            Text(
+                                "vehicle No. ${nextSerivceDateList[index].registerNo}",
                                 style: textStyle2),
                             Text(" at", style: textStyle1),
                             Text(
@@ -101,21 +102,21 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                                   style: textStyle2),
                             ),
                             // Text(' As per our records', style: textStyle1),
-                            Text(
-                                "As per our records next service is due on",
+                            Text("As per our records next service is due on",
                                 style: textStyle1),
-                              Text(' ${nextSerivceDateList[index].nextServiceDate}.',style: textStyle2),
-                             Padding(
-                      padding: const EdgeInsets.only(left:15.0,right:15.0),
-                      child: new Divider(
-                        thickness: 2.0,
-                        color: Color(0xffef773c),
-                      ),
-                    ),
+                            Text(
+                                ' ${nextSerivceDateList[index].nextServiceDate}.',
+                                style: textStyle2),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15.0, right: 15.0),
+                              child: new Divider(
+                                thickness: 1.5,
+                                color: Color(0xffef773c),
+                              ),
+                            ),
                           ]),
-                          
                   ),
-                  
 
                   //  Text(
                   //     "Thank you for servicing your vehicle No.${nextSerivceDateList[index].registerNo} at Fasttrack-${nextSerivceDateList[index].locationName} ${nextSerivceDateList[index].phoneNumber}. As per our records next service is due on ${nextSerivceDateList[index].nextServiceDate}.",style: TextStyle(fontSize: 14),),
@@ -274,7 +275,6 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                 ),
               ),
             ),
-            
           ],
           content: Container(
             height: MediaQuery.of(context).size.height * 0.20,

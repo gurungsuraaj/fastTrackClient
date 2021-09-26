@@ -150,10 +150,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   color: Colors.white,
                                 ),
                               ),
-                              Divider(
-                                color: Color(ExtraColors.orange),
-                                height: 10,
-                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15.0, right: 15.0),
+                                child: new Divider(
+                                  thickness: 1.5,
+                                  color: Color(0xffef773c),
+                                ),
+                              )
                             ],
                           )),
                     );
