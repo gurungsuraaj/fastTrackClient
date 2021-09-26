@@ -128,9 +128,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                   Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: Text(
-                                      "Welcome to",
+                                      "WELCOME TO",
                                       style: TextStyle(
-                                          fontSize: 35,
+                                          fontSize: 28,
                                           fontWeight: FontWeight.w500,
                                           // fontStyle: FontStyle.italic,
                                           color: Colors.white),
@@ -160,7 +160,7 @@ class _LoginActivityState extends State<LoginActivity> {
                               child: Text(
                                 "Login to your account",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 18),
+                                    color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
                               ),
                             ), //Container
                             SizedBox(
@@ -381,18 +381,18 @@ class _LoginActivityState extends State<LoginActivity> {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      "All rights reserved © 2020",
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "All Rights Reserved © 2020",
                       // textAlign: TextAlign.start,
                       style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
-                  ),
-                  // SizedBox(width: 10),
-                  Expanded(
-                    child: FutureBuilder(
+                    // SizedBox(width: 10),
+                    FutureBuilder(
                       future: getVersionNumber(),
                       builder: (BuildContext context,
                               AsyncSnapshot<String> snapshot) =>
@@ -403,8 +403,8 @@ class _LoginActivityState extends State<LoginActivity> {
                         style: TextStyle(color: Colors.white, fontSize: 10),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -578,8 +578,9 @@ class _LoginActivityState extends State<LoginActivity> {
                 Text(
                   '+971',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white,
+                    fontWeight: FontWeight.w300
                   ),
                 ),
               ],
@@ -614,7 +615,7 @@ class _LoginActivityState extends State<LoginActivity> {
             ),
             Expanded(
               child: TextFormField(
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
                 keyboardType: TextInputType.number,
                 controller: mobileController,
                 textInputAction: TextInputAction.done,
@@ -700,8 +701,9 @@ class _LoginActivityState extends State<LoginActivity> {
       if (res.status == Rcode.successCode) {
         customeretails = res;
         String message =
-            'Dear ${customeretails.name}, We have recognized you as an existing customer of Fasttrack. Please click "Proceed" to update/confirm your details and choose a password';
-        showAlert(message, customeretails);
+            'Dear ${customeretails.name}, We have recognized you as an existing customer of Fasttrack.';
+        String message1 = 'Please click "Proceed" to update/confirm your details and choose a password.';
+        showAlert(message, customeretails, message1);
       } else {
         Navigator.push(
             context,
@@ -722,55 +724,63 @@ class _LoginActivityState extends State<LoginActivity> {
     return version;
   }
 
-  showAlert(String message, CustomerModel customerDetails) {
+  showAlert(String message, CustomerModel customerDetails, String message1) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Color(0xff0c2d8a),
           contentPadding: EdgeInsets.all(10.0),
           actions: <Widget>[
-            Container(
-              width: 100,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SignUpActivity(
-                                customerDetails: customerDetails,
-                              )));
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(15.0),
-                    side: BorderSide(
-                      color: Colors.blue[700],
-                      width: 2,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:15.0),
+                child: Container(
+                  width: 140,
+                  
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpActivity(
+                                    customerDetails: customerDetails,
+                                  )));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(20.0),
+                        side: BorderSide(
+                          color:  Color(0xffef773c),
+                          width: 2,
+                        ),
+                      ),
+                      primary:  Color(0xffef773c),
+                      textStyle: TextStyle(color: Colors.white),
                     ),
-                  ),
-                  primary: Colors.white,
-                  textStyle: TextStyle(color: Colors.black),
-                ),
-                child: Text(
-                  'Proceed',
-                  style: TextStyle(
-                    color: Colors.blue[700],
+                    child: Text(
+                      'Proceed',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ],
           title: Text(
-            'Notice',
+            'NOTICE',
             style: TextStyle(
-              fontSize: 24,
-              color: Theme.of(context).primaryColor,
+              fontSize: 20,
+              color:  Color(0xffef773c),
             ),
             textAlign: TextAlign.center,
           ),
           content: Container(
-            height: 150,
+            color: Color(0xff0c2d8a),
+            height: 190,
             child: Column(
               children: <Widget>[
                 Container(
@@ -779,8 +789,15 @@ class _LoginActivityState extends State<LoginActivity> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
-                        child: Text(message),
+                        padding: EdgeInsets.fromLTRB(0, 35, 0, 5),
+                        child: Text(message,textAlign: TextAlign.center,style: TextStyle(color:Colors.white)),
+
+                      ),
+                      // SizedBox(height:5.0),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                        child: Text(message1,textAlign: TextAlign.center,style: TextStyle(color:Colors.white)),
+                        
                       ),
                     ],
                   ),

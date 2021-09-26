@@ -45,7 +45,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.appBarColor),
-        title: Text("CHECK HISTORY"),
+        title: Text("CHECK HISTORY", style: TextStyle(fontStyle: FontStyle.italic)),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -56,8 +56,8 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
               PostedSalesInvoiceModel postedSaleInvoiceItem =
                   postedSalesList[index];
               return Card(
-                elevation: 2,
-                color: Colors.white,
+                elevation: 0,
+                color: Color(ExtraColors.scaffoldColor),
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -254,9 +254,13 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                       ],
                     ),
 
-                    // new Divider(
-                    //   color: Colors.black,
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      child: new Divider(
+                        color: Color(0xffef773c),
+                        thickness:1.0,
+                      ),
+                    ),
                   ],
                 ),
               );

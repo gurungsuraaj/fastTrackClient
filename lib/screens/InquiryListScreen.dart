@@ -20,8 +20,8 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Make An Inquiry"),
-        backgroundColor: Color(ExtraColors.darkBlue),
+        title: Text("Make An Inquiry".toUpperCase(),style:TextStyle(fontStyle: FontStyle.italic)),
+        backgroundColor: Color(ExtraColors.appBarColor),
       ),
       body: Column(
           // padding: const EdgeInsets.all(15.0),

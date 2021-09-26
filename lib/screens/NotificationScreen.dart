@@ -28,7 +28,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.appBarColor),
-        title: Center(child: Text("NOTIFICATIONS")),
+        title: Center(child: Text("NOTIFICATIONS",style: TextStyle(fontStyle: FontStyle.italic))),
         // actions: <Widget>[
         //   IconButton(
         //     onPressed: () {

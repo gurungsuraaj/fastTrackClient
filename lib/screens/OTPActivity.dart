@@ -143,14 +143,15 @@ class _OTP extends State<OTP> {
                                             width: width,
                                             child: TextFieldPin(
                                               filled: true,
-                                              filledColor: Colors.white,
+                                              filledColor: Colors.transparent,
                                               codeLength: _otpCodeLength,
                                               boxSize: 35,
                                               filledAfterTextChange: true,
                                               textStyle:
-                                                  TextStyle(fontSize: 16),
+                                                  TextStyle(fontSize: 16,color:Colors.white),
+                                                  
                                               borderStyle: OutlineInputBorder(
-                                                  borderSide: BorderSide.none,
+                                                  borderSide: BorderSide(color:Color(0xffef773c),style: BorderStyle.solid, width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           20)),
@@ -215,8 +216,8 @@ class _OTP extends State<OTP> {
                                           }
                                         },
                                         child: _setUpButtonChild(),
-                                        color: Colors.orange,
-                                        disabledColor: Colors.blue[100],
+                                        color: Color(0xffef773c),
+                                        disabledColor: Colors.orange[200],
                                       ),
                                     ),
                                     SizedBox(

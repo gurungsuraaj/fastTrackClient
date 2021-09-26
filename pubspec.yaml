@@ -127,7 +127,7 @@ flutter:
     - images/call.png
     - images/userProfile.png
     - images/FTProfileLogo.png
-
+    - images/alert.png
     - images/distress.png
     - images/inquiry1.png
     - images/invoiceSales1.png
@@ -136,6 +136,17 @@ flutter:
     - images/service1.png
     - images/iconBg.png
     - images/iconFg.png
+    - images/logowa.png
+    - images/branchnew.png
+    - images/checkhistorynew.png
+    - images/distresscallnew.png
+    - images/inquirynew.png
+    - images/nextservicenew.png
+    - images/promotionnew.png
+    - images/servicenew.png
+    - images/acnew.png
+
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

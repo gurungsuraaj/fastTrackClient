@@ -1,6 +1,7 @@
 import 'package:fasttrackgarage_app/models/ServiceModel.dart';
 import 'package:fasttrackgarage_app/screens/ServiceDetailActivity.dart';
 import 'package:fasttrackgarage_app/utils/AppBarWithTitle.dart';
+import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +14,8 @@ class ServiceActivity extends StatefulWidget {
   _ServiceActivityState createState() => _ServiceActivityState();
 }
 
-class _ServiceActivityState extends State<ServiceActivity> with TickerProviderStateMixin {
+class _ServiceActivityState extends State<ServiceActivity>
+    with TickerProviderStateMixin {
   var textDecoration = TextDecoration.underline;
   var fontSize = 18.0;
   var imageWidth = 35.0;
@@ -36,7 +38,10 @@ class _ServiceActivityState extends State<ServiceActivity> with TickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBarWithTitle.getAppBar('Services'),
+      appBar: AppBar(
+        backgroundColor: Color(ExtraColors.appBarColor),
+        title: Text("SERVICES", style: TextStyle(fontStyle: FontStyle.italic)),
+      ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         child: Container(
@@ -325,6 +330,12 @@ class _ServiceActivityState extends State<ServiceActivity> with TickerProviderSt
                   itemCount: staticServiceList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
+                      shadowColor: Color(0xffd9d9d9),
+                      elevation: 20,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff05135b)),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         child: Container(
                             child: InkWell(
                                 onTap: () {
@@ -345,11 +356,11 @@ class _ServiceActivityState extends State<ServiceActivity> with TickerProviderSt
                                   children: <Widget>[
                                     Image.asset(
                                       staticServiceList[index].image,
-                                      height: 70,
-                                      width: 50,
+                                      height: 120,
+                                      width: 100,
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(top: 5),
+                                        // padding: EdgeInsets.only(top: 5),
                                         child: Text(
                                             staticServiceList[index].title))
                                   ],
@@ -408,7 +419,7 @@ class _ServiceActivityState extends State<ServiceActivity> with TickerProviderSt
   List<ServiceModel> staticServiceList = [
     ServiceModel(
         title: "Air Conditioning",
-        image: "images/air-conditioning.png",
+        image: "images/acnew.png",
         body:
             "Your auto air conditioner has one job: to keep you comfortable in the heat. Your A/C compressor is also responsible for assisting with removing moisture from the cabin of your car to keep the windows clear when you turn on the “defrost” function? Whether you’re concerned about windshield visibility, keeping the environment safe, or just being comfortable in your car during the heat of summer, be sure to get all of your auto air conditioning components checked before something breaks. So, stop on by today and have our expertly trained and Certified mechanics at Fasttrack - Emarat service your car’s Air Conditioning."),
     ServiceModel(

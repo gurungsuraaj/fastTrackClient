@@ -48,15 +48,16 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
   @override
   Widget build(BuildContext context) {
     var textStyle1 =
-        TextStyle(color: Color(ExtraColors.darkBlue), fontSize: 14);
-    var textStyle2 = TextStyle(color: Color(0xffEF9C2B), fontSize: 14);
+        TextStyle(color: Colors.white, fontSize: 14);
+    var textStyle2 = TextStyle(color: Color(0xffef773c), fontSize: 14);
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(ExtraColors.darkBlue),
-        title: Text("Next Service Date"),
+        backgroundColor: Color(ExtraColors.appBarColor),
+        title: Text("NEXT SERVICE DATE",style:TextStyle(fontStyle: FontStyle.italic)),
       ),
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
         child: ListView.builder(
@@ -77,9 +78,9 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                                 style: textStyle2)
                           ])
                         : Wrap(children: <Widget>[
-                            Text('Thank you for servicing your vehicle No.',
+                            Text('Thank you for servicing your',
                                 style: textStyle1),
-                            Text("${nextSerivceDateList[index].registerNo}",
+                            Text("vehicle No. ${nextSerivceDateList[index].registerNo}",
                                 style: textStyle2),
                             Text(" at", style: textStyle1),
                             Text(
@@ -101,10 +102,20 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                             ),
                             // Text(' As per our records', style: textStyle1),
                             Text(
-                                "As per our records next service is due on ${nextSerivceDateList[index].nextServiceDate}.",
-                                style: textStyle1)
+                                "As per our records next service is due on",
+                                style: textStyle1),
+                              Text(' ${nextSerivceDateList[index].nextServiceDate}.',style: textStyle2),
+                             Padding(
+                      padding: const EdgeInsets.only(left:15.0,right:15.0),
+                      child: new Divider(
+                        thickness: 2.0,
+                        color: Color(0xffef773c),
+                      ),
+                    ),
                           ]),
+                          
                   ),
+                  
 
                   //  Text(
                   //     "Thank you for servicing your vehicle No.${nextSerivceDateList[index].registerNo} at Fasttrack-${nextSerivceDateList[index].locationName} ${nextSerivceDateList[index].phoneNumber}. As per our records next service is due on ${nextSerivceDateList[index].nextServiceDate}.",style: TextStyle(fontSize: 14),),
@@ -247,7 +258,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                   Navigator.of(context).pop();
                 },
                 style: TextButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: Color(0xffef773c),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     )),
@@ -257,15 +268,16 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                   'Back to Previous screen',
                   // textAlign: TextAlign.justify,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white,
                   ),
                 ),
               ),
             ),
+            
           ],
           content: Container(
-            height: 150,
+            height: MediaQuery.of(context).size.height * 0.20,
             child: Column(
               children: <Widget>[
                 Container(
@@ -278,7 +290,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
                         child: Text(
                           message,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                     ],

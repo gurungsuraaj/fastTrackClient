@@ -154,22 +154,22 @@ class _HomeActivityState extends State<HomeActivity>
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Image.asset(
-                        'images/fastTrackSingleLogo.png',
-                        height: 30,
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Container(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Image.asset(
+                  //       'images/fastTrackSingleLogo.png',
+                  //       height: 30,
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                       flex: 2,
                       child: Container(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.center,
                           child: Text(
-                            "   My Fasttrack",
+                            "   MY FASTTRACK",
                             style: TextStyle(
                               fontStyle: FontStyle.italic,
                             ),
@@ -208,7 +208,7 @@ class _HomeActivityState extends State<HomeActivity>
                         children: <Widget>[
                           Icon(
                             Icons.location_on,
-                            color: Colors.white,
+                            color: Color(0xffef773c),
                             size: 18,
                           ),
                           SizedBox(
@@ -253,7 +253,7 @@ class _HomeActivityState extends State<HomeActivity>
                           builder: (BuildContext context) {
                             return Container(
                               width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                               //                                decoration: BoxDecoration(
                               //                                  color: Color(
                               //                                    0xFF1D1E33,
@@ -261,7 +261,7 @@ class _HomeActivityState extends State<HomeActivity>
                               //                                  borderRadius: BorderRadius.circular(20),
                               //                                ),
                               child: ClipRRect(
-                                borderRadius: new BorderRadius.circular(11.0),
+                                // borderRadius: new BorderRadius.circular(11.0),
                                 child: Image.network(
                                   i.image,
                                   fit: BoxFit.cover,
@@ -274,6 +274,122 @@ class _HomeActivityState extends State<HomeActivity>
                         );
                       }).toList(),
                     ),
+              SizedBox(height:20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Card(
+                      elevation: 10.0,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Color(0xff0c2d8a)),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          height: MediaQuery.of(context).size.width * 0.45,
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PostedSalesInvoiceScreen()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/checkhistorynew.png",
+                                    height: 100,
+                                    width: 80,
+                                  ),
+                                  Container(
+                                      // padding: EdgeInsets.only(top: 5),
+                                      child: Text("Check History",
+                                          style: TextStyle(
+                                              color: Color(0xff808080),
+                                              fontSize: 16.0)))
+                                ],
+                              )))),
+                  Card(
+                      elevation: 10.0,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Color(0xff0c2d8a)),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          height: MediaQuery.of(context).size.width * 0.45,
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NextServiceDateScreen()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/nextservicenew.png",
+                                    height: 100,
+                                    width: 80,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text("Next Service Date",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Color(0xff808080),
+                                              fontSize: 16.0)))
+                                ],
+                              )))),
+                ],
+              ),
+              SizedBox(height:5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Card(
+                      elevation: 10.0,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Color(0xff0c2d8a)),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          height: MediaQuery.of(context).size.width * 0.45,
+                          child: InkWell(
+                              onTap: () {
+                                getLocationOfCLient().whenComplete(() {
+                                  _showAlert();
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "images/distresscallnew.png",
+                                    height: 100,
+                                    width: 80,
+                                  ),
+                                  Container(
+                                      // padding: EdgeInsets.only(top: 5),
+                                      child: Text("Distress Call",
+                                          style: TextStyle(
+                                              color: Color(0xff808080),
+                                              fontSize: 16.0)))
+                                ],
+                              )))),
+                ],
+              ),
+              SizedBox(height:5),
               Wrap(
                   // crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.center,
@@ -288,45 +404,26 @@ class _HomeActivityState extends State<HomeActivity>
                   // crossAxisSpacing: 4.0,
                   children: <Widget>[
                     Card(
+                        elevation: 10.0,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff0c2d8a)),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         child: Container(
                             width: MediaQuery.of(context).size.width * 0.45,
                             height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
-                                  //                                    Navigator.push(
-                                  //                                      context,
-                                  //                                      MaterialPageRoute(
-                                  //                                          builder: (context) =>
-                                  //                                              ServiceActivity()),
-                                  //                                    );
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => ServiceActivity()));
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Image.asset(
-                                      "images/service1.png",
-                                      height: 90,
-                                      width: 60,
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text("Services"))
-                                  ],
-                                )))),
-                    Card(
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            height: MediaQuery.of(context).size.width * 0.45,
-                            child: InkWell(
-                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => GoogleMapActivity()),
+                                  // );
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PostedSalesInvoiceScreen()),
+                                            InquiryListScreen()),
                                   );
                                 },
                                 child: Column(
@@ -334,100 +431,24 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/invoiceSales1.png",
+                                      "images/inquirynew.png",
                                       height: 100,
                                       width: 80,
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text("Check History"))
-                                  ],
-                                )))),
-                    // Card(
-                    //     child: Container(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               Navigator.push(
-                    //                 context,
-                    //                 MaterialPageRoute(
-                    //                     builder: (context) =>
-                    //                         OutletActivity()),
-                    //               );
-                    //             },
-                    //             child: Column(
-                    //               mainAxisAlignment: MainAxisAlignment.center,
-                    //               crossAxisAlignment:
-                    //                   CrossAxisAlignment.center,
-                    //               children: <Widget>[
-                    //                 Image.asset(
-                    //                   "images/outletLogo.png",
-                    //                   height: 70,
-                    //                   width: 50,
-                    //                 ),
-                    //                 Container(
-                    //                     padding: EdgeInsets.only(top: 5),
-                    //                     child: Text("Outlet List"))
-                    //               ],
-                    //             )))),
-                    Card(
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            height: MediaQuery.of(context).size.width * 0.45,
-                            child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => OfferPromo()),
-                                  );
-                                  //showOffer();
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Image.asset(
-                                      "images/promotions1.png",
-                                      height: 90,
-                                      width: 60,
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text("Promotions"))
+                                        // padding: EdgeInsets.only(top: 5),
+                                        child: Text("Make An Inquiry",
+                                            style: TextStyle(
+                                                color: Color(0xff808080),
+                                                fontSize: 16.0)))
                                   ],
                                 )))),
                     Card(
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            height: MediaQuery.of(context).size.width * 0.45,
-                            child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NextServiceDateScreen()),
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Image.asset(
-                                      "images/inquiry.png",
-                                      height: 90,
-                                      width: 60,
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Next Service Date",
-                                          textAlign: TextAlign.center,
-                                        ))
-                                  ],
-                                )))),
-
-                    Card(
+                        elevation: 10.0,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff0c2d8a)),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         child: Container(
                             width: MediaQuery.of(context).size.width * 0.45,
                             height: MediaQuery.of(context).size.width * 0.45,
@@ -455,73 +476,118 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/locate1.png",
-                                      height: 90,
-                                      width: 60,
+                                      "images/branchnew.png",
+                                      height: 100,
+                                      width: 80,
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text("Locate A Branch"))
+                                        // padding: EdgeInsets.only(top: 5),
+                                        child: Text("Locate A Branch",
+                                            style: TextStyle(
+                                                color: Color(0xff808080),
+                                                fontSize: 16.0)))
                                   ],
                                 )))),
-
                     Card(
+                        elevation: 10.0,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff0c2d8a)),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         child: Container(
                             width: MediaQuery.of(context).size.width * 0.45,
                             height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => GoogleMapActivity()),
-                                  // );
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            InquiryListScreen()),
+                                        builder: (context) => OfferPromo()),
                                   );
+                                  //showOffer();
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/inquiry1.png",
-                                      height: 90,
-                                      width: 60,
+                                      "images/promotionnew.png",
+                                      height: 110,
+                                      width: 80,
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text("Make An Inquiry"))
+                                        // padding: EdgeInsets.only(top: 5),
+                                        child: Text("Promotions",
+                                            style: TextStyle(
+                                                color: Color(0xff808080),
+                                                fontSize: 16.0)))
                                   ],
                                 )))),
-
                     Card(
+                        elevation: 10.0,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff0c2d8a)),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         child: Container(
                             width: MediaQuery.of(context).size.width * 0.45,
                             height: MediaQuery.of(context).size.width * 0.45,
                             child: InkWell(
                                 onTap: () {
-                                  getLocationOfCLient().whenComplete(() {
-                                    _showAlert();
-                                  });
+                                  //                                    Navigator.push(
+                                  //                                      context,
+                                  //                                      MaterialPageRoute(
+                                  //                                          builder: (context) =>
+                                  //                                              ServiceActivity()),
+                                  //                                    );
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ServiceActivity()));
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/distress.png",
-                                      height: 90,
-                                      width: 60,
+                                      "images/servicenew.png",
+                                      height: 100,
+                                      width: 80,
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text("Distress Call"))
+                                        // padding: EdgeInsets.only(top: 5),
+                                        child: Text("Services",
+                                            style: TextStyle(
+                                                color: Color(0xff808080),
+                                                fontSize: 16.0)))
                                   ],
                                 )))),
+                                
+
+                    // Card(
+                    //     child: Container(
+                    //         child: InkWell(
+                    //             onTap: () {
+                    //               Navigator.push(
+                    //                 context,
+                    //                 MaterialPageRoute(
+                    //                     builder: (context) =>
+                    //                         OutletActivity()),
+                    //               );
+                    //             },
+                    //             child: Column(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               crossAxisAlignment:
+                    //                   CrossAxisAlignment.center,
+                    //               children: <Widget>[
+                    //                 Image.asset(
+                    //                   "images/outletLogo.png",
+                    //                   height: 70,
+                    //                   width: 50,
+                    //                 ),
+                    //                 Container(
+                    //                     padding: EdgeInsets.only(top: 5),
+                    //                     child: Text("Outlet List"))
+                    //               ],
+                    //             )))),
 
                     // Card(
                     //     child: Container(
@@ -601,17 +667,19 @@ class _HomeActivityState extends State<HomeActivity>
           return AlertDialog(
             contentPadding: EdgeInsets.all(0.0),
             content: Container(
+              color: Color(0xff0e308a),
               height: MediaQuery.of(context).size.height * 0.52,
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 120,
+                    height: 140,
                     //                  width: queryData.size.width,
-                    color: Color(ExtraColors.darkBlue),
+                    // color: Color(ExtraColors.darkBlue),
+
                     child: Center(
                         child: Image.asset(
-                      "images/message.png",
-                      height: 90,
+                      "images/alert.png",
+                      height: 110,
                     )),
                   ),
                   Container(
@@ -621,31 +689,41 @@ class _HomeActivityState extends State<HomeActivity>
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
-                          child: Text("By clicking this button, nearest location will call you within half an hour",textAlign: TextAlign.center,
-                          style:TextStyle(color:Colors.grey,fontSize:12.0)),
+                          child: Text("Need Help?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 14.0)),
                         ),
-                        
+
                         Container(
                           width: 120,
                           child: ElevatedButton(
-                            style:ElevatedButton.styleFrom(elevation:4.0, 
-                            // primary: Colors.blue[700],
-                            primary:Colors.green[300],
-                            shadowColor: Colors.black87,
-                            minimumSize: Size(60, 50),
-                            ),
+                            // style:ElevatedButton.styleFrom(elevation:4.0,
+
+                            // primary:Color(0xffef773c),
+                            // shadowColor: Colors.black87,
+                            // minimumSize: Size(60, 40),
+                            // ),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xffef773c)),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        side: BorderSide(
+                                            color: Color(0xffef773c))))),
                             onPressed: () {
                               // Navigator.pop(context);
 
                               getUserList();
                             },
-                           
+
                             child: Text(
-                              'SEND ALERT',
+                              'Send Alert',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0
-                              ),
+                                  color: Colors.white, fontSize: 14.0),
                             ),
                           ),
                         ),
@@ -658,7 +736,7 @@ class _HomeActivityState extends State<HomeActivity>
                         ),
                         Text(
                           "OR",
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                         SizedBox(
                           height: 15,
@@ -682,11 +760,25 @@ class _HomeActivityState extends State<HomeActivity>
                                     throw 'Could not launch $url';
                                   }
                                 },
-                                child: Image.asset(
-                                  "images/call.png",
-                                  height: 40,
-                                  width: 40,
+                                child: Container(
+                                  height: 52,
+                                  width: 52,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xffef773c),
+                                  ),
+                                  child: Icon(
+                                    Icons.call,
+                                    color: Colors.white,
+                                    size: 30.0,
+                                  ),
+                                  alignment: Alignment.center,
                                 ),
+                                // child: Image.asset(
+                                //   "images/call.png",
+                                //   height: 40,
+                                //   width: 40,
+                                // ),
                               ),
                               SizedBox(
                                 width: 50,
@@ -704,9 +796,9 @@ class _HomeActivityState extends State<HomeActivity>
                                       : showAlert();
                                 },
                                 child: Image.asset(
-                                  "images/whatsapp.png",
-                                  height: 40,
-                                  width: 40,
+                                  "images/logowa.png",
+                                  height: 51,
+                                  width: 51,
                                 ),
                               ),
                             ],

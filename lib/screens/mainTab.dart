@@ -115,7 +115,10 @@ class _MainTabState extends State<MainTab> {
     return Scaffold(
       body: buildPageView(),
       bottomNavigationBar: Container(
+        
+        
         child: BottomNavigationBar(
+          
           currentIndex: bottomSelectedIndex,
           onTap: (index) {
             bottomTapped(index);
@@ -150,11 +153,17 @@ class _MainTabState extends State<MainTab> {
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
       BottomNavigationBarItem(
+        backgroundColor: Color(0xff19378d),
         icon: new Icon(
           Icons.home,
-          color: Color(ExtraColors.darkBlue),
+          color: Color(0xff88acd0),
         ),
-        label: 'Home',
+        activeIcon: new Icon(
+          Icons.home,
+          color: Color(0xffef773c),
+        ),
+        // label:'Home'
+        label: '',
 
         //  Padding(
         //   padding: const EdgeInsets.only(top: 2.0),
@@ -165,8 +174,14 @@ class _MainTabState extends State<MainTab> {
         // )
       ),
       BottomNavigationBarItem(
-          icon: Icon(Icons.person, color: Color(ExtraColors.darkBlue)),
-          label: 'Profile'
+        backgroundColor: Color(0xff19378d),
+          icon: Icon(Icons.person, color: Color(0xff88acd0),),
+          activeIcon: new Icon(
+          Icons.person,
+          color: Color(0xffef773c),
+        ),
+          // label: 'Profile'
+          label: '',
 
           // title: Padding(
           //   padding: const EdgeInsets.only(top: 2.0),
@@ -177,8 +192,14 @@ class _MainTabState extends State<MainTab> {
           // )
           ),
       BottomNavigationBarItem(
-          icon: new Icon(Icons.public, color: Color(ExtraColors.darkBlue)),
-          label: 'Web'
+        backgroundColor: Color(0xff19378d),
+          icon: new Icon(Icons.public, color: Color(0xff88acd0),),
+          activeIcon: new Icon(
+          Icons.public,
+          color: Color(0xffef773c),
+        ),
+          // label: 'Web'
+          label: '',
           // title: Padding(
           //   padding: const EdgeInsets.only(top: 2.0),
           //   child: new Text(
@@ -188,8 +209,14 @@ class _MainTabState extends State<MainTab> {
           // ),
           ),
       BottomNavigationBarItem(
-        icon: new Icon(Icons.notifications, color: Color(ExtraColors.darkBlue)),
-        label: 'Notifications',
+        backgroundColor: Color(0xff19378d),
+        icon: new Icon(Icons.notifications,color: Color(0xff88acd0),),
+        activeIcon: new Icon(
+          Icons.notifications,
+          color: Color(0xffef773c),
+        ),
+        // label: 'Notifications',
+        label: '',
         // title: Padding(
         //   padding: const EdgeInsets.only(top: 2.0),
         //   child: new Text(
