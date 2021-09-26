@@ -41,11 +41,11 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
     );
     return Scaffold(
       backgroundColor: Color(ExtraColors.scaffoldColor),
-
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.appBarColor),
-        title: Text("CHECK HISTORY", style: TextStyle(fontStyle: FontStyle.italic)),
+        title: Text("CHECK HISTORY",
+            style: TextStyle(fontStyle: FontStyle.italic)),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -61,7 +61,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      color: Theme.of(context).accentColor,
+                      color: Color(ExtraColors.darkBlue),
                       height: 30,
                       width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -253,12 +253,11 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
                         ),
                       ],
                     ),
-
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       child: new Divider(
                         color: Color(0xffef773c),
-                        thickness:1.0,
+                        thickness: 1.0,
                       ),
                     ),
                   ],
