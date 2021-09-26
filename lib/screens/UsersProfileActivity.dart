@@ -29,6 +29,8 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
     return Scaffold(
       backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+
         title: Center(
             child: Text("USER PROFILE",
                 style: TextStyle(fontStyle: FontStyle.italic))),
@@ -45,6 +47,9 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 30,
+            ),
             Container(
               // padding: EdgeInsets.only(left: 10),
               child: Image.asset(
