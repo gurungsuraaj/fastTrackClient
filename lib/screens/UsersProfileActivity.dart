@@ -29,7 +29,9 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
     return Scaffold(
       backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
-        title: Center(child: Text("USER PROFILE")),
+        title: Center(
+            child: Text("USER PROFILE",
+                style: TextStyle(fontStyle: FontStyle.italic))),
         backgroundColor: Color(ExtraColors.appBarColor),
         // actions: <Widget>[],
         // leading: Container(
@@ -161,21 +163,21 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
             ),
             // Spacer(),
             SizedBox(
-              height: 20,
+              height: 40,
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.5,
               height: 35,
               child: FloatingActionButton(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                    borderRadius: BorderRadius.all(Radius.circular(18))),
                 child: Text(
                   "Log Out",
                   style: TextStyle(
-                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
-                backgroundColor: Color(ExtraColors.orange),
+                backgroundColor: Color(0xffef773c),
                 onPressed: () {
                   PrefsManager.clearSession().then((val) {
                     Navigator.pushAndRemoveUntil(
