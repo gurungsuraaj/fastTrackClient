@@ -163,7 +163,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
         key: _scaffoldKey,
         backgroundColor: Color(ExtraColors.scaffoldColor),
         appBar: AppBar(
-          title: Text("TYRES INQUIRY",style: TextStyle(fontStyle: FontStyle.italic)),
+          title: Text("TYRES INQUIRY",
+              style: TextStyle(fontStyle: FontStyle.italic)),
           backgroundColor: Color(ExtraColors.appBarColor),
           bottom: TabBar(
             isScrollable: true,
@@ -311,6 +312,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "width",
                         style: TextStyle(color: Colors.white),
@@ -345,6 +347,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "height",
                         style: TextStyle(color: Colors.white),
@@ -385,6 +388,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "rim-size",
                         style: TextStyle(color: Colors.white),
@@ -417,6 +421,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "brand",
                         style: TextStyle(color: Colors.white),
@@ -484,6 +489,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
+                          dropdownColor: Color(ExtraColors.scaffoldColor),
                           hint: Text(
                             "width",
                             style: TextStyle(color: Colors.white),
@@ -518,6 +524,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
+                          dropdownColor: Color(ExtraColors.scaffoldColor),
                           hint: Text(
                             "height",
                             style: TextStyle(color: Colors.white),
@@ -558,6 +565,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
+                          dropdownColor: Color(ExtraColors.scaffoldColor),
                           hint: Text(
                             "rim-size",
                             style: TextStyle(color: Colors.white),
@@ -788,70 +796,70 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
             //           },
             //     child: Text("Test"))
           ),
-            Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.18),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  Navigator.of(context).pop();
-                                  // String nearestPhoneNo = SpUtil.getString(
-                                  //         Constants.nearestStorePhoneNo)
-                                  //     .replaceAll(
-                                  //         new RegExp(r"\s+\b|\b\s"), "");
-                                  var url = "tel:$nearestStorePhn";
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffef773c),
-                                  ),
-                                  child: Icon(
-                                    Icons.call,
-                                    color: Colors.white,
-                                    size: 30.0,
-                                  ),
-                                  alignment: Alignment.center,
-                                ),
-                                // child: Image.asset(
-                                //   "images/call.png",
-                                //   height: 40,
-                                //   width: 40,
-                                // ),
-                              ),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  Navigator.of(context).pop();
-                                  // String whatappNO = SpUtil.getString(
-                                  //     Constants.whatsAppNumber);
-                                  print("Whats app number $whatsAppNum");
-                                  var whatsappUrl =
-                                      "whatsapp://send?phone=$whatsAppNum";
-                                  await canLaunch(whatsappUrl)
-                                      ? launch(whatsappUrl)
-                                      : showAlert();
-                                },
-                                child: Image.asset(
-                                  "images/logowa.png",
-                                  height: 50,
-                                  width: 50,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    // String nearestPhoneNo = SpUtil.getString(
+                    //         Constants.nearestStorePhoneNo)
+                    //     .replaceAll(
+                    //         new RegExp(r"\s+\b|\b\s"), "");
+                    var url = "tel:$nearestStorePhn";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffef773c),
+                    ),
+                    child: Icon(
+                      Icons.call,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                    alignment: Alignment.center,
+                  ),
+                  // child: Image.asset(
+                  //   "images/call.png",
+                  //   height: 40,
+                  //   width: 40,
+                  // ),
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    // String whatappNO = SpUtil.getString(
+                    //     Constants.whatsAppNumber);
+                    print("Whats app number $whatsAppNum");
+                    var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
+                    await canLaunch(whatsappUrl)
+                        ? launch(whatsappUrl)
+                        : showAlert();
+                  },
+                  child: Image.asset(
+                    "images/logowa.png",
+                    height: 50,
+                    width: 50,
+                  ),
+                ),
+              ],
+            ),
+          ),
           SizedBox(
             height: 20,
           ),
@@ -918,6 +926,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "Select Make",
                         style: TextStyle(color: Colors.white),
@@ -952,6 +961,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "Select Model",
                         style: TextStyle(color: Colors.white),
@@ -1031,6 +1041,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "Select Year",
                         style: TextStyle(color: Colors.white),
