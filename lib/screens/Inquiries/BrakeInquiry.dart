@@ -520,8 +520,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(18.0),
                         ),
-                      primary: Color(0xffef773c),
-
+                        primary: Color(0xffef773c),
                       ),
                       onPressed: () {
                         // performLogin();
@@ -539,9 +538,6 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
                 ),
 
                 Container(
