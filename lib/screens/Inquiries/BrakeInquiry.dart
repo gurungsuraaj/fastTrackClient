@@ -75,7 +75,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(ExtraColors.scaffoldColor),
-        title: Text("Brake Inquiry",
+        title: Text("BRAKE INQUIRY",
             style: TextStyle(fontStyle: FontStyle.italic)),
         actions: <Widget>[],
       ),
