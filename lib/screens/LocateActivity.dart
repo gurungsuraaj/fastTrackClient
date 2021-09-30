@@ -258,7 +258,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                       child: new Container(
                                         alignment: Alignment.center,
                                         height: 32.0,
-                                        width: 150,
+                                        width: 180,
                                         decoration: new BoxDecoration(
                                           color: Color(0xffef773c),
                                           // border: new Border.all(

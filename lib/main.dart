@@ -13,6 +13,7 @@ import 'package:fasttrackgarage_app/utils/Constants.dart';
 import 'package:fasttrackgarage_app/utils/RoutesName.dart';
 import 'package:fasttrackgarage_app/screens/LoginActivity.dart';
 import 'package:fasttrackgarage_app/utils/SPUtils.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 
 import 'package:flutter/material.dart';
@@ -31,6 +32,13 @@ Future<void> main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
+       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backwardsCompatibility: false, // 1
+          systemOverlayStyle: SystemUiOverlayStyle.light, // 2
+        ),
+      ),
+      
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
         RoutesName.login: (BuildContext context) => new LoginActivity(),

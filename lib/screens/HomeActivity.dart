@@ -301,7 +301,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Image.asset(
-                                    "images/checkhistorynew.png",
+                                    "images/checkhistoryupdated.png",
                                     height: 100,
                                     width: 80,
                                   ),
@@ -336,7 +336,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Image.asset(
-                                    "images/nextservicenew.png",
+                                    "images/nextserviceupdated.png",
                                     height: 100,
                                     width: 80,
                                   ),
@@ -375,7 +375,7 @@ class _HomeActivityState extends State<HomeActivity>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Image.asset(
-                                    "images/distresscallnew.png",
+                                    "images/callupdated.png",
                                     height: 100,
                                     width: 80,
                                   ),
@@ -431,7 +431,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/inquirynew.png",
+                                      "images/inquireupdated.png",
                                       height: 100,
                                       width: 80,
                                     ),
@@ -476,7 +476,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/branchnew.png",
+                                      "images/branchupdated.png",
                                       height: 100,
                                       width: 80,
                                     ),
@@ -511,7 +511,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/promotionnew.png",
+                                      "images/promotionupdated.png",
                                       height: 110,
                                       width: 80,
                                     ),
@@ -548,7 +548,7 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/servicenew.png",
+                                      "images/serviceupdated.png",
                                       height: 100,
                                       width: 80,
                                     ),
@@ -678,7 +678,7 @@ class _HomeActivityState extends State<HomeActivity>
 
                     child: Center(
                         child: Image.asset(
-                      "images/alert.png",
+                      "images/callupdated.png",
                       height: 110,
                     )),
                   ),
@@ -760,6 +760,7 @@ class _HomeActivityState extends State<HomeActivity>
                                     throw 'Could not launch $url';
                                   }
                                 },
+                                
                                 child: Container(
                                   height: 52,
                                   width: 52,
@@ -767,18 +768,22 @@ class _HomeActivityState extends State<HomeActivity>
                                     shape: BoxShape.circle,
                                     color: Color(0xffef773c),
                                   ),
-                                  child: Icon(
-                                    Icons.call,
-                                    color: Colors.white,
-                                    size: 30.0,
-                                  ),
-                                  alignment: Alignment.center,
-                                ),
-                                // child: Image.asset(
-                                //   "images/call.png",
+                                //    child: Image.asset(
+                                //   "images/img.png",
                                 //   height: 40,
                                 //   width: 40,
+                                //   alignment: Alignment.center,
                                 // ),
+                                  child: Icon(
+                                    Icons.call_rounded,
+                                    color: Colors.white,
+                                    size: 35.0,
+                                    
+                                  ),
+                                  alignment: Alignment.center,
+                                  
+                                ),
+                               
                               ),
                               SizedBox(
                                 width: 50,

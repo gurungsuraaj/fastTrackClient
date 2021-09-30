@@ -55,9 +55,13 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
+
+        
         child: Stack(
           children: [
             Container(
+
+
               width: double.infinity,
               height: double.infinity,
               child: GoogleMap(

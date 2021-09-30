@@ -150,14 +150,14 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
               children: <Widget>[
                 Image.asset(widget.image),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 40, 0, 10),
+                    padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
                     alignment: Alignment.center,
                     child: Text(
                       widget.serviceTitle.toUpperCase(),
                       
                      
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xffef773c), fontSize: 32,fontWeight: FontWeight.w500),
+                      style: TextStyle(color: Color(0xffef773c), fontSize: 38,fontWeight: FontWeight.w500),
                     )),
               ],
             ),
@@ -199,7 +199,7 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
                                     color: Color(0xffef773c),
                                   ),
                                   child: Icon(
-                                    Icons.call,
+                                    Icons.call_rounded,
                                     color: Colors.white,
                                     size: 40.0,
                                   ),

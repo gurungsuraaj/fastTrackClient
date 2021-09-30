@@ -248,7 +248,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Color(ExtraColors.appBarColor),
+          backgroundColor: Color(0xff0b2c8b),
           contentPadding: EdgeInsets.all(10.0),
           actions: <Widget>[
             Align(

@@ -57,7 +57,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        "images/tyre-s.png",
+                        "images/tyresupdated.png",
                         // staticServiceList[index].image,
                         height: 80,
                         // width: 50,
@@ -97,7 +97,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        "images/oil-filter.png",
+                        "images/oilfilterupdated.png",
                         // staticServiceList[index].image,
                         height: 80,
                         // width: 50,
@@ -137,7 +137,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        "images/electrics.png",
+                        "images/electricupdated.png",
                         // staticServiceList[index].image,
                         height: 80,
                         // width: 50,
@@ -177,7 +177,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        "images/brakes.png",
+                        "images/brakesupdated.png",
                         // staticServiceList[index].image,
                         height: 80,
                         // width: 50,
@@ -217,7 +217,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        "images/other.gif",
+                        "images/servicingupdated.png",
                         // staticServiceList[index].image,
                         height: 80,
                         // width: 50,
@@ -244,12 +244,12 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
   List<ServiceModel> staticServiceList = [
     ServiceModel(
         title: "Tyre-S",
-        image: "images/tyre-s.png",
+        image: "images/tyresupdated.png",
         body:
             "Fasttrack - Emarat has built its extensive reputation on providing exceptional tyre sales and service. If you are looking for a custom wheel package, our professional, knowledgeable team will help you choose according to your needs and budget. We always strive to provide comprehensive service and ensure that we match your vehicle and driving needs with the right tyre. We stock and fit a huge range of tyres for cars, 4WD, light commercial and SUV’s at competitive prices. We believe in giving you the best advice and a range of options to suit your requirements and budget. Our Services Include Free Tyre Inspection Tyre Change Wheel Balancing Wheel Alignment Inflate Tyres with Nitrogen Gas Tyre Rotation"),
     ServiceModel(
         title: "Oil Filter",
-        image: "images/oil-filter.png",
+        image: "images/oilfilterupdated.png",
         body:
             "  The fluids and air flowing through your engine need to stay clean to avoid clogging the narrow passageways. To keep these elements clean, your engine utilizes several well-placed filters. The filters sit in strategic locations and act as the first line of defense against potentially damaging dirt particles. To help the filters do their job, you must have them replaced regularly by a skilled technician. A replacement schedule is determined by the way you drive, total mileage between services, and vehicle manufacturer specifications. Fasttrack - Emarat technicians first look at your vehicle's filter change intervals assigned by the manufacturer to determine if your filters are in need of replacement. The intervals list both a time and mileage rating to consider. Our Technicians will then use their expertise to determine if your vehicle could benefit from a filter change. A visual inspection also assists in determining the right time to perform the fuel, oil and air filter replacement service. Our Services Include Oil Lubes Oil Filter At Fluid & Filter Replacement Maula Transmission Oil Differential Oil"),
 
@@ -260,7 +260,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
     //         "Fasttrack – Emarat offers brake pads that provide the best design for vehicle application with options available for medium duty, passenger cars, light trucks, SUVs, medium duty, fleet and specialty applications. With a strong commitment to research and development, every brake pad is extensively tested to ensure OE fit, form and function. Fasttrack – Emarat dominates the aftermarket with first-to-market part numbers and industry leading coverage for brake pads. Whether it’s for high end applications, everyday drivers or budget-conscious customers. Fasttrack – Emarat performs various intricate tests on the vehicle for guaranteed premium performance and maximized safety.Parts that are available are Brake Pads, Brake Shoe, Disks, Brake Fluid Check/ Replace. Master Cylinder, Brake Booster, Wheel Cylinder, Calipers, Parking Brakes Bleeding, Hydraulic Lines Check/ Replace. Skimming for all Disks and Drums"),
     ServiceModel(
         title: "Brakes",
-        image: "images/brakes.png",
+        image: "images/brakesupdated.png",
         body:
             " Fasttrack – Emarat offers brake pads that provide the best design for vehicle application with options available for medium duty, passenger cars, light trucks, SUVs, medium duty, fleet and specialty applications. With a strong commitment to research and development, every brake pad is extensively tested to ensure OE fit, form and function. Fasttrack – Emarat dominates the aftermarket with first-to-market part numbers and industry leading coverage for brake pads. Whether it’s for high end applications, everyday drivers or budget-conscious customers. Fasttrack – Emarat performs various intricate tests on the vehicle for guaranteed premium performance and maximized safety. Parts that are available are Brake Pads, Brake Shoe, Disks, Brake Fluid Check/ Replace. Master Cylinder, Brake Booster, Wheel Cylinder, Calipers, Parking Brakes Bleeding, Hydraulic Lines Check/ Replace. Skimming for all Disks and Drums"),
     // ServiceModel(
@@ -293,7 +293,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
 
     ServiceModel(
         title: "Other",
-        image: "images/other.gif",
+        image: "images/servicingupdated.png",
         body:
             "Fasttrack – Emarat provides several other services which are vital for your vehicle maintenance. Our Car Services include \n Approved Speed Limiter Installation \n Auto Glass Replacement & Repair \n Service Contract \n Engine and Brake Flush \n Head Light Restoration \n High Quality Additives \n A wide range of car care products (Air Fresheners, Injector Cleaner, Engine Degreaser, Brake Cleaners, Windshield Cleaner, Wiper Blades, High Quality Booster Cable, Tow Rope, Jerry Cans, Range of Philip Head Light Bulbs Etc. \n Car Wash Only Available at Bawadi Mall, Al Ain*"),
   ];
