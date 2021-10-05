@@ -24,220 +24,226 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
             style: TextStyle(fontStyle: FontStyle.italic)),
         backgroundColor: Color(ExtraColors.appBarColor),
       ),
-      body: Column(
-          // padding: const EdgeInsets.all(15.0),
-          // crossAxisCount: 1,
-          // childAspectRatio: 3,
-          // mainAxisSpacing: 2.0,
-          // crossAxisSpacing: 2.0,
-
-          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //   crossAxisCount: 2,
-          //   childAspectRatio: 1,
-          //   mainAxisSpacing: 10.0,
-          //   crossAxisSpacing: 4.0,
-          // ),
-          // itemCount: staticServiceList.length,
-          // itemBuilder: (BuildContext context, int index) {
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 30),
-              margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => InquiryDetailScreen(),
-                        ));
-                  },
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/tyresupdated.png",
-                        // staticServiceList[index].image,
-                        height: 80,
-                        // width: 50,
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Text(
-                            "Tyres",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w800),
-                          ))
-                    ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-              child: new Divider(
-                thickness: 1.5,
-                color: Color(0xffef773c),
+      body: SingleChildScrollView(
+        child: Column(
+            // padding: const EdgeInsets.all(15.0),
+            // crossAxisCount: 1,
+            // childAspectRatio: 3,
+            // mainAxisSpacing: 2.0,
+            // crossAxisSpacing: 2.0,
+      
+            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //   crossAxisCount: 2,
+            //   childAspectRatio: 1,
+            //   mainAxisSpacing: 10.0,
+            //   crossAxisSpacing: 4.0,
+            // ),
+            // itemCount: staticServiceList.length,
+            // itemBuilder: (BuildContext context, int index) {
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 30),
+                margin: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InquiryDetailScreen(),
+                          ));
+                    },
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/tyresupdated.png",
+                          // staticServiceList[index].image,
+                          height: 80,
+                          // width: 50,
+                        ),
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            child: Text(
+                              "Tyres",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w800),
+                            ))
+                      ],
+                    )),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OilFilterInquiryDetail(),
-                        ));
-                  },
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/oilfilterupdated.png",
-                        // staticServiceList[index].image,
-                        height: 80,
-                        // width: 50,
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Text(
-                            "Oil & Filters",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w800),
-                          ))
-                    ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-              child: new Divider(
-                thickness: 1.5,
-                color: Color(0xffef773c),
+              Padding(
+                // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+                child: new Divider(
+                  thickness: 1.5,
+                  color: Color(0xffef773c),
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BatteryInquiry(),
-                        ));
-                  },
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/electricupdated.png",
-                        // staticServiceList[index].image,
-                        height: 80,
-                        // width: 50,
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Text(
-                            "Batteries",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w800),
-                          ))
-                    ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-              child: new Divider(
-                thickness: 1.5,
-                color: Color(0xffef773c),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OilFilterInquiryDetail(),
+                          ));
+                    },
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/oilfilterupdated.png",
+                          // staticServiceList[index].image,
+                          height: 80,
+                          // width: 50,
+                        ),
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            child: Text(
+                              "Oil & Filters",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w800),
+                            ))
+                      ],
+                    )),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BrakeInquiry(),
-                        ));
-                  },
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/brakesupdated.png",
-                        // staticServiceList[index].image,
-                        height: 80,
-                        // width: 50,
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Text(
-                            "Brakes",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w800),
-                          ))
-                    ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-              child: new Divider(
-                thickness: 1.5,
-                color: Color(0xffef773c),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+                // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                child: new Divider(
+                  thickness: 1.5,
+                  color: Color(0xffef773c),
+                ),
               ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BatteryInquiry(),
+                          ));
+                    },
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/batteryupdated.png",
+                          // staticServiceList[index].image,
+                          height: 80,
+                          // width: 50,
+                        ),
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            child: Text(
+                              "Batteries",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w800),
+                            ))
+                      ],
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+                // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                child: new Divider(
+                  thickness: 1.5,
+                  color: Color(0xffef773c),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BrakeInquiry(),
+                          ));
+                    },
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/brakesupdated.png",
+                          // staticServiceList[index].image,
+                          height: 80,
+                          // width: 50,
+                        ),
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            child: Text(
+                              "Brakes",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w800),
+                            ))
+                      ],
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+                // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                child: new Divider(
+                  thickness: 1.5,
+                  color: Color(0xffef773c),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OtherServicesInquiry(),
+                          ));
+                    },
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/servicingupdated.png",
+                          // staticServiceList[index].image,
+                          height: 80,
+                          // width: 50,
+                        ),
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            child: Text(
+                              "Other Services",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w800),
+                            ))
+                      ],
+                    )),
+              )
+            ]
+      
+            // }
             ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OtherServicesInquiry(),
-                        ));
-                  },
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/servicingupdated.png",
-                        // staticServiceList[index].image,
-                        height: 80,
-                        // width: 50,
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Text(
-                            "Other Services",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w800),
-                          ))
-                    ],
-                  )),
-            )
-          ]
-
-          // }
-          ),
+      ),
     );
   }
 
@@ -263,11 +269,11 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
         image: "images/brakesupdated.png",
         body:
             " Fasttrack – Emarat offers brake pads that provide the best design for vehicle application with options available for medium duty, passenger cars, light trucks, SUVs, medium duty, fleet and specialty applications. With a strong commitment to research and development, every brake pad is extensively tested to ensure OE fit, form and function. Fasttrack – Emarat dominates the aftermarket with first-to-market part numbers and industry leading coverage for brake pads. Whether it’s for high end applications, everyday drivers or budget-conscious customers. Fasttrack – Emarat performs various intricate tests on the vehicle for guaranteed premium performance and maximized safety. Parts that are available are Brake Pads, Brake Shoe, Disks, Brake Fluid Check/ Replace. Master Cylinder, Brake Booster, Wheel Cylinder, Calipers, Parking Brakes Bleeding, Hydraulic Lines Check/ Replace. Skimming for all Disks and Drums"),
-    // ServiceModel(
-    //     title: "Electrics",
-    //     image: "images/electrics.png",
-    //     body:
-    //         "Electrical systems are more complicated than ever, but they’re more reliable too, and easier to diagnose and repair with the proper equipment. At Fasttrack - Emarat, we have a full line of manufacturer-certified diagnostic tools. The tools, scanners, and equipment are the same as those used in dealership service departments or better. Our certified technicians know your car’s electrical components and can diagnose problems quickly and effectively. At Fasttrack - Emarat, we take a serious, targeted approach to pinpoint the problem and minimize the cost of repairs. This means that time is not wasted on guesswork and your wait in our waiting area is as short as we can make it. Electrical Services we provide Battery, Coils, Fuse, Light Check/ Replace. Electrical Fan, Starter Motor, Alternator, Windscreen Motor Check/Replace/ Spark Plugs, Ignition Coil, High Tension Wires Check/ Replace. Electrical Accessories Check/Replace."),
+    ServiceModel(
+        title: "Electrics",
+        image: "images/electricupdated.png",
+        body:
+            "Electrical systems are more complicated than ever, but they’re more reliable too, and easier to diagnose and repair with the proper equipment. At Fasttrack - Emarat, we have a full line of manufacturer-certified diagnostic tools. The tools, scanners, and equipment are the same as those used in dealership service departments or better. Our certified technicians know your car’s electrical components and can diagnose problems quickly and effectively. At Fasttrack - Emarat, we take a serious, targeted approach to pinpoint the problem and minimize the cost of repairs. This means that time is not wasted on guesswork and your wait in our waiting area is as short as we can make it. Electrical Services we provide Battery, Coils, Fuse, Light Check/ Replace. Electrical Fan, Starter Motor, Alternator, Windscreen Motor Check/Replace/ Spark Plugs, Ignition Coil, High Tension Wires Check/ Replace. Electrical Accessories Check/Replace."),
 
     // ServiceModel(
     //     title: "Servicing",

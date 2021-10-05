@@ -118,6 +118,7 @@ class _MainTabState extends State<MainTab> {
         
         
         child: BottomNavigationBar(
+           type: BottomNavigationBarType.fixed,
           
           currentIndex: bottomSelectedIndex,
           onTap: (index) {
@@ -150,7 +151,9 @@ class _MainTabState extends State<MainTab> {
     });
   }
 
-  List<BottomNavigationBarItem> buildBottomNavBarItems() {
+  List<BottomNavigationBarItem> 
+  
+  buildBottomNavBarItems() {
     return [
       BottomNavigationBarItem(
         backgroundColor: Color(0xff19378d),

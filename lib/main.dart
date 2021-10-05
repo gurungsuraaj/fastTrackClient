@@ -107,8 +107,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/car.png"),
-              fit: BoxFit.cover,
+              image: AssetImage("images/bgimage.jpg"),
+              fit: BoxFit.fill,
             ),
           ),
           height: double.maxFinite,

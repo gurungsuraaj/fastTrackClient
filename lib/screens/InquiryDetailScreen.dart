@@ -312,6 +312,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.white,
                       dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "width",
@@ -347,6 +349,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.white,
                       dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "height",
@@ -388,6 +392,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.white,
                       dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "rim-size",
@@ -421,6 +427,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.white,
                       dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "brand",
@@ -926,6 +934,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.white,
                       dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "Select Make",
@@ -961,6 +971,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.white,
                       dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "Select Model",
@@ -1041,6 +1053,8 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      iconEnabledColor: Colors.white,
+                      iconDisabledColor: Colors.white,
                       dropdownColor: Color(ExtraColors.scaffoldColor),
                       hint: Text(
                         "Select Year",
