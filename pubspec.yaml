@@ -61,6 +61,7 @@ dependencies:
   flutter_statusbarcolor:
   encrypt:
   flutter_config:
+  webview_flutter:
 
 dev_dependencies:
   flutter_test:
@@ -157,6 +158,7 @@ flutter:
     - images/acnew.png
     - images/checkhistorynew.png
     - images/bgimage.jpg
+    - images/insta.png
 
     
 
