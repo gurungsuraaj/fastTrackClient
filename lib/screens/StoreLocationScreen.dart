@@ -49,6 +49,7 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     );
     return Scaffold(
       appBar: AppBar(
+         centerTitle: true,
         automaticallyImplyLeading: false,
         title: Text("Store Location"),
         backgroundColor: Color(ExtraColors.darkBlueAccent),

@@ -122,7 +122,8 @@ class _MainTabState extends State<MainTab> {
       body: buildPageView(),
       bottomNavigationBar: Container(
         child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
+          backgroundColor: Color(0xff0B2D8A),
+          type: BottomNavigationBarType.shifting,
           currentIndex: bottomSelectedIndex,
           onTap: (index) {
             bottomTapped(index);

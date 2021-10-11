@@ -38,6 +38,7 @@ class _LocateActivityState extends State<LocateActivity> {
         fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white);
     return Scaffold(
         appBar: AppBar(
+           centerTitle: true,
           backgroundColor: Color(ExtraColors.appBarColor),
           title: Text("LOCATE A BRANCH",
               style: TextStyle(fontStyle: FontStyle.italic)),

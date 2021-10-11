@@ -81,6 +81,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
 
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.scaffoldColor),
         title: Text("Battery Inquiry",
             style: TextStyle(fontStyle: FontStyle.italic)),

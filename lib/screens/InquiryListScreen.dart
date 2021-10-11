@@ -20,6 +20,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         centerTitle: true,
         title: Text("Make An Inquiry".toUpperCase(),
             style: TextStyle(fontStyle: FontStyle.italic)),
         backgroundColor: Color(ExtraColors.appBarColor),
@@ -67,6 +68,47 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
                             child: Text(
                               "Tyres",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w800),
+                            ))
+                      ],
+                    )),
+              ),
+               Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+                // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                child: new Divider(
+                  thickness: 1.5,
+                  color: Color(0xffef773c),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BrakeInquiry(),
+                          ));
+                    },
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/brakesupdated.png",
+                          // staticServiceList[index].image,
+                          height: 80,
+                          // width: 50,
+                        ),
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            child: Text(
+                              "Brakes",
                               style: TextStyle(
                                   fontSize: 24,
                                   color: Colors.grey[600],
@@ -148,7 +190,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                         Container(
                             padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
                             child: Text(
-                              "Batteries",
+                              "Battery",
                               style: TextStyle(
                                   fontSize: 24,
                                   color: Colors.grey[600],
@@ -157,47 +199,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                       ],
                     )),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                child: new Divider(
-                  thickness: 1.5,
-                  color: Color(0xffef773c),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1),
-                child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BrakeInquiry(),
-                          ));
-                    },
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset(
-                          "images/brakesupdated.png",
-                          // staticServiceList[index].image,
-                          height: 80,
-                          // width: 50,
-                        ),
-                        Container(
-                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
-                            child: Text(
-                              "Brakes",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.w800),
-                            ))
-                      ],
-                    )),
-              ),
+             
               Padding(
                 padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
                 // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -222,7 +224,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Image.asset(
-                          "images/servicingupdated.png",
+                          "images/OtherServices.png",
                           // staticServiceList[index].image,
                           height: 80,
                           // width: 50,

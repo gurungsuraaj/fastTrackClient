@@ -163,6 +163,7 @@ class _InquiryDetailScreenState extends State<InquiryDetailScreen>
         key: _scaffoldKey,
         backgroundColor: Color(ExtraColors.scaffoldColor),
         appBar: AppBar(
+           centerTitle: true,
           title: Text("TYRES INQUIRY",
               style: TextStyle(fontStyle: FontStyle.italic)),
           backgroundColor: Color(ExtraColors.appBarColor),

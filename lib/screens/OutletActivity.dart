@@ -35,6 +35,7 @@ class _OutletActivity extends State<OutletActivity> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         title: Text("Outlet"),
         backgroundColor: Color(ExtraColors.darkBlue),
       ),

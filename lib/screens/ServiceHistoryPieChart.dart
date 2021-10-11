@@ -51,6 +51,7 @@ class _ServiceHistoryPieChart extends State<ServiceHistoryPieChart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.darkBlue),
         title: Text('Service Details'),
       ),

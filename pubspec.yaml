@@ -145,7 +145,7 @@ flutter:
     - images/callupdated.png
     - images/checkhistoryupdated.png
     - images/electricupdated.png
-    - images./inquireupdated.png
+    - images/inquireupdated.png
     - images/nextserviceupdated.png
     - images/oilfilterupdated.png
     - images/promotionupdated.png
@@ -159,6 +159,7 @@ flutter:
     - images/checkhistorynew.png
     - images/bgimage.jpg
     - images/insta.png
+    - images/OtherServices.png
 
     
 

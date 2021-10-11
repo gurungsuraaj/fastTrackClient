@@ -70,6 +70,7 @@ class _OtherServicesInquiryState extends State<OtherServicesInquiry>
       backgroundColor: Color(ExtraColors.scaffoldColor),
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("OTHER SERVICES INQUIRY",
             style: TextStyle(fontStyle: FontStyle.italic)),

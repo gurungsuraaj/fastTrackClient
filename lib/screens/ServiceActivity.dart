@@ -39,6 +39,7 @@ class _ServiceActivityState extends State<ServiceActivity>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("SERVICES", style: TextStyle(fontStyle: FontStyle.italic)),
       ),
@@ -46,7 +47,6 @@ class _ServiceActivityState extends State<ServiceActivity>
         inAsyncCall: isProgressBarShown,
         child: Container(
           child:
-
 //          new GridView.count(
 //              physics: NeverScrollableScrollPhysics(),
 //              shrinkWrap: true,

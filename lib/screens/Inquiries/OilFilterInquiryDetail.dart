@@ -78,6 +78,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
 
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("OIL FILTER INQUIRY ",
             style: TextStyle(fontStyle: FontStyle.italic)),

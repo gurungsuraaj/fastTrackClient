@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppBarWithTitle {
   static getAppBar(String title) {
     return AppBar(
+       centerTitle: true,
       backgroundColor: Color(ExtraColors.darkBlue),
       title: Text(title),
     );

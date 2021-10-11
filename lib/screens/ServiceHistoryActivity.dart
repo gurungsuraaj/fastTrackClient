@@ -43,6 +43,7 @@ class _ServiceHistoryActivityState extends State<ServiceHistoryActivity> {
         fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
     return Scaffold(
         appBar: AppBar(
+           centerTitle: true,
           title: Text("Service history"),
           backgroundColor: Color(ExtraColors.darkBlue),
         ),

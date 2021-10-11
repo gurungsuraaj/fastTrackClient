@@ -12,9 +12,10 @@ class ServiceDetailActivity extends StatefulWidget {
   _ServiceDetailActivityState createState() => _ServiceDetailActivityState();
 }
 
-class _ServiceDetailActivityState extends State<ServiceDetailActivity> with TickerProviderStateMixin{
+class _ServiceDetailActivityState extends State<ServiceDetailActivity>
+    with TickerProviderStateMixin {
   AnimationController _controller;
- 
+
   String nearestStorePhn,
       whatsAppNum,
       customerName,
@@ -26,30 +27,30 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
     "images/whatsapp.png"
   ];
 
-  
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     setState(() {
-       nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
+      nearestStorePhn = SpUtil.getString(Constants.nearestStorePhoneNo)
           .replaceAll(new RegExp(r"\s+\b|\b\s"), "");
       whatsAppNum = SpUtil.getString(Constants.whatsAppNumber);
       customerName = SpUtil.getString(Constants.customerName);
       customerNumber = SpUtil.getString(Constants.customerMobileNo);
       customerEmail = SpUtil.getString(Constants.customerEmail);
     });
-     _controller = new AnimationController(
+    _controller = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.serviceTitle.toUpperCase(), style: TextStyle(fontStyle: FontStyle.italic)),
+        centerTitle: true,
+        title: Text(widget.serviceTitle.toUpperCase(),
+            style: TextStyle(fontStyle: FontStyle.italic)),
         backgroundColor: Color(ExtraColors.appBarColor),
       ),
       backgroundColor: Color(ExtraColors.scaffoldColor),
@@ -62,7 +63,7 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
       //         alignment: FractionalOffset.topCenter,
       //         child: new ScaleTransition(
       //           scale: new CurvedAnimation(
-                  
+
       //             parent: _controller,
       //             curve: new Interval(0.0, 1.0 - index / imageList.length / 2.0,
       //                 curve: Curves.easeOut),
@@ -109,8 +110,8 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
       //                     _controller.value * 0.5 * math.pi),
       //                 alignment: FractionalOffset.center,
       //                 child: new Icon(
-                        
-      //                     _controller.isDismissed ? Icons.call : Icons.close, 
+
+      //                     _controller.isDismissed ? Icons.call : Icons.close,
       //                     color:Color(ExtraColors.darkBlue)),
       //               );
       //             },
@@ -148,101 +149,103 @@ class _ServiceDetailActivityState extends State<ServiceDetailActivity> with Tick
             padding: EdgeInsets.fromLTRB(15, 50, 0, 20),
             child: Column(
               children: <Widget>[
-                Image.asset(widget.image),
+                Image.asset(widget.image, scale: 0.7),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
+                    padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
                     alignment: Alignment.center,
                     child: Text(
                       widget.serviceTitle.toUpperCase(),
-                      
-                     
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xffef773c), fontSize: 38,fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        color: Color(0xffef773c),
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                      ),
                     )),
               ],
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              padding: EdgeInsets.fromLTRB(40, 0, 40, 10),
               child: Text(
                 widget.body,
                 textAlign: TextAlign.justify,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: Colors.white, height: 1.2, wordSpacing: 1.2),
               )),
-              SizedBox(height:20),
-              // Spacer(),
-                 Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.18),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  Navigator.of(context).pop();
-                                  // String nearestPhoneNo = SpUtil.getString(
-                                  //         Constants.nearestStorePhoneNo)
-                                  //     .replaceAll(
-                                  //         new RegExp(r"\s+\b|\b\s"), "");
-                                  var url = "tel:$nearestStorePhn";
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                child: Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffef773c),
-                                  ),
-                                  child: Icon(
-                                    Icons.call_rounded,
-                                    color: Colors.white,
-                                    size: 40.0,
-                                  ),
-                                  alignment: Alignment.center,
-                                ),
-                                // child: Image.asset(
-                                //   "images/call.png",
-                                //   height: 40,
-                                //   width: 40,
-                                // ),
-                              ),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  Navigator.of(context).pop();
-                                  // String whatappNO = SpUtil.getString(
-                                  //     Constants.whatsAppNumber);
-                                  print("Whats app number $whatsAppNum");
-                                  var whatsappUrl =
-                                      "whatsapp://send?phone=$whatsAppNum";
-                                  await canLaunch(whatsappUrl)
-                                      ? launch(whatsappUrl)
-                                      : showAlert();
-                                },
-                                child: Image.asset(
-                                  "images/logowa.png",
-                                  height: 60,
-                                  width: 60,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height:MediaQuery.of(context).size.height * 0.10
-                        ),
+          SizedBox(height: 20),
+          // Spacer(),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    // String nearestPhoneNo = SpUtil.getString(
+                    //         Constants.nearestStorePhoneNo)
+                    //     .replaceAll(
+                    //         new RegExp(r"\s+\b|\b\s"), "");
+                    var url = "tel:$nearestStorePhn";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffef773c),
+                    ),
+                    child: Icon(
+                      Icons.call_rounded,
+                      color: Colors.white,
+                      size: 40.0,
+                    ),
+                    alignment: Alignment.center,
+                  ),
+                  // child: Image.asset(
+                  //   "images/call.png",
+                  //   height: 40,
+                  //   width: 40,
+                  // ),
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    // String whatappNO = SpUtil.getString(
+                    //     Constants.whatsAppNumber);
+                    print("Whats app number $whatsAppNum");
+                    var whatsappUrl = "whatsapp://send?phone=$whatsAppNum";
+                    await canLaunch(whatsappUrl)
+                        ? launch(whatsappUrl)
+                        : showAlert();
+                  },
+                  child: Image.asset(
+                    "images/logowa.png",
+                    height: 60,
+                    width: 60,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.10),
         ],
       ),
     );
   }
 
-   showAlert() {
+  showAlert() {
     showDialog(
       context: context,
       builder: (BuildContext context) {

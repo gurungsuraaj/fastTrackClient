@@ -53,6 +53,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("NEXT SERVICE DATE",
             style: TextStyle(fontStyle: FontStyle.italic)),
