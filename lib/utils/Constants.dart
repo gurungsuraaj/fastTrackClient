@@ -2,7 +2,9 @@ class Constants {
   // static final String NTLM_USERNAME = "PSS";
   // static final String NTLM_PASSWORD = "\$ky\$p0rt\$";
     static final String ntlmUsername = "EBTUSER";
-  static final String ntlmPassword = "abcd1234\$";
+  // static final String ntlmPassword = "abcd1234\$";
+  static final String ntlmPassword = "cisco@123";
+  
   static final String userName = "username";
   static const String logout = 'LOGOUT';
   static const List<String> choices = <String>[logout];
