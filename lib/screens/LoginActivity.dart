@@ -719,6 +719,7 @@ class _LoginActivityState extends State<LoginActivity> {
                 builder: (context) => SignUpActivity(
                       mobileNumber: mobileController.text,
                     )));
+       
       }
     }).catchError((err) {
       ShowToast.showToast(context, err);

@@ -1148,7 +1148,7 @@ class NetworkOperationManager {
       encoding: Encoding.getByName("UTF-8"),
     )
         .then((res) {
-      print("This is the response ${res.body}");
+      print("This is the response ------- ${res.body}");
 
       var rawXmlResponse = res.body;
       xml.XmlDocument parsedXml = xml.parse(rawXmlResponse);
