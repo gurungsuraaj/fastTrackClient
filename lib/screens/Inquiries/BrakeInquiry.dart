@@ -74,11 +74,10 @@ class _BrakeInquiryState extends State<BrakeInquiry>
       backgroundColor: Color(ExtraColors.scaffoldColor),
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.scaffoldColor),
-        title: Center(
-          child: Text("Brake Inquiry",
-              style: TextStyle(fontStyle: FontStyle.italic)),
-        ),
+        title: Text("BRAKE INQUIRY",
+            style: TextStyle(fontStyle: FontStyle.italic)),
         actions: <Widget>[],
       ),
       body: ModalProgressHUD(
