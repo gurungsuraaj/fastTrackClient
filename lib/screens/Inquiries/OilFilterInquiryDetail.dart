@@ -78,6 +78,7 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
 
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("OIL FILTER INQUIRY ",
             style: TextStyle(fontStyle: FontStyle.italic)),
@@ -105,6 +106,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Select Make",
@@ -141,6 +144,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Select Model",
@@ -285,6 +290,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Select Year",
@@ -320,6 +327,8 @@ class _OilFilterInquiryDetailState extends State<OilFilterInquiryDetail>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Location",

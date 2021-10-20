@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:fasttrackgarage_app/database/AppDatabase.dart';
@@ -71,6 +72,7 @@ class _HomeActivityState extends State<HomeActivity>
   int shortDistanceIndex;
   double androidVersion, iosVersion;
   var userCurrentLocation;
+  bool enabled = true;
 
   @override
   void initState() {
@@ -274,7 +276,7 @@ class _HomeActivityState extends State<HomeActivity>
                         );
                       }).toList(),
                     ),
-              SizedBox(height:20),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -301,9 +303,11 @@ class _HomeActivityState extends State<HomeActivity>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Image.asset(
-                                    "images/checkhistorynew.png",
-                                    height: 100,
-                                    width: 80,
+                                    "images/checkhistoryupdated.png",
+                                    height: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
                                   ),
                                   Container(
                                       // padding: EdgeInsets.only(top: 5),
@@ -336,9 +340,11 @@ class _HomeActivityState extends State<HomeActivity>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Image.asset(
-                                    "images/nextservicenew.png",
-                                    height: 100,
-                                    width: 80,
+                                    "images/nextserviceupdated.png",
+                                    height: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
                                   ),
                                   Container(
                                       padding: EdgeInsets.only(top: 5),
@@ -351,7 +357,7 @@ class _HomeActivityState extends State<HomeActivity>
                               )))),
                 ],
               ),
-              SizedBox(height:5),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -364,32 +370,42 @@ class _HomeActivityState extends State<HomeActivity>
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.45,
                           height: MediaQuery.of(context).size.width * 0.45,
-                          child: InkWell(
-                              onTap: () {
-                                getLocationOfCLient().whenComplete(() {
-                                  _showAlert();
-                                });
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset(
-                                    "images/distresscallnew.png",
-                                    height: 100,
-                                    width: 80,
-                                  ),
-                                  Container(
-                                      // padding: EdgeInsets.only(top: 5),
-                                      child: Text("Distress Call",
-                                          style: TextStyle(
-                                              color: Color(0xff808080),
-                                              fontSize: 16.0)))
-                                ],
-                              )))),
+                          child: AbsorbPointer(
+                            absorbing: !enabled,
+                            child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    enabled = false;
+                                  });
+                                  getLocationOfCLient().whenComplete(() {
+                                    _showAlert();
+
+                                    setState(() {
+                                      enabled = true;
+                                    });
+                                  });
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "images/callupdated.png",
+                                  height: MediaQuery.of(context).size.width * 0.35,
+                                    width: MediaQuery.of(context).size.width * 0.35,
+                                    ),
+                                    Container(
+                                        // padding: EdgeInsets.only(top: 5),
+                                        child: Text("Distress Call",
+                                            style: TextStyle(
+                                                color: Color(0xff808080),
+                                                fontSize: 16.0)))
+                                  ],
+                                )),
+                          ))),
                 ],
               ),
-              SizedBox(height:5),
+              SizedBox(height: 8),
               Wrap(
                   // crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.center,
@@ -404,6 +420,8 @@ class _HomeActivityState extends State<HomeActivity>
                   // crossAxisSpacing: 4.0,
                   children: <Widget>[
                     Card(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(color: Color(0xff0c2d8a)),
@@ -431,9 +449,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/inquirynew.png",
-                                      height: 100,
-                                      width: 80,
+                                      "images/inquireupdated.png",
+                                 height: MediaQuery.of(context).size.width * 0.35,
+                                    width: MediaQuery.of(context).size.width * 0.35,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -443,7 +461,10 @@ class _HomeActivityState extends State<HomeActivity>
                                                 fontSize: 16.0)))
                                   ],
                                 )))),
+                    // SizedBox(height:8),
                     Card(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(color: Color(0xff0c2d8a)),
@@ -476,9 +497,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/branchnew.png",
-                                      height: 100,
-                                      width: 80,
+                                      "images/branchupdated.png",
+                                    height: MediaQuery.of(context).size.width * 0.35,
+                                    width: MediaQuery.of(context).size.width * 0.35,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -488,7 +509,10 @@ class _HomeActivityState extends State<HomeActivity>
                                                 fontSize: 16.0)))
                                   ],
                                 )))),
+                    //  SizedBox(height:8),
                     Card(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(color: Color(0xff0c2d8a)),
@@ -511,9 +535,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/promotionnew.png",
-                                      height: 110,
-                                      width: 80,
+                                      "images/promotionupdated.png",
+                                     height: MediaQuery.of(context).size.width * 0.35,
+                                    width: MediaQuery.of(context).size.width * 0.35,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -523,7 +547,10 @@ class _HomeActivityState extends State<HomeActivity>
                                                 fontSize: 16.0)))
                                   ],
                                 )))),
+
                     Card(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(color: Color(0xff0c2d8a)),
@@ -548,9 +575,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Image.asset(
-                                      "images/servicenew.png",
-                                      height: 100,
-                                      width: 80,
+                                      "images/serviceupdated.png",
+                                 height: MediaQuery.of(context).size.width * 0.35,
+                                    width: MediaQuery.of(context).size.width * 0.35,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -560,7 +587,6 @@ class _HomeActivityState extends State<HomeActivity>
                                                 fontSize: 16.0)))
                                   ],
                                 )))),
-                                
 
                     // Card(
                     //     child: Container(
@@ -668,17 +694,18 @@ class _HomeActivityState extends State<HomeActivity>
             contentPadding: EdgeInsets.all(0.0),
             content: Container(
               color: Color(0xff0e308a),
-              height: MediaQuery.of(context).size.height * 0.52,
+              height: MediaQuery.of(context).size.height * 0.60,
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 140,
+                    height: 160,
+                    margin: const EdgeInsets.only(top: 30),
                     //                  width: queryData.size.width,
                     // color: Color(ExtraColors.darkBlue),
 
                     child: Center(
                         child: Image.asset(
-                      "images/alert.png",
+                      "images/callupdated.png",
                       height: 110,
                     )),
                   ),
@@ -767,18 +794,19 @@ class _HomeActivityState extends State<HomeActivity>
                                     shape: BoxShape.circle,
                                     color: Color(0xffef773c),
                                   ),
+                                  //    child: Image.asset(
+                                  //   "images/img.png",
+                                  //   height: 40,
+                                  //   width: 40,
+                                  //   alignment: Alignment.center,
+                                  // ),
                                   child: Icon(
-                                    Icons.call,
+                                    Icons.call_rounded,
                                     color: Colors.white,
-                                    size: 30.0,
+                                    size: 35.0,
                                   ),
                                   alignment: Alignment.center,
                                 ),
-                                // child: Image.asset(
-                                //   "images/call.png",
-                                //   height: 40,
-                                //   width: 40,
-                                // ),
                               ),
                               SizedBox(
                                 width: 50,

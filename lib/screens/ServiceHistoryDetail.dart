@@ -18,6 +18,7 @@ class _ServiceHistoryDetailState extends State<ServiceHistoryDetail> {
 
     return Scaffold(
       appBar: AppBar(
+         centerTitle: true,
         title: Text(
           "Service History Detail",
         ),

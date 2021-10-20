@@ -74,6 +74,7 @@ class _BrakeInquiryState extends State<BrakeInquiry>
       backgroundColor: Color(ExtraColors.scaffoldColor),
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.scaffoldColor),
         title: Text("BRAKE INQUIRY",
             style: TextStyle(fontStyle: FontStyle.italic)),
@@ -103,6 +104,8 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            iconEnabledColor: Colors.white,
+                          iconDisabledColor: Colors.white,
                             dropdownColor: Color(ExtraColors.scaffoldColor),
                             hint: Text("Select Make",
                                 style: TextStyle(color: Colors.white)),
@@ -133,6 +136,8 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            iconEnabledColor: Colors.white,
+                          iconDisabledColor: Colors.white,
                             dropdownColor: Color(ExtraColors.scaffoldColor),
                             hint: Text("Select Model",
                                 style: TextStyle(color: Colors.white)),
@@ -376,6 +381,8 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            iconEnabledColor: Colors.white,
+                          iconDisabledColor: Colors.white,
                             dropdownColor: Color(ExtraColors.scaffoldColor),
                             hint: Text("Location",
                                 style: TextStyle(color: Colors.white)),
@@ -413,6 +420,8 @@ class _BrakeInquiryState extends State<BrakeInquiry>
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
+                          iconEnabledColor: Colors.white,
+                          iconDisabledColor: Colors.white,
                           dropdownColor: Color(ExtraColors.scaffoldColor),
                           hint: Text("Select Year",
                               style: TextStyle(color: Colors.white)),

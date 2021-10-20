@@ -61,6 +61,7 @@ dependencies:
   flutter_statusbarcolor:
   encrypt:
   flutter_config:
+  webview_flutter:
 
 dev_dependencies:
   flutter_test:
@@ -137,14 +138,30 @@ flutter:
     - images/iconBg.png
     - images/iconFg.png
     - images/logowa.png
-    - images/branchnew.png
-    - images/checkhistorynew.png
-    - images/distresscallnew.png
-    - images/inquirynew.png
-    - images/nextservicenew.png
-    - images/promotionnew.png
-    - images/servicenew.png
+    - images/acupdated.png
+    - images/batteryupdated.png
+    - images/brakesupdated.png
+    - images/branchupdated.png
+    - images/callupdated.png
+    - images/checkhistoryupdated.png
+    - images/electricupdated.png
+    - images/inquireupdated.png
+    - images/nextserviceupdated.png
+    - images/oilfilterupdated.png
+    - images/promotionupdated.png
+    - images/serviceupdated.png
+    - images/servicingupdated.png
+    - images/steeringupdated.png
+    - images/suspensionupdated.png
+    - images/tuneupupdated.png
+    - images/tyresupdated.png
     - images/acnew.png
+    - images/checkhistorynew.png
+    - images/bgimage.jpg
+    - images/insta.png
+    - images/OtherServices.png
+
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -89,7 +89,7 @@ class _SignUpActivity extends State<SignUpActivity> {
         statusBarColor: Color(ExtraColors.darkBlueAccent)));
 
     return Scaffold(
-      backgroundColor: Color(0xff253983),
+      backgroundColor: Color(ExtraColors.scaffoldColor),
       key: _scaffoldKey,
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
@@ -111,14 +111,14 @@ class _SignUpActivity extends State<SignUpActivity> {
                       "CREATE AN ",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 28,
+                          fontSize: 24,
                           fontWeight: FontWeight.w600),
                     ),
                     Text(
                       "ACCOUNT ",
                       style: TextStyle(
                           color: Color(0xffef773c),
-                          fontSize: 28,
+                          fontSize: 24,
                           fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -189,7 +189,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                           child: Icon(
                                             Icons.person_outline,
                                             color: Colors.white,
-                                            size: 30,
+                                            size: 22,
                                           )),
                                     ),
                                     // enabledBorder: OutlineInputBorder(
@@ -241,7 +241,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                           child: Icon(
                                             Icons.mail_outline,
                                             color: Colors.white,
-                                            size: 30,
+                                            size: 22,
                                           )),
                                     ),
                                     // enabledBorder: OutlineInputBorder(
@@ -342,7 +342,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                                           child: Icon(
                                             Icons.lock_outline,
                                             color: Colors.white,
-                                            size: 30,
+                                            size: 22,
                                           )),
                                     ),
                                     // enabledBorder: OutlineInputBorder(
@@ -598,7 +598,7 @@ class _SignUpActivity extends State<SignUpActivity> {
                   child: Icon(
                     Icons.phone,
                     color: Colors.white,
-                    size: 25,
+                    size: 22,
                   )),
             ),
             SizedBox(

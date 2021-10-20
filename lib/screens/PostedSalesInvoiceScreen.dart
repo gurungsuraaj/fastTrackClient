@@ -43,6 +43,7 @@ class _PostedSalesInvoiceScreenState extends State<PostedSalesInvoiceScreen> {
       backgroundColor: Color(ExtraColors.scaffoldColor),
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("CHECK HISTORY",
             style: TextStyle(fontStyle: FontStyle.italic)),

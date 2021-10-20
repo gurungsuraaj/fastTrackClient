@@ -38,6 +38,7 @@ class _LocateActivityState extends State<LocateActivity> {
         fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white);
     return Scaffold(
         appBar: AppBar(
+           centerTitle: true,
           backgroundColor: Color(ExtraColors.appBarColor),
           title: Text("LOCATE A BRANCH",
               style: TextStyle(fontStyle: FontStyle.italic)),
@@ -258,7 +259,7 @@ class _LocateActivityState extends State<LocateActivity> {
                                       child: new Container(
                                         alignment: Alignment.center,
                                         height: 32.0,
-                                        width: 150,
+                                        width: 180,
                                         decoration: new BoxDecoration(
                                           color: Color(0xffef773c),
                                           // border: new Border.all(

@@ -30,7 +30,6 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
       backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-
         title: Center(
             child: Text("USER PROFILE",
                 style: TextStyle(fontStyle: FontStyle.italic))),
@@ -48,7 +47,7 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
         child: Column(
           children: [
             SizedBox(
-              height: 30,
+              height: 60,
             ),
             Container(
               // padding: EdgeInsets.only(left: 10),
@@ -58,7 +57,7 @@ class _UsersProfileActivityState extends State<UsersProfileActivity> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 35,
             ),
 
             Container(

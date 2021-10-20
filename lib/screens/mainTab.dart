@@ -2,7 +2,11 @@ import 'dart:io';
 
 import 'package:fasttrackgarage_app/database/AppDatabase.dart';
 import 'package:fasttrackgarage_app/models/NotificationDbModel.dart';
+import 'package:fasttrackgarage_app/screens/FacebookScreen.dart';
+
 import 'package:fasttrackgarage_app/screens/HomeActivity.dart';
+import 'package:fasttrackgarage_app/screens/InstagramScreen.dart';
+
 import 'package:fasttrackgarage_app/screens/NotificationScreen.dart';
 import 'package:fasttrackgarage_app/screens/UsersProfileActivity.dart';
 import 'package:fasttrackgarage_app/screens/WebViewScreen.dart';
@@ -11,6 +15,8 @@ import 'package:fasttrackgarage_app/utils/PrimaryKeyGenerator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainTab extends StatefulWidget {
   @override
@@ -115,10 +121,9 @@ class _MainTabState extends State<MainTab> {
     return Scaffold(
       body: buildPageView(),
       bottomNavigationBar: Container(
-        
-        
         child: BottomNavigationBar(
-          
+          backgroundColor: Color(0xff0B2D8A),
+          type: BottomNavigationBarType.shifting,
           currentIndex: bottomSelectedIndex,
           onTap: (index) {
             bottomTapped(index);
@@ -139,6 +144,8 @@ class _MainTabState extends State<MainTab> {
         HomeActivity(),
         UsersProfileActivity(),
         WebViewScreen(),
+        InstagramScreen(),
+        FacebookScreen(),
         NotificationScreen(),
       ],
     );
@@ -146,7 +153,9 @@ class _MainTabState extends State<MainTab> {
 
   void pageChanged(int index) {
     setState(() {
-      bottomSelectedIndex = index;
+   bottomSelectedIndex = index;
+
+     
     });
   }
 
@@ -175,55 +184,68 @@ class _MainTabState extends State<MainTab> {
       ),
       BottomNavigationBarItem(
         backgroundColor: Color(0xff19378d),
-          icon: Icon(Icons.person, color: Color(0xff88acd0),),
-          activeIcon: new Icon(
+        icon: Icon(
+          Icons.person,
+          color: Color(0xff88acd0),
+        ),
+        activeIcon: new Icon(
           Icons.person,
           color: Color(0xffef773c),
         ),
-          // label: 'Profile'
-          label: '',
-
-          // title: Padding(
-          //   padding: const EdgeInsets.only(top: 2.0),
-          //   child: Text(
-          //     'Profile',
-          //     style: bottomTabBarText,
-          //   ),
-          // )
-          ),
+        // label: 'Profile'
+        label: '',
+      ),
       BottomNavigationBarItem(
         backgroundColor: Color(0xff19378d),
-          icon: new Icon(Icons.public, color: Color(0xff88acd0),),
-          activeIcon: new Icon(
+        icon: new Icon(
+          Icons.public,
+          color: Color(0xff88acd0),
+        ),
+        activeIcon: new Icon(
           Icons.public,
           color: Color(0xffef773c),
         ),
-          // label: 'Web'
-          label: '',
-          // title: Padding(
-          //   padding: const EdgeInsets.only(top: 2.0),
-          //   child: new Text(
-          //     'Web',
-          //     style: bottomTabBarText,
-          //   ),
-          // ),
-          ),
+        // label: 'Web'
+        label: '',
+      ),
       BottomNavigationBarItem(
         backgroundColor: Color(0xff19378d),
-        icon: new Icon(Icons.notifications,color: Color(0xff88acd0),),
+        icon: FaIcon(
+          FontAwesomeIcons.instagram,
+          color: Color(0xff88acd0),
+        ),
+        activeIcon: FaIcon(
+          FontAwesomeIcons.instagram,
+          color: Color(0xffef773c),
+        ),
+        // label: 'Instagram'
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        backgroundColor: Color(0xff19378d),
+        icon: FaIcon(
+          FontAwesomeIcons.facebook,
+          color: Color(0xff88acd0),
+        ),
+        activeIcon: FaIcon(
+          FontAwesomeIcons.facebook,
+          color: Color(0xffef773c),
+        ),
+        // label: 'Facebook'
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        backgroundColor: Color(0xff19378d),
+        icon: new Icon(
+          Icons.notifications,
+          color: Color(0xff88acd0),
+        ),
         activeIcon: new Icon(
           Icons.notifications,
           color: Color(0xffef773c),
         ),
         // label: 'Notifications',
         label: '',
-        // title: Padding(
-        //   padding: const EdgeInsets.only(top: 2.0),
-        //   child: new Text(
-        //     'Notifications',
-        //     style: bottomTabBarText,
-        //   ),
-        // ),
       ),
     ];
   }
@@ -231,9 +253,11 @@ class _MainTabState extends State<MainTab> {
   void bottomTapped(int index) {
     debugPrint("this is index");
     setState(() {
-      bottomSelectedIndex = index;
-      pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
+      
+        bottomSelectedIndex = index;
+        pageController.animateToPage(index,
+            duration: Duration(milliseconds: 500), curve: Curves.ease);
+      
     });
   }
 
@@ -322,5 +346,23 @@ class _MainTabState extends State<MainTab> {
 
     notification.dateTime = DateTime.now().toString();
     await database.notificationDao.insertNotification(notification);
+  }
+
+  static urlLauncher() async {
+    const url = 'https://www.instagram.com/fasttrackemarat/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  static _urlLauncher() async {
+    const url = 'https://www.facebook.com/fasttrackemarat/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

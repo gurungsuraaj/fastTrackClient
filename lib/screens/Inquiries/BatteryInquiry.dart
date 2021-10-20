@@ -81,6 +81,7 @@ class _BatteryInquiryState extends State<BatteryInquiry>
 
       key: _scaffoldKey,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Color(ExtraColors.scaffoldColor),
         title: Text("BATTERY INQUIRY",
             style: TextStyle(fontStyle: FontStyle.italic)),
@@ -106,6 +107,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text("Select Make",
                             style: TextStyle(color: Colors.white)),
@@ -137,6 +140,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Select Model",
@@ -176,6 +181,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Current Battery",
@@ -334,6 +341,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Location",
@@ -451,6 +460,8 @@ class _BatteryInquiryState extends State<BatteryInquiry>
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        iconDisabledColor: Colors.white,
                         dropdownColor: Color(ExtraColors.scaffoldColor),
                         hint: Text(
                           "Select Year",

@@ -43,6 +43,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       key: _scaffoldKey,
       backgroundColor: Color(ExtraColors.scaffoldColor),
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("Forgot Password"),
       ),

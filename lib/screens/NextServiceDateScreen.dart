@@ -53,6 +53,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         backgroundColor: Color(ExtraColors.appBarColor),
         title: Text("NEXT SERVICE DATE",
             style: TextStyle(fontStyle: FontStyle.italic)),
@@ -248,7 +249,7 @@ class _NextServiceDateScreenState extends State<NextServiceDateScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Color(ExtraColors.appBarColor),
+          backgroundColor: Color(0xff0b2c8b),
           contentPadding: EdgeInsets.all(10.0),
           actions: <Widget>[
             Align(

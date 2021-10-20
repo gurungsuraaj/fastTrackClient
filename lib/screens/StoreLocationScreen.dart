@@ -49,15 +49,20 @@ class _StoreLocationScreenState extends State<StoreLocationScreen> {
     );
     return Scaffold(
       appBar: AppBar(
+         centerTitle: true,
         automaticallyImplyLeading: false,
         title: Text("Store Location"),
         backgroundColor: Color(ExtraColors.darkBlueAccent),
       ),
       body: ModalProgressHUD(
         inAsyncCall: isProgressBarShown,
+
+        
         child: Stack(
           children: [
             Container(
+
+
               width: double.infinity,
               height: double.infinity,
               child: GoogleMap(
