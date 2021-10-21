@@ -20,7 +20,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         centerTitle: true,
+        centerTitle: true,
         title: Text("Make An Inquiry".toUpperCase(),
             style: TextStyle(fontStyle: FontStyle.italic)),
         backgroundColor: Color(ExtraColors.appBarColor),
@@ -32,7 +32,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
             // childAspectRatio: 3,
             // mainAxisSpacing: 2.0,
             // crossAxisSpacing: 2.0,
-      
+
             // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             //   crossAxisCount: 2,
             //   childAspectRatio: 1,
@@ -43,9 +43,10 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
             // itemBuilder: (BuildContext context, int index) {
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: 30),
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
+
+                // margin: EdgeInsets.symmetric(
+                //     horizontal: MediaQuery.of(context).size.width * 0.1),
                 child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -65,18 +66,19 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                           // width: 50,
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
                             child: Text(
                               "Tyres",
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
                       ],
                     )),
               ),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
                 // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                 child: new Divider(
@@ -85,8 +87,11 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                // padding: EdgeInsets.symmetric(horizontal: 30),
+                padding: EdgeInsets.only(left: 30),
+
+                // margin: EdgeInsets.symmetric(
+                // horizontal: MediaQuery.of(context).size.width * 0.1),
                 child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -106,11 +111,12 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                           // width: 50,
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
                             child: Text(
                               "Brakes",
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
@@ -126,8 +132,11 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                // padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: EdgeInsets.only(left: 30),
+
+                // margin: EdgeInsets.symmetric(
+                //     horizontal: MediaQuery.of(context).size.width * 0.1),
                 child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -144,14 +153,16 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                           "images/oilfilterupdated.png",
                           // staticServiceList[index].image,
                           height: 80,
+
                           // width: 50,
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
                             child: Text(
                               "Oil & Filters",
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
@@ -167,8 +178,11 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                // padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: EdgeInsets.only(left: 30),
+
+                // margin: EdgeInsets.symmetric(
+                //     horizontal: MediaQuery.of(context).size.width * 0.1),
                 child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -185,21 +199,21 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                           "images/batteryupdated.png",
                           // staticServiceList[index].image,
                           height: 80,
-                          // width: 50,
+                          width: 100,
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
                             child: Text(
                               "Battery",
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
                       ],
                     )),
               ),
-             
               Padding(
                 padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
                 // padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -209,8 +223,11 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                // padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.only(left: 30),
+
+                // margin: EdgeInsets.symmetric(
+                //     horizontal: MediaQuery.of(context).size.width * 0.1),
                 child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -226,15 +243,16 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                         Image.asset(
                           "images/OtherServices.png",
                           // staticServiceList[index].image,
-                          height: 80,
-                          // width: 50,
+                          height: 90,
+                          width: 100,
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
                             child: Text(
                               "Other Services",
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
@@ -242,7 +260,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                     )),
               )
             ]
-      
+
             // }
             ),
       ),

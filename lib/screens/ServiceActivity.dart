@@ -360,7 +360,7 @@ class _ServiceActivityState extends State<ServiceActivity>
                                       width: 100,
                                     ),
                                     Container(
-                                        // padding: EdgeInsets.only(top: 5),
+                                        padding: EdgeInsets.only(bottom: 15),
                                         child: Text(
                                             staticServiceList[index].title))
                                   ],

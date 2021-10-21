@@ -153,9 +153,7 @@ class _MainTabState extends State<MainTab> {
 
   void pageChanged(int index) {
     setState(() {
-   bottomSelectedIndex = index;
-
-     
+      bottomSelectedIndex = index;
     });
   }
 
@@ -165,6 +163,7 @@ class _MainTabState extends State<MainTab> {
         backgroundColor: Color(0xff19378d),
         icon: new Icon(
           Icons.home,
+          //  color: Color(ExtraColors.appBarColor)
           color: Color(0xff88acd0),
         ),
         activeIcon: new Icon(
@@ -253,11 +252,9 @@ class _MainTabState extends State<MainTab> {
   void bottomTapped(int index) {
     debugPrint("this is index");
     setState(() {
-      
-        bottomSelectedIndex = index;
-        pageController.animateToPage(index,
-            duration: Duration(milliseconds: 500), curve: Curves.ease);
-      
+      bottomSelectedIndex = index;
+      pageController.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.ease);
     });
   }
 
