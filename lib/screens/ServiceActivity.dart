@@ -337,6 +337,7 @@ class _ServiceActivityState extends State<ServiceActivity>
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: Container(
+                          alignment: Alignment.center,
                             child: InkWell(
                                 onTap: () {
                                   Navigator.push(

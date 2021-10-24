@@ -305,9 +305,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   Image.asset(
                                     "images/checkhistoryupdated.png",
                                     height: MediaQuery.of(context).size.width *
-                                        0.35,
+                                        0.3,
                                     width: MediaQuery.of(context).size.width *
-                                        0.35,
+                                        0.3,
                                   ),
                                   Container(
                                       // padding: EdgeInsets.only(top: 5),
@@ -342,9 +342,9 @@ class _HomeActivityState extends State<HomeActivity>
                                   Image.asset(
                                     "images/nextserviceupdated.png",
                                     height: MediaQuery.of(context).size.width *
-                                        0.35,
+                                        0.3,
                                     width: MediaQuery.of(context).size.width *
-                                        0.35,
+                                        0.3,
                                   ),
                                   Container(
                                       padding: EdgeInsets.only(top: 5),
@@ -391,8 +391,8 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/callupdated.png",
-                                  height: MediaQuery.of(context).size.width * 0.35,
-                                    width: MediaQuery.of(context).size.width * 0.35,
+                                  height: MediaQuery.of(context).size.width * 0.3,
+                                    width: MediaQuery.of(context).size.width * 0.3,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -450,8 +450,8 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/inquireupdated.png",
-                                 height: MediaQuery.of(context).size.width * 0.35,
-                                    width: MediaQuery.of(context).size.width * 0.35,
+                                 height: MediaQuery.of(context).size.width * 0.3,
+                                    width: MediaQuery.of(context).size.width * 0.3,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -498,8 +498,8 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/branchupdated.png",
-                                    height: MediaQuery.of(context).size.width * 0.35,
-                                    width: MediaQuery.of(context).size.width * 0.35,
+                                    height: MediaQuery.of(context).size.width * 0.3,
+                                    width: MediaQuery.of(context).size.width * 0.3,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -536,8 +536,8 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/promotionupdated.png",
-                                     height: MediaQuery.of(context).size.width * 0.35,
-                                    width: MediaQuery.of(context).size.width * 0.35,
+                                     height: MediaQuery.of(context).size.width * 0.3,
+                                    width: MediaQuery.of(context).size.width * 0.3,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),
@@ -576,8 +576,8 @@ class _HomeActivityState extends State<HomeActivity>
                                   children: <Widget>[
                                     Image.asset(
                                       "images/serviceupdated.png",
-                                 height: MediaQuery.of(context).size.width * 0.35,
-                                    width: MediaQuery.of(context).size.width * 0.35,
+                                 height: MediaQuery.of(context).size.width * 0.3,
+                                    width: MediaQuery.of(context).size.width * 0.3,
                                     ),
                                     Container(
                                         // padding: EdgeInsets.only(top: 5),

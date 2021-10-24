@@ -62,6 +62,7 @@ dependencies:
   encrypt:
   flutter_config:
   webview_flutter:
+    
 
 dev_dependencies:
   flutter_test:
