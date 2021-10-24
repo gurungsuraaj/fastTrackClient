@@ -122,8 +122,10 @@ class _MainTabState extends State<MainTab> {
       body: buildPageView(),
       bottomNavigationBar: Container(
         child: BottomNavigationBar(
-          backgroundColor: Color(0xff0B2D8A),
-          type: BottomNavigationBarType.shifting,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
           currentIndex: bottomSelectedIndex,
           onTap: (index) {
             bottomTapped(index);
@@ -160,7 +162,7 @@ class _MainTabState extends State<MainTab> {
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
       BottomNavigationBarItem(
-        backgroundColor: Color(0xff19378d),
+        backgroundColor: Colors.white,
         icon: new Icon(
           Icons.home,
           //  color: Color(ExtraColors.appBarColor)
@@ -182,10 +184,10 @@ class _MainTabState extends State<MainTab> {
         // )
       ),
       BottomNavigationBarItem(
-        backgroundColor: Color(0xff19378d),
+        backgroundColor: Colors.red,
         icon: Icon(
           Icons.person,
-          color: Color(0xff88acd0),
+          color: Color(0xff19378d),
         ),
         activeIcon: new Icon(
           Icons.person,
@@ -195,10 +197,11 @@ class _MainTabState extends State<MainTab> {
         label: '',
       ),
       BottomNavigationBarItem(
-        backgroundColor: Color(0xff19378d),
+        backgroundColor: Colors.white,
+
         icon: new Icon(
           Icons.public,
-          color: Color(0xff88acd0),
+          color: Color(0xff19378d),
         ),
         activeIcon: new Icon(
           Icons.public,
@@ -208,10 +211,11 @@ class _MainTabState extends State<MainTab> {
         label: '',
       ),
       BottomNavigationBarItem(
-        backgroundColor: Color(0xff19378d),
+        backgroundColor: Colors.white,
+
         icon: FaIcon(
           FontAwesomeIcons.instagram,
-          color: Color(0xff88acd0),
+          color: Color(0xff19378d),
         ),
         activeIcon: FaIcon(
           FontAwesomeIcons.instagram,
@@ -221,10 +225,11 @@ class _MainTabState extends State<MainTab> {
         label: '',
       ),
       BottomNavigationBarItem(
-        backgroundColor: Color(0xff19378d),
+        backgroundColor: Colors.white,
+
         icon: FaIcon(
           FontAwesomeIcons.facebook,
-          color: Color(0xff88acd0),
+          color: Color(0xff19378d),
         ),
         activeIcon: FaIcon(
           FontAwesomeIcons.facebook,
@@ -234,10 +239,11 @@ class _MainTabState extends State<MainTab> {
         label: '',
       ),
       BottomNavigationBarItem(
-        backgroundColor: Color(0xff19378d),
+        backgroundColor: Colors.white,
+
         icon: new Icon(
           Icons.notifications,
-          color: Color(0xff88acd0),
+          color: Color(0xff19378d),
         ),
         activeIcon: new Icon(
           Icons.notifications,
