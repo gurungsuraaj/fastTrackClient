@@ -71,7 +71,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             child: Text(
                               "Tyres",
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
@@ -116,7 +116,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             child: Text(
                               "Brakes",
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
@@ -162,7 +162,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             child: Text(
                               "Oil & Filters",
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
@@ -207,7 +207,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             child: Text(
                               "Battery",
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))
@@ -224,7 +224,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
               ),
               Container(
                 // padding: EdgeInsets.symmetric(horizontal: 15),
-                padding: EdgeInsets.only(left: 30),
+                padding: EdgeInsets.only(left: 20),
 
                 // margin: EdgeInsets.symmetric(
                 //     horizontal: MediaQuery.of(context).size.width * 0.1),
@@ -243,8 +243,8 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                         Image.asset(
                           "images/OtherServices.png",
                           // staticServiceList[index].image,
-                          height: 90,
-                          width: 100,
+                          height: 110,
+                          width: 110,
                         ),
                         Container(
                             padding: EdgeInsets.symmetric(
@@ -252,7 +252,7 @@ class _InquiryListScreenState extends State<InquiryListScreen> {
                             child: Text(
                               "Other Services",
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w800),
                             ))

@@ -337,7 +337,7 @@ class _ServiceActivityState extends State<ServiceActivity>
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: Container(
-                          alignment: Alignment.center,
+                            alignment: Alignment.center,
                             child: InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -361,7 +361,7 @@ class _ServiceActivityState extends State<ServiceActivity>
                                       width: 100,
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(bottom: 15),
+                                        padding: EdgeInsets.only(bottom: 25),
                                         child: Text(
                                             staticServiceList[index].title))
                                   ],

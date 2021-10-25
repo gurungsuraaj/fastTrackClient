@@ -166,7 +166,8 @@ class _MainTabState extends State<MainTab> {
         icon: new Icon(
           Icons.home,
           //  color: Color(ExtraColors.appBarColor)
-          color: Color(0xff88acd0),
+          // color: Color(0xff88acd0),
+          color: Color(0xff19378d),
         ),
         activeIcon: new Icon(
           Icons.home,
