@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:fasttrackgarage_app/api/Api.dart';
-import 'package:fasttrackgarage_app/utils/Constants.dart';
+import 'package:fasttrackgarage_app/utils/PrefsManager.dart';
 import 'package:fasttrackgarage_app/utils/Rcode.dart';
 import 'package:flutter/material.dart';
 import 'package:fasttrackgarage_app/utils/ExtraColors.dart';
-import 'GoogleMap.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
 import '../models/OutletList.dart';
@@ -18,13 +17,17 @@ class OutletActivity extends StatefulWidget {
 class _OutletActivity extends State<OutletActivity> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isProgressBarShown = false;
-  List<OutletList> outletlist = new List<OutletList>();
+  List<OutletList> outletlist = <OutletList>[];
+  String basicToken = "";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getOutletList();
+
+    PrefsManager.getBasicToken().then((token) {
+      basicToken = token;
+      getOutletList();
+    });
   }
 
   @override
@@ -32,8 +35,9 @@ class _OutletActivity extends State<OutletActivity> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+         centerTitle: true,
         title: Text("Outlet"),
-        backgroundColor: Color(ExtraColors.DARK_BLUE),
+        backgroundColor: Color(ExtraColors.darkBlue),
       ),
       body: ModalProgressHUD(
           inAsyncCall: isProgressBarShown,
@@ -47,19 +51,19 @@ class _OutletActivity extends State<OutletActivity> {
 
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GoogleMapActivity()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => GoogleMapActivity()),
+                      // );
                     },
                     child: ListTile(
                       onTap: null,
                       title: Container(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                         child: Text(
-                          outletlist[index].Name,
-                          style: TextStyle(color: Color(ExtraColors.DARK_BLUE)),
+                          outletlist[index].name,
+                          style: TextStyle(color: Color(ExtraColors.darkBlue)),
                         ),
                       ),
                       subtitle: Column(
@@ -68,10 +72,10 @@ class _OutletActivity extends State<OutletActivity> {
                           Container(
                               padding: EdgeInsets.only(bottom: 8),
                               child: Text(
-                                outletlist[index].Address,
+                                outletlist[index].address,
                               )),
                           Text(
-                            outletlist[index].City,
+                            outletlist[index].city,
                             style: TextStyle(
                                 fontStyle: FontStyle.italic,
                                 fontSize: 14,
@@ -102,26 +106,25 @@ class _OutletActivity extends State<OutletActivity> {
 
   getOutletList() async {
     showProgressBar();
-    String url = Api.LOCCATION_LIST;
+    String url = Api.locationList;
     debugPrint("---url---$url");
 
     Map<String, String> body = {"Key": "", "Code": "", "Name": ""};
-    var body_json = json.encode(body);
+    var bodyJson = json.encode(body);
 
     Map<String, String> header = {
       "Content-Type": "application/json",
-      "username": "PSS",
-      "password": "\$ky\$p0rt\$",
-      "url":
-          "http://202.166.211.230:7747/DynamicsNAV/ws/FT%20Support/Page/LocationList",
+      "url": "DynamicsNAV/ws/FT%20Support/Page/LocationList",
+      "Authorization": "$basicToken"
     };
-    await http.post(url, body: body_json, headers: header).then((res) {
+
+    await http.post(url, body: bodyJson, headers: header).then((res) {
       hideProgressBar();
       debugPrint("this is status code ${res.statusCode}");
       var result = json.decode(res.body);
       var values = result['data'] as List;
 
-      if (res.statusCode == Rcode.SUCCESS_CODE) {
+      if (res.statusCode == Rcode.successCode) {
         outletlist = values
             .map<OutletList>((json) => OutletList.fromJson(json))
             .toList();

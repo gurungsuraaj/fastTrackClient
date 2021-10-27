@@ -11,7 +11,7 @@ description: A new Flutter application.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.1.0+3
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -26,7 +26,7 @@ dependencies:
   xml: ^3.0.0
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.5.3+1
-  xml2json: ^3.0.3
+  xml2json: ^4.0.0
   toast: ^0.1.3
   modal_progress_hud: ^0.1.3
   circular_check_box: ^0.0.2
@@ -36,11 +36,33 @@ dependencies:
   font_awesome_flutter: ^8.5.0
   charts_flutter: ^0.6.0
   http: ^0.12.0+2
-  flutter_launcher_icons: "^0.7.3"
+  flutter_launcher_icons: "^0.8.1"
   floor: ^0.9.0
-  sqflite: ^1.1.3
-
-
+  sqflite: ^1.3.2+1
+  imei_plugin: ^1.1.4
+  custom_progress_dialog: ^1.0.2
+  connectivity:
+  firebase_messaging: ^6.0.16
+  geolocator:
+  # barcode_scan:
+  url_launcher: ^5.7.10
+  intl:
+  country_pickers:
+  carousel_slider:
+  cached_network_image: 2.0.0-rc
+  custom_navigator: ^0.2.0
+  flutter_local_notifications:
+  package_info:
+  sms_otp_auto_verify: ^1.2.2
+  geocoder: ^0.2.1
+  country_icons: ^1.1.1
+  pin_code_fields: ^2.3.0+3
+  flutter_webview_plugin:
+  flutter_statusbarcolor:
+  encrypt:
+  flutter_config:
+  webview_flutter:
+    
 
 dev_dependencies:
   flutter_test:
@@ -51,15 +73,15 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "images/ic_launcher_ebt.png"
-
+  image_path: "images/fastTrack_launcher.png"
+  adaptive_icon_background: "images/iconBg.png"
+  adaptive_icon_foreground: "images/iconFg.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -71,24 +93,74 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - images/fast_track_logo.png
-    - images/cart.png
+    - images/fastTrack_launcher.png
+    - images/car.png
+    - images/handle.jpg
+    - images/dashboard.jpg
+    - images/shopAndGo.png
     - images/message.png
     - images/maintenance_icon.png
     - images/tyre.png
     - images/carrepair.png
-    - images/setting.png
-    - images/outlet.png
+    - images/ServiceHistory.png
+    - images/outletLogo.png
     - images/distressCall.png
-    - images/service.png
-    - images/shop.png
-    - images/offer.png
-    - images/locate.png
-
-
-
-
-
-
+    - images/ServicesLogo.png
+    - images/LocationLogo.png
+    - images/promotionLogo.png
+    - images/promotionLogo.png
+    - images/fastTrackSplashLogo.png
+    - images/fastTrackSingleLogo.png
+    - images/inventoryLogo.png
+    - images/AcImage.jpg
+    - images/air-conditioning.png
+    - images/brakes.png
+    - images/electrics.png
+    - images/oil-filter.png
+    - images/other.gif
+    - images/servicing.png
+    - images/steering.png
+    - images/suspension.png
+    - images/tone-up.png
+    - images/tyre-s.png
+    - images/inquiry.png
+    - images/whatsapp.png
+    - images/phone.png
+    - images/call.png
+    - images/userProfile.png
+    - images/FTProfileLogo.png
+    - images/alert.png
+    - images/distress.png
+    - images/inquiry1.png
+    - images/invoiceSales1.png
+    - images/locate1.png
+    - images/promotions1.png
+    - images/service1.png
+    - images/iconBg.png
+    - images/iconFg.png
+    - images/logowa.png
+    - images/acupdated.png
+    - images/batteryupdated.png
+    - images/brakesupdated.png
+    - images/branchupdated.png
+    - images/callupdated.png
+    - images/checkhistoryupdated.png
+    - images/electricupdated.png
+    - images/inquireupdated.png
+    - images/nextserviceupdated.png
+    - images/oilfilterupdated.png
+    - images/promotionupdated.png
+    - images/serviceupdated.png
+    - images/servicingupdated.png
+    - images/steeringupdated.png
+    - images/suspensionupdated.png
+    - images/tuneupupdated.png
+    - images/tyresupdated.png
+    - images/acnew.png
+    - images/checkhistorynew.png
+    - images/bgimage.jpg
+    - images/insta.png
+    - images/OtherServices.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -106,7 +178,7 @@ flutter:
       fonts:
         - asset: fonts/Catamaran-ExtraBold.ttf
         # - asset: fonts/Schyler-Italic.ttf
-          # style: bold
+        # style: bold
     # - family: Trajan Pro
     #   fonts:
     #     - asset: fonts/TrajanPro.ttf

@@ -1,14 +1,14 @@
 class OutletList {
-  String Name;
-  String City;
-  String Address;
+  String name;
+  String city;
+  String address;
 
-  OutletList({this.Name, this.City, this.Address});
+  OutletList({this.name, this.city, this.address});
   factory OutletList.fromJson(Map<String, dynamic> json) {
     return OutletList(
-      Name: json['Name'],
-      City: json['City'],
-      Address: json['Address'],
+      name: json['Name'],
+      city: json['City'],
+      address: json['Address'],
     );
   }
 }

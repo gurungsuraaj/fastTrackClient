@@ -1,11 +1,11 @@
  import 'package:floor/floor.dart';
 
  @entity
- class Person {
+ class Suraj {
    @primaryKey
    final int id;
 
    final String name;
 
-   Person(this.id, this.name);
+   Suraj(this.id, this.name);
  }

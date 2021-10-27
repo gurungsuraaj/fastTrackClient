@@ -1,5 +1,5 @@
 class Rstring{
-
-  static final String LOGIN_SUCCESS = "login success";
-
+  static final String loginSuccess = "login success";
+  static final String otpSendSuccess = "OTP sent on registered mobile no.";
+  static final String otpVerified = "OTP Verified";
 }
