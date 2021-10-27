@@ -144,7 +144,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                           fontSize: 28,
                                           fontWeight: FontWeight.w800,
                                           // fontStyle: FontStyle.values(80),
-                                          color: Colors.orange),
+                                          color: Color(0xfff07639)),
                                     ),
                                   ),
                                 ],
@@ -268,7 +268,7 @@ class _LoginActivityState extends State<LoginActivity> {
                                                   new BorderRadius.circular(
                                                       18.0),
                                             ),
-                                            primary: Colors.orange,
+                                            primary: Color(0xfff07639),
                                           ),
                                           onPressed: () {
                                             // performLogin();
@@ -422,7 +422,7 @@ class _LoginActivityState extends State<LoginActivity> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/handle.jpg"),
+          image: AssetImage("images/LoginBgImage.jpg"),
           fit: BoxFit.cover,
         ),
       ),
@@ -550,7 +550,7 @@ class _LoginActivityState extends State<LoginActivity> {
         width: MediaQuery.of(context).size.width * 0.7,
         decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.orange,
+              color: Color(0xfff07639),
               // width: 5,
             ),
             borderRadius: BorderRadius.circular(30),
@@ -562,7 +562,7 @@ class _LoginActivityState extends State<LoginActivity> {
               child: CircleAvatar(
                   radius: 18,
                   // backgroundColor: Color(0xffe6a764),
-                  backgroundColor: Colors.orange,
+                  backgroundColor:Color(0xfff07639),
                   child: Icon(
                     Icons.phone,
                     color: Colors.white,
